@@ -12,52 +12,60 @@
 
         <h2>Talks</h2>
         <ul>
-            <li>"Select * From Internet: Yahoo Query Language" (Oct 12th, 2010 @ SoCal.js meetup in Pasadena, CA) - <a href="talks/20101011_SoCaljs/index.html">HTML slides</a></li>
-            <li>"Select * From Internet: Yahoo Query Language" (May 5th, 2010 @ Music Hackday in San Francisco) - <a href="talks/20100515_MusicHackday/index.html">HTML slides</a></li>
-            <li>"Select * From Internet: Yahoo Query Language" (Apr 21st, 2010 @ Yahoo! Center in Santa Monica, CA) - <a href="http://www.slideshare.net/drgath/yahoo-query-language-select-from-internet">Slideshare.net</a></li>            
-            <li>"jQuery: JavaScript that Doesn't Suck" (Aug 8th, 2009 @ preDevCamp: Kansas City) - <a href="http://www.derekgathright.com/talks/20090808_pdc_jquery.pdf">PDF</a></li>
+            <li>2010-12-04: "Yahoo Query Language" @ NYTimes Open Hackday in New York City, NY (<a href="http://www.slideshare.net/drgath/yql-select-from-internet">Slideshare</a>)</li>
+            <li>2010-10-12: "Yahoo Query Language" @ SoCal.js meetup in Pasadena, CA (<a href="talks/20101011_SoCaljs/index.html">HTML</a>)</li>
+            <li>2010-05-05: "Yahoo Query Language" @ Music Hackday in San Francisco, CA (<a href="talks/20100515_MusicHackday/index.html">HTML</a>)</li
+            <li>2010-04-21: "Yahoo Query Language" @ Yahoo.  (<a href="http://www.slideshare.net/drgath/yahoo-query-language-select-from-internet">Slideshare</a>)</li>
+            <li>2009-08-08: "jQuery: JavaScript that Doesn't Suck" @ preDevCamp Kansas City.  (<a href="http://www.derekgathright.com/talks/20090808_pdc_jquery.pdf">PDF</a>)</li>
+            <li>2009-06-16: "Twitter Bootcamp" @ Enterprise Center of Johnson County. (<a href="http://www.derekgathright.com/talks/20090606_twitter_bootcamp.pdf">PDF</a>)</li>
+            <li>2009-05-19: "Twitter Bootcamp" @ Enterprise Center of Johnson County.</li>
+            <li>2009-04-21: "Twitter Bootcamp" @ Enterprise Center of Johnson County.</li>
+            <li>2009-02-19: "Twitter Bootcamp" @ Enterprise Center of Johnson County.</li>
         </ul>
 
         <h2>Github Repositories</h2>
-        <ul id="repositories"></ul>
+        <div id="repositories"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
 
         <h2>Gists</h2>
-        <ul id="gists"></ul>
+        <div id="gists"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
 
         <h2>jsFiddles</h2>
-        <ul id="fiddles"></ul>
+        <div id="fiddles"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
         
         <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js" charset="utf-8"></script>
 		<script>
             YUI().use("node", "jsonp-url", function(Y) {
                 Y.jsonp("https://gist.github.com/api/v1/json/gists/derek", function(response) {
                     var html = [];
-                    
+                    html.push("<ul>");
                     Y.each(response.gists, function(gist) {
                         html.push("<li><a href='https://gist.github.com/" + gist.repo + "'>" + gist.description + "</a> (" + gist.created_at.split(" ")[0] + ")</li>");
                     })
-                    
+                    html.push("</ul>");
                     Y.one("#gists").set("innerHTML", html.join(""));
                 });
             });
 
             YUI().use("node", "jsonp-url", function(Y) {
-                new Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
+                Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
                     var html = [];
                     
                     response.repositories.reverse();
+                    html.push("<ul>");
                     Y.each(response.repositories, function(repo) {
                         html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + " (" + repo.created_at.split(" ")[0] + ")</li>");
                     });
+                    html.push("</ul>");
 
                     Y.one("#repositories").set("innerHTML", html.join(""));
                 });
             });
 
             YUI().use("node", "yql", function(Y) {
-                new Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function(response) {
+                Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function(response) {
                     var html = [];
                     
+                    html.push("<ul>");
                     Y.each(response.query.results.div, function(parsed) {
                         var fiddle = {
                             url: "http://jsfiddle.net" + parsed.a.href,
@@ -67,6 +75,7 @@
                         }
                         html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
                     })
+                    html.push("</ul>");
                     
                     Y.one("#fiddles").set("innerHTML", html.join(""));
                 });
