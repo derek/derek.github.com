@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  
+    <title>Yahoo Query Language: select * from Internet</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" media="screen, projection" />
+	<link type="text/css" rel="stylesheet" href="css/sh_nedit.css">
+	<link type="text/css" rel="stylesheet" href="css/sh_style.css">
+	<style type="text/css">
+		.yqlInputField {
+			font-size:28px; 
+			width:100px;
+			font-weight:bold;
+		}
+		.yqlInputFieldLong {
+			width:300px;
+			font-size:28px; 
+			font-weight:bold;
+		}
+		.shadowify {
+		  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 10px 15px 15px;
+		}
+		h1.large {
+			font-size:60px;
+		}
+		p.large{
+			font-size:25px;
+		}
+            
+        .col2 {
+            -webkit-column-width: 350px;
+            -webkit-column-count: 2;
+        }
+    	
+		.small {
+		    font-size:30px;
+		}
+	</style>
+	<script src="js/sh_main.js"></script>
+	<script src="js/sh_javascript_dom.js"></script>
+	<script src="js/sh_javascript.js"></script>
+	<script src="js/sh_sql.js"></script>
+	<script src="js/sh_xml.js"></script>
+	<script src="js/sh_php.js"></script>
+	<script src="js/sh_python.js"></script>
+	<script src="js/sh_ruby.js"></script>
+	<script src="js/sh_sh.js"></script>
+  </head>
+
+  <body>
+    <div class="presentation">
+      <div class="slides">
+
+
+
+
+		<div class="slide">
+			<section class="center intro">
+				<hgroup>
+					<h1>
+						Select * from Internet:
+					</h1>
+					<h2>
+						Yahoo Query Language
+					</h2>
+				</hgroup>
+				 <div style="margin-top:40px;height:250px;"><img src="images/yql.png" width="200"  ></div>
+				<p>Derek Gathright</p>
+				<p>Front-end Engineer, <img src="images/yahoo.gif" height="20" ></p>
+			</section>
+		</div>
+
+
+
+
+
+		<div class="slide">
+			<section class="center">
+				<img src="images/about01.png" width="800" class="shadowify" />
+			</section>
+		</div>
+
+
+
+
+
+		<div class="slide">
+			<section class="center">
+				<img src="images/about02.png" width="800" class="shadowify" />
+			</section>
+		</div>
+
+
+
+
+
+		<div class="slide">
+			<section class="center">
+				<img src="images/about03.png" width="800" class="shadowify" />
+			</section>
+		</div>
+
+
+
+
+
+		<div class="slide">
+			<section class="center">
+				<img src="images/about04.png" width="800" class="shadowify" />
+			</section>
+		</div>
+
+		
+
+
+<!--
+
+		<div class="slide">
+			<header>
+				<h1>Why YQL</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>Thousands of Web Services and sources that provide valuable data.</li>
+					<li>Require developers to read documentation and form URLs/queries.</li>
+					<li>Data is isolated.</li>
+					<li>Needs filtering, combining, tweaking, shaping even after it gets to the developer.</li>
+				</ul>
+			</section>
+		</div>
+-->
+
+
+
+        
+		<div class="slide">
+			<header>
+				<h1>What is YQL?</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>Cloud web service with an SQL-like syntax.</li>
+					<li>Why SQL? It is familiar to developers, expressive, &amp; is synonymous with data access.</li>
+					<li>Allows you to query, filter, join and update data across any structured data on the web.</li> 
+				</ul>
+			</section>
+		</div>
+        
+
+
+
+
+        
+		<div class="slide">
+			<section class="center">
+				<h1 class="large">Examples</h1>
+			</section>
+		</div>
+        
+
+
+
+
+        
+		<div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="center">
+				<pre class="sh_sql large">SELECT {what} FROM {datatable} WHERE {condition}</pre>
+			</section>
+		</div>
+        
+
+
+
+<!--
+		<div class="slide">
+			<header>
+				<h1>YQL Statement Basics</h1>
+			</header>
+			<section class="small center">
+				<table border="1" style="width:100%;">
+					<tr>
+						<th>Method</th>
+						<th>Use</th>
+					</tr>
+					<tr>
+						<td>show</td>
+						<td>lists the supported tables</td>
+					</tr>
+					<tr>
+						<td>desc</td>
+						<td>describes the structure of a table </td>
+					</tr>
+					<tr>
+						<td>select</td>
+						<td>fetches data</td>
+					</tr>
+					<tr>
+						<td>insert/update/delete</td>
+						<td>modify data</td>
+					</tr>
+					<tr>
+						<td>use</td>
+						<td>use an Open Data Table</td>
+					</tr>
+					<tr>
+						<td>set</td>
+						<td>define key-values across Open Data Tables</td>
+					</tr>
+
+				</table>
+			</section>
+		</div>
+
+
+
+-->
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+SELECT * 
+FROM weather.forecast 
+WHERE location = '<input type="text" class="yqlInputField" id="weatherZipInput">'</pre>
+				<button onclick="foobar();" class="large">Execute</button>
+
+				<pre id="asd" class="output"></pre>
+			</section>
+		<script>
+			function foobar() {
+				var weatherZipInput = document.getElementById('weatherZipInput').value;
+				executeYQL("SELECT * FROM weather.forecast WHERE location='" + weatherZipInput + "'", "foobarCB");
+			}
+
+			function foobarCB(response) {
+				var timerStop = +new Date();
+				var item = response.query.results.channel.item;
+				var html = item.title + "\n" + item.condition.temp + " degrees and " + item.condition.text + "\n\n" + timerStart + " - " + timerStop + " = " + ( timerStop - timerStart) + " milliseconds";
+
+				document.getElementById("asd").innerHTML = html;
+			}
+		</script>
+		</div>
+
+
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+SELECT * 
+FROM music.artist.popular(30)
+| sort(field='name')</pre>
+				<button onclick="popArtists();" class="large">Execute</button>
+
+				<pre id="popArtistList" class="output"></pre>
+			</section>
+		<script>
+			function popArtists() {
+				executeYQL("select name from music.artist.popular(30) | sort(field='name')", "popArtistsCB");
+			}
+
+			function popArtistsCB(response) {
+				var html = [];
+				for(var i in response.query.results.Artist) {
+					artist = response.query.results.Artist[i];
+					html.push((parseInt(i) + 1 )+ ") " + artist.name);
+				}
+
+				document.getElementById("popArtistList").innerHTML = html.join(', ');
+			}
+		</script>
+		</div>        		
+
+
+
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+SELECT Latitude, Longitude FROM ip.location WHERE ip IN (SELECT p FROM data.html.cssselect WHERE url="http://whatismyip.org" AND css="body p")</pre>
+				<button onclick="ipAddress();" class="large">Execute</button>
+
+				<div id="ipAddressResult" align="center"></div>
+			</section>
+		<script>
+			function ipAddress() {
+				executeYQL("SELECT Latitude, Longitude FROM ip.location WHERE ip IN (SELECT p FROM data.html.cssselect WHERE url='http://whatismyip.org' AND css='body p')", "ipAddressCB");
+			}
+
+			function ipAddressCB(response) {
+				showMap(response.query.results.Response);
+			}
+			
+		    function showMap(coordinates) {
+				document.getElementById("ipAddressResult").innerHTML = '<pre>' + coordinates.Latitude + ',' + coordinates.Longitude + '</pre><img src="http://maps.google.com/maps/api/staticmap?center=' + coordinates.Latitude + ',' + coordinates.Longitude + '&markers=color:green|label:G|' + coordinates.Latitude + ',' + coordinates.Longitude + '&zoom=12&size=1000x200&sensor=false">';
+		    }
+
+		</script>
+		</div>        		
+
+
+
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+SELECT name FROM music.artist.similar 
+WHERE id IN (
+	SELECT id FROM music.artist.search 
+	WHERE keyword="<input id="similarArtistInput" type="text" class="yqlInputField" style="width:300px;">" 
+| truncate(count=1)
+)</pre>
+				<button onclick="similarArtists();" class="large">Execute</button>
+
+				<pre id="similarArtistOutput" class="output"></pre>
+			</section>
+		<script>
+			function similarArtists() {
+				var artist = document.getElementById('similarArtistInput').value;
+				getSimilarArtists(artist);
+			}
+
+			function getSimilarArtists(artist) {
+				executeYQL("SELECT name FROM music.artist.similar WHERE id IN (select id from music.artist.search where keyword='" + artist + "' | truncate(count=1))", "similarArtistsCB");				
+			}
+
+
+			function similarArtistsCB(response) {
+				var html = [];
+				console.log(response);
+				for(var i in response.query.results.Artist) {
+					artist = response.query.results.Artist[i];
+					html.push((parseInt(i) + 1 )+ ") " + "<span style='cursor:pointer;'>" + artist.name + "</span>" );
+				}
+
+				document.getElementById("similarArtistOutput").innerHTML = html.join(', ');
+			}
+
+
+			document.getElementById('similarArtistOutput').onclick = function(e) {
+				var artist = e.target.innerHTML;
+				document.getElementById('similarArtistInput').value = artist;
+				getSimilarArtists(artist);
+			}
+		</script>
+		</div>
+
+
+		<!--
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+select * from text.text where text.key1 = "http://farm" and text.key3 = ".static.flickr.com/" and text.key5 = "/" and text.key7 = "_" and text.key9 = ".jpg" and (text.key2, text.key4, text.key6, text.key8) in (select farm, server, id, secret from flickr.photos.search where text = '<input type="text" class="yqlInputFieldLong" id="twitterSearchInput">'); = </pre>
+				<button onclick="twitterSearchHandler();" class="large">Execute</button>
+
+				<pre id="twitterSearchOutput" class="output"></pre>
+			</section>
+		<script>
+			function twitterSearchHandler() {
+				var query = document.getElementById('twitterSearchInput').value;
+				executeYQL("SELECT from_user, text, profile_image_url FROM twitter.search(3) WHERE q ='" + query + "'", "twitterSearchCB");
+			}
+
+			function twitterSearchCB(response) {
+				console.log(response);
+				var tweets = response.query.results.results;
+				var html = [];
+				for(i in tweets) {
+					var tweet = tweets[i];
+					html.push("<img style='float:left;' src='" + tweet.profile_image_url + "' height='65'><div>" + tweet.from_user + ": " + tweet.text + "</div><div style='clear:both;' ></div>\n\n");
+				}
+				document.getElementById("twitterSearchOutput").innerHTML = html.join('');
+			}
+		</script>
+		</div>
+
+
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+select * from rss where url in (select title from atom where url="http://spreadsheets.google.com/feeds/list/pg_T0Mv3iBwIJoc82J1G8aQ/od6/public/basic") LIMIT 10 | unique(field="title") </pre>
+				<button onclick="twitterSearchHandler();" class="large">Execute</button>
+
+				<pre id="twitterSearchOutput" class="output"></pre>
+			</section>
+		<script>
+			function twitterSearchHandler() {
+				var query = document.getElementById('twitterSearchInput').value;
+				executeYQL("SELECT from_user, text, profile_image_url FROM twitter.search(3) WHERE q ='" + query + "'", "twitterSearchCB");
+			}
+
+			function twitterSearchCB(response) {
+				console.log(response);
+				var tweets = response.query.results.results;
+				var html = [];
+				for(i in tweets) {
+					var tweet = tweets[i];
+					html.push("<img style='float:left;' src='" + tweet.profile_image_url + "' height='65'><div>" + tweet.from_user + ": " + tweet.text + "</div><div style='clear:both;' ></div>\n\n");
+				}
+				document.getElementById("twitterSearchOutput").innerHTML = html.join('');
+			}
+		</script>
+		</div>
+
+
+
+-->
+
+
+
+
+        <div class="slide">
+			<header>
+				<h1>Examples</h1>
+			</header>
+			<section class="intro">
+				<pre class="sh_sql large">
+SELECT from_user, text, profile_image_url
+FROM twitter.search(3)
+WHERE q = '<input type="text" class="yqlInputFieldLong" id="twitterSearchInput">'</pre>
+				<button onclick="twitterSearchHandler();" class="large">Execute</button>
+
+				<pre id="twitterSearchOutput" class="output"></pre>
+			</section>
+		<script>
+			function twitterSearchHandler() {
+				var query = document.getElementById('twitterSearchInput').value;
+				executeYQL("SELECT from_user, text, profile_image_url FROM twitter.search(3) WHERE q ='" + query + "'", "twitterSearchCB");
+			}
+
+			function twitterSearchCB(response) {
+				console.log(response);
+				var tweets = response.query.results.results;
+				var html = [];
+				for(i in tweets) {
+					var tweet = tweets[i];
+					html.push("<img style='float:left;' src='" + tweet.profile_image_url + "' height='65'><div>" + tweet.from_user + ": " + tweet.text + "</div><div style='clear:both;' ></div>\n\n");
+				}
+				document.getElementById("twitterSearchOutput").innerHTML = html.join('');
+			}
+		</script>
+		</div>
+
+
+
+
+		<div class="slide">
+			<header>
+				<h1>Insert / Update / Delete</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>With INSERT / UPDATE / DELETE SQL verbs you can modify data on the internet</li>
+					<li>Create tweets, add blog entries, update databases, etc...</li>
+					<li>Store tables or pieces of code in Sherpa, Yahoo's cloud storage</li>
+				</ul>
+			</section>
+		</div>
+        
+
+
+
+
+		<div class="slide">
+			<section class="center">
+				<h1 class="large">Integration</h1>
+			</section>
+		</div>
+
+
+
+
+		<div class="slide">
+			<header>
+				<h1>PHP Example</h1>
+			</header>
+			<section>
+				<pre class="sh_php">
+$yql_query = "SELECT * FROM upcoming.events 
+WHERE location='Los Angeles, CA' AND search_text='JavaScript'";
+
+$result = yql($yql_query);
+
+function yql($yql_query)
+{
+   $url = "https://query.yahooapis.com/v1/public/yql" . 
+          "?q=" . urlencode($yql_query) . 
+          "&format=json";
+   $curl = curl_init($url);
+   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+   $json = curl_exec($curl);
+
+   return json_decode($json);
+}</pre>
+			</section>
+		</div>        
+
+
+
+
+        <div class="slide">
+            <header>
+                <h1>JavaScript Example (JSONP)</h1>
+            </header>
+            <section>
+                <pre class="sh_javascript">
+var yql = "SELECT * FROM weather.forecast WHERE location=@zip";
+
+function executeYQL(yql) {
+   // Construct the URL
+   var url = "http://query.yahooapis.com/v1/public/yql?"    
+           + "q=" + encodeURIComponent(yql)
+           + "&amp;format=json"
+           + "&amp;callback=responseHandler";
+
+   // Dynamically load the script
+   var head = document.getElementsByTagName('head')[0];
+   var script = document.createElement('script');
+   script.type = 'text/javascript';
+   script.src = url;
+   head.appendChild(script);
+}
+
+function responseHandler(response) {
+   // Do something
+   // ...
+}
+
+executeYQL(yql, {zip:'90066'});</pre>
+            </section>
+        </div>        
+
+
+        
+
+        <div class="slide">
+            <header>
+                <h1>Widely Supported</h1>
+            </header>
+            <section>
+                <p>Available on any platform that speaks HTTP. Examples...</p>
+                <ul class="">
+                    <li><a href="http://python-yql.org/">python-yql</a>
+<pre class="sh_python">
+import yql
+y = yql.Public()
+result = y.execute('select * from flickr.photos.search where text="foo"')</pre>
+                    </li>
+                    <li><a href="http://github.com/drgath/node-yql">node-yql</a><pre class="sh_sh">$ npm install yql</pre></li>
+                    <li><a href="http://erikeldridge.wordpress.com/2010/02/21/ruby-utility-for-yql-storage/">Ruby utility for YQL storage</a><pre class="sh_ruby">storage.use(‘table’).set(‘foo’, ‘bar’)</pre></li>
+                </ul>   
+            </section>
+        </div>        
+
+
+        
+
+<!--
+
+		<div class="slide">
+			<header>
+				<h1>Server-side JavaScript Usage</h1>
+			</header>
+			<section>
+				<pre class="sh_javascript">
+var sys = require("sys"),
+    YQL = require('./yql');
+					
+// Test #3
+new YQL.exec("select * from twitter.user.timeline where (id = @id)", function(response) {
+
+	if (response.error) {
+		sys.puts("Error: " + response.error.description);
+	} else {	
+		var tweets = response.query.results.entry;
+		sys.puts("Test #3... Latest tweet from " + tweets[0].title);
+	}
+
+}, {id:"derek"}, {https:true});</pre>
+			</section>
+		</div>        
+
+-->
+
+
+
+
+
+
+        <div class="slide">
+        	<section class="center">
+        		<h1 class="large">What's Behind the "Magic"?</h1>
+        	</section>
+        </div>
+
+
+
+
+
+        <div class="slide">
+            <header>
+                <h1>DataTables</h1>
+            </header>
+            <section>
+                <p>13 categories &amp; counting, including...</p>
+                <ul class="bullets col2">
+                    <li>Geo</li>
+                    <li>Flickr</li>
+                    <li>Local</li>
+                    <li>Maps</li>
+                    <li>Meme</li>
+                    <li>Music</li>
+                    <li>Social</li>
+                    <li>Upcoming</li>
+                    <li>Weather</li>
+                    <li>Yahoo (Search)</li>
+                    <li>YMail</li>
+                    <li>YQL (Storage)</li>
+                </ul>
+            </section>
+        </div>
+
+
+
+
+
+
+
+		<div class="slide">
+			<section class="center">
+				<h1 class="large">Open DataTables</h1>
+			</section>
+		</div>
+
+
+        <div class="slide">
+            <header>
+                <h1>Open DataTables</h1>
+            </header>
+            <section>
+                <p>900+ user contributed tables in hundreds of categories, including...</p>
+                <ul class="bullets col2">
+                    <li>Amazon</li>
+                    <li>AWS</li>
+                    <li>Craigslist</li>
+                    <li>Facebook</li>
+                    <li>Foursquare</li>
+                    <li>Google</li>
+                    <li>HackerNews</li>
+                    <li>LastFM</li>
+                    <li>Netflix</li>
+                    <li>SimpleGeo</li>
+                    <li>SPARQL</li>
+                    <li>Twitter</li>
+                    <li>Wordpress</li>
+                    <li>YouTube</li>
+                </ul>
+            </section>
+        </div>
+
+
+
+		<div class="slide">
+			<header>
+				<h1>Open DataTables</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>A "data table" is an XML doc that translates YQL statements into HTTP request(s). It is what powers YQL</li>
+					<li>All open tables visible at http://github.com/yql/yql-tables/.</li> 
+					<li>Datatables.org mirrors the github master and builds a single environment with all tables (faster serving)</li>
+					<li>Brings the power of the table model to new APIs</li>
+				</ul>
+			</section>
+		</div>
+        
+
+
+
+
+
+
+		<div class="slide">
+			<header>
+				<h1>Open DataTables</h1>
+			</header>
+			<section class="small">
+				<ul class="bullets">
+					<pre class="sh_xml">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;table xmlns="http://query.yahooapis.com/v1/schema/table.xsd"&gt;
+  &lt;meta&gt;
+    &lt;author&gt;Yahoo! Inc.&lt;/author&gt;
+    &lt;documentationURL&gt;http://craigslist.org/&lt;/documentationURL&gt;
+    &lt;sampleQuery&gt;select * from {table} where location="sfbay" 
+	and type="sss" and query="schwinn mountain bike"&lt;/sampleQuery&gt;
+  &lt;/meta&gt;
+  &lt;bindings&gt;
+    &lt;select itemPath="" produces="XML"&gt;
+      &lt;urls&gt;
+        &lt;url&gt;http://{location}.craigslist.org/search/{type}?format=rss&lt;/url&gt;
+      &lt;/urls&gt;
+      &lt;inputs&gt;
+        &lt;key id="location" type="xs:string" 
+           paramType="path" required="true" /&gt;
+        &lt;key id="type" type="xs:string" 
+           paramType="path" required="true" /&gt;
+        &lt;key id="query" type="xs:string" 
+           paramType="query" required="true" /&gt;
+      &lt;/inputs&gt;
+    &lt;/select&gt;
+  &lt;/bindings&gt;
+&lt;/table&gt;</pre>
+				</ul>
+			</section>
+		</div>
+
+
+
+
+<!--
+
+		<div class="slide">
+			<header>
+				<h1>Open Data tables</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>Schema defines mapping between YQL and Endpoint</li>
+					<li>Keys can either be query, path or matrix parameters</li>
+					<li>Keys can be marked as required</li>
+					<li>YQL compiler validates existence of required keys</li>
+				</ul>
+			</section>
+		</div>
+    -->    
+
+
+
+
+
+
+
+		<div class="slide">
+			<header>
+				<h1>Open DataTables</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>Create APIs for websites that do not have public APIs.
+						<ul class="bullets">
+							<li>Ex. Craigslist, Y! Movies</li>
+						</ul>
+					</li>
+					<li>Extend with &lt;execute&gt;...&lt;/execute&gt;
+						<ul class="bullets">
+							<li>Server-side JavaScript, E4X</li>
+							<li>Authenticate: Basic, OAuth, XAuth, OpenID, ...</li>
+							<li>Translate: Protocols, XMLRPC</li>
+						</ul>
+					</li>
+					<li>Best feature: View-source!!!</li>
+				</ul>
+			</section>
+		</div>
+
+        
+
+
+        <div class="slide">
+            <header>
+                <h1>Conclusion</h1>
+            </header>
+            <section>
+                <ul class="bullets">
+                    <li>Rapidly build applications, prototypes, and mashups</li>
+                    <li>Use fewer lines of code</li>
+                    <li>Process your data away from app</li>
+                </ul>
+            </section>
+        </div>
+
+
+
+
+		<div class="slide">
+			<header>
+				<h1>Conclusion</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>Build applications that run faster. Let the "Cloud" do the work for you. Data conversion, filtering, parallel requests...</li>
+					<li>Build applications with a smaller network footprint, fewer calls, smaller data sets</li>
+				</ul>
+			</section>
+		</div>
+        
+        
+
+
+		<div class="slide">
+			<header>
+				<h1>Conclusion</h1>
+			</header>
+			<section>
+				<ul class="bullets">
+					<li>YQL is flexible. Supports XML, JSON, JSONP, JSONPX output. Easily transform documents between formats</li>
+					<li>Easy to integrate into any development environment w/ HTTP</li>
+				</ul>
+			</section>
+		</div>
+        
+
+
+
+        <div class="slide">
+            <header>
+                <h1>Resources</h1>
+            </header>
+            <section>
+                <ul class="bullets">
+                    <li>Docs: <a href="http://developer.yahoo.com/yql/guide/">developer.yahoo.com/yql/guide/</a></li>
+                    <li>Console: <a href="http://developer.yahoo.com/yql/console">developer.yahoo.com/yql/console</a></li>
+                    <li>DataTables: <a href="http://github.com/yql/yql-tables">github.com/yql/yql-tables</a></li>
+                    <li>Forums: <a href="http://tinyurl.com/yqlforums">tinyurl.com/yqlforums</a></li>
+                    <li>Twitter: <a href="http://twitter.com/yql">twitter.com/yql</a></li>
+                    <li>IRC: Freenode #yql</li>
+                </ul>
+            </section>
+        </div>
+        
+    
+
+
+
+		<div class="slide">
+            <header>
+                <h1>Demos</h1>
+            </header>
+            <section>
+    			<ul>
+			        <li><a target="_blank" href="http://developer.yahoo.com/yql/console">YQL Console</a></li>
+			        <li><a target="_blank" href="http://tweetanium.com">Twitter Client</a></li>
+    			    <li><a target="_blank" href="http://www.wait-till-i.com/2010/02/18/analysing-the-history-of-winter-olympics-medals-with-yql/">Olympics</a></li>
+    			    <li><a target="_blank" href="http://andrewwooldridge.com/blog/2010/10/06/create-a-blogroll-with-google-spreadsheets-and-yui3/">Blogroll</a></li>
+    			</ul>    
+            </section>
+		</div>
+    
+    
+    
+
+        <div class="slide">
+          <section class="center small intro">
+            <hgroup>
+              <h1>Thank you</h1>
+              <h3>Derek Gathright</h3>
+            </hgroup>
+	            <p><img src="images/twitter.ico"> twitter.com/derek</p>
+	            <p><img src="images/github.ico"> github.com/drgath</p>
+	            <p><img src="images/yahoo.ico"> drg@yahoo-inc.com</p>
+          </section>
+        </div>
+
+
+
+      </div> 
+    </div> 
+	<script>
+	
+	var timerStart = 0;
+		function onDomReady(){
+			sh_highlightDocument();
+		}
+	
+	
+	  var _timer=setInterval(function(){
+	  if(/loaded|complete/.test(document.readyState)){
+	    clearInterval(_timer)
+	    onDomReady(); // call target function
+	  }}, 10)
+	
+	function executeYQL(yql, callbackFuncName) {
+		timerStart = +new Date();
+		var url = "http://query.yahooapis.com/v1/public/yql?q=" + encodeURIComponent(yql) + "&env=store://datatables.org/alltableswithkeys&format=json&callback="+callbackFuncName + "&cacheBuster=" + (+new Date());
+		var head = document.getElementsByTagName('head')[0];
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = url;
+		head.appendChild(script);
+	}
+	
+	</script>
+    
+    <script>
+      (function() {
+        // Since we don't have the fallback of attachEvent and
+        // other IE only stuff we won't try to run JS for IE.
+        // It will run though when using Google Chrome Frame
+        if (document.all) { return; }
+
+        var currentSlideNo;
+        var notesOn = false;
+        var slides = document.getElementsByClassName('slide');
+        var touchStartX = 0;     
+   
+        // var slide_hash = window.location.hash.replace(/#/, '');
+        // if (slide_hash) {
+        //   for (var i = 0, len = slides.length; i < len; i++) {
+        //     if (slides[i].id == slide_hash) {
+        //       currentSlideNo = i;
+        //       updateSlideClasses(); 
+        //     }
+        //   }
+        // }
+        
+        var spaces = /\s+/, a1 = [""];
+
+        var str2array = function(s) {
+          if (typeof s == "string" || s instanceof String) {
+            if (s.indexOf(" ") < 0) {
+              a1[0] = s;
+              return a1;
+            } else {
+              return s.split(spaces);
+            }
+          }
+          return s;
+        };
+
+        var trim = function(str) {
+          return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+        };
+
+        var addClass = function(node, classStr) {
+          classStr = str2array(classStr);
+          var cls = " " + node.className + " ";
+          for (var i = 0, len = classStr.length, c; i < len; ++i) {
+            c = classStr[i];
+            if (c && cls.indexOf(" " + c + " ") < 0) {
+              cls += c + " ";
+            }
+          }
+          node.className = trim(cls);
+        };
+
+        var removeClass = function(node, classStr) {
+          var cls;
+          if (classStr !== undefined) {
+            classStr = str2array(classStr);
+            cls = " " + node.className + " ";
+            for (var i = 0, len = classStr.length; i < len; ++i) {
+              cls = cls.replace(" " + classStr[i] + " ", " ");
+            }
+            cls = trim(cls);
+          } else {
+            cls = "";
+          }
+          if (node.className != cls) {
+            node.className = cls;
+          }
+        };
+
+        var getSlideEl = function(slideNo) {
+          if (slideNo > 0) {
+            return slides[slideNo - 1];
+          } else {
+            return null;
+          }
+        };
+
+        var getSlideTitle = function(slideNo) {
+          var el = getSlideEl(slideNo);
+          
+          if (el) {
+            return el.getElementsByTagName('header')[0].innerHTML;
+          } else {
+            return null;
+          }
+        };
+        
+        var changeSlideElClass = function(slideNo, className) {
+          var el = getSlideEl(slideNo);
+
+          if (el) {
+            removeClass(el, 'far-past past current future far-future');
+            addClass(el, className);
+          }
+        };
+        
+        var updateSlideClasses = function() {
+          window.location.hash = "slide" + currentSlideNo;
+          changeSlideElClass(currentSlideNo - 2, 'far-past');
+          changeSlideElClass(currentSlideNo - 1, 'past');
+          changeSlideElClass(currentSlideNo, 'current');
+          changeSlideElClass(currentSlideNo + 1, 'future');
+          changeSlideElClass(currentSlideNo + 2, 'far-future');                
+        };
+        
+        var nextSlide = function() {
+          if (currentSlideNo < slides.length) {
+            currentSlideNo++;
+          }
+          
+          updateSlideClasses();
+        };
+        
+        var prevSlide = function() {
+          if (currentSlideNo > 1) {
+            currentSlideNo--;
+          }
+          updateSlideClasses();
+        };
+        
+        var showNotes = function() {
+          var notes = document.querySelectorAll('.notes');
+          for (var i = 0, len = notes.length; i < len; i++) {
+            notes[i].style.display = (notesOn) ? 'none':'block';
+          }
+          notesOn = (notesOn) ? false:true;
+        };
+
+        var switch3D = function() {
+          if (document.body.className.indexOf('three-d') == -1) {
+            document.getElementsByClassName('presentation')[0].style.webkitPerspective = '1000px';
+            document.body.className += ' three-d';
+          } else {
+            window.setTimeout("document.getElementsByClassName('presentation')[0].style.webkitPerspective = '0';", 2000);
+            document.body.className = document.body.className.replace(/three-d/, '');
+          }
+        };
+
+        var handleBodyKeyDown = function(event) {
+           //console.log(event.keyCode);
+          switch (event.keyCode) {
+            case 37: // left arrow
+              prevSlide();
+              break;
+            case 39: // right arrow
+            // case 32: // space
+              nextSlide();
+              break;
+            case 50: // 2
+              showNotes();          
+              break;
+            case 51: // 3
+              //switch3D();          
+              break;
+          }
+        };
+
+        var addTouchListeners = function() {
+          document.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].pageX;
+          }, false);
+          document.addEventListener('touchend', function(e) {
+            var pixelsMoved = touchStartX - e.changedTouches[0].pageX;
+            var SWIPE_SIZE = 150;
+            if (pixelsMoved > SWIPE_SIZE) {
+              nextSlide();
+            }
+            else if (pixelsMoved < -SWIPE_SIZE) {
+             prevSlide();
+            }
+          }, false);
+        };
+
+        // initialize
+
+        (function() {
+          if (window.location.hash != "") {
+            currentSlideNo = Number(window.location.hash.replace('#slide', ''));
+          } else {
+            currentSlideNo = 1;
+          }
+   
+          document.addEventListener('keydown', handleBodyKeyDown, false);
+   
+          var els = slides;
+          for (var i = 0, el; el = els[i]; i++) {
+            addClass(el, 'slide far-future');
+          }
+          updateSlideClasses(); 
+
+          // add support for finger events (filter it by property detection?)
+          addTouchListeners();
+        })();
+      })();
+    </script>
+
+    <!--[if IE]>
+		<script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script> 
+		<script>CFInstall.check({ mode: "overlay" });</script> 
+    <![endif]--> 
+</body>
+</html>

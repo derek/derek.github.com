@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>
+Derek's WCQ projector - Java version
+</TITLE>
+</HEAD>
+<BODY>
+<BR>
+<APPLET
+  CODEBASE = "Java Classes"
+  CODE     = "WCQ.class"
+  NAME     = "WCQ applet"
+  WIDTH    = 900
+  HEIGHT   = 390
+  HSPACE   = 0
+  VSPACE   = 0
+  ALIGN    = middle
+>
+</APPLET>
+<p>Like this? Also see my MLS Season Projector <a href="http://people.ku.edu/~dgath/MLS%20Java/MLS.html">here</a></p>
+<p style="line-height: 0%">In this Java version, I made it so you can put in
+your own skill levels and amount of home field advantage each team has.</p>
+<p style="line-height: 0%">You might ask if the skill and advantage levels are
+on a 1-10 scale or a 1-20 scale or whatever, but actually they aren't on any
+scale.&nbsp;</p>
+<p style="line-height: 0%">They are just relative to each other, meaning that if
+you think the US is twice as good as Mexico (which we all know they are), the
+skill levels could be set at</p>
+<p style="line-height: 0%" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+US skill - 10</p>
+<p style="line-height: 0%" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Mexico skill - 5</p>
+<p style="line-height: 0%" align="left">or it could even be</p>
+<p style="line-height: 0%" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+US skill - 84</p>
+<p style="line-height: 0%" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Mexico skill - 42</p>
+<p style="line-height: 0%" align="left">But then keep in mind that if you put
+the levels that high, then you'll have to raise every one else's as well.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">And the home field advantage works just
+by adding on whatever # is in the Home Field Advantage box onto the teams skill,
+but only when they play at home.</p>
+<p style="line-height: 0%" align="left">So you can look at it like Mexico's
+skill might be 10 when they play on the road, but with the home field advantage
+factor when they play at home,</p>
+<p style="line-height: 0%" align="left">they play like they are a team of a
+skill level of 15 if their advtantage # is 5.</p>
+<p style="line-height: 0%" align="left">Got it?</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">And I have entered in the real results
+of the games already played, so you can choose to use those or not by checking
+or un-checking the box.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">And for all you geeks out there who want
+to know how this works? It's not too complicated. All the program does is use
+odds, and a&nbsp;</p>
+<p style="line-height: 0%" align="left">random number to spit out the
+results.&nbsp;</p>
+<p style="line-height: 0%" align="left">- For each game, the program generates a
+total number which is based off of&nbsp;</p>
+<p style="line-height: 0%" align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TOTAL = (HOME_TEAM_SKILL + HOME_TEAM_ADVANTAGE + AWAY_TEAM_SKILL + TIE_CHANCE)</b></p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">- And tieChance is equal to&nbsp;</p>
+<p style="line-height: 0%" align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(HOME_TEAM_SKILL + HOME_TEAM_ADVANTAGE + AWAY_TEAM_SKILL) / 5</b></p>
+<p style="line-height: 0%" align="left">That takes in account that there is a
+1/5 chance the game will end in a tie. That's the number I came up with from
+looking at previous WCQ games.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">- Then a random number is generated
+who's minimum is 1 and maximum is TOTAL.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">- If the number is less than&nbsp;</p>
+<p style="line-height: 0%" align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(HOME_TEAM_SKILL + HOME_TEAM_ADVANTAGE)</b></p>
+<p style="line-height: 0%" align="left">the home team wins.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">- If the number is greater than&nbsp;</p>
+<p style="line-height: 0%" align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(HOME_TEAM_SKILL + HOME_TEAM_ADVANTAGE)&nbsp;</b></p>
+<p style="line-height: 0%" align="left">and less than&nbsp;</p>
+<p style="line-height: 0%" align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(HOME_TEAM_SKILL + HOME_TEAM_ADVANTAGE + AWAY_TEAM_SKILL)</b></p>
+<p style="line-height: 0%" align="left">then the away team wins</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">- And if the number is anything other
+than than it's a tie.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">For example we'll take US @ Mexico.</p>
+<p style="line-height: 0%" align="left">US Skill = 8</p>
+<p style="line-height: 0%" align="left">Mexico Skill = 9</p>
+<p style="line-height: 0%" align="left">Mexico home advantage = 15</p>
+<p style="line-height: 0%" align="left">TieChance&nbsp; = 6</p>
+<p style="line-height: 0%" align="left"><b>So the total number is 38</b></p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="left">Mexico wins if the random number is in
+between 0 and 24</p>
+<p style="line-height: 0%" align="left">US Wins if the random number is in
+between 25 and 32</p>
+<p style="line-height: 0%" align="left">It's a Tie if the random number is in
+between 33 and 38</p>
+<p style="line-height: 0%" align="left">So it's breaks down to Mexico having a
+64% chance at winning, US having a 20% chance, and a tie having a 16% chance at
+happening.</p>
+<p style="line-height: 0%" align="left">&nbsp;</p>
+<p style="line-height: 0%" align="center"><b>Created by Derek Gathright</b></p>
+<p style="line-height: 0%" align="center"><b><a href="mailto:Lucid16@yahoo.com">Lucid16@yahoo.com</a></b></p>
+
+<!-- Start of TheCounter.com Code -->
+<SCRIPT TYPE="text/javascript" LANGUAGE="javascript">
+s="na";c="na";j="na";f=""+escape(document.referrer)
+</SCRIPT>
+<SCRIPT TYPE="text/javascript" LANGUAGE="javascript1.2">
+s=screen.width;v=navigator.appName
+if (v != "Netscape") {c=screen.colorDepth}
+else {c=screen.pixelDepth}
+j=navigator.javaEnabled()
+</SCRIPT>
+<SCRIPT TYPE="text/javascript" LANGUAGE="javascript">
+function pr(n) {document.write(n,"\n");}
+NS2Ch=0
+if (navigator.appName == "Netscape" &&
+navigator.appVersion.charAt(0) == "2") {NS2Ch=1}
+if (NS2Ch == 0) {
+r="&size="+s+"&colors="+c+"&referer="+f+"&java="+j+""
+pr("<A HREF=\"http://www.TheCounter.com\" TARGET=\"_top\"><IMG"+
+" BORDER=0 SRC=\"http://c3.thecounter.com/id=2299642"+r+"\"><\/A>")}
+</SCRIPT>
+<NOSCRIPT><A HREF="http://www.TheCounter.com" TARGET="_top"><IMG
+SRC="http://c3.thecounter.com/id=2299642" ALT="TC" BORDER=0></A>
+</NOSCRIPT>
+<!-- End of TheCounter.com Code -->
+
+</BODY>
+</HTML>
