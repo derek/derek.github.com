@@ -41,7 +41,7 @@
                 });
             });
 
-            YUI().use("node", "yql", function(Y) {
+            YUI().use("node", "jsonp-url", function(Y) {
                 new Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
                     var html = [];
                     
