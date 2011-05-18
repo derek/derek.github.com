@@ -45,8 +45,9 @@
                 new Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
                     var html = [];
                     
+                    response.repositories.reverse();
                     Y.each(response.repositories, function(repo) {
-                        html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + "</li>");
+                        html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + " (" + repo.created_at.split(" ")[0] + ")</li>");
                     });
 
                     Y.one("#repositories").set("innerHTML", html.join(""));
