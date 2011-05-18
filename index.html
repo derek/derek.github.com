@@ -32,18 +32,20 @@
             YUI().use("node", "jsonp-url", function(Y) {
                 Y.jsonp("https://gist.github.com/api/v1/json/gists/derek", function(response) {
                     var html = [];
+                    
                     Y.each(response.gists, function(gist) {
                         html.push("<li><a href='https://gist.github.com/" + gist.repo + "'>" + gist.description + "</a> (" + gist.created_at.split(" ")[0] + ")</li>");
                     })
+                    
                     Y.one("#gists").set("innerHTML", html.join(""));
                 });
             });
 
             YUI().use("node", "yql", function(Y) {
-                new Y.YQL("select repository from github.user.repos where id='derek' | reverse()", function (response) {
+                new Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
                     var html = [];
-                    Y.each(response.query.results.repositories, function(repo) {
-                        repo = repo.repository;
+                    
+                    Y.each(response.repositories, function(repo) {
                         html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + "</li>");
                     });
 
@@ -54,6 +56,7 @@
             YUI().use("node", "yql", function(Y) {
                 new Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function(response) {
                     var html = [];
+                    
                     Y.each(response.query.results.div, function(parsed) {
                         var fiddle = {
                             url: "http://jsfiddle.net" + parsed.a.href,
@@ -63,6 +66,7 @@
                         }
                         html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
                     })
+                    
                     Y.one("#fiddles").set("innerHTML", html.join(""));
                 });
             });
