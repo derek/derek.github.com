@@ -21,55 +21,56 @@
         <h2>Github Repositories</h2>
         <ul id="repositories"></ul>
         
+        <h2>Gists</h2>
+        <ul id="gists"></ul>
+        
         <h2>jsFiddles</h2>
         <ul id="fiddles"></ul>
-		
+        
+        <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js" charset="utf-8"></script>
 		<script>
-		
-		
-		
-		function executeYQL(yql, callbackFuncName) {
-			timerStart = +new Date();
-			var url = "http://query.yahooapis.com/v1/public/yql?q=" + encodeURIComponent(yql) + "&env=store://datatables.org/alltableswithkeys&format=json&callback="+callbackFuncName + "&cacheBuster=" + (+new Date());
-			var head = document.getElementsByTagName('head')[0];
-			var script = document.createElement('script');
-			script.type = 'text/javascript';
-			script.src = url;
-			head.appendChild(script);
-		}
-		
-		executeYQL("select repository from github.user.repos where id='derek' | reverse()", "repositoryCallback");
-		executeYQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', "fiddleCallback");
-		
-		function repositoryCallback(data) {
-			var repositories = data.query.results.repositories,
-			    html = [];
-			
-			for(i in repositories) { 
-				var repo = repositories[i].repository;
-				html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + "</li>");
-			}
-			
-			document.getElementById("repositories").innerHTML = html.join('');
-		}
-		
-        function fiddleCallback(response) {
-            var fiddles = response.query.results.div,
-                html = [];
-            for (var i = 0; i < fiddles.length; i++) {
-                var parsed = response.query.results.div[i];
-                console.log(parsed);
-                var fiddle = {
-                    url: "http://jsfiddle.net" + parsed.a.href,
-                    title: parsed.a.title,
-                    description: parsed.div.p,
-                    dateCreated: parsed.span.content.split(",")[1].trim()
-                }
-                html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
-            }
-            document.getElementById("fiddles").innerHTML = html.join('');
-        }
-		
+            YUI().use("node", "jsonp-url", function(Y) {
+                Y.jsonp("https://gist.github.com/api/v1/json/gists/derek", function handleJSONP(response) {
+                    var html = []
+                    Y.each(response.gists, function(gist){
+                        html.push("<li><a href='https://gist.github.com/" + gist.repo + "'>" + gist.description + "</a> (" + gist.created_at.split(" ")[0] + ")</li>");
+                    })
+                    Y.one("#gists").set("innerHTML", html.join(""));
+                });
+            });
+		    
+            YUI().use("node", "yql", function(Y) {
+                new Y.YQL("select repository from github.user.repos where id='derek' | reverse()", function handleJSONP(response) {
+                    var repositories = response.query.results.repositories,
+                        html = [];
+
+                    for(i in repositories) { 
+                        var repo = repositories[i].repository;
+                        html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + "</li>");
+                    }
+
+                    Y.one("#repositories").set("innerHTML", html.join(""));
+                });
+            });
+            
+            YUI().use("node", "yql", function(Y) {
+                new Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function handleJSONP(response) {
+                    var fiddles = response.query.results.div,
+                        html = [];
+                    for (var i = 0; i < fiddles.length; i++) {
+                        var parsed = response.query.results.div[i];
+                        var fiddle = {
+                            url: "http://jsfiddle.net" + parsed.a.href,
+                            title: parsed.a.title,
+                            description: parsed.div.p,
+                            dateCreated: parsed.span.content.split(",")[1].trim()
+                        }
+                        html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
+                    }
+                    Y.one("#fiddles").set("innerHTML", html.join(""));
+                });
+            });
+            
 		</script>
 	</body>
 <html>
