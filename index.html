@@ -17,9 +17,12 @@
             <li>"Select * From Internet: Yahoo Query Language" (Apr 21st, 2010 @ Yahoo! Center in Santa Monica, CA) - <a href="http://www.slideshare.net/drgath/yahoo-query-language-select-from-internet">Slideshare.net</a></li>            
             <li>"jQuery: JavaScript that Doesn't Suck" (Aug 8th, 2009 @ preDevCamp: Kansas City) - <a href="http://www.derekgathright.com/talks/20090808_pdc_jquery.pdf">PDF</a></li>
 		</ul>
-		
-		<h2>Github Repositories</h2>
-		<ul id="repositories"></ul>
+        
+        <h2>Github Repositories</h2>
+        <ul id="repositories"></ul>
+        
+        <h2>jsFiddles</h2>
+        <ul id="fiddles"></ul>
 		
 		<script>
 		
@@ -36,10 +39,11 @@
 		}
 		
 		executeYQL("select repository from github.user.repos where id='derek' | reverse()", "repositoryCallback");
+		executeYQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', "fiddleCallback");
 		
 		function repositoryCallback(data) {
-			var repositories = data.query.results.repositories;
-			var html = [];
+			var repositories = data.query.results.repositories,
+			    html = [];
 			
 			for(i in repositories) { 
 				var repo = repositories[i].repository;
@@ -48,6 +52,23 @@
 			
 			document.getElementById("repositories").innerHTML = html.join('');
 		}
+		
+        function fiddleCallback(response) {
+            var fiddles = response.query.results.div,
+                html = [];
+            for (var i = 0; i < fiddles.length; i++) {
+                var parsed = response.query.results.div[i];
+                console.log(parsed);
+                var fiddle = {
+                    url: "http://jsfiddle.net" + parsed.a.href,
+                    title: parsed.a.title,
+                    description: parsed.div.p,
+                    dateCreated: parsed.span.content.split(",")[1].trim()
+                }
+                html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
+            }
+            document.getElementById("fiddles").innerHTML = html.join('');
+        }
 		
 		</script>
 	</body>
