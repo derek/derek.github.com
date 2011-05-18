@@ -1,64 +1,60 @@
 <html>
-	<body>
-		<h1>Derek Gathright</h1>
-		
-		<h2>Connect</h2>
-		<ul>
-			<li><a href="http://derek.io/">derek.io</a></li>
-			<li><a href="http://twitter.com/derek">twitter.com/derek</a></li>
-			<li><a href="http://github.com/drgath">github.com/derek</li>
-			<li><a href="mailto://drgath@gmail.com">drgath@gmail.com</a></li>
-		</ul>
-		
-		<h2>Talks</h2>
-		<ul>
+    <body>
+        <h1>Derek Gathright</h1>
+
+        <h2>Connect</h2>
+        <ul>
+            <li><a href="http://derek.io/">derek.io</a></li>
+            <li><a href="http://twitter.com/derek">twitter.com/derek</a></li>
+            <li><a href="http://github.com/drgath">github.com/derek</li>
+            <li><a href="mailto://drgath@gmail.com">drgath@gmail.com</a></li>
+        </ul>
+
+        <h2>Talks</h2>
+        <ul>
             <li>"Select * From Internet: Yahoo Query Language" (Oct 12th, 2010 @ SoCal.js meetup in Pasadena, CA) - <a href="talks/20101011_SoCaljs/index.html">HTML slides</a></li>
             <li>"Select * From Internet: Yahoo Query Language" (May 5th, 2010 @ Music Hackday in San Francisco) - <a href="talks/20100515_MusicHackday/index.html">HTML slides</a></li>
             <li>"Select * From Internet: Yahoo Query Language" (Apr 21st, 2010 @ Yahoo! Center in Santa Monica, CA) - <a href="http://www.slideshare.net/drgath/yahoo-query-language-select-from-internet">Slideshare.net</a></li>            
             <li>"jQuery: JavaScript that Doesn't Suck" (Aug 8th, 2009 @ preDevCamp: Kansas City) - <a href="http://www.derekgathright.com/talks/20090808_pdc_jquery.pdf">PDF</a></li>
-		</ul>
-        
+        </ul>
+
         <h2>Github Repositories</h2>
         <ul id="repositories"></ul>
-        
+
         <h2>Gists</h2>
         <ul id="gists"></ul>
-        
+
         <h2>jsFiddles</h2>
         <ul id="fiddles"></ul>
         
         <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js" charset="utf-8"></script>
 		<script>
             YUI().use("node", "jsonp-url", function(Y) {
-                Y.jsonp("https://gist.github.com/api/v1/json/gists/derek", function handleJSONP(response) {
-                    var html = []
-                    Y.each(response.gists, function(gist){
+                Y.jsonp("https://gist.github.com/api/v1/json/gists/derek", function(response) {
+                    var html = [];
+                    Y.each(response.gists, function(gist) {
                         html.push("<li><a href='https://gist.github.com/" + gist.repo + "'>" + gist.description + "</a> (" + gist.created_at.split(" ")[0] + ")</li>");
                     })
                     Y.one("#gists").set("innerHTML", html.join(""));
                 });
             });
-		    
-            YUI().use("node", "yql", function(Y) {
-                new Y.YQL("select repository from github.user.repos where id='derek' | reverse()", function handleJSONP(response) {
-                    var repositories = response.query.results.repositories,
-                        html = [];
 
-                    for(i in repositories) { 
-                        var repo = repositories[i].repository;
+            YUI().use("node", "yql", function(Y) {
+                new Y.YQL("select repository from github.user.repos where id='derek' | reverse()", function (response) {
+                    var html = [];
+                    Y.each(response.query.results.repositories, function(repo) {
+                        repo = repo.repository;
                         html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + "</li>");
-                    }
+                    });
 
                     Y.one("#repositories").set("innerHTML", html.join(""));
                 });
             });
-            
+
             YUI().use("node", "yql", function(Y) {
-                new Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function handleJSONP(response) {
-                    var fiddles = response.query.results.div,
-                        html = [];
-                    for (var i = 0; i < fiddles.length; i++) {
-                        var parsed = response.query.results.div[i];
+                new Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function(response) {
+                    var html = [];
+                    Y.each(response.query.results.div, function(parsed) {
                         var fiddle = {
                             url: "http://jsfiddle.net" + parsed.a.href,
                             title: parsed.a.title,
@@ -66,11 +62,11 @@
                             dateCreated: parsed.span.content.split(",")[1].trim()
                         }
                         html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
-                    }
+                    })
                     Y.one("#fiddles").set("innerHTML", html.join(""));
                 });
             });
-            
+
 		</script>
 	</body>
 <html>
