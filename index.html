@@ -33,9 +33,10 @@
         <div id="fiddles"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
         
         <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js" charset="utf-8"></script>
-		<script>
-            YUI().use("node", "jsonp-url", function(Y) {
-                Y.jsonp("https://gist.github.com/api/v1/json/gists/derek", function(response) {
+        <script>
+        
+            YUI().use("node", "jsonp", "yql", function(Y) {
+                Y.jsonp("https://gist.github.com/api/v1/json/gists/derek?callback={callback}", function(response) {
                     var html = [];
                     html.push("<ul>");
                     Y.each(response.gists, function(gist) {
@@ -44,12 +45,11 @@
                     html.push("</ul>");
                     Y.one("#gists").set("innerHTML", html.join(""));
                 });
-            });
-
-            YUI().use("node", "jsonp-url", function(Y) {
+                
+                
                 Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
                     var html = [];
-                    
+
                     response.repositories.reverse();
                     html.push("<ul>");
                     Y.each(response.repositories, function(repo) {
@@ -59,12 +59,11 @@
 
                     Y.one("#repositories").set("innerHTML", html.join(""));
                 });
-            });
 
-            YUI().use("node", "yql", function(Y) {
+
                 Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function(response) {
                     var html = [];
-                    
+
                     html.push("<ul>");
                     Y.each(response.query.results.div, function(parsed) {
                         var fiddle = {
@@ -76,11 +75,10 @@
                         html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
                     })
                     html.push("</ul>");
-                    
+
                     Y.one("#fiddles").set("innerHTML", html.join(""));
                 });
             });
-
-		</script>
+        </script>
 	</body>
 <html>
