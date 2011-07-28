@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
+    	<link href="https://raw.github.com/derek/yui3-gallery/master/src/gallerycss-button/css/cssbutton.css" type="text/css" rel="stylesheet" />
+        
+        <script src="http://yui.yahooapis.com/3.4.0pr2/build/yui/yui-min.js"></script>
+        
+        <style>
+        
+            body {
+                font-family: "Gill Sans", sans-serif;
+                padding:20px;
+            }
+            
+            h1 { font-weight:bold; text-align:center; font-size:26px;}
+            h2 { font-size:18px;}
+            
+            .yui3-button { margin:10px; }
+            .yui3-button.small { font-size:77%; }
+            .yui3-button.medium { font-size:100%; }
+            .yui3-button.large { font-size:138.5%; }
+            
+        </style>
+    </head>
+    
+    <body class="yui3-skin-sam">
+        <h1>gallerycss-button decorator example</h1>
+        
+        <hr />
+        
+        <h2>Options</h2>
+        <div>
+            <span>Skin</span>
+            <div class="yui3-button yui3-button-selected" id="skin-sam">Sam</div>
+            <div class="yui3-button" id="skin-night">Night</div>
+        </div>
+        
+        <div>
+            <span>State</span>
+            <div class="yui3-button yui3-button-selected" id="state-unselected">Unselected</div>
+            <div class="yui3-button" id="state-selected">Selected</div>
+            <div class="yui3-button" id="state-disabled">Disabled</div>
+        </div>
+        
+        <div>
+            <span>Type</span>
+            <div class="yui3-button yui3-button-selected" id="type-push">Push</div>
+            <div class="yui3-button" id="type-back">Back</div>
+        </div>
+        
+        <hr />
+        
+        <div id="examples">
+            <div>
+                <h2>HTML Elements</h2>
+                <div class="yui3-button">&lt;div&gt;</div>
+                <a class="yui3-button">&lt;a&gt;</a>
+                <button class="yui3-button">&lt;button&gt;</button>
+                <input type="submit" class="yui3-button" value="&lt;input type='submit'&gt;"></input>
+            </div>
+
+            <div>
+                <h2>Font Sizes</h2>
+                <div class="yui3-button large">large (138.5%)</div>
+                <div class="yui3-button medium">medium (100%)</div>
+                <div class="yui3-button small">small (77%)</div>
+            </div>
+
+            <div>
+                <h2>Icons</h2>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-bold"></span><span class="yui-button-label">bold</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-italic"></span><span class="yui-button-label">italic</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-underline"></span><span class="yui-button-label">underline</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-strikethrough"></span><span class="yui-button-label">strikethrough</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-superscript"></span><span class="yui-button-label">superscript</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-subscript"></span><span class="yui-button-label">subscript</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-backcolor"></span><span class="yui-button-label">backcolor</span></div>
+                <!-- missing -->
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-justifyleft"></span><span class="yui-button-label">justifyleft</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-justifycenter"></span><span class="yui-button-label">justifycenter</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-justifyright"></span><span class="yui-button-label">justifyright</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-justifyfull"></span><span class="yui-button-label">justifyfull</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-unorderedlist"></span><span class="yui-button-label">unordered list</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-orderedlist"></span><span class="yui-button-label">ordered list</span></div>
+                <!-- missing -->
+                <!-- missing -->
+                <!-- missing -->
+                <!-- missing -->
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-unindent"></span><span class="yui-button-label">unindent</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-indent"></span><span class="yui-button-label">indent</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-insertimage"></span><span class="yui-button-label">insert image</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-createlink"></span><span class="yui-button-label">create link</span></div>
+                <!-- missing -->
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-inline"></span><span class="yui-button-label">inline</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-block"></span><span class="yui-button-label">block</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-floatright"></span><span class="yui-button-label">right</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-floatleft"></span><span class="yui-button-label">left</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-smiley"></span><span class="yui-button-label">smiley</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-hiddenelements"></span><span class="yui-button-label">hidden characters</span></div>
+                <div class="yui3-button"><span class="yui3-button-icon yui3-button-icon-removeformat"></span><span class="yui-button-label">remove format</span></div>
+                <!-- missing -->
+                <!-- missing -->
+                <!-- missing -->
+                <!-- missing -->
+                <!-- missing -->
+                <!-- missing -->
+            </div>
+        </div>
+        
+        <script>
+            YUI({combine:false, filter:'raw'}).use('node', function (Y) {
+                
+                Y.one('#skin-sam').on('click', function (evt) {
+                    Y.one('#skin-sam').addClass("yui3-button-selected");
+                    Y.one('#skin-night').removeClass("yui3-button-selected");
+                    Y.one("body").addClass("yui3-skin-sam").removeClass("yui3-skin-night");
+                });
+                
+                Y.one('#skin-night').on('click', function (evt) {
+                    Y.one('#skin-night').addClass("yui3-button-selected");
+                    Y.one('#skin-sam').removeClass("yui3-button-selected");
+                    Y.one("body").addClass("yui3-skin-night").removeClass("yui3-skin-sam");
+                });
+
+                Y.one('#state-unselected').on('click', function (evt) {
+                    Y.one('#state-unselected').addClass("yui3-button-selected");
+                    Y.one('#state-selected').removeClass("yui3-button-selected");
+                    Y.one('#state-disabled').removeClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').removeClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').removeClass("yui3-button-disabled");
+                });
+
+                Y.one('#state-selected').on('click', function (evt) {
+                    Y.one('#state-unselected').removeClass("yui3-button-selected");
+                    Y.one('#state-selected').addClass("yui3-button-selected");
+                    Y.one('#state-disabled').removeClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').addClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').removeClass("yui3-button-disabled");
+                });
+
+                Y.one('#state-disabled').on('click', function (evt) {
+                    Y.one('#state-unselected').removeClass("yui3-button-selected");
+                    Y.one('#state-selected').removeClass("yui3-button-selected");
+                    Y.one('#state-disabled').addClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').removeClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').addClass("yui3-button-disabled");
+                });
+
+                 Y.one('#type-push').on('click', function (evt) {
+                    Y.one('#type-push').addClass("yui3-button-selected");
+                    Y.one('#type-back').removeClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').removeClass("yui3-button-back");
+                });
+
+                 Y.one('#type-back').on('click', function (evt) {
+                    Y.one('#type-push').removeClass("yui3-button-selected");
+                    Y.one('#type-back').addClass("yui3-button-selected");
+                    Y.all('#examples .yui3-button').addClass("yui3-button-back");
+                });
+                
+            });
+        </script>
+    </body>
+</html>
