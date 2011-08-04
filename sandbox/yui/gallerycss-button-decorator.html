@@ -2,32 +2,28 @@
 <html>
 
     <head>
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
-    	<link href="https://raw.github.com/derek/yui3-gallery/master/src/gallerycss-button/css/cssbutton.css" type="text/css" rel="stylesheet" />
-        
-        <script src="http://yui.yahooapis.com/3.4.0pr2/build/yui/yui-min.js"></script>
-        
-        <style>
-        
-            body {
-                font-family: "Gill Sans", sans-serif;
-                padding:20px;
-            }
-            
-            h1 { font-weight:bold; text-align:center; font-size:26px;}
-            h2 { font-size:18px;}
-            
-            .yui3-button { margin:10px; }
-            .yui3-button.small { font-size:77%; }
-            .yui3-button.medium { font-size:100%; }
-            .yui3-button.large { font-size:138.5%; }
-            
-        </style>
+    	<link href="http://yui.yahooapis.com/gallery-2011.08.04-15-16/build/gallerycss-cssbutton/gallerycss-cssbutton.css" type="text/css" rel="stylesheet" />
+      <script src="http://yui.yahooapis.com/3.4.0pr2/build/yui/yui-min.js"></script>
+      <style>
+      
+          body {
+              font-family: "Gill Sans", sans-serif;
+              padding:20px;
+          }
+          
+          h1 { font-weight:bold; text-align:center; font-size:26px;}
+          h2 { font-size:18px;}
+          
+          .yui3-button { margin:10px; }
+          .yui3-button.small { font-size:77%; }
+          .yui3-button.medium { font-size:100%; }
+          .yui3-button.large { font-size:138.5%; }
+          
+      </style>
     </head>
     
     <body class="yui3-skin-sam">
-        <h1>gallerycss-button decorator example</h1>
+        <h1>Example: gallerycss-cssbutton decorator</h1>
         
         <hr />
         
@@ -111,7 +107,7 @@
         </div>
         
         <script>
-            YUI({combine:false, filter:'raw'}).use('node', function (Y) {
+            YUI().use('node', function (Y) {
                 
                 Y.one('#skin-sam').on('click', function (evt) {
                     Y.one('#skin-sam').addClass("yui3-button-selected");
