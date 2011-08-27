@@ -1483,4 +1483,4 @@ var REGEXP_PRECEDER_PATTERN = '(?:^^\\.?|[+-]|[!=]=?=?|\\#|%=?|&&?=?|\\(|\\*=?|[
 })();
 
 
-}, '@VERSION@' );
+}, '@VERSION@' ,{skinnable:true});
