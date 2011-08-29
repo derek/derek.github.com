@@ -3,13 +3,12 @@
 
     <head>
       
+      <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
+      
       <!-- reset the default browser styles -->
-      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
-      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
-    	
-    	<!-- Include some happies -->
-    	<link href="http://yui.yahooapis.com/gallery-2011.08.04-15-16/build/gallerycss-cssbutton/gallerycss-cssbutton.css" type="text/css" rel="stylesheet" />
-      <script src="http://yui.yahooapis.com/3.4.0pr2/build/yui/yui-min.js"></script>
+      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.0/build/cssreset/reset-min.css">
+      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.0/build/cssfonts/fonts-min.css">
+    	<link href="cssbutton.css" type="text/css" rel="stylesheet" />
       
       <style>
       
@@ -25,25 +24,6 @@
           .yui3-button.small { font-size:77%; }
           .yui3-button.medium { font-size:100%; }
           .yui3-button.large { font-size:138.5%; }
-          
-          .yui3-skin-sam .yui3-button:active {
-              background: -moz-linear-gradient(
-                  0% 100% 90deg, 
-                  #e8f2ff 0%,
-                  #dfedff 50%,
-                  #bfdaff 100%
-              );
-              background: -webkit-gradient(
-                  linear,
-                  left bottom,
-                  left top,
-                  from(#e8f2ff),
-                  color-stop(0.5, #dfedff),
-                  to(#bfdaff)     
-              );
-              background-color: #d7e8ff;
-              border-color: #7d98b8;
-          }
           
       </style>
       
@@ -68,12 +48,12 @@
             <div class="yui3-button" id="state-disabled">Disabled</div>
         </div>
         
-        <div>
+       <!-- <div>
             <span>Type</span>
             <div class="yui3-button yui3-button-selected" id="type-push">Push</div>
             <div class="yui3-button" id="type-back">Back</div>
         </div>
-        
+        -->
         <hr />
         
         <div id="examples">

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+      
+      <!-- reset the default browser styles -->
+      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssfonts/fonts-min.css">
+      
+      <style>
+      
+          body {
+              font-family: "Gill Sans", sans-serif;
+              padding:20px;
+          }
+          
+          h1 { font-weight:bold; text-align:center; font-size:26px;}
+          h2 { font-size:18px;}
+          
+          .yui3-button { margin:10px; }
+          .yui3-button.small { font-size:77%; }
+          .yui3-button.medium { font-size:100%; }
+          .yui3-button.large { font-size:138.5%; }
+          
+          .yui3-skin-sam .yui3-button:active {
+              background: -moz-linear-gradient(
+                  0% 100% 90deg, 
+                  #e8f2ff 0%,
+                  #dfedff 50%,
+                  #bfdaff 100%
+              );
+              background: -webkit-gradient(
+                  linear,
+                  left bottom,
+                  left top,
+                  from(#e8f2ff),
+                  color-stop(0.5, #dfedff),
+                  to(#bfdaff)     
+              );
+              background-color: #d7e8ff;
+              border-color: #7d98b8;
+          }
+          
+      </style>
+      
+      <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
+
+      <script>
+        YUI().use('gallerycss-cssbutton');
+      </script>
+    </head>
+    
+    <body class="yui3-skin-sam">
+        <h1>Example: gallerycss-cssbutton decorator (via Loader)</h1>
+        
+        <hr />
+        
+        <div>
+            <div class="yui3-button yui3-button-selected" id="skin-sam">Button A</div>
+            <div class="yui3-button" id="skin-sam">Button B</div>
+        </div>
+    </body>
+</html>
