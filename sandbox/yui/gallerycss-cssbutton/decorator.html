@@ -2,30 +2,34 @@
 <html>
 
     <head>
-      
-      <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
-      
-      <!-- reset the default browser styles -->
-      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.0/build/cssreset/reset-min.css">
-      <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.0/build/cssfonts/fonts-min.css">
-    	<link href="cssbutton.css" type="text/css" rel="stylesheet" />
-      
-      <style>
-      
-          body {
-              font-family: "Gill Sans", sans-serif;
-              padding:20px;
-          }
-          
-          h1 { font-weight:bold; text-align:center; font-size:26px;}
-          h2 { font-size:18px;}
-          
-          .yui3-button { margin:10px; }
-          .yui3-button.small { font-size:77%; }
-          .yui3-button.medium { font-size:100%; }
-          .yui3-button.large { font-size:138.5%; }
-          
-      </style>
+        <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
+
+        <!-- reset the default browser styles -->
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.0/build/cssreset/reset-min.css">
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.0/build/cssfonts/fonts-min.css">
+        
+        <link href="cssbutton.css" type="text/css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width" />
+        <style>
+
+            body {
+                font-family: "Gill Sans", sans-serif;
+                padding:20px;
+            }
+
+            h1 { font-weight:bold; text-align:center; font-size:26px;}
+            h2 { font-size:18px;}
+
+            .yui3-button { margin:10px; }
+            .yui3-button.small { font-size:77%; }
+            .yui3-button.medium { font-size:100%; }
+            .yui3-button.large { font-size:138.5%; }
+
+            .yui3-skin-night {
+                background-color:black;
+                color:white;
+            }
+        </style>
       
     </head>
     
@@ -114,56 +118,56 @@
         </div>
         
         <script>
-            YUI().use('node', function (Y) {
+            YUI().use('node', 'event-touch', function (Y) {
                 
-                Y.one('#skin-sam').on('click', function (evt) {
-                    Y.one('#skin-sam').addClass("yui3-button-selected");
-                    Y.one('#skin-night').removeClass("yui3-button-selected");
-                    Y.one("body").addClass("yui3-skin-sam").removeClass("yui3-skin-night");
+                Y.all('.yui3-button').on(['touchstart' /* if applicable */, 'click'], function (e) {
+                    
+                    // Stop event propogation 
+                    e.halt();
+                    
+                    // What was clicked?
+                    var id = Y.Node(e.target).getAttribute('id');
+                    
+                    if (id === "skin-sam") {
+                        Y.one('#skin-sam').addClass("yui3-button-selected");
+                        Y.one('#skin-night').removeClass("yui3-button-selected");
+                        Y.one("body").addClass("yui3-skin-sam").removeClass("yui3-skin-night");
+                    }
+                    else if (id === "skin-night") {
+                        Y.one('#skin-night').addClass("yui3-button-selected");
+                        Y.one('#skin-sam').removeClass("yui3-button-selected");
+                        Y.one("body").addClass("yui3-skin-night").removeClass("yui3-skin-sam");
+                    }
+                    else if (id === "state-unselected") {
+                        Y.one('#state-unselected').addClass("yui3-button-selected");
+                        Y.one('#state-selected').removeClass("yui3-button-selected");
+                        Y.one('#state-disabled').removeClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button').removeClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button').removeClass("yui3-button-disabled");
+                    }
+                    else if (id === "state-selected") {
+                        Y.one('#state-unselected').removeClass("yui3-button-selected");
+                        Y.one('#state-selected').addClass("yui3-button-selected");
+                        Y.one('#state-disabled').removeClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button').addClass("yui3-button-selected").removeClass("yui3-button-disabled");
+                    }
+                    else if (id === "state-disabled") {
+                        Y.one('#state-unselected').removeClass("yui3-button-selected");
+                        Y.one('#state-selected').removeClass("yui3-button-selected");
+                        Y.one('#state-disabled').addClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button').removeClass("yui3-button-selected").addClass("yui3-button-disabled");
+                    }
+                    else if (id === "type-push") {
+                        Y.one('#type-push').addClass("yui3-button-selected");
+                        Y.one('#type-back').removeClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button').removeClass("yui3-button-back");
+                    }
+                    else if (id === "type-back") {
+                        Y.one('#type-push').removeClass("yui3-button-selected");
+                        Y.one('#type-back').addClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button').addClass("yui3-button-back");
+                    }
                 });
-                
-                Y.one('#skin-night').on('click', function (evt) {
-                    Y.one('#skin-night').addClass("yui3-button-selected");
-                    Y.one('#skin-sam').removeClass("yui3-button-selected");
-                    Y.one("body").addClass("yui3-skin-night").removeClass("yui3-skin-sam");
-                });
-
-                Y.one('#state-unselected').on('click', function (evt) {
-                    Y.one('#state-unselected').addClass("yui3-button-selected");
-                    Y.one('#state-selected').removeClass("yui3-button-selected");
-                    Y.one('#state-disabled').removeClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').removeClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').removeClass("yui3-button-disabled");
-                });
-
-                Y.one('#state-selected').on('click', function (evt) {
-                    Y.one('#state-unselected').removeClass("yui3-button-selected");
-                    Y.one('#state-selected').addClass("yui3-button-selected");
-                    Y.one('#state-disabled').removeClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').addClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').removeClass("yui3-button-disabled");
-                });
-
-                Y.one('#state-disabled').on('click', function (evt) {
-                    Y.one('#state-unselected').removeClass("yui3-button-selected");
-                    Y.one('#state-selected').removeClass("yui3-button-selected");
-                    Y.one('#state-disabled').addClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').removeClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').addClass("yui3-button-disabled");
-                });
-
-                /*Y.one('#type-push').on('click', function (evt) {
-                    Y.one('#type-push').addClass("yui3-button-selected");
-                    Y.one('#type-back').removeClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').removeClass("yui3-button-back");
-                });
-
-                 Y.one('#type-back').on('click', function (evt) {
-                    Y.one('#type-push').removeClass("yui3-button-selected");
-                    Y.one('#type-back').addClass("yui3-button-selected");
-                    Y.all('#examples .yui3-button').addClass("yui3-button-back");
-                });*/
-                
             });
         </script>
     </body>
