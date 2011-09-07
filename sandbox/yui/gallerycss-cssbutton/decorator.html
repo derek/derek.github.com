@@ -11,7 +11,9 @@
         <link href="cssbutton.css" type="text/css" rel="stylesheet" />
         <meta name="viewport" content="width=device-width" />
         <style>
-
+            html, body {
+                height: 100%;
+            }
             body {
                 font-family: "Gill Sans", sans-serif;
                 padding:20px;
@@ -28,6 +30,14 @@
             .yui3-skin-night {
                 background-color:black;
                 color:white;
+            }
+            
+            .yui3-skin-night, .yui3-skin-sam {
+                -webkit-transition: background-color 0.2s linear;
+                -moz-transition: background-color 0.2s linear;
+                -ms-transition: background-color 0.2s linear;
+                -o-transition: background-color 0.2s linear;
+                transition: background-color 0.2s linear;
             }
         </style>
       
