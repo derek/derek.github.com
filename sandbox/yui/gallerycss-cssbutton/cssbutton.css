@@ -1,6 +1,6 @@
 /***
 
-    For development convinience, this stylesheet uses Sass, or SCSS. http://sass-lang.com/
+    For development convinience, this stylesheet uses SCSS. http://sass-lang.com/
     
     Files:
     1) cssbutton.scss - The development stylesheet. Do -not- import this into your HTML document.
@@ -16,12 +16,6 @@
   -moz-background-clip: padding;
   background-clip: padding-box;
   background-repeat: repeat-x;
-  -moz-border-radius: 0.4em;
-  /* FF1-3.6 */
-  -webkit-border-radius: 0.4em;
-  /* Saf3-4, iOS 1-3.2, Android <1.6 */
-  border-radius: 0.4em;
-  /* Opera 10.5, IE9, Saf5, Chrome, FF4, iOS 4, Android 2.1+ */
   border: solid 1px;
   cursor: pointer;
   display: inline-block;
@@ -35,178 +29,212 @@
   position: relative;
   text-align: center;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-  -webkit-transition: background-position 0.1s linear;
-  /* Saf3.2+, Chrome */
-  -moz-transition: background-position 0.1s linear;
-  /* FF4+ */
-  -ms-transition: background-position 0.1s linear;
-  /* IE10? */
-  -o-transition: background-position 0.1s linear;
-  /* Opera 10.5+ */
-  transition: background-position 0.1s linear;
+  -webkit-user-drag: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  -webkit-user-drag: none; }
+  -moz-border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  border-radius: 0.4em;
+  -webkit-transition: background-position 0.1s linear, color 0.1s linear;
+  -moz-transition: background-position 0.1s linear, color 0.1s linear;
+  -ms-transition: background-position 0.1s linear, color 0.1s linear;
+  -o-transition: background-position 0.1s linear, color 0.1s linear;
+  transition: background-position 0.1s linear, color 0.1s linear;
+}
 
 .yui3-button:hover,
 .yui3-button-selected {
   border-style: solid;
   border-width: 1px;
-  -webkit-transition: background-position 0.1s linear;
-  /* Saf3.2+, Chrome */
-  -moz-transition: background-position 0.1s linear;
-  /* FF4+ */
-  -ms-transition: background-position 0.1s linear;
-  /* IE10? */
-  -o-transition: background-position 0.1s linear;
-  /* Opera 10.5+ */
-  transition: background-position 0.1s linear;
-  background-position: 0 -1em; }
+  background-position: 0 -1em;
+  -webkit-transition: background-position 0.1s linear, color 0.1s linear;
+  -moz-transition: background-position 0.1s linear, color 0.1s linear;
+  -ms-transition: background-position 0.1s linear, color 0.1s linear;
+  -o-transition: background-position 0.1s linear, color 0.1s linear;
+  transition: background-position 0.1s linear, color 0.1s linear;
+}
 
 .yui3-button-icon {
   background-repeat: no-repeat;
   display: inline-block;
   height: 20px;
   vertical-align: middle;
-  width: 20px; }
+  width: 20px;
+}
 
 .yui3-button-disabled {
-  cursor: default; }
+  cursor: default;
+}
 
 .yui3-button-disabled .yui3-button-icon {
   filter: alpha(opacity=30);
-  opacity: .3; }
+  opacity: .3;
+}
 
 .yui3-button:active,
 .yui3-button-selected {
   box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
-  /* Opera 10.5, IE9, FF4+, Chrome 10+ */
   -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
-  /* FF3.5 - 3.6 */
   -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
-  /* Saf3.0+, Chrome */ }
+}
 
 /***
     Icons
 ***/
 .yui3-button-icon-bold {
-  background-position: 0 0px; }
+  background-position: 0 0px;
+}
 
 .yui3-button-icon-italic {
-  background-position: 0 -36px; }
+  background-position: 0 -36px;
+}
 
 .yui3-button-icon-underline {
-  background-position: 0 -72px; }
+  background-position: 0 -72px;
+}
 
 .yui3-button-icon-strikethrough {
-  background-position: 0 -108px; }
+  background-position: 0 -108px;
+}
 
 .yui3-button-icon-superscript {
-  background-position: 0 -144px; }
+  background-position: 0 -144px;
+}
 
 .yui3-button-icon-subscript {
-  background-position: 0 -180px; }
+  background-position: 0 -180px;
+}
 
 .yui3-button-icon-forecolor {
-  background-position: 0 -216px; }
+  background-position: 0 -216px;
+}
 
 .yui3-button-icon-backcolor {
-  background-position: 0 -252px; }
+  background-position: 0 -252px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -288px; }
+  background-position: 0 -288px;
+}
 
 .yui3-button-icon-justifyleft {
-  background-position: 0 -324px; }
+  background-position: 0 -324px;
+}
 
 .yui3-button-icon-justifycenter {
-  background-position: 0 -360px; }
+  background-position: 0 -360px;
+}
 
 .yui3-button-icon-justifyright {
-  background-position: 0 -396px; }
+  background-position: 0 -396px;
+}
 
 .yui3-button-icon-justifyfull {
-  background-position: 0 -432px; }
+  background-position: 0 -432px;
+}
 
 .yui3-button-icon-unorderedlist {
-  background-position: 0 -468px; }
+  background-position: 0 -468px;
+}
 
 .yui3-button-icon-orderedlist {
-  background-position: 0 -504px; }
+  background-position: 0 -504px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -540px; }
+  background-position: 0 -540px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -576px; }
+  background-position: 0 -576px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -612px; }
+  background-position: 0 -612px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -648px; }
+  background-position: 0 -648px;
+}
 
 .yui3-button-icon-unindent {
-  background-position: 0 -684px; }
+  background-position: 0 -684px;
+}
 
 .yui3-button-icon-indent {
-  background-position: 0 -720px; }
+  background-position: 0 -720px;
+}
 
 .yui3-button-icon-insertimage {
-  background-position: 1px -756px; }
+  background-position: 1px -756px;
+}
 
 .yui3-button-icon-createlink {
-  background-position: 0 -792px; }
+  background-position: 0 -792px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -828px; }
+  background-position: 0 -828px;
+}
 
 .yui3-button-icon-block {
-  background-position: 0 -864px; }
+  background-position: 0 -864px;
+}
 
 .yui3-button-icon-inline {
-  background-position: 0 -900px; }
+  background-position: 0 -900px;
+}
 
 .yui3-button-icon-floatright {
-  background-position: 0 -936px; }
+  background-position: 0 -936px;
+}
 
 .yui3-button-icon-floatleft {
-  background-position: 0 -972px; }
+  background-position: 0 -972px;
+}
 
 .yui3-button-icon-smiley {
-  background-position: 0 -1008px; }
+  background-position: 0 -1008px;
+}
 
 .yui3-button-icon-hiddenelements {
-  background-position: 0 -1044px; }
+  background-position: 0 -1044px;
+}
 
 .yui3-button-icon-removeformat {
-  background-position: 0 -1080px; }
+  background-position: 0 -1080px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -1116px; }
+  background-position: 0 -1116px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -1152px; }
+  background-position: 0 -1152px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -1188px; }
+  background-position: 0 -1188px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -1224px; }
+  background-position: 0 -1224px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -1260px; }
+  background-position: 0 -1260px;
+}
 
 .yui3-button-icon-TBD {
-  background-position: 0 -1296px; }
+  background-position: 0 -1296px;
+}
 
 /***
     Skin: Sam
 ***/
 .yui3-skin-sam .yui3-button,
-.yui3-skin-sam .yui3-button-disabled,
-.yui3-skin-sam .yui3-button-disabled:hover {
+.yui3-skin-sam .yui3-button-disabled {
   border-color: #808080;
   color: #000;
   background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#d8d8da));
@@ -216,20 +244,22 @@
   background-image: -o-linear-gradient(top, white, #d8d8da);
   background-image: linear-gradient(top, white, #d8d8da);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#d8d8da');
-  background-color: #d8d8da; }
+  background-color: #d8d8da;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-blue {
+.yui3-skin-sam .yui3-button-color-blue {
   color: #fff;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#426fd9), to(#3153a2));
-  background-image: -webkit-linear-gradient(top, #426fd9, #3153a2);
-  background-image: -moz-linear-gradient(top, #426fd9, #3153a2);
-  background-image: -ms-linear-gradient(top, #426fd9, #3153a2);
-  background-image: -o-linear-gradient(top, #426fd9, #3153a2);
-  background-image: linear-gradient(top, #426fd9, #3153a2);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#426fd9', EndColorStr='#3153a2');
-  background-color: #3153a2; }
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#599bdc), to(#3476b7));
+  background-image: -webkit-linear-gradient(top, #599bdc, #3476b7);
+  background-image: -moz-linear-gradient(top, #599bdc, #3476b7);
+  background-image: -ms-linear-gradient(top, #599bdc, #3476b7);
+  background-image: -o-linear-gradient(top, #599bdc, #3476b7);
+  background-image: linear-gradient(top, #599bdc, #3476b7);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#599bdc', EndColorStr='#3476b7');
+  background-color: #3476b7;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-red {
+.yui3-skin-sam .yui3-button-color-red {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ee443e), to(#b2332e));
   background-image: -webkit-linear-gradient(top, #ee443e, #b2332e);
@@ -238,9 +268,10 @@
   background-image: -o-linear-gradient(top, #ee443e, #b2332e);
   background-image: linear-gradient(top, #ee443e, #b2332e);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee443e', EndColorStr='#b2332e');
-  background-color: #b2332e; }
+  background-color: #b2332e;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-green {
+.yui3-skin-sam .yui3-button-color-green {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#62c462), to(#499349));
   background-image: -webkit-linear-gradient(top, #62c462, #499349);
@@ -249,9 +280,10 @@
   background-image: -o-linear-gradient(top, #62c462, #499349);
   background-image: linear-gradient(top, #62c462, #499349);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#62c462', EndColorStr='#499349');
-  background-color: #499349; }
+  background-color: #499349;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-turquoise {
+.yui3-skin-sam .yui3-button-color-turquoise {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#5bc0de), to(#4490a6));
   background-image: -webkit-linear-gradient(top, #5bc0de, #4490a6);
@@ -260,9 +292,10 @@
   background-image: -o-linear-gradient(top, #5bc0de, #4490a6);
   background-image: linear-gradient(top, #5bc0de, #4490a6);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5bc0de', EndColorStr='#4490a6');
-  background-color: #4490a6; }
+  background-color: #4490a6;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-yellow {
+.yui3-skin-sam .yui3-button-color-yellow {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eee95f), to(#b2ae47));
   background-image: -webkit-linear-gradient(top, #eee95f, #b2ae47);
@@ -271,9 +304,10 @@
   background-image: -o-linear-gradient(top, #eee95f, #b2ae47);
   background-image: linear-gradient(top, #eee95f, #b2ae47);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eee95f', EndColorStr='#b2ae47');
-  background-color: #b2ae47; }
+  background-color: #b2ae47;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-orange {
+.yui3-skin-sam .yui3-button-color-orange {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eebd4c), to(#b28d39));
   background-image: -webkit-linear-gradient(top, #eebd4c, #b28d39);
@@ -282,20 +316,22 @@
   background-image: -o-linear-gradient(top, #eebd4c, #b28d39);
   background-image: linear-gradient(top, #eebd4c, #b28d39);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eebd4c', EndColorStr='#b28d39');
-  background-color: #b28d39; }
+  background-color: #b28d39;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-purple {
+.yui3-skin-sam .yui3-button-color-purple {
   color: #fff;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#5e63ee), to(#464ab2));
-  background-image: -webkit-linear-gradient(top, #5e63ee, #464ab2);
-  background-image: -moz-linear-gradient(top, #5e63ee, #464ab2);
-  background-image: -ms-linear-gradient(top, #5e63ee, #464ab2);
-  background-image: -o-linear-gradient(top, #5e63ee, #464ab2);
-  background-image: linear-gradient(top, #5e63ee, #464ab2);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5e63ee', EndColorStr='#464ab2');
-  background-color: #464ab2; }
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#65106e), to(#4b0c52));
+  background-image: -webkit-linear-gradient(top, #65106e, #4b0c52);
+  background-image: -moz-linear-gradient(top, #65106e, #4b0c52);
+  background-image: -ms-linear-gradient(top, #65106e, #4b0c52);
+  background-image: -o-linear-gradient(top, #65106e, #4b0c52);
+  background-image: linear-gradient(top, #65106e, #4b0c52);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#65106e', EndColorStr='#4b0c52');
+  background-color: #4b0c52;
+}
 
-.yui3-skin-sam .yui3-button.yui3-button-color-black {
+.yui3-skin-sam .yui3-button-color-black {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#545454), to(black));
   background-image: -webkit-linear-gradient(top, #545454, black);
@@ -304,16 +340,22 @@
   background-image: -o-linear-gradient(top, #545454, black);
   background-image: linear-gradient(top, #545454, black);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#545454', EndColorStr='black');
-  background-color: black; }
+  background-color: black;
+}
 
 /*
-.yui3-skin-sam .yui3-button:hover {
-    @extend .yui3-button-color-turquoise;
+.yui3-skin-sam .yui3-button-selected {
+    @extend .yui3-button-color-black;
+}
+
+.yui3-skin-sam .yui3-button:hover,
+.yui3-skin-sam .yui3-button-selected:hover {
+    @extend .yui3-button-color-red;
 }
 .yui3-skin-sam .yui3-button:hover {
     border-color: #7d98b8;
 
-    @include bg-gradient(#fff, #bfdaff);
+    @include background-gradient(#fff, #bfdaff);
 }
 
 .yui3-skin-sam .yui3-button-selected,
@@ -326,7 +368,7 @@
     color: #fff;
     $start: #426fd9;
     $end: #2647a0;
-    @include bg-gradient($start, $end);
+    @include background-gradient($start, $end);
 }
 
 */
@@ -334,10 +376,16 @@
 .yui3-skin-sam .yui3-button-disabled:hover {
   border-color: #ccc;
   color: #ccc;
-  cursor: default; }
+  cursor: default;
+  background-position: 0 0;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
 
 .yui3-skin-sam .yui3-button-icon {
-  background-image: url("assets/sam_icons.gif"); }
+  background-image: url("assets/sam_icons.gif");
+}
 
 /***
     Skin: Night
@@ -364,13 +412,16 @@
   box-shadow: 0px 1px 1px #222;
   /* Opera 10.5, IE9, FF4+, Chrome 10+ */
   border-color: #0c0c0c;
-  color: #fff; }
+  color: #fff;
+}
 
 .yui3-skin-night .yui3-button {
-  border: outset #666 1px; }
+  border: outset #666 1px;
+}
 
 .yui3-skin-night .yui3-button:active {
-  border: inset #666 1px; }
+  border: inset #666 1px;
+}
 
 .yui3-skin-night .yui3-button-selected,
 .yui3-skin-night .yui3-button-selected:hover {
@@ -387,7 +438,8 @@
   /* Opera 11.10+ */
   background-image: linear-gradient(top, #2c2d2f, #242526);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#2C2D2F', EndColorStr='#242526');
-  /* IE6–IE9 */ }
+  /* IE6–IE9 */
+}
 
 .yui3-skin-night .yui3-button-back:before {
   /*TODO: Check the rotation on this */
@@ -404,7 +456,8 @@
   background-image: linear-gradient(45deg, #2c2d2f, #3e3f41);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#2C2D2F', EndColorStr='#3E3F41');
   /* IE6–IE9 */
-  border-color: #0c0c0c; }
+  border-color: #0c0c0c;
+}
 
 .yui3-skin-night .yui3-button-back:hover:before {
   /*TODO: Check the rotation on this */
@@ -420,7 +473,8 @@
   /* Opera 11.10+ */
   background-image: linear-gradient(45deg, #2e2e30, #3d3e3f);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#2e2e30', EndColorStr='#3d3e3f');
-  /* IE6–IE9 */ }
+  /* IE6–IE9 */
+}
 
 .yui3-skin-night .yui3-button-selected.yui3-button-back:before {
   background-color: #2B2D2D;
@@ -437,11 +491,14 @@
   /* Opera 11.10+ */
   background-image: linear-gradient(45deg, #242526, #2c2d2f);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#242526', EndColorStr='#2C2D2F');
-  /* IE6–IE9 */ }
+  /* IE6–IE9 */
+}
 
 .yui3-skin-night .yui3-button-disabled,
 .yui3-skin-night .yui3-button-disabled:hover {
-  color: #666; }
+  color: #666;
+}
 
 .yui3-skin-night .yui3-button-icon {
-  background-image: url("assets/night_icons.gif"); }
+  background-image: url("assets/night_icons.gif");
+}
