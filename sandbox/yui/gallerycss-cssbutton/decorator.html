@@ -55,7 +55,7 @@
 
             <div id="color-options">
                 <span>Colors</span>
-                <div class="yui3-button yui3-button-selected" id="color-default">Default</div>
+                <div class="yui3-button yui3-button-selected" id="color-gray">Gray</div>
                 <div class="yui3-button yui3-button-color-red" id="color-red">Red</div>
                 <div class="yui3-button yui3-button-color-orange" id="color-orange">Orange</div>
                 <div class="yui3-button yui3-button-color-yellow" id="color-yellow">Yellow</div>
@@ -63,6 +63,7 @@
                 <div class="yui3-button yui3-button-color-turquoise" id="color-turquoise">Turquoise</div>
                 <div class="yui3-button yui3-button-color-blue" id="color-blue">Blue</div>
                 <div class="yui3-button yui3-button-color-purple" id="color-purple">Purple</div>
+                <div class="yui3-button yui3-button-color-black" id="color-black">Black</div>
             </div>
         </div>
     
@@ -185,6 +186,7 @@
                         console.log(color);
                         Y.all('#color-options .yui3-button').removeClass("yui3-button-selected");
                         e.target.addClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button.yui3-button-color-gray').removeClass("yui3-button-color-gray");
                         Y.all('#examples .yui3-button.yui3-button-color-red').removeClass("yui3-button-color-red");
                         Y.all('#examples .yui3-button.yui3-button-color-turquoise').removeClass("yui3-button-color-turquoise");
                         Y.all('#examples .yui3-button.yui3-button-color-blue').removeClass("yui3-button-color-blue");
@@ -192,6 +194,7 @@
                         Y.all('#examples .yui3-button.yui3-button-color-green').removeClass("yui3-button-color-green");
                         Y.all('#examples .yui3-button.yui3-button-color-orange').removeClass("yui3-button-color-orange");
                         Y.all('#examples .yui3-button.yui3-button-color-purple').removeClass("yui3-button-color-purple");
+                        Y.all('#examples .yui3-button.yui3-button-color-black').removeClass("yui3-button-color-black");
                         Y.all('#examples .yui3-button').addClass("yui3-button-color-"+color[1]);
                     }
                 });

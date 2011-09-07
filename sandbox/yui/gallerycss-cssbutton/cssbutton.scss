@@ -1,4 +1,16 @@
 /***
+
+    For development convinience, this stylesheet uses Sass, or SCSS. http://sass-lang.com/
+    
+    Files:
+    1) cssbutton.scss - The development stylesheet. Do -not- import this into your HTML document.
+    2) cssbutton.css  - The Sass generated output. Do import this file into your HTML document.
+
+***/
+
+
+
+/***
     Core Button Styles
 ***/
 .yui3-button {
@@ -23,7 +35,7 @@
     padding: 0 1em;
     position: relative;
     text-align: center;
-    
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
     -webkit-transition: background-position 0.1s linear;  /* Saf3.2+, Chrome */
        -moz-transition: background-position 0.1s linear;  /* FF4+ */
         -ms-transition: background-position 0.1s linear;  /* IE10? */
@@ -118,14 +130,15 @@
     Skin: Sam
 ***/
 
-@mixin bg-gradient($start, $end, $angle: top){
-    background-color: $end;
-    background-image: -webkit-linear-gradient($angle, $start, $end); // Chrome 10+, Saf5.1+
-    background-image:    -moz-linear-gradient($angle, $start, $end); // FF3.6
-    background-image:     -ms-linear-gradient($angle, $start, $end); // IE10
-    background-image:      -o-linear-gradient($angle, $start, $end); // Opera 11.10+
-    background-image:         linear-gradient($angle, $start, $end);
+@mixin bg-gradient($start, $end){
+    background-image: -webkit-gradient(linear, left top, left bottom, from($start), to($end)); // Saf4+, Chrome
+    background-image: -webkit-linear-gradient(top, $start, $end); // Chrome 10+, Saf5.1+
+    background-image:    -moz-linear-gradient(top, $start, $end); // FF3.6
+    background-image:     -ms-linear-gradient(top, $start, $end); // IE10
+    background-image:      -o-linear-gradient(top, $start, $end); // Opera 11.10+
+    background-image:         linear-gradient(top, $start, $end);
               filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$start}', EndColorStr='#{$end}'); // IE6–IE9
+    background-color: $end;
 }
 
 .yui3-skin-sam .yui3-button,
@@ -182,6 +195,13 @@
     color: #fff;
     $start: #5e63ee;
     $end: #464ab2;
+    @include bg-gradient($start, $end);
+}
+
+.yui3-skin-sam .yui3-button.yui3-button-color-black {
+    color: #fff;
+    $start: #545454;
+    $end: #000;
     @include bg-gradient($start, $end);
 }
 

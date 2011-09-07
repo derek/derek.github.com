@@ -1,4 +1,13 @@
 /***
+
+    For development convinience, this stylesheet uses Sass, or SCSS. http://sass-lang.com/
+    
+    Files:
+    1) cssbutton.scss - The development stylesheet. Do -not- import this into your HTML document.
+    2) cssbutton.css  - The Sass generated output. Do import this file into your HTML document.
+
+***/
+/***
     Core Button Styles
 ***/
 .yui3-button {
@@ -25,6 +34,7 @@
   padding: 0 1em;
   position: relative;
   text-align: center;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   -webkit-transition: background-position 0.1s linear;
   /* Saf3.2+, Chrome */
   -moz-transition: background-position 0.1s linear;
@@ -199,83 +209,102 @@
 .yui3-skin-sam .yui3-button-disabled:hover {
   border-color: #808080;
   color: #000;
-  background-color: #d8d8da;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#d8d8da));
   background-image: -webkit-linear-gradient(top, white, #d8d8da);
   background-image: -moz-linear-gradient(top, white, #d8d8da);
   background-image: -ms-linear-gradient(top, white, #d8d8da);
   background-image: -o-linear-gradient(top, white, #d8d8da);
   background-image: linear-gradient(top, white, #d8d8da);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#d8d8da'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#d8d8da');
+  background-color: #d8d8da; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-blue {
   color: #fff;
-  background-color: #3153a2;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#426fd9), to(#3153a2));
   background-image: -webkit-linear-gradient(top, #426fd9, #3153a2);
   background-image: -moz-linear-gradient(top, #426fd9, #3153a2);
   background-image: -ms-linear-gradient(top, #426fd9, #3153a2);
   background-image: -o-linear-gradient(top, #426fd9, #3153a2);
   background-image: linear-gradient(top, #426fd9, #3153a2);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#426fd9', EndColorStr='#3153a2'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#426fd9', EndColorStr='#3153a2');
+  background-color: #3153a2; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-red {
   color: #fff;
-  background-color: #b2332e;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ee443e), to(#b2332e));
   background-image: -webkit-linear-gradient(top, #ee443e, #b2332e);
   background-image: -moz-linear-gradient(top, #ee443e, #b2332e);
   background-image: -ms-linear-gradient(top, #ee443e, #b2332e);
   background-image: -o-linear-gradient(top, #ee443e, #b2332e);
   background-image: linear-gradient(top, #ee443e, #b2332e);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee443e', EndColorStr='#b2332e'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee443e', EndColorStr='#b2332e');
+  background-color: #b2332e; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-green {
   color: #fff;
-  background-color: #499349;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#62c462), to(#499349));
   background-image: -webkit-linear-gradient(top, #62c462, #499349);
   background-image: -moz-linear-gradient(top, #62c462, #499349);
   background-image: -ms-linear-gradient(top, #62c462, #499349);
   background-image: -o-linear-gradient(top, #62c462, #499349);
   background-image: linear-gradient(top, #62c462, #499349);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#62c462', EndColorStr='#499349'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#62c462', EndColorStr='#499349');
+  background-color: #499349; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-turquoise {
   color: #fff;
-  background-color: #4490a6;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#5bc0de), to(#4490a6));
   background-image: -webkit-linear-gradient(top, #5bc0de, #4490a6);
   background-image: -moz-linear-gradient(top, #5bc0de, #4490a6);
   background-image: -ms-linear-gradient(top, #5bc0de, #4490a6);
   background-image: -o-linear-gradient(top, #5bc0de, #4490a6);
   background-image: linear-gradient(top, #5bc0de, #4490a6);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5bc0de', EndColorStr='#4490a6'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5bc0de', EndColorStr='#4490a6');
+  background-color: #4490a6; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-yellow {
   color: #fff;
-  background-color: #b2ae47;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eee95f), to(#b2ae47));
   background-image: -webkit-linear-gradient(top, #eee95f, #b2ae47);
   background-image: -moz-linear-gradient(top, #eee95f, #b2ae47);
   background-image: -ms-linear-gradient(top, #eee95f, #b2ae47);
   background-image: -o-linear-gradient(top, #eee95f, #b2ae47);
   background-image: linear-gradient(top, #eee95f, #b2ae47);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eee95f', EndColorStr='#b2ae47'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eee95f', EndColorStr='#b2ae47');
+  background-color: #b2ae47; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-orange {
   color: #fff;
-  background-color: #b28d39;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eebd4c), to(#b28d39));
   background-image: -webkit-linear-gradient(top, #eebd4c, #b28d39);
   background-image: -moz-linear-gradient(top, #eebd4c, #b28d39);
   background-image: -ms-linear-gradient(top, #eebd4c, #b28d39);
   background-image: -o-linear-gradient(top, #eebd4c, #b28d39);
   background-image: linear-gradient(top, #eebd4c, #b28d39);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eebd4c', EndColorStr='#b28d39'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eebd4c', EndColorStr='#b28d39');
+  background-color: #b28d39; }
 
 .yui3-skin-sam .yui3-button.yui3-button-color-purple {
   color: #fff;
-  background-color: #464ab2;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#5e63ee), to(#464ab2));
   background-image: -webkit-linear-gradient(top, #5e63ee, #464ab2);
   background-image: -moz-linear-gradient(top, #5e63ee, #464ab2);
   background-image: -ms-linear-gradient(top, #5e63ee, #464ab2);
   background-image: -o-linear-gradient(top, #5e63ee, #464ab2);
   background-image: linear-gradient(top, #5e63ee, #464ab2);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5e63ee', EndColorStr='#464ab2'); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#5e63ee', EndColorStr='#464ab2');
+  background-color: #464ab2; }
+
+.yui3-skin-sam .yui3-button.yui3-button-color-black {
+  color: #fff;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#545454), to(black));
+  background-image: -webkit-linear-gradient(top, #545454, black);
+  background-image: -moz-linear-gradient(top, #545454, black);
+  background-image: -ms-linear-gradient(top, #545454, black);
+  background-image: -o-linear-gradient(top, #545454, black);
+  background-image: linear-gradient(top, #545454, black);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#545454', EndColorStr='black');
+  background-color: black; }
 
 /*
 .yui3-skin-sam .yui3-button:hover {
