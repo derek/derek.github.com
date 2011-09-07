@@ -39,19 +39,33 @@
         <hr />
         
         <h2>Options</h2>
-        <div>
-            <span>Skin</span>
-            <div class="yui3-button yui3-button-selected" id="skin-sam">Sam</div>
-            <div class="yui3-button" id="skin-night">Night</div>
-        </div>
+        <div id="options">
+            <div>
+                <span>Skin</span>
+                <div class="yui3-button yui3-button-selected" id="skin-sam">Sam</div>
+                <div class="yui3-button" id="skin-night">Night</div>
+            </div>
         
-        <div>
-            <span>State</span>
-            <div class="yui3-button yui3-button-selected" id="state-unselected">Unselected</div>
-            <div class="yui3-button" id="state-selected">Selected</div>
-            <div class="yui3-button" id="state-disabled">Disabled</div>
+            <div>
+                <span>State</span>
+                <div class="yui3-button yui3-button-selected" id="state-unselected">Unselected</div>
+                <div class="yui3-button" id="state-selected">Selected</div>
+                <div class="yui3-button" id="state-disabled">Disabled</div>
+            </div>    
+
+            <div id="color-options">
+                <span>Colors</span>
+                <div class="yui3-button yui3-button-selected" id="color-default">Default</div>
+                <div class="yui3-button yui3-button-color-red" id="color-red">Red</div>
+                <div class="yui3-button yui3-button-color-orange" id="color-orange">Orange</div>
+                <div class="yui3-button yui3-button-color-yellow" id="color-yellow">Yellow</div>
+                <div class="yui3-button yui3-button-color-green" id="color-green">Green</div>
+                <div class="yui3-button yui3-button-color-turquoise" id="color-turquoise">Turquoise</div>
+                <div class="yui3-button yui3-button-color-blue" id="color-blue">Blue</div>
+                <div class="yui3-button yui3-button-color-purple" id="color-purple">Purple</div>
+            </div>
         </div>
-        
+    
        <!-- <div>
             <span>Type</span>
             <div class="yui3-button yui3-button-selected" id="type-push">Push</div>
@@ -120,13 +134,13 @@
         <script>
             YUI().use('node', 'event-touch', function (Y) {
                 
-                Y.all('.yui3-button').on(['touchstart' /* if applicable */, 'click'], function (e) {
+                Y.all('#options .yui3-button').on(['touchstart' /* <- if applicable */, 'click'], function (e) {
                     
                     // Stop event propogation 
                     e.halt();
-                    
+                    console.log(e);
                     // What was clicked?
-                    var id = Y.Node(e.target).getAttribute('id');
+                    var id = e.target.getAttribute('id');
                     
                     if (id === "skin-sam") {
                         Y.one('#skin-sam').addClass("yui3-button-selected");
@@ -166,6 +180,19 @@
                         Y.one('#type-push').removeClass("yui3-button-selected");
                         Y.one('#type-back').addClass("yui3-button-selected");
                         Y.all('#examples .yui3-button').addClass("yui3-button-back");
+                    }
+                    else if (color = id.match(/color-([a-z]+)/)) {
+                        console.log(color);
+                        Y.all('#color-options .yui3-button').removeClass("yui3-button-selected");
+                        e.target.addClass("yui3-button-selected");
+                        Y.all('#examples .yui3-button.yui3-button-color-red').removeClass("yui3-button-color-red");
+                        Y.all('#examples .yui3-button.yui3-button-color-turquoise').removeClass("yui3-button-color-turquoise");
+                        Y.all('#examples .yui3-button.yui3-button-color-blue').removeClass("yui3-button-color-blue");
+                        Y.all('#examples .yui3-button.yui3-button-color-yellow').removeClass("yui3-button-color-yellow");
+                        Y.all('#examples .yui3-button.yui3-button-color-green').removeClass("yui3-button-color-green");
+                        Y.all('#examples .yui3-button.yui3-button-color-orange').removeClass("yui3-button-color-orange");
+                        Y.all('#examples .yui3-button.yui3-button-color-purple').removeClass("yui3-button-color-purple");
+                        Y.all('#examples .yui3-button').addClass("yui3-button-color-"+color[1]);
                     }
                 });
             });
