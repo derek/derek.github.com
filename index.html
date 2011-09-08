@@ -66,13 +66,14 @@
 
                     html.push("<ul>");
                     Y.each(response.query.results.div, function(parsed) {
+                        console.log(parsed);
                         var fiddle = {
                             url: "http://jsfiddle.net" + parsed.a.href,
                             title: parsed.a.title,
-                            description: parsed.div.p,
+                            description: (parsed.div ? " - " + parsed.div.p : ""),
                             dateCreated: parsed.span.content.split(",")[1].trim()
                         }
-                        html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> - " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
+                        html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
                     })
                     html.push("</ul>");
 
