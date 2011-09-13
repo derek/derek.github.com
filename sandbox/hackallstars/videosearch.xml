@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
+  <meta>
+    <author></author>
+    <documentationURL></documentationURL>
+    <sampleQuery>SELECT * FROM videohack WHERE query='ghost'</sampleQuery>
+  </meta>
+  <bindings>
+    <select itemPath="results" produces="XML">
+      <inputs>
+        <key id="q" as="query" type="xs:string" paramType="query" required="true" />
+        <key id="service" type="xs:string" paramType="query" />
+      </inputs>
+      <execute><![CDATA[
+
+            // Import the community tables
+            y.env("http://datatables.org/alltables.env");
+
+            var results = <results></results>,
+                services = [];
+
+            // Define which services to pull data from
+            if (service) {
+                services = [service];
+            }
+            else {
+                services = ["netflix", "youtube", "justintv"];
+            }
+            
+            // Loop through each service and get data from the API
+            for(var i in services) {
+            
+                // YouTube
+                if (services[i] === 'youtube') {
+                    var videos = y.query('SELECT * FROM youtube.search WHERE query="' + query + '"').results;
+                    for each(var video in videos.video) {
+                        var item = <item></item>;
+                        item.appendChild(<source>youtube</source>);
+                        item.appendChild(video.id);
+                        item.appendChild(video.title);
+                        item.appendChild(<description>{video.content.toString()}</description>);
+                        item.appendChild(<image>{video.thumbnails.thumbnail[0].toString()}</image>);
+                        results.appendChild(item);
+                    }
+                }
+                
+                // Justin.tv
+                else if (services[i] === 'justintv') {
+                    var raw = y.rest('http://api.justin.tv/api/stream/search/' + query + '.json').accept("application/json").get().response;
+                    var data = eval(raw);
+                    for(var j in data) {
+                        var item = <item></item>;
+                        item.appendChild(<source>justin.tv</source>);
+                        item.appendChild(<id>{data[j].channel.login}</id>);
+                        item.appendChild(<title>{data[j].channel.title}</title>);
+                        item.appendChild(<description>{data[j].title}</description>);
+                        item.appendChild(<image>{data[j].channel.screen_cap_url_large}</image>);
+                        results.appendChild(item);
+                    }
+                }
+                
+                // Netflix
+                else if (services[i] === 'netflix') {
+                    var atom = Namespace("http://www.w3.org/2005/Atom");
+                    var d = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices");
+                    var m = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
+                    
+                    var xml = y.rest('http://odata.netflix.com/Catalog/Titles?$filter=Name%20eq%20%27' + query + '%27').get().response;
+                    
+                    for each(var movie in xml.atom::entry) {
+                        var item = <item></item>;
+                        item.appendChild(<source>netflix</source>);
+                        item.appendChild(<id>{movie.m::properties.d::Id.toString()}</id>);
+                        item.appendChild(<title>{movie.m::properties.d::Name.toString()}</title>);
+                        item.appendChild(<description>{movie.m::properties.d::ShortSynopsis.toString()}</description>);
+                        item.appendChild(<image>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</image>);
+                        results.appendChild(item);
+                    }
+                }
+            }
+            
+            response.object = results;
+      ]]></execute>
+    </select>
+  </bindings>
+</table>
