@@ -32,15 +32,31 @@
             
                 // YouTube
                 if (services[i] === 'youtube') {
-                    var videos = y.query('SELECT * FROM youtube.search WHERE query="' + query + '"').results;
-                    for each(var video in videos.video) {
+                    var atom = Namespace("http://www.w3.org/2005/Atom");
+                    var media = Namespace("http://search.yahoo.com/mrss/");
+                    var gd = Namespace("http://schemas.google.com/g/2005");
+                    var yt = Namespace("http://gdata.youtube.com/schemas/2007");
+
+                    var xml = y.rest("http://gdata.youtube.com/feeds/api/videos?orderby=relevance&q=" + query + "&v=2").get().response;
+
+                    for each(video_entry in xml.atom::entry){
                         var item = <item></item>;
-                        item.appendChild(<source>youtube</source>);
-                        item.appendChild(video.id);
-                        item.appendChild(video.title);
-                        item.appendChild(<description>{video.content.toString()}</description>);
-                        item.appendChild(<thumb>{video.thumbnails.thumbnail[0].toString()}</thumb>);
-                        item.appendChild(<embed></embed>);
+                        item.appendChild( <source>youtube</source> );
+                        item.appendChild( <id>{video_entry.media::group.yt::videoid.toString()}</id> );
+                        item.appendChild( <title>{video_entry.atom::title.toString()}</title> );
+                        item.appendChild( <description>{video_entry.media::group.media::description.toString()}</description> );
+                        item.appendChild( <embed></embed> );
+                        
+                        var biggest = 0;
+                        var biggestThumbURL = '';
+                        for each(thumbnail in video_entry.media::group.media::thumbnail){
+                            if (parseInt(thumbnail.@height, 10) > biggest) {
+                                biggest = thumbnail.@height;
+                                biggestThumbURL = thumbnail.@url;
+                            }
+                        }
+                        
+                        item.appendChild(<thumb>{biggestThumbURL}</thumb>);
                         results.appendChild(item);
                     }
                 }
