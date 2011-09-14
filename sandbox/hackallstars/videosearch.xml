@@ -24,7 +24,7 @@
                 services = [service];
             }
             else {
-                services = ["netflix", "youtube", "justintv"];
+                services = ["netflix", "youtube", "justintv", "flickr"];
             }
             
             // Loop through each service and get data from the API
@@ -39,7 +39,8 @@
                         item.appendChild(video.id);
                         item.appendChild(video.title);
                         item.appendChild(<description>{video.content.toString()}</description>);
-                        item.appendChild(<image>{video.thumbnails.thumbnail[0].toString()}</image>);
+                        item.appendChild(<thumb>{video.thumbnails.thumbnail[0].toString()}</thumb>);
+                        item.appendChild(<embed></embed>);
                         results.appendChild(item);
                     }
                 }
@@ -54,7 +55,8 @@
                         item.appendChild(<id>{data[j].channel.login}</id>);
                         item.appendChild(<title>{data[j].channel.title}</title>);
                         item.appendChild(<description>{data[j].title}</description>);
-                        item.appendChild(<image>{data[j].channel.screen_cap_url_large}</image>);
+                        item.appendChild(<thumb>{data[j].channel.screen_cap_url_large}</thumb>);
+                        item.appendChild(<embed></embed>);
                         results.appendChild(item);
                     }
                 }
@@ -73,7 +75,8 @@
                         item.appendChild(<id>{movie.m::properties.d::Id.toString()}</id>);
                         item.appendChild(<title>{movie.m::properties.d::Name.toString()}</title>);
                         item.appendChild(<description>{movie.m::properties.d::ShortSynopsis.toString()}</description>);
-                        item.appendChild(<image>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</image>);
+                        item.appendChild(<thumb>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</thumb>);
+                        item.appendChild(<embed></embed>);
                         results.appendChild(item);
                     }
                 }
@@ -87,7 +90,8 @@
                         item.appendChild(<id>{photo.@id}</id>);
                         item.appendChild(<title>{photo.@title}</title>);
                         item.appendChild(<description></description>);
-                        item.appendChild(<image>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}.jpg</image>);
+                        item.appendChild(<thumb>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_m.jpg</thumb>);
+                        item.appendChild(<embed>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_b.jpg</embed>);
                         results.appendChild(item);
                     }
                 }
