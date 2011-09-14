@@ -14,7 +14,8 @@
       <execute><![CDATA[
 
             // Import the community tables
-            y.env("http://datatables.org/alltables.env");
+            // UPDATE: Shouldn't need this anymore
+            // y.env("http://datatables.org/alltables.env");
 
             var results = <results></results>,
                 services = [];
@@ -99,8 +100,9 @@
                 
                 // Flickr
                 else if (services[i] === 'flickr') {
-                    var photos = y.query('select * from flickr.photos.search where text="' + query + '" AND api_key="b671f7ed14170030d9bda8ddb28b0547"').results;
-                    for each(var photo in photos.photo) {
+                    var photos = y.rest('http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=b671f7ed14170030d9bda8ddb28b0547&text=' + query + '&per_page=10&format=rest').get().response;
+
+                    for each(var photo in photos.photos.photo) {
                         var item = <item></item>;
                         item.appendChild(<source>flickr</source>);
                         item.appendChild(<id>{photo.@id}</id>);
