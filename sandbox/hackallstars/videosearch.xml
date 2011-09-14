@@ -24,7 +24,7 @@
                 services = [service];
             }
             else {
-                services = ["netflix", "youtube", "justintv", "flickr"];
+                services = ["netflix", "justintv", "youtube", "flickr"];
             }
             
             // Loop through each service and get data from the API
