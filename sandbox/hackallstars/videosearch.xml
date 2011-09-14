@@ -77,6 +77,20 @@
                         results.appendChild(item);
                     }
                 }
+                
+                // Flickr
+                else if (services[i] === 'flickr') {
+                    var photos = y.query('select * from flickr.photos.search where text="' + query + '" AND api_key="b671f7ed14170030d9bda8ddb28b0547"').results;
+                    for each(var photo in photos.photo) {
+                        var item = <item></item>;
+                        item.appendChild(<source>flickr</source>);
+                        item.appendChild(<id>{photo.@id}</id>);
+                        item.appendChild(<title>{photo.@title}</title>);
+                        item.appendChild(<description></description>);
+                        item.appendChild(<image>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}.jpg</image>);
+                        results.appendChild(item);
+                    }
+                }
             }
             
             response.object = results;
