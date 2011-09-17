@@ -123,7 +123,7 @@
                     callback = service.callback;
                 
                 // Queue an async call
-                y.rest(url, callback).get();
+                y.rest(url, callback).header("Cache-Control", "max-stale=0").get();
             }
             
             // Execute the async calls
