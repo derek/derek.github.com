@@ -12,6 +12,14 @@
         <key id="service" type="xs:string" paramType="variable" required="false" />
       </inputs>
       <execute><![CDATA[
+      
+            var nsatom = Namespace("http://www.w3.org/2005/Atom"),
+                nsmrss = Namespace("http://search.yahoo.com/mrss/"),
+                nsgd   = Namespace("http://schemas.google.com/g/2005"),
+                nsyt   = Namespace("http://gdata.youtube.com/schemas/2007"),
+                nsds   = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices"),
+                nsdsm  = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
+      
             var results = <items></items>;
             
             // Define which services to pull data from
@@ -22,16 +30,12 @@
                 "youtube": {
                     url:      "http://gdata.youtube.com/feeds/api/videos?orderby=relevance&q={{query}}&v=2",
                     callback: function(response) {
-                        var atom = Namespace("http://www.w3.org/2005/Atom");
-                        var media = Namespace("http://search.yahoo.com/mrss/");
-                        var gd = Namespace("http://schemas.google.com/g/2005");
-                        var yt = Namespace("http://gdata.youtube.com/schemas/2007");
 
                         var xml = response.response;
-                        for each(video_entry in xml.atom::entry){
+                        for each(video_entry in xml.nsatom::entry){
                             var biggest = 0;
                             var biggestThumbURL = '';
-                            for each(thumbnail in video_entry.media::group.media::thumbnail){
+                            for each(thumbnail in video_entry.nsmrss::group.nsmrss::thumbnail){
                                 if (parseInt(thumbnail.@height, 10) > biggest) {
                                     biggest = thumbnail.@height;
                                     biggestThumbURL = thumbnail.@url;
@@ -41,9 +45,9 @@
                             results.appendChild(
                                 <item>
                                     <source>youtube</source> 
-                                    <id>{video_entry.media::group.yt::videoid.toString()}</id> 
-                                    <title>{video_entry.atom::title.toString()}</title> 
-                                    <description>{video_entry.media::group.media::description.toString()}</description>
+                                    <id>{video_entry.nsmrss::group.nsyt::videoid.toString()}</id> 
+                                    <title>{video_entry.nsatom::title.toString()}</title> 
+                                    <description>{video_entry.nsmrss::group.nsmrss::description.toString()}</description>
                                     <thumb>{biggestThumbURL}</thumb>
                                     <embed></embed>
                                 </item>
@@ -74,21 +78,16 @@
                 "netflix": {
                     url:      "http://odata.netflix.com/Catalog/Titles?$filter=Name%20eq%20%27{{query}}%27",
                     callback: function(response){
-                    
-                        var atom = Namespace("http://www.w3.org/2005/Atom");
-                        var d = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices");
-                        var m = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
-
                         var xml = response.response;
 
-                        for each(var movie in xml.atom::entry) {
+                        for each(var movie in xml.nsatom::entry) {
                             results.appendChild(
                                 <item>
                                     <source>netflix</source>
-                                    <id>{movie.m::properties.d::Id.toString()}</id>
-                                    <title>{movie.m::properties.d::Name.toString()}</title>
-                                    <description>{movie.m::properties.d::ShortSynopsis.toString()}</description>
-                                    <thumb>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</thumb>
+                                    <id>{movie.nsdsm::properties.nsds::Id.toString()}</id>
+                                    <title>{movie.nsdsm::properties.nsds::Name.toString()}</title>
+                                    <description>{movie.nsdsm::properties.nsds::ShortSynopsis.toString()}</description>
+                                    <thumb>{movie.nsdsm::properties.nsds::BoxArt.nsds::LargeUrl.toString()}</thumb>
                                     <embed></embed>
                                 </item>
                             );
@@ -123,7 +122,7 @@
                     callback = service.callback;
                 
                 // Queue an async call
-                y.rest(url, callback).header("Cache-Control", "max-stale=0").get();
+                y.rest(url, callback).get();
             }
             
             // Execute the async calls
