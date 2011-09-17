@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
   <meta>
-    <author></author>
+    <author>Derek Gathright</author>
     <documentationURL></documentationURL>
-    <sampleQuery>SELECT * FROM videohack WHERE query='ghost'</sampleQuery>
+    <sampleQuery>SELECT * FROM mediasearch WHERE query='kittens'</sampleQuery>
   </meta>
   <bindings>
     <select itemPath="results" produces="XML">
@@ -13,120 +13,116 @@
       </inputs>
       <execute><![CDATA[
 
-            // Import the community tables
-            // UPDATE: Shouldn't need this anymore
-            // y.env("http://datatables.org/alltables.env");
-
-            var results = <results></results>,
-                services = [];
+            var results = <results></results>;
 
             // Define which services to pull data from
             if (service) {
-                services = [service];
+                servicesToUse = [service];
             }
             else {
-                services = ["netflix", "justintv", "youtube", "flickr"];
+                servicesToUse = ["netflix", "justintv", "youtube", "flickr"];
             }
             
-            function youtubeHandler(response) {
-                var atom = Namespace("http://www.w3.org/2005/Atom");
-                var media = Namespace("http://search.yahoo.com/mrss/");
-                var gd = Namespace("http://schemas.google.com/g/2005");
-                var yt = Namespace("http://gdata.youtube.com/schemas/2007");
-                
-                var xml = response.response;
-                for each(video_entry in xml.atom::entry){
-                    var item = <item></item>;
-                    item.appendChild( <source>youtube</source> );
-                    item.appendChild( <id>{video_entry.media::group.yt::videoid.toString()}</id> );
-                    item.appendChild( <title>{video_entry.atom::title.toString()}</title> );
-                    item.appendChild( <description>{video_entry.media::group.media::description.toString()}</description> );
-                    item.appendChild( <embed></embed> );
-                
-                    var biggest = 0;
-                    var biggestThumbURL = '';
-                    for each(thumbnail in video_entry.media::group.media::thumbnail){
-                        if (parseInt(thumbnail.@height, 10) > biggest) {
-                            biggest = thumbnail.@height;
-                            biggestThumbURL = thumbnail.@url;
+            var services = {
+                "youtube": {
+                    url:      "http://gdata.youtube.com/feeds/api/videos?orderby=relevance&q={{query}}&v=2",
+                    callback: function(response) {
+                        var atom = Namespace("http://www.w3.org/2005/Atom");
+                        var media = Namespace("http://search.yahoo.com/mrss/");
+                        var gd = Namespace("http://schemas.google.com/g/2005");
+                        var yt = Namespace("http://gdata.youtube.com/schemas/2007");
+
+                        var xml = response.response;
+                        for each(video_entry in xml.atom::entry){
+                            var item = <item></item>;
+                            item.appendChild( <source>youtube</source> );
+                            item.appendChild( <id>{video_entry.media::group.yt::videoid.toString()}</id> );
+                            item.appendChild( <title>{video_entry.atom::title.toString()}</title> );
+                            item.appendChild( <description>{video_entry.media::group.media::description.toString()}</description> );
+                            item.appendChild( <embed></embed> );
+
+                            var biggest = 0;
+                            var biggestThumbURL = '';
+                            for each(thumbnail in video_entry.media::group.media::thumbnail){
+                                if (parseInt(thumbnail.@height, 10) > biggest) {
+                                    biggest = thumbnail.@height;
+                                    biggestThumbURL = thumbnail.@url;
+                                }
+                            }
+
+                            item.appendChild(<thumb>{biggestThumbURL}</thumb>);
+                            results.appendChild(item);
                         }
                     }
+                },
                 
-                    item.appendChild(<thumb>{biggestThumbURL}</thumb>);
-                    results.appendChild(item);
+                "justintv": {
+                    url:      "http://api.justin.tv/api/stream/search/{{query}}.json",
+                    callback: function(response){
+                    
+                        var data = eval(response.response);
+                        for(var j in data) {
+                            var item = <item></item>;
+                            item.appendChild(<source>justin.tv</source>);
+                            item.appendChild(<id>{data[j].channel.login}</id>);
+                            item.appendChild(<title>{data[j].channel.title}</title>);
+                            item.appendChild(<description>{data[j].title}</description>);
+                            item.appendChild(<thumb>{data[j].channel.screen_cap_url_large}</thumb>);
+                            item.appendChild(<embed></embed>);
+                            results.appendChild(item);
+                        }
+                    }
+                },
+            
+                "netflix": {
+                    url:      "http://odata.netflix.com/Catalog/Titles?$filter=Name%20eq%20%27{{query}}%27",
+                    callback: function(response){
+                    
+                        var atom = Namespace("http://www.w3.org/2005/Atom");
+                        var d = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices");
+                        var m = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
+
+                        var xml = response.response;
+
+                        for each(var movie in xml.atom::entry) {
+                            var item = <item></item>;
+                            item.appendChild(<source>netflix</source>);
+                            item.appendChild(<id>{movie.m::properties.d::Id.toString()}</id>);
+                            item.appendChild(<title>{movie.m::properties.d::Name.toString()}</title>);
+                            item.appendChild(<description>{movie.m::properties.d::ShortSynopsis.toString()}</description>);
+                            item.appendChild(<thumb>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</thumb>);
+                            item.appendChild(<embed></embed>);
+                            results.appendChild(item);
+                        }
+                    }
+                },
+            
+                "flickr": {
+                    url:      "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=1895311ec0d2e23431a6407f3e8dffcc&text={{query}}&per_page=10&sort=interestingness-desc&format=rest",
+                    callback: function(response){
+                        var photos = response.response;
+                        for each(var photo in photos.photos.photo) {
+                            var item = <item></item>;
+                            item.appendChild(<source>flickr</source>);
+                            item.appendChild(<id>{photo.@id}</id>);
+                            item.appendChild(<title>{photo.@title}</title>);
+                            item.appendChild(<description></description>);
+                            item.appendChild(<thumb>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_m.jpg</thumb>);
+                            item.appendChild(<embed>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_b.jpg</embed>);
+                            results.appendChild(item);
+                        }
+                    }
                 }
             }
             
-            function justintvHandler(response) {
-                var data = eval(response.response);
-                for(var j in data) {
-                    var item = <item></item>;
-                    item.appendChild(<source>justin.tv</source>);
-                    item.appendChild(<id>{data[j].channel.login}</id>);
-                    item.appendChild(<title>{data[j].channel.title}</title>);
-                    item.appendChild(<description>{data[j].title}</description>);
-                    item.appendChild(<thumb>{data[j].channel.screen_cap_url_large}</thumb>);
-                    item.appendChild(<embed></embed>);
-                    results.appendChild(item);
-                }
-            }
-            
-            function netflixHandler(response) {
-            
-                var atom = Namespace("http://www.w3.org/2005/Atom");
-                var d = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices");
-                var m = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
-            
-                var xml = response.response;
+            // Loop through each service and queue up the API call
+            for(var i in servicesToUse) {
+                var service  = services[servicesToUse[i]],
+                    url      = service.url.replace("{{query}}", query),
+                    callback = service.callback;
                 
-                for each(var movie in xml.atom::entry) {
-                    var item = <item></item>;
-                    item.appendChild(<source>netflix</source>);
-                    item.appendChild(<id>{movie.m::properties.d::Id.toString()}</id>);
-                    item.appendChild(<title>{movie.m::properties.d::Name.toString()}</title>);
-                    item.appendChild(<description>{movie.m::properties.d::ShortSynopsis.toString()}</description>);
-                    item.appendChild(<thumb>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</thumb>);
-                    item.appendChild(<embed></embed>);
-                    results.appendChild(item);
-                }
-            }
-            
-            function flickrHandler(response) {
-                var photos = response.response;
-                for each(var photo in photos.photos.photo) {
-                    var item = <item></item>;
-                    item.appendChild(<source>flickr</source>);
-                    item.appendChild(<id>{photo.@id}</id>);
-                    item.appendChild(<title>{photo.@title}</title>);
-                    item.appendChild(<description></description>);
-                    item.appendChild(<thumb>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_m.jpg</thumb>);
-                    item.appendChild(<embed>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_b.jpg</embed>);
-                    results.appendChild(item);
-                }
-            }
-            
-            // Loop through each service and get data from the API
-            for(var i in services) {
-            
-                // YouTube
-                if (services[i] === 'youtube') {
-                    y.rest("http://gdata.youtube.com/feeds/api/videos?orderby=relevance&q=" + query + "&v=2", youtubeHandler).get();
-                }
-                
-                // Justin.tv
-                else if (services[i] === 'justintv') {
-                    y.rest('http://api.justin.tv/api/stream/search/' + query + '.json', justintvHandler).accept("application/json").get();
-                }
-                
-                // Netflix
-                else if (services[i] === 'netflix') {
-                    y.rest('http://odata.netflix.com/Catalog/Titles?$filter=Name%20eq%20%27' + query + '%27', netflixHandler).get()
-                }
-                
-                // Flickr
-                else if (services[i] === 'flickr') {
-                    y.rest('http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=b671f7ed14170030d9bda8ddb28b0547&text=' + query + '&per_page=10&sort=interestingness-desc&format=rest', flickrHandler).get();
-                }
+                // Queue an async call
+                y.rest(url, callback).get();
             }
             
             // Execute the async calls
