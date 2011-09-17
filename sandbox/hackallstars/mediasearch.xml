@@ -6,22 +6,17 @@
     <sampleQuery>SELECT * FROM mediasearch WHERE query='kittens'</sampleQuery>
   </meta>
   <bindings>
-    <select itemPath="results" produces="XML">
+    <select itemPath="items.item" produces="XML">
       <inputs>
-        <key id="q" as="query" type="xs:string" paramType="query" required="true" />
-        <key id="service" type="xs:string" paramType="query" />
+        <key id="query" type="xs:string" paramType="variable" required="true" />
+        <key id="service" type="xs:string" paramType="variable" required="false" />
       </inputs>
       <execute><![CDATA[
-
-            var results = <results></results>;
-
+            var results = <items></items>;
+            
             // Define which services to pull data from
-            if (service) {
-                servicesToUse = [service];
-            }
-            else {
-                servicesToUse = ["netflix", "justintv", "youtube", "flickr"];
-            }
+            if (service) { servicesToUse = [service]; }
+            else         { servicesToUse = ["netflix", "justintv", "youtube", "flickr"]; }
             
             var services = {
                 "youtube": {
@@ -34,13 +29,6 @@
 
                         var xml = response.response;
                         for each(video_entry in xml.atom::entry){
-                            var item = <item></item>;
-                            item.appendChild( <source>youtube</source> );
-                            item.appendChild( <id>{video_entry.media::group.yt::videoid.toString()}</id> );
-                            item.appendChild( <title>{video_entry.atom::title.toString()}</title> );
-                            item.appendChild( <description>{video_entry.media::group.media::description.toString()}</description> );
-                            item.appendChild( <embed></embed> );
-
                             var biggest = 0;
                             var biggestThumbURL = '';
                             for each(thumbnail in video_entry.media::group.media::thumbnail){
@@ -49,9 +37,17 @@
                                     biggestThumbURL = thumbnail.@url;
                                 }
                             }
-
-                            item.appendChild(<thumb>{biggestThumbURL}</thumb>);
-                            results.appendChild(item);
+                            
+                            results.appendChild(
+                                <item>
+                                    <source>youtube</source> 
+                                    <id>{video_entry.media::group.yt::videoid.toString()}</id> 
+                                    <title>{video_entry.atom::title.toString()}</title> 
+                                    <description>{video_entry.media::group.media::description.toString()}</description>
+                                    <thumb>{biggestThumbURL}</thumb>
+                                    <embed></embed>
+                                </item>
+                            );
                         }
                     }
                 },
@@ -59,17 +55,18 @@
                 "justintv": {
                     url:      "http://api.justin.tv/api/stream/search/{{query}}.json",
                     callback: function(response){
-                    
                         var data = eval(response.response);
                         for(var j in data) {
-                            var item = <item></item>;
-                            item.appendChild(<source>justin.tv</source>);
-                            item.appendChild(<id>{data[j].channel.login}</id>);
-                            item.appendChild(<title>{data[j].channel.title}</title>);
-                            item.appendChild(<description>{data[j].title}</description>);
-                            item.appendChild(<thumb>{data[j].channel.screen_cap_url_large}</thumb>);
-                            item.appendChild(<embed></embed>);
-                            results.appendChild(item);
+                            results.appendChild(
+                                <item>
+                                    <source>justin.tv</source>
+                                    <id>{data[j].channel.login}</id>
+                                    <title>{data[j].channel.title}</title>
+                                    <description>{data[j].title}</description>
+                                    <thumb>{data[j].channel.screen_cap_url_large}</thumb>
+                                    <embed></embed>
+                                </item>
+                            );
                         }
                     }
                 },
@@ -85,14 +82,16 @@
                         var xml = response.response;
 
                         for each(var movie in xml.atom::entry) {
-                            var item = <item></item>;
-                            item.appendChild(<source>netflix</source>);
-                            item.appendChild(<id>{movie.m::properties.d::Id.toString()}</id>);
-                            item.appendChild(<title>{movie.m::properties.d::Name.toString()}</title>);
-                            item.appendChild(<description>{movie.m::properties.d::ShortSynopsis.toString()}</description>);
-                            item.appendChild(<thumb>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</thumb>);
-                            item.appendChild(<embed></embed>);
-                            results.appendChild(item);
+                            results.appendChild(
+                                <item>
+                                    <source>netflix</source>
+                                    <id>{movie.m::properties.d::Id.toString()}</id>
+                                    <title>{movie.m::properties.d::Name.toString()}</title>
+                                    <description>{movie.m::properties.d::ShortSynopsis.toString()}</description>
+                                    <thumb>{movie.m::properties.d::BoxArt.d::LargeUrl.toString()}</thumb>
+                                    <embed></embed>
+                                </item>
+                            );
                         }
                     }
                 },
@@ -102,14 +101,16 @@
                     callback: function(response){
                         var photos = response.response;
                         for each(var photo in photos.photos.photo) {
-                            var item = <item></item>;
-                            item.appendChild(<source>flickr</source>);
-                            item.appendChild(<id>{photo.@id}</id>);
-                            item.appendChild(<title>{photo.@title}</title>);
-                            item.appendChild(<description></description>);
-                            item.appendChild(<thumb>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_m.jpg</thumb>);
-                            item.appendChild(<embed>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_b.jpg</embed>);
-                            results.appendChild(item);
+                            results.appendChild(
+                                <item>
+                                    <source>flickr</source>
+                                    <id>{photo.@id}</id>
+                                    <title>{photo.@title}</title>
+                                    <description></description>
+                                    <thumb>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_m.jpg</thumb>
+                                    <embed>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_b.jpg</embed>
+                                </item>
+                            );
                         }
                     }
                 }
