@@ -1,10 +1,12 @@
+<!-- See, I told you -->
+
 <!DOCTYPE html>
 <html>
     <head>		
         <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.0/build/cssreset/cssreset-min.css&3.4.0/build/cssfonts/cssfonts-min.css&3.4.0/build/cssbase/cssbase-min.css">
 
         <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
-        <script src="../api.js"></script>
+        <script src="http://embeditor.org/api.js"></script>
         <style>
             #embeditor {
                 height:450px;
@@ -14,23 +16,24 @@
             }
         </style>
         <script id="sample">
-    // The Ace embed API is documented at https://github.com/ajaxorg/ace/wiki/Embedding---API
+    // Here is the actual JavaScript used to render this page. Go ahead, view-source if you don't believe me.
         
     // YUI isn't required, I'm just using it for convinience
     YUI().use("event", function(Y){
         
         var $ = Y.one, // Bling it up
-            editor; // This will be your Ace API object once the onReady fires
-            
-        // Set the onReady() callback that the iframe will fire when it is ready
-        Embeditor.onReady = function(){
-            editor = Embeditor.getInstance();
+            editor = new Embeditor("embeditor");
+        
+        // Set the onReady() callback that will be fired when the editor is ready
+        editor.onReady(function(){
             editor.setValue($("#sample").getContent());
-        };
+        });
         
         // Get the content of the editor and log it to the console
         $("#btnGetValue").on("click", function(){
-            Y.log(editor.getValue());
+            editor.getValue(function(value){
+               Y.log("----> " + value);
+            });
         });
         
         // Set the content of the editor
@@ -43,7 +46,7 @@
     </head>
     
     <body>
-        <iframe id="embeditor" src="../index.html"></iframe>
+        <iframe id="embeditor" name="embeditor" src="http://embeditor.org/?mode=javascript"></iframe>
         
         <br ><br >
         

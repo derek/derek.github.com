@@ -2,16 +2,16 @@
 <html>
     <head>		
         <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.0/build/cssreset/cssreset-min.css&3.4.0/build/cssfonts/cssfonts-min.css&3.4.0/build/cssbase/cssbase-min.css">
-
         <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
-        <script src="../api.js"></script>
+        <script src="http://embeditor.org/api.js"></script>
+        
         <style>
             #embeditorUno {
                 height:400px;
                 width:45%;
                 float:left;
             }
-             #embeditorDos {
+            #embeditorDos {
                 height:400px;
                 width:45%;
                 float:right;
@@ -29,33 +29,32 @@
                 text-align:center;
             }
         </style>
+        
         <script>
-        YUI().use("event", function(Y){
-            var editor, uno, dos;
+            YUI().use("event", function(Y){
+                var editor, uno, dos;
             
-            Embeditor.onReady = function(id){
-                if (id === "embeditorUno") {
-                    uno = Embeditor.getInstance(id);
-                }
-                else if (id === "embeditorDos") {
-                    dos = Embeditor.getInstance(id);
-                }
-            };
+                uno = new Embeditor("embeditorUno");
+                dos = new Embeditor("embeditorDos");
             
-            Y.one("#copyuno").on("click", function(){
-                dos.setValue(uno.getValue());
+                Y.one("#copyuno").on("click", function(){
+                    uno.getValue(function(val){
+                        dos.setValue(val);
+                    });
+                });
+            
+                Y.one("#copydos").on("click", function(){
+                    dos.getValue(function(val){
+                        uno.setValue(val);
+                    });
+                })
             });
-            
-            Y.one("#copydos").on("click", function(){
-                uno.setValue(dos.getValue());
-            })
-        });
         </script>
     </head>
     
     <body>
-        <iframe class="editor" name="embeditorUno" id="embeditorUno" src="../index.html"></iframe>
-        <iframe class="editor" name="embeditorDos" id="embeditorDos" src="../index.html"></iframe>
+        <iframe class="editor" name="embeditorUno" id="embeditorUno" src="http://embeditor.org"></iframe>
+        <iframe class="editor" name="embeditorDos" id="embeditorDos" src="http://embeditor.org"></iframe>
         <input id="copyuno" type="button" value="Copy >>>">
         <br >
         <br >
