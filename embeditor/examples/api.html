@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>		
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.0/build/cssreset/cssreset-min.css&3.4.0/build/cssfonts/cssfonts-min.css&3.4.0/build/cssbase/cssbase-min.css">
+
+        <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
+        <script src="../api.js"></script>
+        <style>
+            #embeditor {
+                height:450px;
+                width:100%;
+                overflow: hidden;
+                border:none;
+            }
+        </style>
+        <script id="sample">
+    // The Ace embed API is documented at https://github.com/ajaxorg/ace/wiki/Embedding---API
+        
+    // YUI isn't required, I'm just using it for convinience
+    YUI().use("event", function(Y){
+        
+        var $ = Y.one, // Bling it up
+            editor; // This will be your Ace API object once the onReady fires
+            
+        // Set the onReady() callback that the iframe will fire when it is ready
+        Embeditor.onReady = function(){
+            editor = Embeditor.getInstance();
+            editor.setValue($("#sample").getContent());
+        };
+        
+        // Get the content of the editor and log it to the console
+        $("#btnGetValue").on("click", function(){
+            Y.log(editor.getValue());
+        });
+        
+        // Set the content of the editor
+        $("#btnSetValue").on("click", function(){
+            editor.setValue("Embeditor is awesome!");
+        });
+        
+    });
+        </script>
+    </head>
+    
+    <body>
+        <iframe id="embeditor" src="../index.html"></iframe>
+        
+        <br ><br >
+        
+        <input type="button" id="btnGetValue" value="#btnGetValue - Click to log the content to console" />
+        
+        <br ><br >
+        
+        <input type="button" id="btnSetValue" value="#btnSetValue - Click to set the content to 'Embeditor is awesome!'" />
+
+        </div>
+    </body>
+
+</html>

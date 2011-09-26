@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>		
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.0/build/cssreset/cssreset-min.css&3.4.0/build/cssfonts/cssfonts-min.css&3.4.0/build/cssbase/cssbase-min.css">
+
+        <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
+        <script src="../api.js"></script>
+        <style>
+            #embeditorUno {
+                height:400px;
+                width:45%;
+                float:left;
+            }
+             #embeditorDos {
+                height:400px;
+                width:45%;
+                float:right;
+            }
+            .editor {
+                overflow:hidden;
+                border:none;
+            }
+            #copyuno{
+                margin-top:150px;
+            }
+            #copyuno,
+            #copydos{
+                width:10%;
+                text-align:center;
+            }
+        </style>
+        <script>
+        YUI().use("event", function(Y){
+            var editor, uno, dos;
+            
+            Embeditor.onReady = function(id){
+                if (id === "embeditorUno") {
+                    uno = Embeditor.getInstance(id);
+                }
+                else if (id === "embeditorDos") {
+                    dos = Embeditor.getInstance(id);
+                }
+            };
+            
+            Y.one("#copyuno").on("click", function(){
+                dos.setValue(uno.getValue());
+            });
+            
+            Y.one("#copydos").on("click", function(){
+                uno.setValue(dos.getValue());
+            })
+        });
+        </script>
+    </head>
+    
+    <body>
+        <iframe class="editor" name="embeditorUno" id="embeditorUno" src="../index.html"></iframe>
+        <iframe class="editor" name="embeditorDos" id="embeditorDos" src="../index.html"></iframe>
+        <input id="copyuno" type="button" value="Copy >>>">
+        <br >
+        <br >
+        <input id="copydos" type="button" value="<<< Copy">
+    </body>
+
+</html>

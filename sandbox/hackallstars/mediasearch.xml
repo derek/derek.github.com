@@ -8,8 +8,6 @@
   <bindings>
     <select itemPath="items.item" produces="XML">
       <inputs>
-        <key id="query" type="xs:string" paramType="variable" required="true" />
-        <key id="service" type="xs:string" paramType="variable" required="false" />
       </inputs>
       <execute><![CDATA[
       
