@@ -7,7 +7,10 @@
   </meta>
   <bindings>
     <select itemPath="items.item" produces="XML">
+
       <inputs>
+        <key id="service" type="xs:string" paramType="variable" required="false" />
+        <key id="query" type="xs:string" paramType="variable" required="true" />
       </inputs>
       <execute><![CDATA[
       
