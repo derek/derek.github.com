@@ -1,0 +1,591 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    
+    <title>Why YUI | JSConf 2011</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <link rel="stylesheet" href="theme/reset.css">
+    <link rel="stylesheet" href="build/upstage-deck-core-min.css">
+    <link rel="stylesheet" href="theme/transition.css">
+    <link rel="stylesheet" href="theme/yuiconf2011.css">
+    
+    <style>
+    .slide h1{
+        font-size:2.3em;
+    }
+    
+    .templateB{
+        position: relative;
+    }
+    
+    .templateB h3{
+        text-align: center;
+        font-size: 3.0em;
+        top: 20%;
+    }
+        
+    .templateB .slide p {
+        font-size: 1.8em;
+        margin-left: 5%;
+    }
+    
+    .asd {
+        display:none;
+    }
+    
+    blockquote{
+        font-style:italic;
+    }
+    </style>
+</head>
+
+<body>
+
+<div id="bd" class="deck-container">
+
+    <div class="slide title">
+        <h1>Why YUI</h1>
+        <p>Derek Gathright, Yahoo! Inc.</p>
+    </div>
+    
+
+
+    <div class="slide">
+        <h2>Who is this guy?</h2>
+        <img style="float:right;" src="http://farm6.static.flickr.com/5169/5238437157_8700c2906d.jpg">
+        <ul>
+            <li>Derek Gathright (<a href="http://twitter.com/derek">@derek</a>)</li>
+            <li>Front-end engineer, Yahoo!
+                <ul>
+                    <li>YUI team (currently)</li>
+                    <li>Yahoo! Media</li>
+                    <li>Yahoo! Entertainment</li>
+                    <li>... various startups</li>
+                </ul>
+            </li>
+            <li>
+                Slides @ <a href="http://derek.github.com/">derek.github.com</a>
+            </li>
+        </ul>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>What is this talk about?</h2>
+        
+        <div class="slide">
+            <p>1. What makes YUI the best JavaScript library for building Web applications?</p>
+        </div>
+        
+        <div class="slide">
+            <p>2. Dispelling myths about YUI.</p>
+        </div>
+        
+        <div class="slide">
+            <p>3. Suggestions for how you can become a more involved community member.</p>
+        </div>
+        
+    </div>
+    
+    
+    <div class="slide">
+        <h2>My history with JS</h2>
+        <p class="slide">2005: "I hate JavaScript"</p>
+        <p class="slide">2006: "Hmm... This Prototype.js thing ain't so bad"</p>
+        <p class="slide">2007: "OMG jQuery &lt;3 &lt;3 &lt;3!1!!"</p>
+        <p class="slide">2008: "OMG jQuery &lt;3 &lt;3?"</p>
+        <p class="slide">2009: "Hmm... This YUI thing ain't so bad."</p>
+        <p class="slide">2010: "OMG YUI &lt;3 &lt;3 &lt;3!!!"</p>
+    </div>
+    
+    
+    <!-- -------- -->
+
+
+    <div class="slide">
+        <h1>Why #1: <span class="slide">It's a <span style="text-decoration: line-through;">DOM</span> JavaScript library</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>YUI: More than just DOM</h2>
+        <p>Post: <a href="http://blog.rebeccamurphey.com/on-jquery-large-applications">On jQuery &amp; Large Applications</a></p>
+        <blockquote>
+            "We have to make clear that, in fact, jQuery is but a hammer. 
+            When it comes to building these intensively client-side applications, we’re talking about building skyscrapers, for god’s sake. 
+            The problems solved by a hammer are the least of our concerns."
+        </blockquote>
+    </div>
+    
+    
+    <!-- -------- -->
+
+
+    <div class="slide">
+        <h1>Why #2: <span class="slide">Modules</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Modules</h2>
+        
+        <!-- 
+            - Modules are in other languages, but not JavaScript
+            - Module Pattern
+        -->
+        
+        <pre class="slide"><code class="prettyprint">// http://www.yuiblog.com/blog/2007/06/12/module-pattern/
+myAwesomeLibrary.someModule = (function () {
+
+  //"private" variables:
+  var myPrivateVar = "Fizz";
+
+  return  {
+    myPublicVar: myPrivateVar + " Buzz",
+    myPublicMethod: function () {
+      // Do something
+    }
+  };
+
+}()); // Note: Parens will execute and return the anonymous function</code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Modules</h2>
+        <p>YUI Modules Implementation</p>
+        <pre><code class="prettyprint">// fizzbuzz.js
+
+YUI.add("fizzbuzz", function(Y){
+
+  // Private variable
+  var myPrivateVar = "Fizz";
+
+  // Export as public variable
+  Y.fizz = myPrivateVar + " buzz"
+
+})</code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Modules</h2>
+        <p>Implementations &amp; evolving standards</p>
+        <ul>
+            <li>YUI Modules</li>
+            <li>AMD (Asynchronous Module Definition)</li>
+            <li>CommonJS Modules/1.1</li>
+            <li>CommonJS Modules/2.0</li>
+            <li>Ender.js</li>
+            <li>... and more</li>
+        </ul>
+        <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Modules</h2>
+        <div class="slide">
+            <p style="text-align:center; font-weight:bold;">Nicholas Zakas: <a href="http://yuilibrary.com/theater/nicholas-zakas/zakas-architecture/">Scalable JavaScript Application Architecture</a> [video]</p>
+            <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">
+        </div>
+    </div>
+
+
+    <!-- -------- -->
+
+
+    <div class="slide">
+        <h1>Why #3: <span class="slide">Loader</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Loader</h2>
+        
+        <pre class="slide"><code class="prettyprint">&lt;!-- Typical web page -->
+&lt;html>
+  &lt;head>
+      &lt;link rel="stylesheet" href="/css/mainStyles.css" />
+      &lt;link rel="stylesheet" href="/css/awesomeUILibrary.css" />
+      &lt;link rel="stylesheet" href="/css/pluginA.css" />
+      &lt;link rel="stylesheet" href="/css/pluginB.css" />
+      &lt;script src="/js/awesomeLibrary.min.js">&lt;/script>
+      &lt;script src="/js/awesomeUILibrary.min.js">&lt;/script>
+      &lt;script src="/js/pluginA.js">&lt;/script>
+      &lt;script src="/js/pluginB.js">&lt;/script>
+      &lt;script src="/js/pluginC.js">&lt;/script>
+      &lt;script src="/js/utils.js">&lt;/script>
+      &lt;script src="/js/main.js?v=87">&lt;/script>
+  &lt;/head>
+  &lt;body>&lt;!-- Do some stuff -->&lt;/body>
+&lt;/html>
+  </code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>Problems?</p>
+        <ul>
+            <li class="slide">HTTP requests</li>
+            <li class="slide">DNS lookups</li>
+            <li class="slide">Blocks rendering</li>
+            <li class="slide">Compressed? Minified?</li>
+        </ul>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>Goals of a module loader?</p>
+        <ul>
+            <li class="slide">Optimize &amp; Simplify</li>
+            <li class="slide">Resolve Dependencies</li>
+            <li class="slide">Asynchronous loading</li>
+            <li class="slide">Combo-load</li>
+        </ul>
+    </div>
+
+
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>YUI Modules Example (again)</p>
+        <pre><code class="prettyprint">// fizzbuzz.js
+
+YUI.add("fizzbuzz", function(Y){
+
+  // Private variable
+  var myPrivateVar = "Fizz";
+
+  // Export as public variable
+  Y.fizz = myPrivateVar + " buzz"
+
+})</code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>YUI Loader Implementation</p>
+        <pre><code class="prettyprint">&lt;html>
+  &lt;head>
+    &lt;script src="http://yuim.in/">&lt;/script>
+  &lt;/head>
+  &lt;body>
+    &lt;script>
+      YUI(<span class="slide asd">{
+        modules:{
+          fizzbuzz:{
+            fullpath:'fizzbuzz.js'
+          }
+        }
+      }</span>).use('fizzbuzz', function(Y) { 
+        console.log(Y.fizz) // "Fizz buzz"
+      });
+    &lt;/script>
+  &lt;/body>
+&lt;/html></code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Loader</h2>
+
+        <pre><code class="prettyprint">// Example @ http://jsfiddle.net/derek/sfcsE/
+YUI({
+    modules: {
+        'jquery': {
+            fullpath: 'jquery.min.js',
+            condition: 'before' // Load jQuery before its plugins
+        },
+        'jCarousel': {
+            fullpath: 'jquery.jcarousel.min.js',
+            requires: ['jquery', 'jCarouselCSS']
+        },
+        'jCarouselCSS': {
+            fullpath: 'skin.css',
+            requires: ['jCarouselCSS'],
+            type: 'css'
+        }
+    }
+}).use('jCarousel', function(Y) { ... });
+        </code></pre>
+
+    </div>
+
+    
+    <div class="slide">
+        <h2>Loader</h2>
+
+        <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>
+
+    </div>
+
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h1>Why #4: <span class="slide">CDN Combo-loading</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Why #4: CDN Combo-loading</h2>
+    </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h1>Why #5: <span class="slide">Environment agnostic</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Why #5: Environment agnostic</h2>
+    </div>
+
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h1>Why #6: <span class="slide">Configurable</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Why #6: Configurable</h2>
+    </div>
+
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h1>Why #7: <span class="slide">Accessibility</span></h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Why #7: Accessibility</h2>
+    </div>
+
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h1>JS Pub Night <br /> Myth vs Fact</h1>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"YUI is too enterprisey"</h1>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"YUI loves IE6"</h1>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"YUI doesn't work on mobile"</h1>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"Chain everything!"</h1>
+        <!--
+        Debugging (breakpoints)
+        Unit Testing
+        Against OO-principles
+        -->
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"YUI's API are not simplistic"</h1>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"Yooey"</h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Lessons</h2>
+    </div>
+    
+    
+    <!-- ------------------------------ -->
+    <div class="slide" id="how">
+        <h2>How Does It Work?</h2>
+        <p>Upstage is a slideshow system built on <a href="http://yuilibrary.com/">YUI 3</a>.</p>
+        <ol>
+            <li>
+                <h3>Create Slides</h3>
+                <p>Slides are plain old HTML.</p>
+            </li>
+            <li>
+                <h3>Tweak Styles</h3>
+                <p>Upstage can be used with deck.js themes.</p>
+            </li>
+            <li>
+                <h3>Extend and Enjoy</h3>
+                <p>Built on YUI's rock-solid Widget architecture.</p>
+            </li>
+        </ol>
+    </div>
+
+
+    <div class="slide" id="getting-started">
+        <h2>Getting Started</h2>
+        <ol>
+            <li>Get the <a href="https://github.com/reid/upstage/tree/widget">Upstage widget branch</a>.</li>
+            <li>Copy <code>index.html</code> and the <code>build</code> directory to another directory.</li>
+            <li>Start writing!</li>
+        </ol>
+    </div>
+
+    <div class="slide" id="sample-code">
+        <h2>Sample Code?</h2>
+        <p>Upstage even can show off your code!</p>
+        <pre><code>function Conference() {
+    this.attendees = "you";
+}
+
+Conference.prototype.isAwesome = function() {
+    if (this.attendees.indexOf("me") === -1) {
+        throw new Error("Without me, it's just Aweso.");
+    }
+    return true;
+};
+
+var yuiconf = new Conference();
+if (yuiconf.isAwesome()) deck.fire("warp", 1);</code></pre>
+    </div>
+
+    <div class="slide" id="architecture">
+
+        <h2>Architecture</h2>
+        <p>The Upstage core provides the architecture for the presentation. Make it useful by plugging in some of these:</p>
+        
+        <ul>
+            <li class="slide" id="architecture-keyboard">
+                <strong>UpstageKeyboard</strong>: Keyboard navigation.
+            </li>
+
+            <li class="slide" id="architecture-gesture">
+                <strong>UpstageGesture</strong>: Gesture navigation.
+            </li>
+            
+            <li class="slide" id="architecture-blanker">
+                <strong>UpstageBlanker</strong>: Simple screen blanking.
+            </li>
+
+            <li class="slide" id="architecture-permalink">
+                <strong>UpstagePermalink</strong>: Provides permalinks to slides that are unique per-slide.
+            </li>
+        </ul>
+    </div>
+<!-- .presentation -->
+</div>
+
+<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
+<script>
+    if (!window.YUI) {
+        // Retry with a local URL.
+        document.write('<script src="yui3/build/yui/yui.js"><\/script>');
+        // Don't autodetect the base path (the CDN path didn't work).
+        document.write('<script>YUI.config.base = "yui3/build/";<\/script>');
+    }
+</script>
+<script>
+    YUI({
+        modules: {
+            "upstage-blank": {
+                fullpath: "build/upstage-blank-min.js",
+                requires: ["upstage-slideshow", "plugin"]
+            },
+            "upstage-controls": {
+                fullpath: "build/upstage-controls-min.js",
+                requires: ["upstage-slideshow", "widget", "transition", "node"]
+            },
+            /*"upstage-gesture": {
+                fullpath: "build/upstage-gesture-min.js",
+                requires: ["upstage-slideshow", "plugin", "event-move"]
+            },*/
+            "upstage-keyboard": {
+                fullpath: "build/upstage-keyboard-min.js",
+                requires: ["upstage-slideshow", "plugin", "event-key"]
+            },
+            "upstage-permalink": {
+                fullpath: "build/upstage-permalink-min.js",
+                requires: ["upstage-slideshow", "node", "plugin", "history", "selection"]
+            },
+            "upstage-slideshow": {
+                fullpath: "build/upstage-slideshow-min.js",
+                requires: ["oop", "node", "widget"]
+            },
+            'gallery-prettify': {
+                fullpath: 'build/gallery-prettify/gallery-prettify.js',
+                requires: ['gallery-prettifyCSS']
+            },
+            'gallery-prettifyCSS': {
+                fullpath: 'build/gallery-prettify/gallery-prettify-skin.css',
+                type: "css"
+            }
+            // For controls plugin-widget:
+            // It should be a sub-Widget, but pluggable into deck.
+            // Also, it should create the prev/next links
+            // unlike deck.js which puts dummy links in markup.
+        },
+        debug: true,
+        filter: "min"
+    }).use(
+        "upstage-slideshow",
+        "upstage-keyboard",
+        "upstage-permalink",
+        "upstage-gesture",
+        "upstage-blank",
+        "gallery-prettify",
+        function (Y) {
+            // Upstage is a YUI widget.
+            var deck = new Y.Upstage({
+                srcNode: "#bd" // Where to find .slide elements.
+            });
+            
+            // Make the code pretty
+            Y.prettyPrint();
+            
+            // Upstage does not do much without plugins.
+            // They are all optional. Use only what you need.
+            deck.plug([
+                Y.Plugin.UpstageKeyboard,
+                Y.Plugin.UpstageBlank,
+                Y.Plugin.UpstageGesture,
+                Y.Plugin.UpstagePermalink
+            ]);
+
+            deck.render();
+        }
+    );
+</script>
+
+</body>
+
+</html>
