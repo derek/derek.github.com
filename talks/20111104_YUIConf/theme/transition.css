@@ -1,9 +1,9 @@
 .csstransitions.csstransforms .deck-container .slide {
-  -webkit-transition: opacity 200ms ease-in-out 0ms;
-  -moz-transition: opacity 200ms ease-in-out 0ms;
-  -ms-transition: opacity 200ms ease-in-out 0ms;
-  -o-transition: opacity 200ms ease-in-out 0ms;
-  transition: opacity 200ms ease-in-out 0ms;
+  -webkit-transition: opacity 400ms ease-in-out 0ms;
+  -moz-transition: opacity 400ms ease-in-out 0ms;
+  -ms-transition: opacity 400ms ease-in-out 0ms;
+  -o-transition: opacity 400ms ease-in-out 0ms;
+  transition: opacity 400ms ease-in-out 0ms;
 }
 .csstransitions.csstransforms .deck-container:not(.deck-menu) > .slide {
   position: absolute;
@@ -26,7 +26,7 @@
 }
 .csstransitions.csstransforms .deck-container:not(.deck-menu) > .slide .deck-current {
   opacity: 1;
-  display:inline;
+  /*display:inline;*/
 }
 .csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-previous, .csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-before, .csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-next, .csstransitions.csstransforms .deck-container:not(.deck-menu) > .deck-after {
   opacity: 0;

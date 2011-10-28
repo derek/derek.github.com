@@ -38,8 +38,12 @@
         display:none;
     }
     
-    blockquote{
-        font-style:italic;
+    .slide a {
+        text-decoration:underline;
+    }
+    
+    .slide.deck-previous>.hide-previous {
+        display:none;
     }
     </style>
 </head>
@@ -59,7 +63,7 @@
         <h2>Who is this guy?</h2>
         <img style="float:right;" src="http://farm6.static.flickr.com/5169/5238437157_8700c2906d.jpg">
         <ul>
-            <li>Derek Gathright (<a href="http://twitter.com/derek">@derek</a>)</li>
+            <li>Derek Gathright</li>
             <li>Front-end engineer, Yahoo!
                 <ul>
                     <li>YUI team (currently)</li>
@@ -69,7 +73,7 @@
                 </ul>
             </li>
             <li>
-                Slides @ <a href="http://derek.github.com/">derek.github.com</a>
+                Twitter &amp; Github as @derek
             </li>
         </ul>
     </div>
@@ -79,15 +83,15 @@
         <h2>What is this talk about?</h2>
         
         <div class="slide">
-            <p>1. What makes YUI the best JavaScript library for building Web applications?</p>
+            <p>1. What makes YUI Awesome</p>
         </div>
         
         <div class="slide">
-            <p>2. Dispelling myths about YUI.</p>
+            <p>2. YUI Myths</p>
         </div>
         
         <div class="slide">
-            <p>3. Suggestions for how you can become a more involved community member.</p>
+            <p>3. Getting Involved</p>
         </div>
         
     </div>
@@ -113,9 +117,9 @@
     
     
     <div class="slide">
-        <h2>YUI: More than just DOM</h2>
-        <p>Post: <a href="http://blog.rebeccamurphey.com/on-jquery-large-applications">On jQuery &amp; Large Applications</a></p>
-        <blockquote>
+        <h2>YUI, more than just DOM</h2>
+        <p><strong>Rebecca Murphey</strong> - <a href="http://blog.rebeccamurphey.com/on-jquery-large-applications">On jQuery &amp; Large Applications</a></p>
+        <blockquote style="font-style:italic; margin:left:5%;">
             "We have to make clear that, in fact, jQuery is but a hammer. 
             When it comes to building these intensively client-side applications, we’re talking about building skyscrapers, for god’s sake. 
             The problems solved by a hammer are the least of our concerns."
@@ -195,7 +199,19 @@ YUI.add("fizzbuzz", function(Y){
             <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">
         </div>
     </div>
-
+    
+    
+    
+    <div class="slide">
+        <h2>Modules</h2>
+        <p>Problems?</p>
+        <ul>
+            <li class="slide">Load order</li>
+            <li class="slide">Blocks rendering</li>
+            <li class="slide">HTTP requests</li>
+            <li class="slide">DNS lookups</li>
+        </ul>
+    </div>
 
     <!-- -------- -->
 
@@ -231,25 +247,12 @@ YUI.add("fizzbuzz", function(Y){
     
     <div class="slide">
         <h2>Loader</h2>
-        <p>Problems?</p>
+        <p>Problems with modules?</p>
         <ul>
-            <li class="slide">HTTP requests</li>
-            <li class="slide">DNS lookups</li>
-            <li class="slide">Blocks rendering</li>
-            <li class="slide">Compressed? Minified?</li>
+            <li class="slide">Load order? <span class="slide">Dependency resolution</span></li>
+            <li class="slide">Blocks rendering? <span class="slide">Asynchronous loading</span></li>
         </ul>
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Loader</h2>
-        <p>Goals of a module loader?</p>
-        <ul>
-            <li class="slide">Optimize &amp; Simplify</li>
-            <li class="slide">Resolve Dependencies</li>
-            <li class="slide">Asynchronous loading</li>
-            <li class="slide">Combo-load</li>
-        </ul>
+        <p class="slide">Goal of a module loader? <span class="slide">Optimize &amp; Simplify</span></p>
     </div>
 
 
@@ -279,13 +282,31 @@ YUI.add("fizzbuzz", function(Y){
   &lt;/head>
   &lt;body>
     &lt;script>
-      YUI(<span class="slide asd">{
+      YUI().use('fizzbuzz', function(Y) { 
+        console.log(Y.fizz) // "Fizz buzz"
+      });
+    &lt;/script>
+  &lt;/body>
+&lt;/html></code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>YUI Loader Implementation</p>
+        <pre><code class="prettyprint">&lt;html>
+  &lt;head>
+    &lt;script src="http://yuim.in/">&lt;/script>
+  &lt;/head>
+  &lt;body>
+    &lt;script>
+      YUI({
         modules:{
           fizzbuzz:{
-            fullpath:'fizzbuzz.js'
+            fullpath:'path/to/fizzbuzz.js'
           }
         }
-      }</span>).use('fizzbuzz', function(Y) { 
+      }).use('fizzbuzz', function(Y) { 
         console.log(Y.fizz) // "Fizz buzz"
       });
     &lt;/script>
@@ -332,14 +353,52 @@ YUI({
     
     
     <div class="slide">
-        <h1>Why #4: <span class="slide">CDN Combo-loading</span></h1>
+        <h1>Why #4: <span class="slide">Combo-loading</span></h1>
     </div>
     
     
+    <ul>
+        <li class="slide">Load order? <span class="slide">Dependency resolution</span></li>
+        <li class="slide">Blocks rendering? <span class="slide">Asynchronous loading</span></li>
+        <li class="slide">HTTP requests? <span class="slide">Dependency resolution</span></li>
+        <li class="slide">DNS lookups? <span class="slide">Dependency resolution</span></li>
+    </ul>
     <div class="slide">
-        <h2>Why #4: CDN Combo-loading</h2>
+        <h2>CDN Combo-loading</h2>
+        <p>Addresses the problem of one-module-per-HTTP-request.</p>
+        <div class="hide-previous"> 
+            <p>Instead of:</p>
+            <pre><code>GET moduleA.js
+GET moduleB.js
+GET moduleC.js
+
+= 3 HTTP requests</code></pre>
+        </div>
+        
+        <!--
+        Option A: 
+        Manually cat the files together
+        manually resolve your own dependencies
+        retest
+        
+        or
+        -->
+        <div class="slide">
+            <p>You get:</p>
+            <pre><code>GET moduleA.js &amp; moduleB.js &amp; moduleC.js
+                
+= 1 HTTP request</code></pre></div>
     </div>
     
+    <!--    
+    What about large URLs?
+    -->
+    
+    <!--    
+    Combine it all
+    - Loader + combo service = magic
+    - Show example of simple module inclusion
+    -->
     
     <!-- -------- -->
     
@@ -349,20 +408,37 @@ YUI({
     </div>
     
     
+    <div class="slide templateB">
+        <h2>Environment agnostic</h2>
+        <h1>What is the single most awesome thing about JavaScript?</h1>
+    </div>
+
+    <div class="slide templateB">
+        <h2>Environment agnostic</h2>
+        <h1>It runs everywhere!</h1>
+    </div>
+
     <div class="slide">
-        <h2>Why #5: Environment agnostic</h2>
+        <h2>Environment agnostic</h2>
+        <p class="slide">Why limit a library's potential and design it in a way that restricts it to one environment?</p>
+        <p class="slide">YUI takes pride in the fact that it runs on as well on servers as it does browsers.</p>
     </div>
 
     <!-- -------- -->
     
     
     <div class="slide">
-        <h1>Why #6: <span class="slide">Configurable</span></h1>
+        <h1>Why #6: <span class="slide">Extensibility</span></h1>
     </div>
     
     
     <div class="slide">
-        <h2>Why #6: Configurable</h2>
+        <h2>Extensibility</h2>
+        <p>Every YUI component is designed with future growth and compatibility in mind.</p>
+        <!-- 
+            Sandboxing
+        -->
+
     </div>
 
     <!-- -------- -->
@@ -375,6 +451,13 @@ YUI({
     
     <div class="slide">
         <h2>Why #7: Accessibility</h2>
+        <!-- 
+            Accessibility is really important to us
+            - Keyboard navigation
+            - Aria roles
+            - You get accessibility right out of the box.
+            - It's not an after thought
+        -->
     </div>
 
     <!-- -------- -->
@@ -383,6 +466,12 @@ YUI({
     <div class="slide">
         <h1>JS Pub Night <br /> Myth vs Fact</h1>
     </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Myths</h2>
+        <h1>"Yooey"</h1>
+    </div>    
     
     
     <div class="slide templateB">
@@ -409,7 +498,8 @@ YUI({
         <!--
         Debugging (breakpoints)
         Unit Testing
-        Against OO-principles
+        Code coverage 
+        Against OO-principles ?
         -->
     </div>
     
@@ -417,17 +507,70 @@ YUI({
     <div class="slide templateB">
         <h2>Myths</h2>
         <h1>"YUI's API are not simplistic"</h1>
+        <!--
+        JSRosettaStone.com
+        -->
     </div>
     
     
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"Yooey"</h1>
+    <div class="slide">
+        <h2>Myths: Simple APIs</h2>
+        <pre class="prettyprint"><code>// DOM selection
+    
+        // jQuery
+        $('#foo')
+
+        // YUI
+        Y.one('#foo') or
+        Y.all('#foo')
+        </code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Myths: Simple APIs</h2>
+        <pre class="prettyprint"><code>// DOM selection
+        
+        // jQueryify YUI
+        var $ = Y.all;
+        
+        $('#foo').doSomething();
+        </code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Myths: Simple APIs</h2>
+        <pre class="prettyprint"><code>YUI.add("ajaxPost", function(Y){
+  Y.ajaxPost = function(url, data, callback){
+      Y.io(url, {
+        method: 'POST',
+        data: data,
+        on: {
+          complete: function(id, o, args) {
+            callback(o.response);
+  }}});};
+}, null, {requires:['io-base']});
+
+Y.ajaxPost('someURL.php', {foo: 'bar', function(){...}})
+        </code></pre>
     </div>
     
     
     <div class="slide">
         <h2>Lessons</h2>
+        <!-- Fork/watch YUI -->
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h2>Thanks!</h2>
+        <div>Slides @ <a href="http://derek.github.com/">derek.github.com</a></div>
+    </div>
+    
+    
+    <div class="slide templateB">
+        <h1>Questions?</h1>
     </div>
     
     
