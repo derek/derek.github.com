@@ -61,7 +61,7 @@
 
     <div class="slide">
         <h2>Who is this guy?</h2>
-        <img style="float:right;" src="http://farm6.static.flickr.com/5169/5238437157_8700c2906d.jpg">
+       <!-- <img style="float:right;" src="http://farm6.static.flickr.com/5169/5238437157_8700c2906d.jpg"> -->
         <ul>
             <li>Derek Gathright</li>
             <li>Front-end engineer, Yahoo!
@@ -80,23 +80,303 @@
     
     
     <div class="slide templateB">
-        <h2>What is this talk about?</h2>
+        <h1>What is this talk about?</h1>
+        <!--
+            This talk is about what makes YUI the most uniquely ideal toolkit to build a high-performant, high-scale Web application.
         
-        <div class="slide">
-            <p>1. What makes YUI Awesome</p>
-        </div>
-        
-        <div class="slide">
-            <p>2. YUI Myths</p>
-        </div>
-        
-        <div class="slide">
-            <p>3. Getting Involved</p>
-        </div>
-        
+            #1 It's a JavaScript library
+            #2 Modular architecture
+            #3 Loader
+            #4 Combo-loading
+            #5 It's environment agnostic
+            #6 (?) Extensibility
+            #7 (?) Accessibility
+            #8 Gallery
+            #8 Open-source
+        -->
     </div>
     
     
+    
+    
+    
+    
+    
+    <div class="slide">
+        <h2>The starting point</h2>
+
+        <pre class="slide"><code class="prettyprint">&lt;!doctype html>
+&lt;html>
+  &lt;head>
+    &lt;title>My Awesome Web App \o/&lt;/title>
+    &lt;link rel="stylesheet" href="/css/someUILibrary.css" />
+    &lt;link rel="stylesheet" href="/css/pluginA.css" />
+    &lt;link rel="stylesheet" href="/css/mainStyles.css" />
+    &lt;script src="http://someCDN.com/someLibrary.min.js">&lt;/script>
+    &lt;script src="http://someCDN.com/UILibrary.min.js">&lt;/script>
+    &lt;script src="/js/pluginA.js">&lt;/script>
+    &lt;script src="/js/pluginB.js">&lt;/script>
+    &lt;script src="/js/pluginC.js">&lt;/script>
+    &lt;script src="/js/pluginD.js">&lt;/script>
+    &lt;script src="/js/utils.js">&lt;/script>
+    &lt;script src="/js/main.js?v=87">&lt;/script>
+  &lt;/head>
+  &lt;body>&lt;!-- Display some stuff -->&lt;/body>
+&lt;/html></code></pre>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Problems?</h2>
+        <ol>
+            <li class="slide">Not much structure</li>
+            <li class="slide">Fragile load order</li>
+            <li class="slide"><code>&lt;script></code> in <code>&lt;head></code> blocks rendering</li>
+            <li class="slide">10+ HTTP requests</li>
+            <li class="slide">Multiple DNS lookups</li>
+            <li class="slide">Uncompressed</li>
+        </ol>
+    </div>
+
+
+    <div class="slide templateB">
+        <h1>Problem #1: "Not much structure"</h1>
+    </div>
+
+
+    <div class="slide templateB">
+        <h2>Problem #1: "Not much structure"</h2>
+        <h1>Answer: <span class="slide">Modules</span></h1>
+    </div>
+
+
+        <div class="slide">
+            <h2>Modules</h2>
+
+            <!-- 
+                - Modules are in other languages, but not JavaScript
+                - Module Pattern
+            -->
+
+            <pre class="slide"><code class="prettyprint">// http://www.yuiblog.com/blog/2007/06/12/module-pattern/
+myAwesomeLibrary.someModule = (function () {
+
+  //"private" variables:
+  var myPrivateVar = "Fizz";
+
+  return  {
+    myPublicVar: myPrivateVar + " Buzz",
+    myPublicMethod: function () {
+      // Do something
+    }
+  };
+
+})(); // Note: Parens will execute and return the anonymous function</code></pre>
+        </div>
+
+
+        <div class="slide">
+            <h2>Modules</h2>
+            <p>YUI Modules Implementation</p>
+            <pre><code class="prettyprint">// fizzbuzz.js
+YUI.add("fizzbuzz", function(Y){
+
+  // Private variable
+  var myPrivateVar = "Fizz";
+
+  // Export as public variable
+  Y.fizz = myPrivateVar + " buzz";
+
+});</code></pre>
+        </div>
+
+
+        <div class="slide">
+            <h2>Modules</h2>
+            <p>Implementations &amp; evolving standards</p>
+            <ul>
+                <li>YUI Modules</li>
+                <li>AMD (Asynchronous Module Definition)</li>
+                <li>CommonJS Modules/1.1</li>
+                <li>CommonJS Modules/2.0</li>
+                <li>Ender.js</li>
+                <li>... and more</li>
+            </ul>
+            <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
+        </div>
+
+<!--
+        <div class="slide">
+            <h2>Modules</h2>
+            <div class="slide">
+                <p style="text-align:center; font-weight:bold;">Nicholas Zakas: <a href="http://yuilibrary.com/theater/nicholas-zakas/zakas-architecture/">Scalable JavaScript Application Architecture</a> [video]</p>
+                <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">
+            </div>
+        </div>
+-->
+
+
+    <div class="slide templateB">
+        <h1>I have modules, now What?</h1>
+    </div>
+
+
+    <div class="slide templateB">
+        <h2>Problem #1a: "How to include modules"</h2>
+        <h1>Answer: <span class="slide">Module Loader</span></h1>
+    </div>
+
+
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>YUI Modules Example (again)</p>
+        <pre><code class="prettyprint">// fizzbuzz.js
+
+YUI.add("fizzbuzz", function(Y){
+
+  // Private variable
+  var myPrivateVar = "Fizz";
+
+  // Export as public variable
+  Y.fizz = myPrivateVar + " buzz"
+
+})</code></pre>
+    </div>
+
+
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>Implementation</p>
+        <pre><code class="prettyprint">&lt;html>
+  &lt;head>
+    &lt;script src="http://yuim.in/">&lt;/script>
+  &lt;/head>
+  &lt;body>
+    &lt;script>
+      YUI().use('fizzbuzz', function(Y) { 
+        console.log(Y.fizz) // "Fizz buzz"
+      });
+    &lt;/script>
+  &lt;/body>
+&lt;/html></code></pre>
+    </div>
+
+    <div class="slide">
+        <h2>Loader</h2>
+        <p>YUI Loader Implementation</p>
+        <pre><code class="prettyprint">&lt;html>
+  &lt;head>
+    &lt;script src="http://yuim.in/">&lt;/script>
+  &lt;/head>
+  &lt;body>
+    &lt;script>
+      YUI({
+        modules:{
+          fizzbuzz:{
+            fullpath:'path/to/fizzbuzz.js'
+          }
+        }
+      }).use('fizzbuzz', function(Y) { 
+        console.log(Y.fizz) // "Fizz buzz"
+      });
+    &lt;/script>
+  &lt;/body>
+&lt;/html></code></pre>
+    </div>
+
+
+    <div class="slide">
+        <h2>Loader</h2>
+
+        <pre><code class="prettyprint">// Example @ http://jsfiddle.net/derek/sfcsE/
+YUI({
+  modules: {
+    'jquery': {
+      fullpath: 'jquery.min.js',
+      condition: 'before' // Execute jQuery before its plugins
+    },
+    'jCarousel': {
+      fullpath: 'jquery.jcarousel.min.js',
+      requires: ['jquery', 'jCarouselCSS']
+    },
+    'jCarouselCSS': {
+      fullpath: 'skin.css',
+      requires: ['jCarouselCSS'],
+      type: 'css'
+    }
+  }
+}).use('jCarousel', function(Y) { ... });
+        </code></pre>
+
+    </div>
+
+
+    <div class="slide">
+        <h2>Loader</h2>
+
+<!--        <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe> -->
+
+    </div>
+
+
+    <div class="slide">
+        <h2>Problems? (update)</h2>
+        <ul>
+            <li class="slide">1. <span style="text-decoration: line-through;">Not much structure</span> - Modules</li>
+            <li class="slide">1a. <span style="text-decoration: line-through;">How to include modules</span> - Loader</li>
+            <li class="slide">2. <span style="text-decoration: line-through;">Fragile load order</span> - Loader</li>
+            <li class="slide">3. <span style="text-decoration: line-through;"><code>&lt;script></code> in <code>&lt;head></code> blocks rendering</span> - Loader</li>
+            <li class="slide">4. 10+ HTTP requests</li>
+            <li class="slide">5. Multiple DNS lookups</li>
+            <li class="slide">6. Uncompressed</li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="slide ">
+        End
+    </div>
+    
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
+    <!-- -------- -->
     <div class="slide">
         <h2>My history with JS</h2>
         <p class="slide">2005: "I hate JavaScript"</p>
@@ -191,7 +471,7 @@ YUI.add("fizzbuzz", function(Y){
         <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
     </div>
     
-    
+    <!--
     <div class="slide">
         <h2>Modules</h2>
         <div class="slide">
@@ -199,7 +479,7 @@ YUI.add("fizzbuzz", function(Y){
             <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">
         </div>
     </div>
-    
+    -->
     
     
     <div class="slide">
@@ -344,7 +624,7 @@ YUI({
     <div class="slide">
         <h2>Loader</h2>
 
-        <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>
+<!--        <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe> -->
 
     </div>
 
@@ -460,109 +740,10 @@ GET moduleC.js
         -->
     </div>
 
+
     <!-- -------- -->
-    
-    
-    <div class="slide">
-        <h1>JS Pub Night <br /> Myth vs Fact</h1>
-    </div>
-    
-    
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"Yooey"</h1>
-    </div>    
-    
-    
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"YUI is too enterprisey"</h1>
-    </div>
-    
-    
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"YUI loves IE6"</h1>
-    </div>
-    
-    
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"YUI doesn't work on mobile"</h1>
-    </div>
-    
-    
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"Chain everything!"</h1>
-        <!--
-        Debugging (breakpoints)
-        Unit Testing
-        Code coverage 
-        Against OO-principles ?
-        -->
-    </div>
-    
-    
-    <div class="slide templateB">
-        <h2>Myths</h2>
-        <h1>"YUI's API are not simplistic"</h1>
-        <!--
-        JSRosettaStone.com
-        -->
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Myths: Simple APIs</h2>
-        <pre class="prettyprint"><code>// DOM selection
-    
-        // jQuery
-        $('#foo')
 
-        // YUI
-        Y.one('#foo') or
-        Y.all('#foo')
-        </code></pre>
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Myths: Simple APIs</h2>
-        <pre class="prettyprint"><code>// DOM selection
-        
-        // jQueryify YUI
-        var $ = Y.all;
-        
-        $('#foo').doSomething();
-        </code></pre>
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Myths: Simple APIs</h2>
-        <pre class="prettyprint"><code>YUI.add("ajaxPost", function(Y){
-  Y.ajaxPost = function(url, data, callback){
-      Y.io(url, {
-        method: 'POST',
-        data: data,
-        on: {
-          complete: function(id, o, args) {
-            callback(o.response);
-  }}});};
-}, null, {requires:['io-base']});
 
-Y.ajaxPost('someURL.php', {foo: 'bar', function(){...}})
-        </code></pre>
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Lessons</h2>
-        <!-- Fork/watch YUI -->
-    </div>
-    
-    
     <div class="slide templateB">
         <h2>Thanks!</h2>
         <div>Slides @ <a href="http://derek.github.com/">derek.github.com</a></div>
