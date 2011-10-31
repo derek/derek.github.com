@@ -53,7 +53,7 @@
 <div id="bd" class="deck-container">
 
     <div class="slide title">
-        <h1>Why YUI</h1>
+        <h1>Why YUI?</h1>
         <p>Derek Gathright, Yahoo! Inc.</p>
     </div>
     
@@ -85,17 +85,76 @@
     <div class="slide templateB">
         <h1>What is this talk about?</h1>
         <!--
-            This talk is about what makes YUI the most uniquely ideal toolkit to build a high-performant, high-scale Web application.
+            This talk is about what makes YUI the most uniquely 
+            ideal toolkit to build a simple, high-scale, maintainable Web application.
         
-            #1 It's a JavaScript library
-            #2 Modular architecture
-            #3 Loader
-            #4 Combo-loading
-            #5 It's environment agnostic
-            #6 (?) Extensibility
-            #7 (?) Accessibility
-            #8 Gallery
+        
+            
+            
+            
+            Architecture
+                1) modules
+                2) extensibility
+                3) Sandbox
+                4) Summary: Debunk "Enterprisey"
+                  -simple
+                  
+              
+            Tools
+                - Loader
+                - Combo service
+                - Grids
+                
+                
+            Open
+                - Open-source
+                    What license?
+            
+            
+              - Not talking about this type of architecture
+              http://www.beachwallpapers.in/bulkupload/New_beaches/Beautiful/Sydney%20Opera%20House%20Australia.jpg
+              - Talking about this type
+              
+              http://www.astronautix.com/graphics/i/issstar9.jpg
+              http://s89997654.onlinehome.us/screencaps/skitched-20111031-001342.jpg
+              http://chamorrobible.org/images/photos/gpw-20061021-NASA-S124-E-010006-black-space-Earth-horizon-white-clouds-blue-water-International-Space-Station-20080611-large.jpg
+            
+            
+            Lincoln Log
+            http://www.flickr.com/photos/51306450@N00/1460073230/
+            
+            Lego catapult
+            http://images.mocpages.com/user_thumbnails/webrain2003@speedy.co.il/www.brickshelf.com_gallery_irod_Catapult_00catapult.jpg_SPLASH.jpg
+            
+            
+        
+        
+        
+        
+        
+            #1 Modular architecture
+            #2 Loader
+            #3 Combo-loading
+            #4 Environment agnostic
+            #5 Extensibility
+            #6 Accessibility
+            #7 Gallery
             #8 Open-source
+            #9 It's a JavaScript library
+            
+            **Maintainability, maximize code resuse
+            
+            
+            Extensiblity
+            - Prototypes, building custom objects.
+            - JavaScript is ideal for this type of architecture
+            - Extend, don't hack
+            - Custom events
+            - State change patterns to hook into
+            - Consistent & formal creation/destruction patterns
+            - Graphics, history, storage (YUI2)
+            
+            
         -->
     </div>
 
@@ -110,13 +169,13 @@
         <p class="slide">2007: "OMG jQuery &lt;3 &lt;3 &lt;3!1!!"</p>
         <p class="slide">2008: "OMG jQuery &lt;3 &lt;3?"</p>
         <p class="slide">2009: "Hmm... This YUI thing ain't so bad."</p>
-        <p class="slide">2010: "OMG YUI &lt;3 &lt;3 &lt;3!!!"</p>
+        <p class="slide">2010+: "OMG YUI &lt;3 &lt;3 &lt;3!!!"</p>
     </div>
     
     
     <!-- -------- -->
-
-
+    
+    
     <div class="slide">
         <h1>Why #1: <span class="slide">Modules</span></h1>
     </div>
@@ -167,10 +226,10 @@ YUI.add("fizzbuzz", function(Y){
         <h2>Modules</h2>
         <p>Implementations &amp; evolving standards</p>
         <ul>
-            <li>YUI Modules (351 core + 274 Gallery)</li>
+            <li>YUI Modules (351 Core + 274 Gallery = 625)</li>
             <li>AMD (Asynchronous Module Definition)</li>
             <li>CommonJS Modules/1.1</li>
-            <li>CommonJS Modules/2.0</li>
+            <li>CommonJS Modules/2.0 (draft)</li>
             <li>Dojo, jQuery, Mootools, Ender.js, ... ?</li>
             <li>... and many more</li>
         </ul>
@@ -181,7 +240,7 @@ YUI.add("fizzbuzz", function(Y){
         <h2>Modules</h2>
         <div class="slide">
             <p style="text-align:center; font-weight:bold;">Nicholas Zakas: <a href="http://yuilibrary.com/theater/nicholas-zakas/zakas-architecture/">Scalable JavaScript Application Architecture</a> [video]</p>
-            <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">
+            <!--<img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">-->
         </div>
     </div>
     
@@ -191,7 +250,7 @@ YUI.add("fizzbuzz", function(Y){
         <h2>Modules</h2>
         
         <p>So we organized into modules, great!</p>
-        <pre class="slide"><code class="prettyprint">&lt;head>
+        <pre><code class="prettyprint">&lt;head>
   &lt;script src='/js/coreLibrary.js'> &lt;/script>
   &lt;script src='/js/moduleA.js'> &lt;/script>
   &lt;script src='/js/moduleB.js'> &lt;/script>
@@ -317,7 +376,7 @@ YUI({
     <div class="slide">
         <h2>Loader</h2>
 
-       <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>
+<!--       <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>-->
 
     </div>
 
@@ -419,14 +478,19 @@ GET moduleC.js
     </div>
     
     
+    <!-- -------- -->
+    
+    
     <div class="slide">
-        <h2>Why #7: Accessibility</h2>
-        <!-- 
-            Accessibility is really important to us
-            - Keyboard navigation
-            - Aria roles
-            - You get accessibility right out of the box.
-            - It's not an after thought
+        <h1>Why #8: <span class="slide">Open</span></h1>
+        <!--
+            Open Source
+            Open Web
+            Open CDN
+            Open Hours
+            Open Development
+            Open Communication
+            Open Documentation
         -->
     </div>
     
@@ -435,7 +499,7 @@ GET moduleC.js
     
     
     <div class="slide">
-        <h1>Why #1: <span class="slide">It's a <span style="text-decoration: line-through;">DOM</span> JavaScript library</span></h1>
+        <h1>Why #9: <span class="slide">It's a <span style="text-decoration: line-through;">DOM</span> JavaScript library</span></h1>
     </div>
     
     
@@ -539,7 +603,7 @@ if (yuiconf.isAwesome()) deck.fire("warp", 1);</code></pre>
 <!-- .presentation -->
 </div>
 
-<script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
+<script src="file:///Users/drg/Code/yui/yui3/build/yui/yui-min.js"></script>
 <script>
     if (!window.YUI) {
         // Retry with a local URL.
