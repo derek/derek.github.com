@@ -110,6 +110,8 @@
                 - Open-source
                     What license?
             
+            sandbox
+            - http://wtfcontent.com/img/130207816278.jpg
             
               - Not talking about this type of architecture
               http://www.beachwallpapers.in/bulkupload/New_beaches/Beautiful/Sydney%20Opera%20House%20Australia.jpg
@@ -177,20 +179,44 @@
     
     
     <div class="slide">
-        <h1>Why #1: <span class="slide">Modules</span></h1>
+        <h1>Why #1: <span class="slide">Architecture</span></h1>
     </div>
     
     
     <div class="slide">
-        <h2>Modules</h2>
+        <h2></h2>
+        <img src="http://www.beachwallpapers.in/bulkupload/New_beaches/Beautiful/Sydney%20Opera%20House%20Australia.jpg" height="500">
+    </div>
+    
+    
+    <div class="slide">
+        <h2></h2>
+        <img src="http://chamorrobible.org/images/photos/gpw-20061021-NASA-S124-E-010006-black-space-Earth-horizon-white-clouds-blue-water-International-Space-Station-20080611-large.jpg" height="500">
+    </div>
+    
+    <!--
+    <div class="slide">
+        <h2></h2>
+        <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111031-001342.jpg" height="500">
+    </div>
+    -->
+    
+    <div class="slide">
+        <h1>Modules</h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>JS Modules</h2>
         
         <!-- 
-            - Modules are in other languages, but not JavaScript
-            - Module Pattern
+            Modules are in other languages, but not JavaScript.
+            Why? Pretty obvious
+            Module Pattern
         -->
         
         <pre class="slide"><code class="prettyprint">// http://www.yuiblog.com/blog/2007/06/12/module-pattern/
-someLibrary.someModule = (function () {
+myLibrary.someModule = (function () {
 
   //"private" variables:
   var somePrivateVar = "Fizz";
@@ -223,7 +249,7 @@ YUI.add("fizzbuzz", function(Y){
     
     
     <div class="slide">
-        <h2>Modules</h2>
+        <h2>JS Modules</h2>
         <p>Implementations &amp; evolving standards</p>
         <ul>
             <li>YUI Modules (351 Core + 274 Gallery = 625)</li>
@@ -236,14 +262,146 @@ YUI.add("fizzbuzz", function(Y){
         <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
     </div>
     
+    
     <div class="slide">
-        <h2>Modules</h2>
-        <div class="slide">
-            <p style="text-align:center; font-weight:bold;">Nicholas Zakas: <a href="http://yuilibrary.com/theater/nicholas-zakas/zakas-architecture/">Scalable JavaScript Application Architecture</a> [video]</p>
-            <!--<img src="http://s89997654.onlinehome.us/screencaps/skitched-20111026-002315.jpg">-->
-        </div>
+        <h2>Extensibility</h2>
+        <img src="http://dallaschildblog.com/wp-content/uploads/2010/11/308460_4596.jpg" height="500">
+        <!--
+            Extensibility
+            - Prototypes, building custom objects.
+            - JavaScript is ideal for this type of architecture
+            - Extend, don't hack
+            - Custom events
+            - State change patterns to hook into
+            - Consistent & formal creation/destruction patterns
+            - Graphics, history, storage (YUI2)
+        -->
+        
+            <!-- 
+                JavaScript is ideal for a fluid environment
+                Prototypes
+                YUI augment/extend/merge/mix
+                Plugins
+                Extensions
+            -->
     </div>
     
+    
+    <div class="slide">
+        <h2></h2>
+        <img src="http://i1.treklens.com/photos/9392/lmqred.jpg" height="500">
+        <!-- source: http://www.treklens.com/gallery/photo149022.htm -->
+    </div>
+    
+    
+    <div class="slide">
+        <h2></h2>
+        <img src="http://www.pixartalk.com/wp-content/uploads/2011/07/cars2lego.jpg" height="500">
+        <!-- source: http://www.pixartalk.com/2011/08/lego-lightning-mcqueen/ -->
+    </div>
+    
+    
+    <div class="slide">
+        <h2></h2>
+        <img src="http://corinnegregory.com/wp-content/uploads/2011/06/change.jpg" height="500">
+    </div>
+    
+    
+    <div class="slide">
+        <h2></h2>
+        <h1>Don't hack it <br /> <br /> Extend it</h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Sandboxes</h2>
+        <img src="http://wtfcontent.com/img/130207816278.jpg" height="500">
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Sandboxes</h2>
+
+        <pre><code class="prettyprint">YUI().use('yql', function(Y){
+
+    console.log(typeof Y.YQL); // function
+
+    Y.use(function(X){
+        console.log(typeof X.YQL); // function
+    });
+
+    YUI().use(function(Y){
+        console.log(typeof Y.YQL); // undefined
+    });
+
+});</code></pre>
+
+    </div>
+    
+    
+    <div class="slide">
+        <h2>But I don't like sandboxes</h2>
+
+        <pre><code class="prettyprint">// Fine, export as a global
+            
+var Y = YUI().use('yql');</code></pre>
+
+    </div>
+    
+    
+    
+    
+    <div class="slide">
+        <h1>"YUI is too enterprisey"</h1>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Enterprisey?</h2>
+        <img src="http://images.wikia.com/memoryalpha/en/images/d/df/USS_Enterprise-A_quarter.jpg" height="500">
+    </div>
+    
+    
+    
+    <div class="slide">
+        <h1>Why #2: <span class="slide">Tools</span></h1>
+    </div>
+    
+    <div class="slide">
+        <h2>Platypus</h2>
+        <img src="http://images.nationalgeographic.com/wpf/media-live/photos/000/006/cache/platypus_662_600x450.jpg" height="500">
+    </div>
+    
+    <div class="slide">
+        <h2>The Amazing Platypus</h2>
+        <ul>
+            <li>Class: Mammal</li>
+            <li>Order: Monotreme</li>
+            <li>Branched 220 million years ago</li>
+        </ul>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>The Amazing Platypus</h2>
+        <p>Why is it so unique?</p>
+        <ul>
+            <li>Duck-like bill</li>
+            <li>Beaver-like tail</li>
+            <li>Lays eggs</li>
+            <li>Webbed feet</li>
+            <li>Venomous</li>
+            <li>Hunts blind</li>
+            <li>10 sex chromosones</li>
+        </ul>
+    </div>
+    
+    
+    <div class="slide">
+        <h2>Similarities?</h2>
+        <p>YUI and the Platypus are similar because they both evolved in very unique environments and adapted very well.</p>
+        <p>YUI characteristics can be found on many other JS libraries, but few match the diversity in one package.</p>
+    </div>
     
     
     <div class="slide">
@@ -276,7 +434,8 @@ YUI.add("fizzbuzz", function(Y){
     
     
     <div class="slide">
-        <h1>Why #2: <span class="slide">Loader</span></h1>
+        <h2>Loader</h2>
+        <img src="http://cdn.gajitz.com/wp-content/uploads/2009/10/Power-Loader-Aliens.jpg" height="500">
         <!--
           Addresses blocking by async loading
           Addresses dependencies by automatic dependency resolution
@@ -294,7 +453,7 @@ YUI.add("fizzbuzz", function(Y){
 
     <div class="slide">
         <h2>Loader</h2>
-        <p>YUI Modules Example (again)</p>
+        <p>YUI Modules example (again)</p>
         <pre><code class="prettyprint">// fizzbuzz.js
 
 YUI.add("fizzbuzz", function(Y){
@@ -375,9 +534,7 @@ YUI({
     
     <div class="slide">
         <h2>Loader</h2>
-
-<!--       <iframe style="width: 100%; height: 700px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>-->
-
+        <iframe style="width: 100%; height: 500px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>
     </div>
 
     
@@ -385,7 +542,8 @@ YUI({
     
     
     <div class="slide">
-        <h1>Why #4: <span class="slide">Combo-loading</span></h1>
+        <h2><span class="slide">Combo-loading</span></h2>
+        <div><img src="http://www.seriouseats.com/images/20081210-yoshi-pica-bento.jpg" height="500"></div>
     </div>
     
     
