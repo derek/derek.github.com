@@ -61,17 +61,28 @@
 
     <div class="slide">
         <h2>Who is this guy?</h2>
+        
+        <!-- 
+            Hi, I'm Derek Gathright.
+            I'm a senior software engineer here at Yahoo where I work on YUI full-time.
+            Prior to joining the YUI team, I worked on other projects at Yahoo within Media and Entertainment as a front-end engineer.
+            I'm a huge advocate of open-source and I love JavaScript
+            You can follow me both on Twitter & Github as @derek
+            
+        -->
+        
         <img style="float:right;" src="http://s89997654.onlinehome.us/screencaps/5238437157_8700c2906d_b.jpg_%281024%C3%97683%29-20111031-192729.jpg" height="350">
         <ul>
             <li>Derek Gathright</li>
-            <li>Senior software engineer, Yahoo!
+            <li>Software engineer, Yahoo!
                 <ul>
                     <li>YUI team</li>
                     <li>Yahoo! Media</li>
-                    <li>Yahoo! Entertainment</li>
                     <li>... various startups</li>
                 </ul>
             </li>
+            <li>&lt;3 open-source</li>
+            <li>&lt;3 JavaScript</li>
             <li>Twitter &amp; Github as @derek</li>
         </ul>
     </div>
@@ -182,49 +193,58 @@
     
     
     <div class="slide">
-        <h1>Why #1: <span class="slide">Architecture</span></h1>
+        <h2>Why YUI?</h2>
+        <h1>#1: <span class="slide">Architecture</span></h1>
         <!--
             The first 'why' we're going to look at is... architecture.
             When I say "architecture", some people think of this...
         -->
     </div>
+
+        <!-- -------- -->
     
     
     <div class="slide">
         <h2></h2>
-        <img src="http://www.beachwallpapers.in/bulkupload/New_beaches/Beautiful/Sydney%20Opera%20House%20Australia.jpg" height="500">
         
         <!--
-            The Sydney Opera House is one of the most recognizable structures on the planet.  It's expressionist design is beautiful, elegant, and iconic.
+            The Sydney Opera House is one of the most recognizable structures on the planet.  
+            It's expressionist design is beautiful, elegant, and iconic.
             Some have even called it a masterpiece.  
             
-            This isn't the type of architecture I'm talking about though.  As beautiful as this opera house is,
-            there's likely not too many lessons we can learn from it about software development.
+            This isn't the type of architecture I'm talking about though.  
+            As beautiful as this opera house is, there's likely not too many lessons we can learn from it about software development.
             
             This type of architecture I'm referring to is more like this.
         -->
+        
+        <img src="http://www.beachwallpapers.in/bulkupload/New_beaches/Beautiful/Sydney%20Opera%20House%20Australia.jpg" height="500">
+        
     </div>
     
     
+    <!-- -------- -->
+    
     <div class="slide">
         <h2></h2>
-        <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111031-001342.jpg" height="500">
         
         <!--
             Not quite as pretty is it?  Well, there is elegance here, it's just not as apparent in this component diagram.  
             
             Let's view it in it's physical form
         -->
+        
+        <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111031-001342.jpg" height="500">
+        
     </div>
+    
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2></h2>
-        <!--
-        <img src="http://chamorrobible.org/images/photos/gpw-20061021-NASA-S124-E-010006-black-space-Earth-horizon-white-clouds-blue-water-International-Space-Station-20080611-large.jpg" height="500">
-        -->
-        <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111031-203100.jpg" height="500">
-        
         <!--
             The International Space Station wasn't designed with beauty in mind, but it's undeniably there.
             To me, the beauty of the IIS in this picture isn't really because of any visual elements, but of the structure itself.
@@ -235,10 +255,22 @@
             
             So let's take a look at some of those "ilities"
         -->
+        
+        <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111031-203100.jpg" height="500">
+        
+        <!--
+        <img src="http://chamorrobible.org/images/photos/gpw-20061021-NASA-S124-E-010006-black-space-Earth-horizon-white-clouds-blue-water-International-Space-Station-20080611-large.jpg" height="500">
+        -->
+        
     </div>
+    
+    
+    <!-- -------- -->
+    
     
     <div class="slide">
         <h1>Modules</h1>
+        
         <!--
             Modules are a concept used across many engineering disciplines.  
             In a space station sense, they refer to the 32 separately constructed components that compose the IIS.
@@ -251,8 +283,24 @@
     </div>
     
     
+    <!-- -------- -->
+    
+    
+    
     <div class="slide">
         <h2>JS Modules</h2>
+
+        <!-- 
+            Here is just one example of a JavaScript module, as proposed on the yuiblog 4 years ago.
+            You start with assigning an anonymous function to whatever you want to name your module.  
+            Inside this module, you can create whatever private variables you'd like, and you return 
+            an object containing things you would like to publicly expose.
+            Finally, you execute and return your anonymous function.
+            
+            There are a number of strengths and weaknesses to this design, and over time, the YUI team finally settled on 
+            similar, but slightly different design for YUI3.
+        -->
+        
         <pre class="slide"><code class="prettyprint">// yuiblog.com/blog/2007/06/12/module-pattern/
 myLibrary.fizzbuzz = (function () {
 
@@ -264,22 +312,27 @@ myLibrary.fizzbuzz = (function () {
   
 })();</code></pre>
 
-        <!-- 
-            Here is just one example of a JavaScript module, as proposed on the yuiblog 4 years ago.
-            You start with assigning an anonymous function to whatever you want to name your module.  
-            Inside this module, you can create whatever private variables you'd like, and you return 
-            an object containing things you would like to publicly expose.
-            Finally, you execute and return your anonymous function.
-            
-            There are a number of strengths and weaknesses to this design, and over time, the YUI team finally settled on 
-            similar, but slightly different design for YUI.
-        -->
-
     </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2>YUI Modules</h2>
+
+        <!-- 
+            This module does the exact same thing the previous example did, the implementation is slightly different though.
+
+            You have the same capabilities for private members, and whatever you'd like to expose to the public is attached to the Y object.
+
+            Modules are a fundamental building block for everything you do in YUI.  Between the Core library and the YUI Gallery, 
+            you'll see over 600 modules that you can use inside of your application to do everything from DOM manipulation,
+            animation, object-oriented helpers, and many more.
+
+            It is not intended that you use all of them at the same time, but rather to pick and chose only the ones you want.
+        -->
+        
         <pre><code class="prettyprint">// fizzbuzz.js
 
 YUI.add("fizzbuzz", function(Y){
@@ -292,32 +345,14 @@ YUI.add("fizzbuzz", function(Y){
 
 });</code></pre>
 
-    
-    <!-- 
-        This module does the exact same thing the previous example did, the implementation is slightly different though.
-        
-        You have the same capabilities for private members, and whatever you'd like to expose to the public is attached to the Y object.
-        
-        Modules are a core building block for everything you do in YUI.  Between the Core library and the YUI Gallery, 
-        you'll see over 600 modules that you can use inside of your application to do everything from DOM manipulation,
-        animation, object-oriented helpers, and many more.
-        
-        It is not intended that you use all of them at the same time, but rather to pick and chose only the ones you want.
-    -->
-
     </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2>JS Modules</h2>
-        <p>Emerging standards</p>
-        <ul>
-            <li>AMD (Asynchronous Module Definition)</li>
-            <li>CommonJS Modules/1.1</li>
-            <li>CommonJS Modules/2.0 (draft)</li>
-            <li>... and more</li>
-        </ul>
-        <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
         
         <!-- 
             YUI is one of the few popular JavaScript libraries that uses this modular architecture, 
@@ -335,36 +370,46 @@ YUI.add("fizzbuzz", function(Y){
             
             This makes it even more important that we as a JavaScript community come up with a standard that it both backwards, and forwards compatible,
             and one that also runs equally as well server-side and within browsers.
-            
-            So we've talked about how to implement a modular design in JS, but what do you get out of it?  The #1 thing....
         -->
+        
+        <p>Emerging standards</p>
+        <ul>
+            <li>AMD (Asynchronous Module Definition)</li>
+            <li>CommonJS Modules/1.1</li>
+            <li>CommonJS Modules/2.0 (draft)</li>
+            <li>... and more</li>
+        </ul>
+        <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
+        
     </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2></h2>
         <h1>What do you gain from modularity?</h1>
-        <!-- 
-            So we've talked about how to implement a modular design in JS, but what do you get out of it?  The #1 thing....
+        <!--
+            So we've talked about briefly about modular design in JS, but what do you get out of it?  The #1 thing....
         -->
     </div>
+    
+    
+    
+    <!-- -------- -->
+    
+    
     <div class="slide">
         <h2>Extensibility</h2>
-        <img src="http://dallaschildblog.com/wp-content/uploads/2010/11/308460_4596.jpg" height="500">
         <!--
+            Extensibility
+            
             This is the idea that a your code is designed with future growth in mind.  Even, to be able to grow in ways it was never intended.
             When working within a library, it's extremely important that you consider all types of edge-cases, and make it possible for
-            developers to replace or extend your functionality with their own.
+            developers who are going to be using your code to replace or extend functionality you provide them with their own.
             
             When you think about extensibility with software, a good comparison might be Lightning McQueen.
-            This specific toy was designed to only 1 thing, look exactly like Lightning McQueen did in the movie Cars.  
-            I'd say they did a pretty good job.  But the problem is what happens in the next sequel when Lightning 
-            is getting older and needs rocket boosters, or the sequel after that when he has a midlife crisis and wants to be a convertible.
-            Something like this might be more appropriate.
-            
-            
-            
-            
         -->
         
             <!--
@@ -384,128 +429,247 @@ YUI.add("fizzbuzz", function(Y){
                 Plugins
                 Extensions
             -->
+        
+        <img src="http://dallaschildblog.com/wp-content/uploads/2010/11/308460_4596.jpg" height="500">
     </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2></h2>
+        <!--
+        
+        This specific toy was designed to be only one thing, look exactly like Lightning McQueen did in the original Cars movie.  
+        I'd say they did a pretty good job.  But the problem is what happens in the next sequel when Lightning 
+        is getting older and needs rocket boosters to get around the track.  
+        Or the sequel after that when he has a midlife crisis and wants to be a convertible.
+        
+        -->
+        
         <img src="http://i1.treklens.com/photos/9392/lmqred.jpg" height="500">
         <!-- source: http://www.treklens.com/gallery/photo149022.htm -->
     </div>
     
     
+    <!-- -------- -->
+    
+    
     <div class="slide">
         <h2></h2>
+        
+        <!--
+            Something like this might be more appropriate.
+            
+            [TODO]
+        -->
+        
         <img src="http://www.pixartalk.com/wp-content/uploads/2011/07/cars2lego.jpg" height="500">
         <!-- source: http://www.pixartalk.com/2011/08/lego-lightning-mcqueen/ -->
+        
     </div>
+    
+    <!-- Time: 10 min -->
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2></h2>
-        <img src="http://corinnegregory.com/wp-content/uploads/2011/06/change.jpg" height="500">
-    </div>
-    
-    
-    <div class="slide">
-        <h2></h2>
-        <h1>Don't hack it <br /> <br /> Extend it</h1>
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Sandboxes</h2>
-        <img src="http://wtfcontent.com/img/130207816278.jpg" height="500">
-    </div>
-    
-    
-    <div class="slide">
-        <h2>Sandboxes</h2>
-
-        <pre><code class="prettyprint">YUI().use('yql', function(Y){
-
-    Y.log(typeof Y.YQL); // function
-
-    Y.use(function(X){
-        Y.log(typeof X.YQL); // function
-    });
-
-    YUI().use(function(Y){
-        Y.log(typeof Y.YQL); // undefined
-    });
-
-});</code></pre>
-
-    </div>
-    
-    
-    <div class="slide">
-        <h2>But I don't like sandboxes</h2>
-
-        <pre><code class="prettyprint">// Fine, export as a global
+        
+        <!--
+            In application development, one constant is change.  This is especially true on the Web where new ideas, 
+            technologies, patterns, techniques, libraries, and standards, are all evolving at an accelerated pace.
             
-var Y = YUI().use('yql');</code></pre>
-
+            Years ago, when I was working on a startup that was using jQuery, a new feature we needed was a rich text editor.
+            So I did what most jquery users do, search "jquery rich text editor plugin."  I came across lots of blog posts
+            "top 12 jQuery editor plugins", "10 jquery-based rich text editors to blow your mind"  This stuff reads like a Cosmo magazine.
+            
+            So I click through each one, play around with the demo, figure out which one most meets my spec, plug it in, glue it together, viola. Done.
+            
+            2 weeks later, "Oh, we need the ability to upload and add pictures within the editor."
+            Now my first thought is "Gee, that would have been great to know a few weeks ago."  But that still doesn't change the problem I have.  
+            I now have a feature that I need to integrate with an editor that it was never designed to support.
+            Sure I could crack open the plugin and start hacking away until I got it working, or just gave up and try another editor.
+            
+            The point of this is...
+        -->
+        
+        <img src="http://corinnegregory.com/wp-content/uploads/2011/06/change.jpg" height="500">
+        
     </div>
     
     
+    <!-- -------- -->
     
     
     <div class="slide">
-        <h1>"YUI is too enterprisey"</h1>
+        <h2></h2>
+        
+        <!-- 
+            Most of our business cards say something similar to "front end engineer", "web engineer".  Well, where do you think the "engineer" part 
+            comes from?  Our jobs are not to  throw together a pile of code, hand it over so you can hack in our modifications, 
+            and deliver it so some other poor sap that is in charge of maintaining it.  
+            You just end up with unmaintainable junk that is thrown away when it no longer fits a spec, and the
+            process is destined to repeat itself over again.
+            
+            Every component within YUI is developed with extensibility in mind.  Some of the teams that use YUI within Yahoo never use the vanilla
+            versions of the components we have.  They endlessly modify and extend them to suit their exact needs.
+            
+            When you talk about things like components, modules, extensibility, one of the things you hear is "Ohhh... that sounds very enterprisey"
+            
+            So let's talk about this myth
+        -->
+        
+        <h1>Don't hack <br /> <br /> Extend</h1>
     </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide" >
+        <h2></h2>
+        
+        <!-- 
+            I go to a lot of meetups, pub nights, and talk with a lot of people about YUI.  This isn't something I hear all the time, but it's something you
+            hear enough that it warrants a discussion.
+            
+            What do you even mean when you say enterprisey?
+            
+            Are you talking about this? ...
+        -->
+        
+        <h1>Myth: "YUI is too enterprisey"</h1>
+    </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2>Enterprisey?</h2>
+        
+        <!--
+            If so, Awesome!
+            I could probably do a whole talk about comparing YUI to the Starship Enterprise.
+            But I have a feeling they aren't talking about this.
+        -->
+        
         <img src="http://images.wikia.com/memoryalpha/en/images/d/df/USS_Enterprise-A_quarter.jpg" height="500">
+        
     </div>
     
+    
+    <!-- -------- -->
     
     
     <div class="slide">
-        <h1>Why #2: <span class="slide">Tools</span></h1>
+        <h2>Enterprisey?</h2>
+        
+        <!--
+            Instead, it's more something like this.
+            
+            Modules? Documentation? Scary!
+            
+            YUI is actually extremely simple if you know how to read a little bit of documentation at yuilibrary.com.
+            It's just a suite of tools that naturally evolved to suit the needs of Yahoo, the team, and the community.
+            You can use as many, or as few of the tools as you like.  Again, extensible design.
+            
+            So let's dive into the tools a little more.
+        -->
+        
+        <img src="http://infolific.com/images/fun/metaphor-for-complexity.gif" height="500">
     </div>
     
-    <div class="slide">
-        <h2>Platypus</h2>
-        <img src="http://images.nationalgeographic.com/wpf/media-live/photos/000/006/cache/platypus_662_600x450.jpg" height="500">
-    </div>
     
-    <div class="slide">
-        <h2>The Amazing Platypus</h2>
-        <ul>
-            <li>Class: Mammal</li>
-            <li>Order: Monotreme</li>
-            <li>Branched 220 million years ago</li>
-        </ul>
-    </div>
-    
-    
-    <div class="slide">
-        <h2>The Amazing Platypus</h2>
-        <p>Why is it so unique?</p>
-        <ul>
-            <li>Duck-like bill</li>
-            <li>Beaver-like tail</li>
-            <li>Lays eggs</li>
-            <li>Webbed feet</li>
-            <li>Venomous</li>
-            <li>Hunts blind</li>
-            <li>10 sex chromosones</li>
-        </ul>
-    </div>
+    <!-- -------- -->
     
     
     <div class="slide">
-        <h2>Similarities?</h2>
-        <p>YUI and the Platypus are similar because they both evolved in unique environments and adapted.</p>
-        <p>YUI characteristics can be found on many other JS libraries, but few match the diversity in one package.</p>
+        <h2>Why YUI?</h2>
+        <h1>#2: <span class="slide">Tools</span></h1>
+        <!-- 
+        
+        -->
     </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h2>Toolkit</h2>
+        
+        <!--
+            YUI is called a library, but I personally view it more like a toolkit.  That's not saying the "library" term is incorrect.  
+            Library, toolkit, and framework are often used interchangeably, so I don't want to get lost in semantics.  
+            The reason I say 'toolkit' most accurately describes YUI is because it allows you to pick & choose what it is you want, and nothing more.
+        -->
+        
+        <img src="http://upload.wikimedia.org/wikipedia/commons/f/f4/20060513_toolbox.jpg" height="500">
+        
+    </div>
+    
+    <div class="slide">
+        <h2>Tools</h2>
+
+        <!--
+            If you just want a DOM selector/editor, ok, YUI use "node"
+            Canvas/SVG/VML graphics, then use graphics
+            Want a calendar widget, use calendar
+            YQL client, use YQL
+
+            So these are all YUI core modules, but the world of YUI tools extends well beyond modules, so let's look at some of them.
+
+            The first, is actually a tool to include you modules.
+        -->
+        
+        <pre><code>// DOM
+YUI().use('node', function (Y) { ... });
+
+// Canvas/SVG/VML graphics
+YUI().use('graphics', function (Y) { ... });
+
+// Calendar widget
+YUI().use('calendar', function (Y) { ... });
+
+// YQL client
+YUI().use('yql', function (Y) { ... });</code></pre>
+    </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h2>YUI Loader</h2>
+        
+        <!--
+          Addresses blocking by async loading
+          Addresses dependencies by automatic dependency resolution
+          On-demand modules loading
+          Support CSS
+        -->
+        
+        <img src="http://cdn.gajitz.com/wp-content/uploads/2009/10/Power-Loader-Aliens.jpg" height="500">
+    </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2>Modules</h2>
+
+        <!-- 
+          Blocking because you are cramming all those into the head
+          It has a fragile load order, because what if you include your coreLibrary.js last?
+          Do you load all your dozens of modules on every page? Load them selectively? How do you handle dependency resolution? Calculation?
+          What about CSS dependencies for UI widgets?
+        -->
         
         <p>So we organized into modules, great!</p>
         <pre><code class="prettyprint">&lt;head>
@@ -517,42 +681,24 @@ var Y = YUI().use('yql');</code></pre>
 &lt;/head></code></pre>
     </div>
     
-    
-    <div class="slide">
-      <h2>Problems?</h2>
-      <ul>
-          <li class="slide">Blocking</li>
-          <li class="slide">Fragile load order</li>
-          <li class="slide">Load all modules on every page? Selectively? How to calculate? Ahhh!</li>
-          <li class="slide">Dependency resolution</li>
-          <li class="slide">CSS Dependencies?</li>
-      </ul>
-    </div>
-    
-    
     <!-- -------- -->
-    
-    
-    <div class="slide">
-        <h2>Loader</h2>
-        <img src="http://cdn.gajitz.com/wp-content/uploads/2009/10/Power-Loader-Aliens.jpg" height="500">
-        <!--
-          Addresses blocking by async loading
-          Addresses dependencies by automatic dependency resolution
-          On-demand modules loading
-          Support CSS
-          
-        -->
-    </div>
-    
     
     <div class="slide templateB">
         <h1>Goal of a module loader? <span class="slide"><br /><br />Optimize &amp; Simplify</span></h1>
+        <!-- 
+        
+        -->
     </div>
 
-
+    
+    <!-- -------- -->
     <div class="slide">
         <h2>Loader</h2>
+        
+        <!-- 
+        
+        -->
+        
         <p>YUI Modules example (again)</p>
         <pre><code class="prettyprint">// fizzbuzz.js
 
@@ -570,6 +716,11 @@ YUI.add("fizzbuzz", function(Y){
     
     <div class="slide">
         <h2>Loader</h2>
+        
+        <!-- 
+        
+        -->
+        
         <p>YUI Loader Implementation</p>
         <pre><code class="prettyprint">&lt;!DOCTYPE html>
 &lt;html>
@@ -579,12 +730,18 @@ YUI.add("fizzbuzz", function(Y){
       console.log(Y.fizz) // "Fizz buzz"
     });
   &lt;/script>
-&lt;/html></code></pre>
+&lt;/html></code></pre>  
+  <!-- -->
     </div>
     
     
     <div class="slide">
         <h2>Loader</h2>
+        
+        <!-- 
+        
+        -->
+        
         <p>YUI Loader Implementation</p>
         <pre><code class="prettyprint">&lt;!DOCTYPE html>
 &lt;html>
@@ -598,13 +755,18 @@ YUI.add("fizzbuzz", function(Y){
       console.log(Y.fizz) // "Fizz buzz"
     });
   &lt;/script>
-&lt;/html></code></pre>
+&lt;/html></code></pre>  
+  <!-- -->
     </div>
     
     
     <div class="slide">
         <h2>Loader</h2>
-
+        
+        <!-- 
+        
+        -->
+        
         <pre><code class="prettyprint">// Example @ http://jsfiddle.net/derek/sfcsE/
 YUI({
     modules: {
@@ -624,12 +786,18 @@ YUI({
     }
 }).use('jCarousel', function(Y) { ... });
         </code></pre>
-
+        
+        <!-- -->
     </div>
 
     
     <div class="slide">
         <h2>Loader</h2>
+        
+        <!-- 
+        
+        -->
+        
         <iframe style="width: 100%; height: 500px" src="http://jsfiddle.net/derek/sfcsE/embedded/"></iframe>
     </div>
 
@@ -639,12 +807,25 @@ YUI({
     
     <div class="slide">
         <h2><span>Combo-loading</span></h2>
+        
+        <!-- 
+        
+        -->
+        
         <div><img src="http://www.seriouseats.com/images/20081210-yoshi-pica-bento.jpg" height="500"></div>
     </div>
     
     
+    <!-- -------- -->
+    
+    
     <div class="slide">
         <h2>Combo-loading</h2>
+        
+        <!-- 
+        
+        -->
+        
         <p>Addresses the problem of one-module-per-HTTP-request.</p>
         <div class="hide-previous"> 
             <p>Instead of:</p>
@@ -653,6 +834,7 @@ GET moduleB.js
 GET moduleC.js
 
 = 3 HTTP requests</code></pre>
+<!-- -->
         </div>
         
         <!--
@@ -671,14 +853,30 @@ GET moduleC.js
     </div>
     
     
+    <!-- -------- -->
+    
+    
     <div class="slide">
         <h2>Combo-loading</h2>
         <h1>"What about large URLs?"</h1>
+        
+        <!-- 
+        
+        -->
+        
     </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h1>Modules + Loader + Combo service</h1>
+        
+        <!-- 
+        
+        -->
+        
     </div>
     
     
@@ -687,6 +885,11 @@ GET moduleC.js
     
     <div class="slide">
         <h2>Environment agnostic</h2>
+        
+        <!-- 
+        
+        -->
+        
     </div>
     
     
@@ -695,6 +898,7 @@ GET moduleC.js
     
     <div class="slide">
         <h1>Why #3: <span class="slide">Open</span></h1>
+        
         <!--
             Open Source
             Open Web
@@ -704,11 +908,20 @@ GET moduleC.js
             Open Communication
             Open Documentation
         -->
+        
     </div>
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
         <h2>Open</h2>
+        
+        <!-- 
+        
+        -->
+        
         <ul>
             <li class="slide">Open Source</li>
             <li class="slide">Open Web</li>
@@ -725,7 +938,100 @@ GET moduleC.js
     
     
     <div class="slide">
+        <h2>Evolution</h2>
+        
+        <!-- 
+        
+        -->
+        
+        <div class="slide">
+            <img src="http://images.nationalgeographic.com/wpf/media-live/photos/000/006/cache/platypus_662_600x450.jpg" height="500">
+        </div>
+        <!--
+            I just mentioned that YUI was a suite of tools that naturally evolved.  So let's explore this concept for a bit.
+            There's a very unique member of the animal kingdom, the platypus.
+            
+            The platypus
+        -->
+    </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h2>The Amazing Platypus</h2>
+        
+        <!-- 
+        
+        -->
+        
+        <ul>
+            <li>Mammal > Monotreme > Platypoda</li>
+            <li>Branched 220 million years ago</li>
+        </ul>
+        <div>
+            <p class="slide">Why is it so unique?</p>
+            <ul>
+                <li class="slide">Duck-like bill</li>
+                <li class="slide">Beaver-like tail</li>
+                <li class="slide">Lays eggs</li>
+                <li class="slide">Webbed feet</li>
+                <li class="slide">Venomous</li>
+                <li class="slide">Hunts blind</li>
+                <li class="slide">10 sex chromosones</li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h2>The Amazing Platypus</h2>
+        <!-- 
+            The reason I'm here giving you a biology lesson is because YUI, much like the platypus, has developed many unique characteristics 
+            over the years as a result of the unique environment that it has evolved in.
+            
+            Many of the tools of the platypus can be seen elsewhere in the animal kingdom on a variety of other animals, but you only
+            get one, maybe two per species, whereas the platypus is an entire package of usefulness. The amazing thing is the platypus evolved all of these
+            on its own.  
+            
+            The bill can be seen on birds, which is good for digging
+            The tail can be seen on beavers, which is good for swimming
+            It lays eggs, much like a reptile
+            It has webbed feet, like aquatic birds
+            It is venomous like many insects and snakes
+            It hunts blind and deaf, using bat-like sonar 
+            
+            It lives & sleeps on land, but hunts mostly in rivers
+        -->
+        <img src="assets/platypus02.jpg" height="500">
+    </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
+        <h2>Similarities?</h2>
+        
+        <!-- 
+        
+        -->
+        
+        <p>YUI and the Platypus are similar because they both evolved in unique environments and adapted.</p>
+        <p>YUI characteristics can be found on many other JS libraries, but few match the diversity in one package.</p>
+    </div>
+    
+    
+    <!-- -------- -->
+    
+    
+    <div class="slide">
         <h1>Conclusion</h1>
+        
         <!-- 
             We use YUI because it is the most versatile, extensible JavaScript library available.
         -->
@@ -743,11 +1049,17 @@ GET moduleC.js
     </div>
     -->
     
+    
     <!-- -------- -->
     
     
     <div class="slide templateB">
         <h2>Thanks!</h2>
+        
+        <!-- 
+        
+        -->
+        
         <div>Slides @ <a href="http://derek.github.com/">http://derek.github.com</a></div>
     </div>
     
@@ -755,6 +1067,16 @@ GET moduleC.js
     <div class="slide templateB">
         <h1>Questions?</h1>
     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     <!-- ------------------------------ -->
@@ -916,3 +1238,49 @@ if (yuiconf.isAwesome()) deck.fire("warp", 1);</code></pre>
 </body>
 
 </html>
+
+
+<!--
+
+
+
+<div class="slide">
+    <h2>Sandboxes</h2>
+    <img src="http://wtfcontent.com/img/130207816278.jpg" height="500">
+    
+        Sandboxes are a broadly used term in JavaScript.  Sometimes they are in reference to 
+        Sandboxes sound scary at first, but they're really very, very simple.  The idea is that you control what instance of YUI you use,
+        regardless of how deeply nested you are.  This is especially important when you are working on large teams where it becomes 
+        
+</div>
+
+
+<div class="slide">
+    <h2>Sandboxes</h2>
+
+    <pre><code class="prettyprint">YUI().use('yql', function(Y){
+
+Y.log(typeof Y.YQL); // function
+
+Y.use(function(X){
+    Y.log(typeof X.YQL); // function
+});
+
+YUI().use(function(Y){
+    Y.log(typeof Y.YQL); // undefined
+});
+
+});</code></pre>
+
+</div>
+
+
+<div class="slide">
+    <h2>But I don't like sandboxes</h2>
+
+    <pre><code class="prettyprint">// Fine, export as a global
+        
+var Y = YUI().use('yql');</code></pre>
+
+</div>
+-->
