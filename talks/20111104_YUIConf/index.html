@@ -56,13 +56,16 @@
         <h1>Why YUI?</h1>
         <p>Derek Gathright, Yahoo! Inc.</p>
     </div>
-    
+
+
+    <!-- -------- -->
 
 
     <div class="slide">
         <h2>Who is this guy?</h2>
         
-        <!-- 
+        <!--
+        
             Hi, I'm Derek Gathright.
             I'm a senior software engineer here at Yahoo where I work on YUI full-time.
             Prior to joining the YUI team, I worked on other projects at Yahoo within Media and Entertainment as a front-end engineer.
@@ -94,11 +97,13 @@
     <div class="slide templateB">
         <h1>What is this talk about?</h1>
         <!--
-            So what is this talk about?  That's a good question.  It's a bit more philosophical than most of the talks you'll see here at YUIConf.
+            So what is this talk about?  That's a good question.  
+            It's a bit more philosophical than most of the talks you'll see here at YUIConf.
             I originally wanted to give a talk on porting an application from another library to YUI, but I felt that was missing 
-            the story of why you would want to do that in the first place.  So as I talked to other developers on the YUI team and within the community
-            about their favorite parts of the library, and why it is they used YUI, I began to see some patterns emerge.  So this talk is a 
-            reflection of those conversations. 
+            the story of why you would want to do that in the first place.  
+            So as I talked to other developers on the YUI team and within the community
+            about their favorite parts of the library, and why it is they used YUI, I began to see some patterns emerge.  
+            So this talk is a reflection of those conversations. 
             
             In short, it's a talk about what makes YUI the most uniquely ideal toolkit to build high-scale, maintainable Web applications.
             
@@ -196,12 +201,15 @@
         <h2>Why YUI?</h2>
         <h1>#1: <span class="slide">Architecture</span></h1>
         <!--
+        
             The first 'why' we're going to look at is... architecture.
             When I say "architecture", some people think of this...
+            
         -->
     </div>
-
-        <!-- -------- -->
+    
+    
+    <!-- -------- -->
     
     
     <div class="slide">
@@ -225,6 +233,7 @@
     
     <!-- -------- -->
     
+    
     <div class="slide">
         <h2></h2>
         
@@ -237,7 +246,6 @@
         <img src="http://s89997654.onlinehome.us/screencaps/skitched-20111031-001342.jpg" height="500">
         
     </div>
-    
     
     
     <!-- -------- -->
@@ -284,7 +292,6 @@
     
     
     <!-- -------- -->
-    
     
     
     <div class="slide">
@@ -394,7 +401,6 @@ YUI.add("fizzbuzz", function(Y){
             So we've talked about briefly about modular design in JS, but what do you get out of it?  The #1 thing....
         -->
     </div>
-    
     
     
     <!-- -------- -->
@@ -648,10 +654,10 @@ YUI().use('yql', function (Y) { ... });</code></pre>
         <h2>YUI Loader</h2>
         
         <!--
-          Addresses blocking by async loading
-          Addresses dependencies by automatic dependency resolution
-          On-demand modules loading
-          Support CSS
+            Addresses blocking by async loading
+            Addresses dependencies by automatic dependency resolution
+            On-demand modules loading
+            Support CSS
         -->
         
         <img src="http://cdn.gajitz.com/wp-content/uploads/2009/10/Power-Loader-Aliens.jpg" height="500">
@@ -665,10 +671,10 @@ YUI().use('yql', function (Y) { ... });</code></pre>
         <h2>Modules</h2>
 
         <!-- 
-          Blocking because you are cramming all those into the head
-          It has a fragile load order, because what if you include your coreLibrary.js last?
-          Do you load all your dozens of modules on every page? Load them selectively? How do you handle dependency resolution? Calculation?
-          What about CSS dependencies for UI widgets?
+            Blocking because you are cramming all those into the head
+            It has a fragile load order, because what if you include your coreLibrary.js last?
+            Do you load all your dozens of modules on every page? Load them selectively? How do you handle dependency resolution? Calculation?
+            What about CSS dependencies for UI widgets?
         -->
         
         <p>So we organized into modules, great!</p>
