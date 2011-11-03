@@ -8,12 +8,12 @@ html {
 }
 
 .deck-container h2 {
-    font-size: 1.8em;
+    font-size: 1.7em;
 }
 
 .yui3-js-enabled .deck-container > .slide {
     background: transparent url('cornerlogo.png') no-repeat bottom left;
-    padding-bottom: 150px;
+/*    padding-bottom: 150px;*/
 }
 
 .yui3-js-enabled .deck-container > .slide.title {
