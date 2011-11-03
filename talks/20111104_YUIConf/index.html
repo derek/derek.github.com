@@ -91,18 +91,21 @@
         
             So what is this talk about?  That's a good question.  
             It's a bit more philosophical than most of the talks you'll see here at YUIConf.
-            I originally wanted to give a talk on porting an application from other libraries
+            I was originally going to give a talk on porting applications from other libraries
             to YUI, but I felt that was missing the story of why you would want to do 
-            that in the first place.  
+            that in the first place.
             
-            So as I talked to other developers on the YUI team and within the community about their favorite parts of the library, 
-            and why it is they used YUI, I began to see some patterns emerge.  
+            So as I talked to other developers on the YUI team and within the community 
+            about their favorite parts of the library, 
+            and why it is they used YUI, 
+            I began to see some patterns emerge.  
             
             So this talk is a reflection of those conversations. 
             
             In short, it's a talk about what makes YUI the most 
             uniquely ideal toolkit to build high-scale, maintainable JavaScript applications.
             
+            [click]
         -->
     </div>
     
@@ -133,7 +136,7 @@
             It's expressionist design is beautiful, elegant, and iconic.
             Some have even called it a masterpiece.
             
-            While most people imagine buildings when they think of "architecture", 
+            While most people imagine buildings like this when they think of "architecture", 
             we're nerds, so we think of this...
             
             [click]
@@ -156,7 +159,7 @@
             Well, there is elegance here, it's just not as apparent 
             in this component diagram.
             
-            Let's view it in it's physical form
+            Let's view this same structure in its physical form
             
             [click]
         -->
@@ -178,8 +181,8 @@
             When we talk about architecture in the sense of software, 
             we're talking about something similar in design to the space station.
             
-            Well architected software is composed of reusable and interchangeable components in a way that 
-            promotes 
+            Well architected software is composed of reusable and interchangeable 
+            components in a way that promotes 
             
             reliability, 
             maintainability, 
@@ -209,16 +212,16 @@
             
             In a software sense, they similarly refer to bits of focused, 
             interchangeable components that you can use to construct 
-            whatever system you are tasked with building.
+            whatever application you are tasked with building.
             
             You'll find native module support in many programming languages.  
             Ruby, Java, Python.  
             
-            But unfortunately not in JavaScript. Why? Well, it's pretty obvious.  
-            JavaScript was developed over the course of a few weeks.  
+            But unfortunately not in JavaScript. 
+            Why? Well, JavaScript was developed over the course of a few weeks.  
             I don't think that was a consideration at the time.
             
-            But, to everyone's surprise, JS has exceeded everyones expectations 
+            But, to everyone's surprise, JS has exceeded expectations 
             and it is now an extremely popular programming language.
             
             The need for them is here, so it's been left up to developers to design their own module patterns.
@@ -241,10 +244,16 @@
         
             Here is just one example of a JavaScript module, as proposed on the yuiblog 4 years ago.
             
+            
+            
             [describe]
             
-            There are a number of strengths and weaknesses to this design, 
-            and over time, the YUI team finally settled on similar, but slightly different for YUI 3 modules.
+            
+            
+            
+            There are a few strengths and weaknesses to this specific design, 
+            and over time, the YUI team finally settled on similar, 
+            but slightly different design for YUI modules.
             
             [click]
             
@@ -276,7 +285,12 @@ myLibrary.fizzbuzz = (function () {
             This module does the exact same thing the previous example did, the implementation 
             is slightly different though.
 
+            
+            
             [describe]
+            
+            
+            
 
             Modules are a fundamental building block for everything you do in YUI.  
             Between the Core library and the YUI Gallery, 
@@ -331,18 +345,9 @@ YUI.add("fizzbuzz", function(Y){
             check out the YUI forum for discussion about this topic.
             As always, we're very interested in hearing your feedback.
             
-            [click]
+            The eventual goal is to have native module support in JavaScript, 
+            which is coming, but it's still in the proposal phase. So we'll see.
             
-            The eventual goal is native modules in ECMAScript, 
-            which are coming, but they're still in the proposal phase. 
-             
-            When they've finally arrived, we still won't be able to use them in an environment 
-            that needs to support legacy browsers because the syntax isn't compatible with legacy JS engines, 
-            so I'm not sure how much adoption they'll actually have inside of browsers.
-            
-            This makes it even more important that we as a JavaScript community come up with a 
-            standard that it both backwards, and forwards compatible,
-            and one that also runs equally as well server-side and within browsers.
             
             [click]
         -->
@@ -417,7 +422,7 @@ YUI.add("fizzbuzz", function(Y){
             But the problem is what happens in the next sequel when Lightning 
             is getting older and needs rocket boosters to get around the track.  
             
-            Or the sequel after that when he has a midlife crisis and wants to be a convertible.
+            Or the sequel after that when he decides he wants to be a convertible.
         
             [click]
         
@@ -478,7 +483,7 @@ YUI.add("fizzbuzz", function(Y){
             I came across a bunch of plugins, clicked around, checked out the demos,
             and figured out which one fit my requirements.  
 
-            Paste it in, glue it together, viola. Done.
+            Pasted it in, glue it together. Done.
             
             2 weeks later, "Oh, users need the ability to upload and add pictures in that editor."
             I now had a feature I needed to add to the editor, which it was never meant to support.
@@ -518,7 +523,7 @@ YUI.add("fizzbuzz", function(Y){
             Every component within YUI is developed with extensibility in mind.
             
             Some of the teams at Yahoo that use YUI never use the vanilla versions of the components available.  
-            They endlessly modify and extend them to suit their exact needs.
+            They endlessly extend them to suit their exact needs.
             
             **pause***
             
@@ -741,7 +746,8 @@ YUI().use('yql', function (Y) { ... });</code></pre>
             Next, you have a very fragile load order.  
             What if you include any of your modules before coreLibrary.js? 
             What if moduleB requires moduleA to run?
-            Do you load all 27 modules you have on every page? 
+
+            Also, do you load all 27 modules you have on every page? 
             Load them selectively? 
             How do you handle dependency resolution? 
             Dependency calculation?
