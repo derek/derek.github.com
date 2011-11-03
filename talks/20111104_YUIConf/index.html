@@ -57,7 +57,7 @@
 
     <div class="slide title">
         <h1>Why YUI?</h1>
-        <p>Derek Gathright, Yahoo! Inc.</p>
+        <p>Derek Gathright, Yahoo!</p>
     </div>
 
 
@@ -67,29 +67,16 @@
     <div class="slide">
         <h2>Who is this guy?</h2>
         
-        <!--
-        
-            Hi, I'm Derek Gathright.
-            I'm a senior software engineer here at Yahoo where I work on YUI full-time.
-            Prior to joining the YUI team, I worked on other projects at 
-            Yahoo within Media and Entertainment as a front-end engineer.
-            I'm a huge advocate of open-source and I love JavaScript
-            You can follow me both on Twitter & Github as @derek
-            
-        -->
-        
-        <img style="float:right;" src="assets/derek.jpg" height="350">
         <ul>
             <li>Derek Gathright</li>
             <li>Software engineer, Yahoo!
                 <ul>
                     <li>YUI team</li>
                     <li>Yahoo! Media</li>
+                    <li>Yahoo! Entertainment</li>
                     <li>... various startups</li>
                 </ul>
             </li>
-            <li>&lt;3 open-source</li>
-            <li>&lt;3 JavaScript</li>
             <li>Twitter &amp; Github as @derek</li>
         </ul>
     </div>
@@ -189,8 +176,7 @@
             but it's undeniably there.
             
             When we talk about architecture in the sense of software, 
-            we're talking about something very similar to the design of 
-            something like the space station.
+            we're talking about something similar in design to the space station.
             
             Well architected software is composed of reusable and interchangeable components in a way that 
             promotes 
@@ -219,19 +205,25 @@
         <!--
         
             Modules are a concept used across many engineering disciplines.  
-            In a space station sense, they refer to the 32 separately constructed components that compose the IIS.
+            In a space station sense, they refer to the 32 separately constructed components it is made up of.
             
             In a software sense, they similarly refer to bits of focused, 
             interchangeable components that you can use to construct 
-            whatever system you are tasked with.
+            whatever system you are tasked with building.
             
             You'll find native module support in many programming languages.  
             Ruby, Java, Python.  
+            
             But unfortunately not in JavaScript. Why? Well, it's pretty obvious.  
             JavaScript was developed over the course of a few weeks.  
             I don't think that was a consideration at the time.
-            Well, to everyone's surprise though, JS has thrived, and the need for them is here, 
-            so it's been left up to developers to design their own module patterns.
+            
+            But, to everyone's surprise, JS has exceeded everyones expectations 
+            and it is now an extremely popular programming language.
+            
+            The need for them is here, so it's been left up to developers to design their own module patterns.
+            
+            So let's take a look at one of those.
             
             [click]
             
@@ -248,19 +240,18 @@
         <!-- 
         
             Here is just one example of a JavaScript module, as proposed on the yuiblog 4 years ago.
-            You start with assigning an anonymous function to whatever you want to name your module.  
-            Inside this module, you can create whatever private variables you'd like, 
-            and you return an object containing things you would like to publicly expose.
-            Finally, you execute and return your anonymous function.
+            
+            [describe]
             
             There are a number of strengths and weaknesses to this design, 
-            and over time, the YUI team finally settled on similar, but slightly different design for YUI3.
+            and over time, the YUI team finally settled on similar, but slightly different for YUI 3 modules.
             
             [click]
             
         -->
         
-        <pre class="slide"><code class="prettyprint">// yuiblog.com/blog/2007/06/12/module-pattern/
+        <pre><code class="prettyprint">// yuiblog.com/blog/2007/06/12/module-pattern/
+            
 myLibrary.fizzbuzz = (function () {
 
   var somePrivateVar = "Fizz";
@@ -296,7 +287,7 @@ myLibrary.fizzbuzz = (function () {
             object-oriented helpers, 
             and many more.
 
-            It is not intended that you use all of them at the same time, 
+            It isn't intended that you use all of them at the same time, 
             but rather to pick and chose only the ones you want.
             
             
@@ -333,9 +324,7 @@ YUI.add("fizzbuzz", function(Y){
             Dojo is has recently adopted the AMD pattern, 
             and Node.js has popularized CommonJS Modules/1.1.
             
-            If you compare all the specs, YUI is kind of a mixture between the two.
-            
-            YUI is really happy with YUI Modules so far, but that's not to say we haven't begun 
+            We're really happy with YUI Modules so far, but that's not to say we haven't begun 
             exploring additional support for other formats.
             
             If you are curious about the work being done there, 
@@ -344,11 +333,11 @@ YUI.add("fizzbuzz", function(Y){
             
             [click]
             
-            The eventual goal is native ECMAScript modules, 
+            The eventual goal is native modules in ECMAScript, 
             which are coming, but they're still in the proposal phase. 
              
             When they've finally arrived, we still won't be able to use them in an environment 
-            that needs to support legacy browsers because they won't be compatible with ES3, 
+            that needs to support legacy browsers because the syntax isn't compatible with legacy JS engines, 
             so I'm not sure how much adoption they'll actually have inside of browsers.
             
             This makes it even more important that we as a JavaScript community come up with a 
@@ -365,7 +354,7 @@ YUI.add("fizzbuzz", function(Y){
             <li>CommonJS Modules/2.0 (draft)</li>
             <li>... and more</li>
         </ul>
-        <p class="slide">Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
+        <p>Eventual goal: <a href="http://wiki.ecmascript.org/doku.php?id=harmony:modules">ECMAScript Modules</a>.  Still just a proposal, and incompatible with ES3. :(</p>
         
     </div>
     
@@ -400,9 +389,9 @@ YUI.add("fizzbuzz", function(Y){
             When working within a library, it's extremely important that you consider 
             all types of edge-cases, 
             and make it possible for developers who are going to be using your code to 
-            replace or extend functionality you provide them with their own.
+            replace or extend functionality.
             
-            When you think about extensibility with software, a good comparison might be...
+            When you think about extensibility, a good comparison might be...
             
             [click]
             
@@ -417,10 +406,10 @@ YUI.add("fizzbuzz", function(Y){
     
     
     <div class="slide">
-        <h2></h2>
+        <h2>Lightning McQueen</h2>
         <!--
         
-            This specific toy was designed to be only one thing, 
+            This specific toy was designed to do only one thing, 
             look exactly like Lightning McQueen did in the original Cars movie.  
             
             I'd say they did a pretty good job.  
@@ -474,7 +463,7 @@ YUI.add("fizzbuzz", function(Y){
         <h2></h2>
         
         <!--
-            In web development, there is one constant, change.  
+            Extensibility is important, because in web development, there is one constant, change.  
             
             This is because new ideas, 
             technologies, libraries, and standards, 
@@ -528,7 +517,7 @@ YUI.add("fizzbuzz", function(Y){
             
             Every component within YUI is developed with extensibility in mind.
             
-            Some of the teams that use YUI within Yahoo never use the vanilla versions of the components we have.  
+            Some of the teams at Yahoo that use YUI never use the vanilla versions of the components available.  
             They endlessly modify and extend them to suit their exact needs.
             
             **pause***
@@ -552,11 +541,11 @@ YUI.add("fizzbuzz", function(Y){
         <h2></h2>
         
         <!-- 
-            I go to a lot of meetups, pub nights, and talk with a lot of people about YUI.
+            I go to lots of meetups, pub nights, and talk with people about YUI.
             This isn't something I hear all the time, 
-            but it's something I hear enough. I'm sure the rest of you have as well.
+            but it's something I hear enough. I'm sure plenty of you have as well.
             
-            So my response is, what do you even mean when you say enterprisey?
+            So my response is typically, what do you even mean when you say enterprisey?
             
             Are you talking about this? ...
             
@@ -658,11 +647,13 @@ YUI.add("fizzbuzz", function(Y){
         <!--
             YUI is called a library, but I personally view it more as a toolkit.  
             That's not saying the "library" term is incorrect.  
-            Library, toolkit, and sometimes framework are often used interchangeably, 
+            The terms Library, toolkit, and framework are often used interchangeably, 
             so I don't want to get lost in semantics.  
             
             The reason I say 'toolkit' most accurately describes YUI is because it allows 
-            you to pick & choose just what you need, and nothing more.
+            you to pick & choose just what you need, and nothing more.  
+            
+            And you can use much of it independent of each other.
             
             [click]
         -->
@@ -684,7 +675,8 @@ YUI.add("fizzbuzz", function(Y){
             YQL client, use YQL
             
             So these are all pretty typical modules with what you'll find in YUI.  
-            There are certainly some more unique ones that you can use though. 
+            
+            However, there are certainly some more unique ones that you'll make use of as well.
             
             [click]
         -->
@@ -713,14 +705,14 @@ YUI().use('yql', function (Y) { ... });</code></pre>
             One of those, is Loader.
             
             Some of you might recognize this picture.  
-            It's from the movie Aliens, of Ripley in her power-loader about to open a 
-            can of whoop-ass on the queen alien.
+            
+            [describe]
             
             Unfortunately, as web developers, we don't have any aliens we get to fight 
             on a daily basis.
             
-            But there are some things out there that are headache to do perfectly, 
-            and one of those is script loading.
+            But there are some things out there that we need some heavy machinery to 
+            handle for us, and one of those is script loading.
             
             [click]
         -->
@@ -816,7 +808,7 @@ YUI().use('yql', function (Y) { ... });</code></pre>
         
         <!-- 
             So how do you use this?  
-            Well let's go back to our YUI Module example we used earlier.
+            Well let's go back to the YUI Module example we used earlier.
             
             If you want to use Loader to include this module instead of using a script tag, 
             here's how you do it.
@@ -877,10 +869,7 @@ YUI.add("fizzbuzz", function(Y){
         <h2>YUI Loader</h2>
         
         <!--
-            Here we added in a loader configuration object, 
-            which tells us where exactly it will be able to find the module fizzbuzz.
-            
-            Pretty simple.
+            [describe]
             
             Loader isn't only for loading YUI modules.
             
@@ -1033,6 +1022,7 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
     
     <div class="slide">
         <!-- 
+            [click]
             When you take the idea of CDN hosted combo-loading, 
             [click]
             then add in Modules, 
@@ -1043,7 +1033,7 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
             
             This is a killer feature and is what makes Yahoo properties so damn fast!
         -->
-        <h1><span>Combo-loading</span> <br /> <span class="slide">+ Modules</span> <br /> <span class="slide">+ Loader</span> <br /> <span class="slide">= Magic!</span</h1>
+        <h1><span class="slide">Combo-loading</span> <br /> <span class="slide">+ Modules</span> <br /> <span class="slide">+ Loader</span> <br /> <span class="slide">= Magic!</span</h1>
     </div>
     
     
@@ -1093,7 +1083,9 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
             
             [click]
             
-            It's open.
+            It's open.  
+            
+            Open isn't just what we do with our source code, it's the mentality of the entire project.
             
             [click]
         -->
@@ -1104,73 +1096,19 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
     
     
     <div class="slide">
-        <h2>Open</h2>
-        
-        <!--
-            
-            Open isn't just what we do with our source code, 
-            it's the mentality of the entire project.
-            
-            Open Source
-                The library is completely 100% open-source and hosted on Github.
-                We use a permissive BSD license.
-                Want to contribute? Submit a pull request.
-                You don't have to be a Yahoo to contribute to the YUI core.
-                We have many community members that do.
-                Just sign a CLA and you are good to go.
-            
-            Open CDN
-                We even have an open CDN, the YUI Gallery, which you can use to publish 
-                whatever YUI modules you'd like.
-                This is yet another very unique feature for YUI that no other JS library can offer
-            
-            Open Hours
-                Couple times a month we invite the community in a meeting
-                where we discuss the latest we're working on,
-                and answer any questions.
-
-            Open Communication
-                Most of us spend all day in IRC, #yui on freenode.  
-                We have an active forum that you can go to ask any questions you have.
-                Most of us all tweet, you should follow yuilibrary and yuirelay.
-            
-            Open Development
-                Pretty much everything we work on is developed in the open.
-                The few things that aren't are developed with the intent to eventually be open-source.
-                Our entire ticketing system, roadmap, and assignments are all visible for anyone to see.
-
-            Open Documentation
-                With the release of 3.4.0 and the new yuilibrary.com website, 
-                all our documentation is now available for anyone to update, edit, and add examples.  
-                You'll now find a /docs/ directory inside of each module where this lives.  
-                It's using Selleck, a Node.js based documentation generation tool Ryan Grove developed.
-                I'd consider JSRosettaStone.com as part of our documentation as well, check it out.
-            
-        -->
-        
-        <ul>
-            <li class="">Open Source - Github</li>
-            <li class="">Open CDN - YUI Gallery</li>
-            <li class="">Open Hours - Come chat!</li>
-            <li class="">Open Communication - #yui on Freenode</li>
-            <li class="">Open Development</li>
-            <li class="">Open Documentation</li>
-        </ul>
-    </div>
-    
-    
-    <div class="slide">
         <h2>Open Source</h2>
         <ul>
             <li>100% open source</li>
             <li>Hosted on Github</li>
             <li>Anyone can contribute to the YUI core</li>
+            <li>Pull requests!</li>
             <li>BSD license (very permissive)</li>
         </ul>
         
         <h2>Open CDN</h2>
         <ul>
             <li>YUI Gallery</li>
+            <li>Publish any YUI modules you like</li>
             <li>Let us take care of hosting your code for you!</li>
         </ul>
     </div>
@@ -1181,11 +1119,16 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
         <ul>
             <li>Open meeting with the community</li>
             <li>Frequency: Couple times a month</li>
+            <li>Discuss latest projects</li>
+            <li>Answer questions</li>
+            <li>Solicit feedback</li>
         </ul>
 
         <h2>Open Communication</h2>
         <ul>
             <li>Freenode - #yui</li>
+            <li>yuilibrary.com/forum</li>
+            <li>@yuilibrary / @yuirelay</li>
         </ul>
     </div>
     
@@ -1200,6 +1143,7 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
         <h2>Open Documentation</h2>
         <ul>
             <li>All website documentation now exists in the yui3 source tree.</li>
+            <li>src/{module}/docs/</li>
             <li>Edit / Update / Create examples</li>
             <li>Selleck documentation generation tool</li>
             <li>jsRosettaStone.com</li>
@@ -1207,7 +1151,7 @@ GET moduleD.js&amp;moduleE.js&amp;moduleF.js
     </div>
     
     <div class="slide">
-        <h1>'Watch' YUI on Github!</h1>
+        <h1>'Watch' YUI3 on Github!</h1>
     </div>
     
     
