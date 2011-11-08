@@ -1,0 +1,49 @@
+<!-- See, I told you -->
+
+<!DOCTYPE html>
+<html>
+    <head>		
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.4.0/build/cssreset/cssreset-min.css&3.4.0/build/cssfonts/cssfonts-min.css&3.4.0/build/cssbase/cssbase-min.css">
+
+        <script src="http://yui.yahooapis.com/3.4.0/build/yui/yui-min.js"></script>
+        <script src="http://embeditor.org/api.js"></script>
+        <style>
+            #embeditor {
+                height:500px;
+                width:100%;
+                overflow: hidden;
+                border:none;
+            }
+        </style>
+        <script id="sample">
+    // YUI isn't required, I'm just using it for convinience
+    YUI().use("event", "node-event-simulate", function(Y){
+        
+        var $ = Y.one, // Bling it up
+            editor = new Embeditor("embeditor");
+        
+        // Set the onReady() callback that will be fired when the editor is ready
+        editor.onReady(function(){
+            editor.setValue("\n\talert('YUI rocks!');\n");x
+        });
+        
+        // Get the content of the editor and log it to the console
+        $("#btnRender").on("click", function(){
+            editor.getValue(function(value){
+               eval(value);
+            });
+        });
+        
+    });
+        </script>
+    </head>
+    
+    <body>
+        <iframe id="embeditor" name="embeditor" src="http://embeditor.org/?mode=javascript"></iframe>
+        
+        <br ><br >
+        
+        <input type="button" id="btnRender" value="Eval" />
+    </body>
+
+</html>

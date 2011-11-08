@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
+  <meta>
+    <author>Derek Gathright</author>
+    <documentationURL></documentationURL>
+    <sampleQuery>SELECT * FROM mediasearch WHERE query='kittens'</sampleQuery>
+  </meta>
+  <bindings>
+    <select itemPath="items.item" produces="XML">
+
+      <inputs>
+        <key id="service" type="xs:string" paramType="variable" required="false" />
+        <key id="query" type="xs:string" paramType="variable" required="true" />
+      </inputs>
+      <execute><![CDATA[
+      
+            var nsatom = Namespace("http://www.w3.org/2005/Atom"),
+                nsmrss = Namespace("http://search.yahoo.com/mrss/"),
+                nsgd   = Namespace("http://schemas.google.com/g/2005"),
+                nsyt   = Namespace("http://gdata.youtube.com/schemas/2007"),
+                nsds   = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices"),
+                nsdsm  = Namespace("http://schemas.microsoft.com/ado/2007/08/dataservices/metadata");
+      
+            var results = <items></items>;
+            
+            // Define which services to pull data from
+            if (service) { servicesToUse = [service]; }
+            else         { servicesToUse = ["netflix", "justintv", "youtube", "flickr"]; }
+            
+            var services = {
+                "youtube": {
+                    url:      "http://gdata.youtube.com/feeds/api/videos?orderby=relevance&q={{query}}&v=2",
+                    callback: function(response) {
+
+                        var xml = response.response;
+                        for each(video_entry in xml.nsatom::entry){
+                            var biggest = 0;
+                            var biggestThumbURL = '';
+                            for each(thumbnail in video_entry.nsmrss::group.nsmrss::thumbnail){
+                                if (parseInt(thumbnail.@height, 10) > biggest) {
+                                    biggest = thumbnail.@height;
+                                    biggestThumbURL = thumbnail.@url;
+                                }
+                            }
+                            
+                            results.appendChild(
+                                <item>
+                                    <source>youtube</source> 
+                                    <id>{video_entry.nsmrss::group.nsyt::videoid.toString()}</id> 
+                                    <title>{video_entry.nsatom::title.toString()}</title> 
+                                    <description>{video_entry.nsmrss::group.nsmrss::description.toString()}</description>
+                                    <thumb>{biggestThumbURL}</thumb>
+                                    <embed></embed>
+                                </item>
+                            );
+                        }
+                    }
+                },
+                
+                "justintv": {
+                    url:      "http://api.justin.tv/api/stream/search/{{query}}.json",
+                    callback: function(response){
+                        var data = eval(response.response);
+                        for(var j in data) {
+                            results.appendChild(
+                                <item>
+                                    <source>justin.tv</source>
+                                    <id>{data[j].channel.login}</id>
+                                    <title>{data[j].channel.title}</title>
+                                    <description>{data[j].title}</description>
+                                    <thumb>{data[j].channel.screen_cap_url_large}</thumb>
+                                    <embed></embed>
+                                </item>
+                            );
+                        }
+                    }
+                },
+            
+                "netflix": {
+                    url:      "http://odata.netflix.com/Catalog/Titles?$filter=Name%20eq%20%27{{query}}%27",
+                    callback: function(response){
+                        var xml = response.response;
+
+                        for each(var movie in xml.nsatom::entry) {
+                            results.appendChild(
+                                <item>
+                                    <source>netflix</source>
+                                    <id>{movie.nsdsm::properties.nsds::Id.toString()}</id>
+                                    <title>{movie.nsdsm::properties.nsds::Name.toString()}</title>
+                                    <description>{movie.nsdsm::properties.nsds::ShortSynopsis.toString()}</description>
+                                    <thumb>{movie.nsdsm::properties.nsds::BoxArt.nsds::LargeUrl.toString()}</thumb>
+                                    <embed></embed>
+                                </item>
+                            );
+                        }
+                    }
+                },
+            
+                "flickr": {
+                    url:      "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=1895311ec0d2e23431a6407f3e8dffcc&text={{query}}&per_page=10&sort=interestingness-desc&format=rest",
+                    callback: function(response){
+                        var photos = response.response;
+                        for each(var photo in photos.photos.photo) {
+                            results.appendChild(
+                                <item>
+                                    <source>flickr</source>
+                                    <id>{photo.@id}</id>
+                                    <title>{photo.@title}</title>
+                                    <description></description>
+                                    <thumb>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_m.jpg</thumb>
+                                    <embed>http://farm{photo.@farm}.static.flickr.com/{photo.@server}/{photo.@id}_{photo.@secret}_b.jpg</embed>
+                                </item>
+                            );
+                        }
+                    }
+                }
+            }
+            
+            // Loop through each service and queue up the API call
+            for(var i in servicesToUse) {
+                var service  = services[servicesToUse[i]],
+                    url      = service.url.replace("{{query}}", query),
+                    callback = service.callback;
+                
+                // Queue an async call
+                y.rest(url, callback).get();
+            }
+            
+            // Execute the async calls
+            y.sync();
+            
+            response.object = results;
+      ]]></execute>
+    </select>
+  </bindings>
+</table>
