@@ -43,8 +43,7 @@
   transition: background-position 0.1s linear, color 0.1s linear;
 }
 
-.yui3-button:hover,
-.yui3-button-selected {
+.yui3-button:hover {
   border-style: solid;
   border-width: 1px;
   background-position: 0 -1em;
@@ -231,10 +230,11 @@
 }
 
 /***
-    Skin: Sam
+    Colors
 ***/
-.yui3-skin-sam .yui3-button,
-.yui3-skin-sam .yui3-button-disabled {
+.yui3-button-color-gray, .yui3-skin-sam .yui3-button,
+.yui3-skin-sam .yui3-button-disabled, .yui3-skin-sam .yui3-button.yui3-button-disabled,
+.yui3-skin-sam .yui3-button.yui3-button-disabled:hover {
   border-color: #808080;
   color: #000;
   background-image: -webkit-gradient(linear, left top, left bottom, from(white), to(#d8d8da));
@@ -247,19 +247,34 @@
   background-color: #d8d8da;
 }
 
-.yui3-skin-sam .yui3-button-color-blue {
+.yui3-button-color-blue, .yui3-skin-sam .yui3-button.yui3-button-selected,
+.yui3-skin-sam .yui3-button.yui3-button-selected:hover {
   color: #fff;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#599bdc), to(#3476b7));
-  background-image: -webkit-linear-gradient(top, #599bdc, #3476b7);
-  background-image: -moz-linear-gradient(top, #599bdc, #3476b7);
-  background-image: -ms-linear-gradient(top, #599bdc, #3476b7);
-  background-image: -o-linear-gradient(top, #599bdc, #3476b7);
-  background-image: linear-gradient(top, #599bdc, #3476b7);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#599bdc', EndColorStr='#3476b7');
-  background-color: #3476b7;
+  /*@include background-gradient(#599BDC, #3476B7);*/
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#426fd9), to(#2647a0));
+  background-image: -webkit-linear-gradient(top, #426fd9, #2647a0);
+  background-image: -moz-linear-gradient(top, #426fd9, #2647a0);
+  background-image: -ms-linear-gradient(top, #426fd9, #2647a0);
+  background-image: -o-linear-gradient(top, #426fd9, #2647a0);
+  background-image: linear-gradient(top, #426fd9, #2647a0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#426fd9', EndColorStr='#2647a0');
+  background-color: #2647a0;
 }
 
-.yui3-skin-sam .yui3-button-color-red {
+.yui3-button-color-lightblue, .yui3-skin-sam .yui3-button:hover {
+  color: #fff;
+  color: #000;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#e8f2ff), to(#bfdaff));
+  background-image: -webkit-linear-gradient(top, #e8f2ff, #bfdaff);
+  background-image: -moz-linear-gradient(top, #e8f2ff, #bfdaff);
+  background-image: -ms-linear-gradient(top, #e8f2ff, #bfdaff);
+  background-image: -o-linear-gradient(top, #e8f2ff, #bfdaff);
+  background-image: linear-gradient(top, #e8f2ff, #bfdaff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#e8f2ff', EndColorStr='#bfdaff');
+  background-color: #bfdaff;
+}
+
+.yui3-button-color-red {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ee443e), to(#b2332e));
   background-image: -webkit-linear-gradient(top, #ee443e, #b2332e);
@@ -271,7 +286,7 @@
   background-color: #b2332e;
 }
 
-.yui3-skin-sam .yui3-button-color-green {
+.yui3-button-color-green {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#62c462), to(#499349));
   background-image: -webkit-linear-gradient(top, #62c462, #499349);
@@ -283,7 +298,7 @@
   background-color: #499349;
 }
 
-.yui3-skin-sam .yui3-button-color-turquoise {
+.yui3-button-color-turquoise {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#5bc0de), to(#4490a6));
   background-image: -webkit-linear-gradient(top, #5bc0de, #4490a6);
@@ -295,7 +310,7 @@
   background-color: #4490a6;
 }
 
-.yui3-skin-sam .yui3-button-color-yellow {
+.yui3-button-color-yellow {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#e3e300), to(#c9c900));
   background-image: -webkit-linear-gradient(top, #e3e300, #c9c900);
@@ -307,7 +322,7 @@
   background-color: #c9c900;
 }
 
-.yui3-skin-sam .yui3-button-color-orange {
+.yui3-button-color-orange {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#eebd4c), to(#d4a844));
   background-image: -webkit-linear-gradient(top, #eebd4c, #d4a844);
@@ -319,7 +334,7 @@
   background-color: #d4a844;
 }
 
-.yui3-skin-sam .yui3-button-color-purple {
+.yui3-button-color-purple {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#a35295), to(#7a3d6f));
   background-image: -webkit-linear-gradient(top, #a35295, #7a3d6f);
@@ -331,7 +346,7 @@
   background-color: #7a3d6f;
 }
 
-.yui3-skin-sam .yui3-button-color-black {
+.yui3-button-color-black {
   color: #fff;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#545454), to(black));
   background-image: -webkit-linear-gradient(top, #545454, black);
@@ -343,37 +358,11 @@
   background-color: black;
 }
 
-/*
-.yui3-skin-sam .yui3-button-selected {
-    @extend .yui3-button-color-black;
-}
-
-.yui3-skin-sam .yui3-button:hover,
-.yui3-skin-sam .yui3-button-selected:hover {
-    @extend .yui3-button-color-red;
-}
-.yui3-skin-sam .yui3-button:hover {
-    border-color: #7d98b8;
-
-    @include background-gradient(#fff, #bfdaff);
-}
-
-.yui3-skin-sam .yui3-button-selected,
-.yui3-skin-sam .yui3-button-selected:hover {
-    @extend .yui3-button-color-blue;
-}
-.yui3-skin-sam .yui3-button-selected,
-.yui3-skin-sam .yui3-button-selected:hover {
-    border-color: #7d98b8;
-    color: #fff;
-    $start: #426fd9;
-    $end: #2647a0;
-    @include background-gradient($start, $end);
-}
-
-*/
-.yui3-skin-sam .yui3-button-disabled,
-.yui3-skin-sam .yui3-button-disabled:hover {
+/***
+    Skin: Sam
+***/
+.yui3-skin-sam .yui3-button.yui3-button-disabled,
+.yui3-skin-sam .yui3-button.yui3-button-disabled:hover {
   border-color: #ccc;
   color: #ccc;
   cursor: default;
