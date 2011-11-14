@@ -47,6 +47,11 @@
                 -o-transition: background-color 0.2s linear;
                 transition: background-color 0.2s linear;
             }
+            
+            .yui3-button-selected {
+                background-color: #426FD9;   
+                color:white;
+            }
         </style>
       
     </head>
@@ -77,7 +82,7 @@
 
             <div id="color-options">
                 <span>Colors</span>
-                <div class="yui3-button yui3-button-selected" id="color-gray">Gray</div>
+                <div class="yui3-button yui3-button-selected" id="color-default">Default</div>
                 <div class="yui3-button yui3-button-color-red" id="color-red">Red</div>
                 <div class="yui3-button yui3-button-color-orange" id="color-orange">Orange</div>
                 <div class="yui3-button yui3-button-color-yellow" id="color-yellow">Yellow</div>
@@ -245,19 +250,42 @@
                     else if (color = id.match(/color-([a-z]+)/)) {
                         Y.all('#color-options .yui3-button').removeClass("yui3-button-selected");
                         e.target.addClass("yui3-button-selected");
-                        Y.all('#examples .yui3-button.yui3-button-color-gray').removeClass("yui3-button-color-gray");
-                        Y.all('#examples .yui3-button.yui3-button-color-red').removeClass("yui3-button-color-red");
-                        Y.all('#examples .yui3-button.yui3-button-color-turquoise').removeClass("yui3-button-color-turquoise");
-                        Y.all('#examples .yui3-button.yui3-button-color-blue').removeClass("yui3-button-color-blue");
-                        Y.all('#examples .yui3-button.yui3-button-color-yellow').removeClass("yui3-button-color-yellow");
-                        Y.all('#examples .yui3-button.yui3-button-color-green').removeClass("yui3-button-color-green");
-                        Y.all('#examples .yui3-button.yui3-button-color-orange').removeClass("yui3-button-color-orange");
-                        Y.all('#examples .yui3-button.yui3-button-color-purple').removeClass("yui3-button-color-purple");
-                        Y.all('#examples .yui3-button.yui3-button-color-black').removeClass("yui3-button-color-black");
-                        Y.all('#examples .yui3-button').addClass("yui3-button-color-"+color[1]);
+                        
+                        if (color[1] === "default") {
+                            Y.all('#examples .yui3-button').setStyle("backgroundColor", "");
+                        }
+                        else {
+                            Y.all('#examples .yui3-button').setStyle("backgroundColor", color[1]);
+                        }
+                        
+                        // horrible, fix
+                        var color = getContrastYIQ(colorToHex(Y.one('#examples .yui3-button').getComputedStyle("backgroundColor")));
+                        Y.all('#examples .yui3-button').setStyle("color", color);
                     }
                 });
             });
+            
+            function getContrastYIQ(hexcolor){
+            	var r = parseInt(hexcolor.substr(1,2),16);
+            	var g = parseInt(hexcolor.substr(3,2),16);
+            	var b = parseInt(hexcolor.substr(5,2),16);
+            	var yiq = ((r*299)+(g*587)+(b*114))/1000;
+            	return (yiq >= 128) ? 'black' : 'white';
+            }
+            
+            function colorToHex(color) {
+                if (color.substr(0, 1) === '#') {
+                    return color;
+                }
+                var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+
+                var red = parseInt(digits[2]);
+                var green = parseInt(digits[3]);
+                var blue = parseInt(digits[4]);
+
+                var rgb = blue | (green << 8) | (red << 16);
+                return digits[1] + '#' + rgb.toString(16);
+            };
         </script>
     </body>
 </html>
