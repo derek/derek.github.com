@@ -37,7 +37,7 @@ function generateNodes() {
 		var id = data[name].id;
 		var size = 1;
 		if (data[name].requires) {
-			size = (data[name].requires.length + 10)
+			size += data[name].requires.length
 		}
 		var subs = {
 			name: name,

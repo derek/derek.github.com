@@ -4,10 +4,11 @@
 			html, body {
 				padding:0px;
 				margin:0px;
+				background-color:#222222;
+				color:white;
 			}
 			#sigma-example {
-				background-color:#222222;
-				height:100%;
+				height:90%;
 			}
 		</style>
 
@@ -22,15 +23,15 @@
 				defaultLabelSize: 14,
 				defaultLabelBGColor: '#fff',
 				defaultLabelHoverColor: '#000',
-				labelThreshold: 10,
-				// defaultEdgeType: 'curve'
+				// labelThreshold: 12,
+				defaultEdgeType: 'curve'
 			}).graphProperties({
-				minNodeSize: 0.5,
-				maxNodeSize: 5,
-				minEdgeSize: 1,
-				maxEdgeSize: 1
+				// minNodeSize: 0.5,
+				// maxNodeSize: 5,
+				// minEdgeSize: 1,
+				// maxEdgeSize: 1
 			}).mouseProperties({
-				maxRatio: 1
+				// maxRatio: 1
 			});
 
 			// Parse a GEXF encoded file to fill the graph
@@ -78,6 +79,7 @@
 	</head>
 
 	<body>
-		<div id="sigma-example">a</div>
+		<p>YUI module dependency info.  Hover, zoom, &amp; pan.</p>
+		<div id="sigma-example"></div>
 	</body>
 </html>
