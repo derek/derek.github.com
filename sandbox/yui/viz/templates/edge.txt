@@ -1,1 +1,1 @@
-			<edge id="{{{i}}}" source="{{{source}}}.0" target="{{{target}}}.0" weight="2.0"/>
+			<edge id="{{{i}}}" source="{{{source}}}.0" target="{{{target}}}.0" weight="1.0"/>
