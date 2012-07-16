@@ -1,0 +1,5 @@
+			<node id="{{{id}}}.0" label="{{{name}}}">
+				<viz:size value="{{{size}}}.0"/>
+				<viz:color b="45" g="72" r="216"/>
+				<viz:position x="{{{x}}}.0" y="{{{y}}}.0" z="0.0"/>
+			</node>
