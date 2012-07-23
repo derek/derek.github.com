@@ -3,7 +3,7 @@
     <head>
         <title>ScrollView Example</title>
         <meta charset='utf-8'>
-        <meta name="viewport" content="width=320, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!-- 
         <link rel="stylesheet" href="../../yui3/build/cssreset/reset-min.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <script src="../../yui3/build/yui/yui.js" type="text/javascript" charset="utf-8"></script> 
@@ -14,10 +14,6 @@
         
         <style>
 
-        #yui3-widget-loading {
-            display:none;
-        }
-
         #ptr {
             height:100px;
         }
@@ -25,9 +21,11 @@
         #refreshing {
             display:none;
             position:relative;
-            left:90px;
+            left:100px;
         }
-
+        #content { 
+            height:480px;
+        }
         #instructions img {
             -webkit-transition: .25s;
             transition: .25s;
@@ -57,7 +55,6 @@
     - having both scrollTo and _animateTo is redundant.  scrollTo should do both
     - scrollTo should set the offset values (this.set('scrollY')) like _animateTo does
     - scrollTo should support a callback
-    - iOS Webkit for some reason is not calculating _maxScrollY correctly. Investigate.
     - Scroll indicator does not work correctly in this example.  Fix
 */
 
@@ -73,14 +70,12 @@
             // Instantiate ScrollView
             scrollview = new Y.ScrollView({
                 srcNode:"#content",
-                width:320,
-                height:500
+                height:415
             }).render();
 
             // Set the 'top' to {ptrHeight}px down
             scrollview.after('render', function (e) {
                 scrollview._minScrollY += ptrHeight;
-                scrollview._maxScrollY += ptrHeight;
                 scrollview.set('scrollY', ptrHeight);
             });
 
