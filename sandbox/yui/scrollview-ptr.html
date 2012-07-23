@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>ScrollView Example</title>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!-- 
+        <link rel="stylesheet" href="../../yui3/build/cssreset/reset-min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <script src="../../yui3/build/yui/yui.js" type="text/javascript" charset="utf-8"></script> 
+       -->  
+
+        <link rel="stylesheet" href="http://yui.yahooapis.com/3.5.0/build/cssreset/reset-min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <script src="http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js" type="text/javascript" charset="utf-8"></script> 
+        
+        <style>
+
+        #yui3-widget-loading {
+            display:none;
+        }
+
+        #ptr {
+            height:100px;
+        }
+
+        #refreshing {
+            display:none;
+            position:relative;
+            left:90px;
+        }
+
+        #instructions img {
+            -webkit-transition: .25s;
+            transition: .25s;
+            
+            -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+        }
+
+        #instructions span{
+            font-size:20px;
+            position: relative;
+            top:-30px;
+        }
+
+        .yui3-scrollview {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            overflow: hidden;
+        }
+
+        </style>
+        
+        <script type="text/javascript" charset="utf-8">
+
+/*
+    findings:
+    - having both scrollTo and _animateTo is redundant.  scrollTo should do both
+    - scrollTo should set the offset values (this.set('scrollY')) like _animateTo does
+    - scrollTo should support a callback
+    - Scroll indicator does not work correctly
+*/
+
+        YUI().use('scrollview-base', function(Y) {
+
+            var timer, scrollview;
+
+            // Instantiate ScrollView
+            scrollview = new Y.ScrollView({
+                srcNode:"#content",
+                width:500,
+                height:500
+            }).render();
+
+            // Set the 'top' to 100px down
+            scrollview.after('render', function (e) {
+                scrollview._minScrollY = 100;
+                scrollview.set('scrollY', 100);
+            });
+
+            // Listen for any changes on Y axis
+            scrollview.after('scrollYChange', function (e) {
+                var y = e.newVal;
+                
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                
+                if (y < 0) {
+                    rotation = 90;
+                    startTimer();
+                }
+                else {
+                    rotation = 270;
+                }
+                
+                Y.one("#instructions img").setStyle('transform', 'rotate(' + rotation + 'deg)');
+            });
+
+            // Begins a 500ms timer to trigger the refresh cycle
+            function startTimer (){
+                timer = setTimeout(beginRefresh, 500)
+            }
+
+            function beginRefresh () {
+                var slidingDuration = 200;
+
+                Y.one('#instructions').hide();
+                Y.one('#refreshing').setStyle('display', 'block');
+                
+                scrollview._minScrollY = 0;
+                scrollview.scrollTo(null, 0, slidingDuration);
+                scrollview.set('disabled', true);
+
+                // End the refresh after 1.5s
+                setTimeout(function () {
+                    scrollview.set('disabled', false);
+                    scrollview._minScrollY = 100;
+                    scrollview.scrollTo(null, 100, slidingDuration);
+                    setTimeout(resetPTR, slidingDuration);
+                }, 1500);
+            }
+
+            // Reset the UI back to its normal state.
+            function resetPTR () {
+                Y.one('#instructions').show();
+                Y.one('#refreshing').hide();
+            }
+        });
+        </script>
+    </head>
+
+    <body class="yui3-skin-sam">
+        <div id="content">
+            <div id="ptr">
+                <div id="instructions"><img src="http://aux.iconpedia.net/uploads/135210286.png" height="100"><span>Pull down to refresh</span></div>
+                <div id="refreshing"><img src="http://www.deadmau5.com/wp-content/themes/deadmau5/images/ajax-loader.gif" height="100"></div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
+        </div>
+    </body>
+</html>
