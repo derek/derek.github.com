@@ -57,7 +57,8 @@
     - having both scrollTo and _animateTo is redundant.  scrollTo should do both
     - scrollTo should set the offset values (this.set('scrollY')) like _animateTo does
     - scrollTo should support a callback
-    - Scroll indicator does not work correctly
+    - iOS Webkit for some reason is not calculating _maxScrollY correctly. Investigate.
+    - Scroll indicator does not work correctly in this example.  Fix
 */
 
         YUI().use('scrollview-base', function(Y) {
