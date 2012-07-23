@@ -62,7 +62,12 @@
 
         YUI().use('scrollview-base', function(Y) {
 
-            var timer, scrollview;
+            var ptrHeight, timer, scrollview;
+
+            // Get the height of the PTR box for offset purposes
+            ptrHeight = Y.one('#ptr').getComputedStyle('height');
+            ptrHeight.replace('px', '');
+            ptrHeight = parseInt(ptrHeight, 10);
 
             // Instantiate ScrollView
             scrollview = new Y.ScrollView({
@@ -71,23 +76,21 @@
                 height:500
             }).render();
 
-            // Set the 'top' to 100px down
+            // Set the 'top' to {ptrHeight}px down
             scrollview.after('render', function (e) {
-                scrollview._minScrollY = 100;
-                scrollview.set('scrollY', 100);
+                scrollview._minScrollY += ptrHeight;
+                scrollview._maxScrollY += ptrHeight;
+                scrollview.set('scrollY', ptrHeight);
             });
 
             // Listen for any changes on Y axis
             scrollview.after('scrollYChange', function (e) {
                 var y = e.newVal;
-                
-                if (timer) {
-                    clearTimeout(timer);
-                }
-                
+                console.log(y);
+                clearTimeout(timer);
                 if (y < 0) {
                     rotation = 90;
-                    startTimer();
+                    doTimer();
                 }
                 else {
                     rotation = 270;
@@ -97,11 +100,12 @@
             });
 
             // Begins a 500ms timer to trigger the refresh cycle
-            function startTimer (){
-                timer = setTimeout(beginRefresh, 500)
+            function doTimer (){
+                timer = setTimeout(doRefresh, 500)
             }
 
-            function beginRefresh () {
+            // 
+            function doRefresh () {
                 var slidingDuration = 200;
 
                 Y.one('#instructions').hide();
@@ -114,8 +118,8 @@
                 // End the refresh after 1.5s
                 setTimeout(function () {
                     scrollview.set('disabled', false);
-                    scrollview._minScrollY = 100;
-                    scrollview.scrollTo(null, 100, slidingDuration);
+                    scrollview._minScrollY = ptrHeight;
+                    scrollview.scrollTo(null, ptrHeight, slidingDuration);
                     setTimeout(resetPTR, slidingDuration);
                 }, 1500);
             }
