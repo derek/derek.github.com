@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns:viz="http:///www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft">
+	<meta lastmodifieddate="2010-05-29+01:27">
+		<Creator>ofNodesAndEdges.com</Creator>
+		<Title>Les Misérables, the characters coappearance weighted graph</Title>
+	</meta>
+	<graph defaultedgetype="directed" idtype="string" type="static">
+		<attributes class="node" mode="static">
+			<attribute id="authority" title="Authority" type="float"/>
+			<attribute id="hub" title="Hub" type="float"/>
+		</attributes>
+		<nodes count="{{nodeCount}}">
+{{{nodes}}}
+		</nodes>
+		<edges count="{{edgeCount}}">
+{{{edges}}}
+		</edges>
+	</graph>
+</gexf>

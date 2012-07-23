@@ -2,6 +2,11 @@
 
     For development convinience, this stylesheet uses SCSS. http://sass-lang.com/
     
+    Directions:
+    1) Install Sass
+    2) Run: `sass --watch cssbutton.scss:cssbutton.css --style expanded`
+    3) All edits/saves to cssbutton.scss will now generate cssbutton.css
+    
     Files:
     1) cssbutton.scss - The development stylesheet. Do -not- import this into your HTML document.
     2) cssbutton.css  - The Sass generated output. Do import this file into your HTML document.
@@ -77,8 +82,7 @@
     @include transition( #{background-position 0.1s linear, color 0.1s linear} );
 }
 
-.yui3-button:hover,
-.yui3-button-selected {
+.yui3-button:hover {
     border-style: solid;
     border-width: 1px;
     background-position: 0 -1em;
@@ -150,92 +154,91 @@
 
 
 /***
-    Skin: Sam
+    Colors
 ***/
 
-.yui3-skin-sam .yui3-button,
-.yui3-skin-sam .yui3-button-disabled{
+
+.yui3-button-color-gray{
     border-color: #808080;
     color: #000;
     @include background-gradient(#fff, #d8d8da);
 }
 
-.yui3-skin-sam .yui3-button-color-blue {
+.yui3-button-color-blue {
     color: #fff;
-    @include background-gradient(#599BDC, #3476B7);
+    /*@include background-gradient(#599BDC, #3476B7);*/
+    @include background-gradient(#426fd9, #2647a0);
 }
 
-.yui3-skin-sam .yui3-button-color-red {
+.yui3-button-color-lightblue {
+    color: #fff;
+    color: #000;
+    @include background-gradient(#E8F2FF, #BFDAFF);
+}
+
+.yui3-button-color-red {
     color: #fff;
     @include background-gradient(#ee443e, #b2332e);
 }
 
-.yui3-skin-sam .yui3-button-color-green {
+.yui3-button-color-green {
     color: #fff;
     @include background-gradient(#62C462, #499349);
 }
 
-.yui3-skin-sam .yui3-button-color-turquoise {
+.yui3-button-color-turquoise {
     color: #fff;
     @include background-gradient(#5BC0DE, #4490a6);
 }
 
-.yui3-skin-sam .yui3-button-color-yellow {
+.yui3-button-color-yellow {
     color: #fff;
     @include background-gradient(#e3e300, #c9c900);
 }
 
-.yui3-skin-sam .yui3-button-color-orange {
+.yui3-button-color-orange {
     color: #fff;
     @include background-gradient(#eebd4c, #d4a844);
 }
 
-.yui3-skin-sam .yui3-button-color-purple {
+.yui3-button-color-purple {
     color: #fff;
     @include background-gradient(#a35295, #7a3d6f);
 }
 
-.yui3-skin-sam .yui3-button-color-black {
+.yui3-button-color-black {
     color: #fff;
     @include background-gradient(#545454, #000);
 }
-/*
-.yui3-skin-sam .yui3-button-selected {
-    @extend .yui3-button-color-black;
-}
 
-.yui3-skin-sam .yui3-button:hover,
-.yui3-skin-sam .yui3-button-selected:hover {
-    @extend .yui3-button-color-red;
-}
+/***
+    Skin: Sam
+***/
+
 .yui3-skin-sam .yui3-button:hover {
-    border-color: #7d98b8;
-
-    @include background-gradient(#fff, #bfdaff);
+    @extend .yui3-button-color-lightblue;
 }
 
-.yui3-skin-sam .yui3-button-selected,
-.yui3-skin-sam .yui3-button-selected:hover {
+.yui3-skin-sam .yui3-button,
+.yui3-skin-sam .yui3-button-disabled{
+    @extend .yui3-button-color-gray;
+}
+
+.yui3-skin-sam .yui3-button.yui3-button-selected,
+.yui3-skin-sam .yui3-button.yui3-button-selected:hover {
     @extend .yui3-button-color-blue;
 }
-.yui3-skin-sam .yui3-button-selected,
-.yui3-skin-sam .yui3-button-selected:hover {
-    border-color: #7d98b8;
-    color: #fff;
-    $start: #426fd9;
-    $end: #2647a0;
-    @include background-gradient($start, $end);
-}
 
-*/
-.yui3-skin-sam .yui3-button-disabled,
-.yui3-skin-sam .yui3-button-disabled:hover{
+.yui3-skin-sam .yui3-button.yui3-button-disabled,
+.yui3-skin-sam .yui3-button.yui3-button-disabled:hover{
     border-color: #ccc;
     color: #ccc;
     cursor: default;
     background-position: 0 0;
+    @extend .yui3-button-color-gray;
     @include box-shadow(none);
 }
+
 .yui3-skin-sam .yui3-button-icon {
     background-image: url("assets/sam_icons.gif");
 }
