@@ -87,8 +87,9 @@
             // Listen for any changes on Y axis
             scrollview.after('scrollYChange', function (e) {
                 var y = e.newVal;
-                console.log(y);
+
                 clearTimeout(timer);
+                
                 if (y < 0) {
                     rotation = 90;
                     doTimer();
