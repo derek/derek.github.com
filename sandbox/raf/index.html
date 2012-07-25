@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<meta charset='utf-8'>
+	<head>
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css">
+
+		<script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas" width="600" height="400" />
+		<script>
+
+		YUI.add('particle', function (Y) {
+
+			/* Particle object */
+            var particle = function() {
+                /* Coordinates */
+                this.x = 0;
+                this.y = 0;
+
+                /* The radius of circles */
+                this.radius = 5;
+
+                this.speed_x = 1;
+                this.speed_y = 1;
+
+                /* Direction */
+                this.dx = 0;
+                this.dy = 0;
+
+                this.color = {
+                    fill : '#000',
+                    stroke : '#000'
+                }
+
+                /* Boundaries (canvas width and height) */
+                this.bounds = {
+                    x0 : 0,
+                    x1 : 600,
+                    y0 : 0,
+                    y1 : 400
+                }
+
+                /* Private function for random color but I think you've already guessed that. */
+                var random_color = function()
+                {
+                    var c = Math.round(0xffffff * Math.random());
+                    return ('#0' + c.toString(16)).replace(/^#0([0-9a-f]{6})$/i, '#$1');
+                }
+
+                /* Function to initialise variables */
+                this.init = function() {                           
+
+                    /* Random radius */
+                    this.radius = Math.floor(Math.random()*25)
+
+                    /* Taking radius into account */
+                    this.bounds.x0 += this.radius;
+                    this.bounds.x1 -= this.radius;
+                    this.bounds.y0 += this.radius;
+                    this.bounds.y1 -= this.radius;
+
+                    /* Random positions */
+                    this.x = Math.floor(Math.random()*this.bounds.x1);
+                    this.y = Math.floor(Math.random()*this.bounds.y1);
+
+                    /* Random directions */
+                    this.dx = Math.floor((Math.random()*2)) == 1 ? -1 : 1;
+                    this.dy = Math.floor((Math.random()*2) == 1) ? -1 : 1;                            
+
+                    /* Random speed */
+                    this.speed_x = Math.floor((Math.random()*3))+1;
+                    this.speed_y = Math.floor((Math.random()*3))+1;
+
+                    /* Random color */
+                    this.color.fill = random_color();
+                    this.color.stroke = this.color.fill;
+
+                }
+
+                /* Updater function, called at every frame. It updates positions and check boundaries. */
+                this.update = function() {
+
+                    if(this.x>this.bounds.x1) {
+                        this.x = this.bounds.x1;
+                        this.dx *= -1;
+                    }
+
+                    if(this.x<this.bounds.x0) {
+                        this.x = this.bounds.x0;
+                        this.dx *= -1;
+                    }
+
+                    if(this.y>this.bounds.y1) {
+                        this.y = this.bounds.y1;
+                        this.dy *= -1;
+                    }
+
+                    if(this.y<this.bounds.y0) {
+                        this.y = this.bounds.y0;
+                        this.dy *= -1;
+                    }
+
+                    this.x+=(this.speed_x)*this.dx;
+                    this.y+=(this.speed_y)*this.dy;
+                }
+            } // end of particle object
+
+            Y.particle = particle;
+		})
+
+
+
+
+
+		YUI.add('animation', function (Y) {
+
+			var active = false;
+			var framerate = 60;
+
+			var requestAnimationFrame = 
+				window.requestAnimationFrame       || 
+				window.webkitRequestAnimationFrame || 
+				window.mozRequestAnimationFrame    || 
+				window.oRequestAnimationFrame      || 
+				window.msRequestAnimationFrame     || 
+				function( callback ){
+					window.setTimeout(callback, 1000 / 60);
+				};
+
+		 	function animation (conf) {
+		 		conf.init();
+		 		this.sequence = {
+		 			_startDate: null,
+		 			_stopDate: null,
+		 			_currentFrameID: 0,
+		 			_fps: 0,
+		 			start: conf.start,
+		 			update: conf.update,
+		 			draw: conf.draw,
+		 			continue: conf.continue,
+		 			stop: conf.stop
+		 		}
+		 	}
+
+		 	animation.prototype.start = function () {
+		 		active = true;
+		 		this.sequence.start();
+		 		this.sequence._startDate = Date.now();
+				this.doFrame();
+		 	}
+
+		 	animation.prototype.stop = function () {
+		 		this.sequence._stopDate = Date.now();
+		 		active = false;
+		 		sequence.stop();
+		 	}
+
+			animation.prototype.doFrame = function (timestamp) {
+				if (!active) {
+					return false;
+				}
+
+				var sequence = this.sequence;
+
+				sequence._currentFrameID++;
+				sequence._fps = (Date.now() - sequence._startDate) / sequence._currentFrameID;
+				sequence.update(sequence._currentFrameID);
+				sequence.draw(sequence._currentFrameID);
+
+				if (sequence.continue(sequence._currentFrameID) === true) {
+					requestAnimationFrame(Y.bind(this.doFrame, this));
+				}
+			}
+
+		 	Y.animation = animation;
+		});
+
+
+
+
+
+		YUI().use('oop', 'particle', 'animation', function (Y) {
+			var particles = [],
+				canvas = document.getElementById('canvas'),
+				context = canvas.getContext('2d'),
+				animation; 
+
+            context.font = "26pt Arial";      
+
+			/*
+				Y.animation({
+					init:     fn, // fires on instantiation
+					start:    fn, // fires on start()
+					update:   fn, // fires to update the state (no UI should be done here)
+					draw:     fn, // fires after update() to draw the state (update UI)
+					continue: fn, // should the animation continue? true/false
+					stop:     fn, // fires on stop()
+				});
+			*/
+
+			animation = new Y.animation({
+				init: function () {
+					console.log('init');
+
+	                for(var i=0; i<50; i++) {
+	                    particles.push(new Y.particle());
+	                    particles[i].init();
+	                }
+				},
+				start: function () {
+			 		console.log('start');
+				},
+				update: function () {
+	                for(var i=0; i<particles.length; i++) {
+	                    particles[i].update();
+	                }
+				},
+				draw: function () {
+					var sequence = animation.sequence,
+						fps = Math.round(sequence._fps);
+
+	                context.clearRect(0, 0, 600, 400);                
+					context.fillText('Elapsed: ' + Math.floor((Date.now() - sequence._startDate)/1000), 10, 80);  
+					context.fillText('FPS: ' + fps, 10, 50);                         
+
+	                for(var i=0; i<particles.length; i++) {
+	                    var p = particles[i];
+
+	                    context.fillStyle = p.color.fill;
+	                    context.beginPath();
+	                    context.arc(p.x, p.y, p.radius, 0, 360);
+	                    context.fill();
+	                }
+				},
+				continue: function (frameID) {
+					if (frameID < 1000) {
+						return true;
+					}
+					else {
+						return false;
+					}
+				},
+				stop: function () {
+			 		console.log('stop');
+				}
+			});
+
+			animation.start();
+		});
+		</script>
+	</body>
+</html>
