@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="http://yui.yahooapis.com/3.4.0/build/yui/yui.js"></script>
+        <script type="text/javascript">
+            YUI({
+                modules: {
+                    'gallery-prettify': {
+                        fullpath: 'http://derek.github.com/sandbox/yui/gallery-prettify/gallery-prettify.js'
+                    }
+                }
+            }).use('gallery-prettify', function(Y) {
+              Y.prettyPrint();
+            });
+        </script>
+        <link type="text/css" rel="stylesheet" href="http://derek.github.com/sandbox/yui/gallery-prettify/gallery-prettify.css">
+    </head>
+
+    <body>
+        <h1>Embeditor</h1>
+        
+        <p>A super easy way to embed a fancy text/code editor onto any webpage.</p>
+        
+        <h3>Sounds useful. How?</h3>
+        <p>Simple.</p>
+        <pre class="prettyprint">
+            
+    &lt;iframe src="http://embeditor.org/"&gt;&lt;/iframe&gt;
+        </pre>
+        
+        <p>That's it!  To make it bigger/smaller, use CSS to resize.  The editor will take up 100% height/width of the iframe.</p>
+        <p>For example:</p>
+        <pre class="prettyprint">
+
+    &lt;iframe id="embeditor" src="http://embeditor.org/"&gt;&lt;/iframe&gt;
+    &lt;style&gt;
+        #embeditor{
+            height:500px;
+            width:300px;
+            overflow: hidden;
+            border:none;
+        }
+    &lt;/style&gt;
+        </pre>
+        
+        <h3>Gimme demos!</h3>
+        <p>Ok, fine!</p>
+        <ul>
+            <li><a href="examples/simple.html">Simple</a></li>
+            <li><a href="examples/api.html">API</a></li>
+            <li><a href="examples/multiple.html">Multiple editors w/ API</a></li>
+        </ul>
+            
+        <h3>API</h3>
+        <div>
+            <ul>
+                <li>
+                    <p>Language modes - Embeditor defaults to plain text, but also supports HTML, CSS, and JS.  More on the way.  To activate, simply append ?mode=javascript, ?mode=html, or ?mode=css to the URL.</p>
+                    <p>For example...</p>
+                    <pre class="prettyprint">
+
+    &lt;iframe src="http://embeditor.org/?mode=javascript"&gt;&lt;/iframe&gt;
+                    </pre>
+                    <p>And now you get all the benefits of the editor knowing it is dealing with JavaScript, so you get syntax-highlighting, auto-formatting, etc...</p>
+                </li>
+                <li>
+                    <p>"But this is in an iFrame, which restricts me from accessing the editor.  So what good is a text editor if you can't either set the content or retrieve it?" Oh, but you can. Thanks <a href="https://developer.mozilla.org/en/DOM/window.postMessage">postMessage</a>.</p>
+                    <pre class="prettyprint">
+    &lt;iframe src="http://embeditor.org/"&gt;&lt;/iframe&gt;
+    &lt;script src="http://embeditor.org/api.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var editor = new Embeditor("embeditor");
+
+        // Set the onReady() callback that will be fired when the editor is ready
+        editor.onReady(function(){
+            editor.setValue("Editor is ready");
+        });
+
+        // Get the content of the editor and log it to the console
+        $("#btnGetValue").on("click", function(){
+            editor.getValue(function(value){
+               console.log("Editor says ----> " + value);
+            });
+        });
+    &lt;/script&gt;
+                    </pre>
+                </li>
+                <li>
+                    <p>Eventually Embeditor will support more of the Ace editor API.  Getting, setting, and modes are the most important, so that's what I started with.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <h3>Additional Notes</h3>
+        <p>This is an open-source project.  Please feel free to <a href="https://github.com/derek/embeditor">fork it</a> and submit pull-requests. </p>
+        <p>Hacked together one lazy Sunday by <a href="http://twitter.com/derek">@derek</a></p>
+        <p>Special thanks to <a href="http://twitter.com/fjakobs">@fjakobs</a> for the awesomely awesome <a href="http://ace.ajax.org/">Ace editor</a>, which Embeditor uses.</p>
+        
+        <a href="http://github.com/derek/embeditor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
+    </body>
+</html>
