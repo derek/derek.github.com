@@ -37,10 +37,11 @@
         <script>
         
             YUI().use("node", "jsonp", "yql", function(Y) {
-                Y.jsonp("https://gist.github.com/api/v1/json/gists/derek?callback={callback}", function(response) {
+                Y.jsonp("https://api.github.com/users/derek/gists?callback={callback}", function(response) {
                     var html = [];
                     html.push("<ul>");
-                    Y.each(response.gists, function(gist) {
+                    
+                    Y.each(response.data, function(gist) {
                         html.push("<li><a href='https://gist.github.com/" + gist.repo + "'>" + gist.description + "</a> (" + gist.created_at.split(" ")[0] + ")</li>");
                     })
                     html.push("</ul>");
@@ -48,12 +49,12 @@
                 });
                 
                 
-                Y.jsonp("https://github.com/api/v2/json/repos/show/derek", function (response) {
+                Y.jsonp("https://api.github.com/users/derek/repos", function (response) {
                     var html = [];
 
-                    response.repositories.reverse();
+                    response.data.reverse();
                     html.push("<ul>");
-                    Y.each(response.repositories, function(repo) {
+                    Y.each(response.data, function(repo) {
                         html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + " (" + repo.created_at.split(" ")[0] + ")</li>");
                     });
                     html.push("</ul>");
