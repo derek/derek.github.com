@@ -1,90 +1,9 @@
+<!DOCTYPE html>
 <html>
-<html>
+    <head>
+        <meta http-equiv="refresh" content="1; url=http://derek.io/">
+    </head>
     <body>
-        <h1>Derek Gathright</h1>
-
-        <h2>Connect</h2>
-        <ul>
-            <li><a href="http://derek.io/">derek.io</a></li>
-            <li><a href="http://twitter.com/derek">twitter.com/derek</a></li>
-            <li><a href="http://github.com/drgath">github.com/derek</li>
-            <li><a href="mailto://drgath@gmail.com">drgath@gmail.com</a></li>
-        </ul>
-
-        <h2>Talks</h2>
-        <ul>
-            <li>2012-11-29: "Developing the Future of Yahoo" @ Future of Web Apps in Prague, Czech Republic (<a href="http://derek.io/~/decks/2012-FOWA/">HTML</a>)</li>
-            <li>2012-11-14: "ScrollView Deep Dive" @ YUIConf in Santa Clara, CA (<a href="http://www.youtube.com/watch?v=0N8GLlxu2Ro">YouTube</a>, <a href="http://derek.io/~/yui/yuiconf2012-presentation/">HTML</a>)</li>
-            <li>2011-11-04: "Why YUI" @ YUIConf in Santa Clara, CA (<a href="http://www.youtube.com/watch?v=Dvyh1Nmq9fs">YouTube</a>, <a href="http://derek.github.com/talks/20111104_YUIConf/index.html">HTML</a>)</li>
-            <li>2010-12-04: "Yahoo Query Language" @ NYTimes Open Hackday in New York City, NY (<a href="http://www.slideshare.net/drgath/yql-select-from-internet">Slideshare</a>)</li>
-            <li>2010-10-12: "Yahoo Query Language" @ SoCal.js meetup in Pasadena, CA (<a href="talks/20101011_SoCaljs/index.html">HTML</a>)</li>
-            <li>2010-05-05: "Yahoo Query Language" @ Music Hackday in San Francisco, CA (<a href="talks/20100515_MusicHackday/index.html">HTML</a>)</li>
-            <li>2010-04-21: "Yahoo Query Language" @ Yahoo.  (<a href="http://www.slideshare.net/drgath/yahoo-query-language-select-from-internet">Slideshare</a>)</li>
-            <li>2009-08-08: "jQuery: JavaScript that Doesn't Suck" @ preDevCamp Kansas City.  (<a href="http://www.derekgathright.com/talks/20090808_pdc_jquery.pdf">PDF</a>)</li>
-            <li>2009-06-16: "Twitter Bootcamp" @ Enterprise Center of Johnson County. (<a href="http://www.derekgathright.com/talks/20090606_twitter_bootcamp.pdf">PDF</a>)</li>
-            <li>2009-05-19: "Twitter Bootcamp" @ Enterprise Center of Johnson County.</li>
-            <li>2009-04-21: "Twitter Bootcamp" @ Enterprise Center of Johnson County.</li>
-            <li>2009-02-19: "Twitter Bootcamp" @ Enterprise Center of Johnson County.</li>
-        </ul>
-
-        <h2>Github Repositories</h2>
-        <div id="repositories"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
-
-        <h2>Gists</h2>
-        <div id="gists"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
-
-        <h2>jsFiddles</h2>
-        <div id="fiddles"><img src="https://github.com/derek/Tweetanium/raw/master/images/ajax.gif"></div>
-
-        <script src="http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js" charset="utf-8"></script>
-        <script>
-
-            YUI().use("node", "jsonp", "yql", function(Y) {
-                Y.jsonp("https://api.github.com/users/derek/gists?callback={callback}", function(response) {
-                    var html = [];
-                    html.push("<ul>");
-
-                    Y.each(response.data, function(gist) {
-                        html.push("<li><a href='https://gist.github.com/" + gist.repo + "'>" + gist.description + "</a> (" + gist.created_at.split(" ")[0] + ")</li>");
-                    })
-                    html.push("</ul>");
-                    Y.one("#gists").set("innerHTML", html.join(""));
-                });
-
-
-                Y.jsonp("https://api.github.com/users/derek/repos", function (response) {
-                    var html = [];
-
-                    response.data.reverse();
-                    html.push("<ul>");
-                    Y.each(response.data, function(repo) {
-                        html.push("<li><a href='" + repo.url + "'>" + repo.name + "</a> - " + repo.description + " (" + repo.created_at.split(" ")[0] + ")</li>");
-                    });
-                    html.push("</ul>");
-
-                    Y.one("#repositories").set("innerHTML", html.join(""));
-                });
-
-
-                Y.YQL('select * from html where url="http://jsfiddle.net/user/derek/fiddles/" and xpath="/html/body/div[3]/div/ul/li/div"', function(response) {
-                    var html = [];
-
-                    html.push("<ul>");
-                    Y.each(response.query.results.div, function(parsed) {
-                        //console.log(parsed);
-                        var fiddle = {
-                            url: "http://jsfiddle.net" + parsed.a.href,
-                            title: parsed.a.title,
-                            description: (parsed.div ? " - " + parsed.div.p : ""),
-                            dateCreated: parsed.span.content.split(",")[1].trim()
-                        }
-                        html.push("<li><a href='" + fiddle.url + "'>" + fiddle.title + "</a> " + fiddle.description + " (" + fiddle.dateCreated + ")</li>");
-                    })
-                    html.push("</ul>");
-
-                    Y.one("#fiddles").set("innerHTML", html.join(""));
-                });
-            });
-        </script>
-	</body>
-<html>
+        Redirecting to <a href="http://derek.io">derek.io</a>
+    </body>
+</html>
