@@ -13,38 +13,38 @@
 			}
 		</style>
 
-		<script src="http://sigmajs.org/js/sigma.min.js"></script>
-		<script src="http://sigmajs.org/js/sigma.parseGexf.js"></script>
+		<script src="lib/sigmajs/release-v1.0.0/sigma.min.js"></script>
+		<script src="lib/sigmajs/release-v1.0.0/plugins/sigma.parsers.gexf.min.js"></script>
 		<script>
 
 		function init() {
 			// Instanciate sigma.js and customize rendering :
-			var sigInst = sigma.init(document.getElementById('sigma-example')).drawingProperties({
+			s = new sigma({
+		        graph: g,
+		        container: 'graph-container',
+		        settings: {
+		          animationsTime: 1000
+		        }
+		      });
+			thing.drawingProperties({
 				defaultLabelColor: '#fff',
 				defaultLabelSize: 12,
 				defaultLabelBGColor: '#fff',
 				defaultLabelHoverColor: '#000',
 				labelThreshold: 3,
 				defaultEdgeType: 'curve'
-			}).graphProperties({
-				// minNodeSize: 0.5,
-				// maxNodeSize: 5,
-				// minEdgeSize: 1,
-				// maxEdgeSize: 1
-			}).mouseProperties({
-				// maxRatio: 1
 			});
 
 			// Parse a GEXF encoded file to fill the graph
 			// (requires "sigma.parseGexf.js" to be included)
-			sigInst.parseGexf('generated.gexf');
+			thing.parseGexf('generated.gexf');
 
 			// Bind events :
 			var greyColor = '#666';
-			sigInst.bind('overnodes',function(event){
+			thing.bind('overnodes',function(event){
 				var nodes = event.content;
 				var neighbors = {};
-				sigInst.iterEdges(function(e){
+				thing.iterEdges(function(e){
 					if(nodes.indexOf(e.source)>=0 || nodes.indexOf(e.target)>=0){
 						neighbors[e.source] = 1;
 						neighbors[e.target] = 1;
@@ -58,7 +58,7 @@
 					}
 				}).draw(2,2,2);
 			}).bind('outnodes',function(){
-				sigInst.iterEdges(function(e){
+				thing.iterEdges(function(e){
 					e.hidden = 0;
 				}).iterNodes(function(n){
 						n.active = false;
@@ -67,7 +67,7 @@
 			});
 
 			// Draw the graph :
-			sigInst.draw();
+			thing.draw();
 		}
 
 		if (document.addEventListener) {
@@ -81,6 +81,6 @@
 
 	<body>
 		<!-- <p>Hover, zoom, &amp; pan.</p> -->
-		<div id="sigma-example"></div>
+		<div id="graph-container"></div>
 	</body>
 </html>
