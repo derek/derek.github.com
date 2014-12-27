@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+
+    <script>
+    var xhr = new XMLHttpRequest();
+    var url = "https://gdata.youtube.com/feeds/api/playlists/PLWBtVaEexfe0ydnRQPRHrm2BiqFHAKfFX?v=2&alt=json";
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            handleData(JSON.parse(xhr.responseText));
+        }
+    }
+
+    xhr.open("GET", url, true);
+    xhr.send();
+
+    function handleData(data) {
+        body = document.querySelectorAll('body')[0];
+        ul = document.createElement('ul')
+
+        link = document.createElement('a');
+        link.href = data.feed.link[0].href;
+        link.innerHTML = 'Playlist';
+
+        info = document.createElement('span');
+        info.innerHTML = ' (' + data.feed.entry.length + ' videos)'
+
+        body.appendChild(link);
+        body.appendChild(info);
+        body.appendChild(ul);
+
+        data.feed.entry.forEach(function (entry) {
+            li = document.createElement('ul');
+            ul.appendChild(li);
+
+            link = document.createElement('a');
+            link.href = entry.link[0].href
+            link.innerHTML = entry.title.$t
+
+            li.appendChild(link);
+        })
+    }
+
+    </script>
+</head>
+<body>
+    <h1>Gathright Family Videos</h1>
+
+</body>
+</html>
