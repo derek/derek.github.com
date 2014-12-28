@@ -6,7 +6,7 @@
 
     <script>
     var xhr = new XMLHttpRequest();
-    var url = "https://gdata.youtube.com/feeds/api/playlists/PLWBtVaEexfe0ydnRQPRHrm2BiqFHAKfFX?v=2&alt=json";
+    var url = 'https://gdata.youtube.com/feeds/api/playlists/PLWBtVaEexfe0ydnRQPRHrm2BiqFHAKfFX?v=2&alt=json&max-results=30';
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -14,7 +14,7 @@
         }
     }
 
-    xhr.open("GET", url, true);
+    xhr.open('GET', url, true);
     xhr.send();
 
     function handleData(data) {
