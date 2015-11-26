@@ -5,46 +5,68 @@
     <title>Gathright Family Videos</title>
 
     <script>
-    var xhr = new XMLHttpRequest();
-    var url = 'https://gdata.youtube.com/feeds/api/playlists/PLWBtVaEexfe0ydnRQPRHrm2BiqFHAKfFX?v=2&alt=json&max-results=30';
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            handleData(JSON.parse(xhr.responseText));
-        }
+    function googleApiClientReady() {
+        gapi.client.setApiKey('AIzaSyB36GknlHf6xWBKy5pgYQY0zaX-FQRQANc');
+        gapi.client.load('youtube', 'v3', handleAPILoaded);
     }
 
-    xhr.open('GET', url, true);
-    xhr.send();
+    function handleAPILoaded() {
+        requestUserUploadsPlaylistId();
+    }
 
-    function handleData(data) {
+    function requestUserUploadsPlaylistId() {
+        var request = gapi.client.youtube.playlistItems.list({
+            part: 'snippet',
+            playlistId: 'PLWBtVaEexfe0ydnRQPRHrm2BiqFHAKfFX',
+            maxResults: 50
+        });
+
+        request.execute(handlePlaylistItemsResponse);
+    }
+
+    function handlePlaylistItemsResponse(response) {
+        var playlist = response.items.map(function (item) {
+            return item.snippet;
+        })
+
+        renderPlaylist(playlist);
+    }
+
+    function renderPlaylist(playlist) {
+        console.log(playlist);
         body = document.querySelectorAll('body')[0];
         ul = document.createElement('ul')
 
         link = document.createElement('a');
-        link.href = data.feed.link[0].href;
+        link.href = 'https://www.youtube.com/playlist?list=PLWBtVaEexfe0ydnRQPRHrm2BiqFHAKfFX';
         link.innerHTML = 'Playlist';
 
         info = document.createElement('span');
-        info.innerHTML = ' (' + data.feed.entry.length + ' videos)'
+        info.innerHTML = ' (' + playlist.length + ' videos)'
 
         body.appendChild(link);
         body.appendChild(info);
         body.appendChild(ul);
 
-        data.feed.entry.forEach(function (entry) {
+        playlist.forEach(function (video) {
             li = document.createElement('li');
             ul.appendChild(li);
 
+            // img = document.createElement('img');
+            // img.src = video.thumbnails.medium.url
+
             link = document.createElement('a');
-            link.href = entry.link[0].href
-            link.innerHTML = entry.title.$t
+            link.href = 'https://www.youtube.com/watch?v=' + video.resourceId.videoId
+            link.innerHTML = video.title
 
             li.appendChild(link);
+            // li.appendChild(document.createElement('br'));
+            // li.appendChild(img);
         })
     }
-
     </script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+
 </head>
 <body>
     <h1>Gathright Family Videos</h1>
