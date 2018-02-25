@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <title>Resume - Derek Gathright - JavaScript Engineer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="description" content="Resume for Derek Gathright, a web engineer / programmer from San Francisco, CA.  Specialties are JavaScript, PHP, Linux, Apache, MySQL, PostgreSQL.">
-    <meta name="keywords" content="web, engineer, javascript, php, php5, programmer, programming, california, san francisco, web, developer">
+    <meta name="description" content="Resume for Derek Gathright, a web engineer / software engineer from San Francisco, CA.  Specialties are JavaScript, Web Standards, PHP, Linux, Apache, MySQL, PostgreSQL.">
+    <meta name="keywords" content="web, engineer, javascript, php, programmer, programming, california, san francisco, web, developer">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <style type="text/css">
         body {
@@ -30,19 +31,17 @@
                 -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 6);
             }
 
-            #nav {
+            nav {
                 text-align: center;
                 margin-top: 10px;
             }
         }
 
-
         @media print {
-            #nav {
+            nav {
                 display: none;
             }
         }
-
 
         h1,
         h2,
@@ -115,74 +114,89 @@
             font-size: 14px;
             margin: 2px;
         }
+
+        #summary ul {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 6em;
+        }
+
+        #summary ul li {
+            width: 50%;
+        }
     </style>
 </head>
 
 <body>
-    <div id="content">
-        <div id="header">
-            <h1>Derek Gathright</h1>
-            <h2>Full Stack Web Engineer - San Francisco, California</h2>
-        </div>
-        <div id="contact">
-            <p><a href="http://derek.io">derek.io</a> | <a href="mailto:derek@derekgathright.com">derek@derekgathright.com</a><br /><a href="http://twitter.com/derek">twitter.com/derek</a> | <a href="http://github.com/derek">github.com/derek</a></p>
-        </div>
-        <div style="clear:both"></div>
-        <div id="nav">
-            <hr>
-            <a href="#summary">Summary</a> |
-            <a href="#skills">Technical Skills</a> |
-            <a href="#employment">Employment History</a> |
-            <a href="#education">Education</a> |
-            <a href="#certifications">Certifications</a> |
-            <a href="#projects">Projects</a> |
-            <a href="#speaking">Speaking</a> |
-            <a href="#organizations">Organizations</a>
-            <hr>
-        </div>
+    <section id="content">
 
-        <div id="summary">
+        <section id="header">
+            <h1>Derek Gathright</h1>
+            <h2>Web Engineer / Full Stack / Front End - San Francisco, CA</h2>
+        </section>
+
+        <section id="contact">
+            <p>
+                <a href="http://derek.io">derek.io</a>
+                <br /><a href="http://github.com/derek">github.com/derek</a>
+                <br /><a href="http://twitter.com/derek">twitter.com/derek</a>
+                <br /><a href="mailto:derek@derekgathright.com">derek@derekgathright.com</a>
+            </p>
+        </section>
+
+        <div style="clear: both"></div>
+
+        <section id="summary">
             <h2>Summary</h2>
             <div class="block">
                 <div class="left"></div>
                 <div class="right">
-                    <p>I am a passionate software engineer with over 15 years worth of professional experience building web applications for the smallest of small startups, the web's largest sites. My specialties include JavaScript, CSS, HTML, Node.js, open-source,
-                        web performance, developer advocacy, and thought leadership.</p>
+                    <p>Highly motivated, skilled software engineer with over 15 years of professional experience building applications. Strong background in JavaScript, web standards, open source, and have worked on some of the largest sites on the internet.
+                        Proficient communication, leadership, and project management skills. Experience with a wide range of software libraries, tools, and languages. Able to plan &amp; lead full project life cycles. Patient and calm with excellent interpersonal
+                        abilities. Skilled at listening and gathering information. Excellent at research and problem finding.
+                    </p>
+
+                    <p>Overall, my professional experiences have included the following, but certainly not limited to:</p>
+                    <ul>
+                        <li>HTML, CSS, JavaScript, Ruby, Python, PHP, SQL, REST, Node.js, React, Rails, DOM, HTTP, jQuery</li>
+                        <li>Web applications, web standards, web performance</li>
+                        <li>Data visualization</li>
+                        <li>Databases, data storage</li>
+                        <li>API design, systems architecture</li>
+                        <li>Strong communication, collaboration, mentor skills</li>
+                        <li>Experience in IC, management, lead roles</li>
+                        <li>Open-source community management</li>
+                        <li>Developer advacocy</li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="skills">
-            <h2>Technical Skills</h2>
-            <div class="block">
-                <div class="left"></div>
-                <div class="right">
-                    <p><strong>Programming Languages</strong>: Currently use JavaScript and Ruby. Previously PHP, Python, Java, C++, and Basic.</p>
-
-                    <p><strong>Markup &amp; Formats</strong>: Proficient with HTML, CSS, XML, &amp; JSON.</p>
-
-                    <p><strong>Database Systems</strong>: Experienced with MySQL, PostgreSQL, &amp; SQLite.</p>
-
-                    <p><strong>Libraries &amp; Frameworks</strong>: jQuery, YUI, Prototype, Node.js, Ruby on Rails, Django, Google App Engine, WebOS, &amp; Zend Framework.</p>
-
-                    <p><strong>Version Control</strong>: Git, Subversion, &amp; CVS.</p>
-                </div>
-            </div>
-
-            <h2>Employment History</h2>
+        <section id="history">
+            <h2>Employment</h2>
             <div class="block">
                 <div class="left">
                     2014 - Present
                 </div>
                 <div class="right">
-                    <div class="organization">Quid, Inc <span class="location"> - San Francisco, CA</span></div>
-                    <div class="title">Senior Software Engineer</div>
+                    <div class="organization">Quid <span class="location"> - San Francisco, CA</span></div>
+                    <div class="title">Senior Software Engineer, Web</div>
                     <p class="description">
-                        As a Senior Software Engineer on a small team of engineers, my time at Quid has been spent building a world-class data visualization platform from scratch. Closely collaborating with Product & UX, I've been heavily involved in building everything from
-                        the search interface, to the visualization engine, and the Rails API.
+                        The Quid web team transforms million of data points in to beautiful visualizations powered by big-data analytics. As a Senior Software Engineer on the team, my time has been spent building a world-class data visualization platform from scratch. Beginning
+                        with a simple search into a seemingly infinite dataset, Quid's users are able to generate rich visualizations and actionable insights that lead to industry influencing decisions. Closely collaborating with Product & UX, I've been
+                        heavily involved in building everything from the search interface, to the WebGL visualization engine, the Rails API, and everything in between.
 
-                        <p class="additional"><strong>Technology used</strong>: JavaScript, ES6, React, Docker, WebGL, Three.js, jQuery, CoffeeScript, Rails, Python, MySQL, REST, WebSockets, &amp; more.</p>
-                    </p>
+                        <p>More specifically:</p>
+                        <ul>
+                            <li>Was part of a small team that rewrote Quid's Three.js-based visualization engine to a highly performant WebGL engine, built entirely in-house</li>
+                            <li>Led an initiative to give users the ability to save & restore visualization states, resulting in an ability to export WebGL visualizations to PowerPoint</li>
+                            <li>Was the UI lead on the Search team, which included a mix of feature development and modernization tasks, integration of React & ES6+</li>
+                            <li>Gave technical talks for both internal and external audiences to demonstrate Quid's amazing technology platform</li>
+                            <li>Championed team goals in testing, quality, innovation, effective communication, and developer happiness</li>
+                            <li>Authored dozens of documents & RFCs detailing proposals, modernizations, and a vision for Quid's future</li>
+                            <li>Spent most of my time working in JavaScript, CoffeeScript, HTML, CSS, Ruby, and Python. Also using libraries & tools such as Babel, React, Redux, Node.js, Rails, Backbone, jQuery, JSX, Webpack, Karma, and Docker.</li>
+                        </ul>
                 </div>
             </div>
 
@@ -191,19 +205,20 @@
                     2011 - 2013
                 </div>
                 <div class="right">
-                    <div class="organization">Yahoo! <span class="location"> - Sunnyvale, CA</span></div>
+                    <div class="organization">Yahoo <span class="location"> - Sunnyvale, CA</span></div>
                     <div class="title">Senior Software Engineer, YUI</div>
                     <p class="description">
                         YUI is a popular open-source JavaScript library, and as a senior engineer working on the project, my time was spent working on variety of tasks. This included building CSS &amp; JavaScript modules, Node.js developer tools, developer advocacy, and overall...
                         just making the library as feature-rich and awesome as possible.
                     </p>
-                    <p>A few of the projects involved with:</p>
+                    <p>A few of the projects I led:</p>
                     <ul>
                         <li>Developed and released the <a href="http://yuilibrary.com/yui/docs/button/">Button component</a>, which is now part of the <a href="http://purecss.io/">Pure CSS library</a>.</li>
                         <li>Enhanced the <a href="http://yuilibrary.com/yui/docs/scrollview/">ScrollView widget</a> to improve performance, add new functionality, and introduce test coverage.</li>
                         <li>Developed <a href="https://github.com/derek/yui-benchmark">YUI Benchmark</a>, a JavaScript performance testing toolkit for web and Node.js applications.</li>
                         <li>Worked on YUI's continuous integration efforts, which included automated testing of functionality, performance, and code quality.</li>
-                        <li>Advocacy and community efforts, which included over 50 blog posts for the <a href="http://yuiblog.com/">YUI Blog</a> and the <a href="http://developer.yahoo.com/blogs/ydn/">YDN blog</a>, as well as representing Yahoo! at various conferences, hackathons, and recruiting events.</li>
+                        <li>Advocacy and community efforts, which included over 50 blog posts for the <a href="http://yuiblog.com/">YUI Blog</a> and the <a href="http://developer.yahoo.com/blogs/ydn/">YDN blog</a>, as well as representing Yahoo! at various
+                            conferences, hackathons, and recruiting events.</li>
                     </ul>
                 </div>
             </div>
@@ -212,20 +227,10 @@
                     2009 - 2011
                 </div>
                 <div class="right">
-                    <div class="organization">Yahoo! <span class="location"> - Santa Monica, CA</span></div>
+                    <div class="organization">Yahoo <span class="location"> - Santa Monica, CA</span></div>
                     <div class="title">Front End Engineer</div>
                     <p class="description">
-                        Engineer, develop, and maintain Yahoo! websites using PHP, JavaScript, CSS, and HTML. <br /> Coding commonly involves using Yahoo! proprietary MVC framework (PHP, XML) and YUI (JavaScript library). <br /> Act as evangelist for
-                        Yahoo! Developer Network.</p>
-                    <p>Projects involved with:</p>
-                    <ul>
-                        <li>Yahoo! Media - Develop modules using PHP, XML, and JavaScript to be used on every Y! Media property (News, Sports, Finance, etc...)</li>
-                        <li>Yahoo! Shine - <a href="http://shine.yahoo.com/">shine.yahoo.com</a></li>
-                        <li>Yahoo! TV - <a href="http://tv.yahoo.com/">tv.yahoo.com</a></li>
-                        <li>Yahoo! Movies - <a href="http://movies.yahoo.com/">movies.yahoo.com</a></li>
-                        <li>Yahoo! Entertainment - <a href="http://entertainment.yahoo.com/">entertainment.yahoo.com</a></li>
-                        <li>Yahoo! Primetime in No Time - <a href="http://primetime.tv.yahoo.com/">primetime.tv.yahoo.com</a></li>
-                    </ul>
+                        Engineer, develop, and maintain Yahoo! Media websites. Products worked on: Yahoo Media, Yahoo Shine, Yahoo TV, Yahoo Movies, Yahoo Entertainment. Act as evangelist for Yahoo! Developer Network.</p>
                 </div>
             </div>
 
@@ -234,7 +239,7 @@
                     2007 - 2009
                 </div>
                 <div class="right">
-                    <div class="organization">Catholic Content, LLC <span class="location"> - Lenexa, KS</span></div>
+                    <div class="organization">Catholic Content <span class="location"> - Kansas City, KS</span></div>
 
                     <div class="title">Software Engineer, Lead</div>
                     <p class="description">
@@ -250,6 +255,7 @@
                             <li>Customized WordpressMU for use as the MyCatholicVoice Blogging Network.</li>
                             <li>Established partnerships with companies such as Rackspace, Limelight Networks, Scribd, &amp; Burst Media.</li>
                             <li>Configured &amp; managed development/production servers running on Red Hat Enterprise Edition 4, Ubuntu, and Windows.</li>
+                            <li>Patent: <a href="https://patents.google.com/patent/US20090271283">Network Media Distribution</a> (US20090271283A1)</li>
                         </ul>
                     </p>
                     <p class="additional"><strong>Technology used</strong>: Amazon Web Services (EC2, S3, SQS), Linux, Apache, lighttpd, MySQL, PostgreSQL, PHP5, Kohana PHP framework, Code Igniter PHP framework, FFMPEG, jQuery, Memcached, Lucene, &amp; ADODB.</p>
@@ -263,7 +269,7 @@
 
                 <div class="right">
                     <div class="organization">Gragg Advertising <span class="location"> - Kansas City, MO</span></div>
-                    <div class="title">Interactive Developer</div>
+                    <div class="title">Software Engineer</div>
                     <p class="description">
                         <ul>
                             <li>Develop internal/client web projects &amp; interactive marketing campaigns.</li>
@@ -283,19 +289,19 @@
                 </div>
 
                 <div class="right">
-                    <div class="organization">Nuvio Corp. <span class="location"> - Overland Park, KS</span></div>
-                    <div class="title">Web Developer</div>
+                    <div class="organization">Nuvio Corp. <span class="location"> - Kansas City, KS</span></div>
+                    <div class="title">Software Engineer</div>
                     <p class="description">
-                        Developed user interfaces for Voice over IP services and company intranet. <br /> Manage Nuvio's corporate website and 200+ partner websites. <br /> Acted as technical contact for Nuvio's engineering department. <br /> Designed,
-                        developed, &amp; managed web API for remote interaction with between partners and Nuvio systems.
+                        Developed user interfaces for Voice over IP services and company intranet. Manage Nuvio's corporate website and 200+ partner websites. Acted as technical contact for Nuvio's engineering department. Designed, developed, &amp; managed web API for remote
+                        interaction with between partners and Nuvio systems.
                     </p>
 
                     <p class="additional"><strong>Technology used</strong>: Linux, Apache, PHP5, JavaScript, HTML, CSS, PostgreSQL, &amp; MySQL</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="education">
+        <section id="education">
             <h2>Education</h2>
             <div class="block">
                 <div class="left">
@@ -306,23 +312,23 @@
                     <p class="description">Bachelors degree in Communication Studies</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="certifications">
+        <section id="certifications">
             <h2>Certifications</h2>
             <div class="block">
                 <div class="right">
-                    <p>Zend Certified PHP Engineer - Certified Sept 2009</p>
+                    <p>Zend Certified PHP Engineer - Sept 2009</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="speaking">
+        <section id="speaking">
             <h2>Speaking Experience</h2>
 
             <div class="block">
                 <div class="right">
-                    <p>I am a confident speaker, with experience in front of both small and large crowds. Along with dozens of public speaking experiences in college as a Communications major, here are some of the formal technical talks I have given.</p>
+                    <p>I am a confident speaker with experience in front of both small and large crowds. Along with dozens of public speaking experiences in college as a Communications major, here are some of the formal technical talks I have given.</p>
                     <ul>
                         <li>2015-01-20: "Quid - Human Intuition at Superhuman Scale" (<a href="https://www.youtube.com/watch?v=PaIVf27ZY5o">YouTube</a>)</li>
                         <li>2012-11-29: "Developing the Future of Yahoo" @ Future of Web Apps in Prague, Czech Republic (<a href="http://derek.io/~/decks/2012-FOWA/">HTML</a>)</li>
@@ -340,9 +346,9 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="organizations">
+        <section id="organizations">
             <h2>Organizations</h2>
             <div class="block">
                 <div class="right">
@@ -351,13 +357,15 @@
                         <li><strong><a href="http://meetup.com/beerjs/">Beer.js SF</a></strong> (2012) - Founder. Beer.js is a social meetup group in San Francisco for JavaScript developers.</li>
                         <li><strong><a href="http://socaljs.com/">SoCal.js</a></strong> (2010) - Founder. SoCal.js is a meetup group in the Los Angeles area focused on JavaScript themed events. Now <a href="http://js.la/">JS.LA</a>.</li>
                         <li><strong><a href="http://groups.google.com/group/kcjug/">KCJUG</a> </strong> (Kansas City JavaScript Users Group) (2008) - Founder</li>
-                        <li><strong><a href="http://startupkc.com/">StartupKC</a></strong> (2007) - Co-founder. StartupKC is an umbrella group within the KC tech community designed to organize developer events &amp; meetups. Organized events such as BarCampKC, PreDevCamp, StartupWeekend, Highlight Midwest, various "code diving" sessions, and created the StartupKC co-working space.</li>
-                        <li><strong><a href="http://hoasoccer.org/">Heart of America Soccer Foundation</a></strong> (2002) - Co-founder &amp; COO. Grassroots organization in the greater Kansas City area that was created to advocate the region's viability as a host for world-class professional &amp; amateur soccer.</li>
+                        <li><strong><a href="http://startupkc.com/">StartupKC</a></strong> (2007) - Co-founder. StartupKC is an umbrella group within the KC tech community designed to organize developer events &amp; meetups. Organized events such as BarCampKC,
+                            PreDevCamp, StartupWeekend, Highlight Midwest, various "code diving" sessions, and created the StartupKC co-working space.</li>
+                        <li><strong><a href="http://hoasoccer.org/">Heart of America Soccer Foundation</a></strong> (2002) - Co-founder &amp; COO. Grassroots organization in the greater Kansas City area that was created to advocate the region's viability
+                            as a host for world-class professional &amp; amateur soccer.</li>
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </section>
 
     <script type="text/javascript">
         var _gaq = _gaq || [];
