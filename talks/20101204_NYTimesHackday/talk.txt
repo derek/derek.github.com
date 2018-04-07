@@ -1,0 +1,96 @@
+Anyone know what this is?
+http://www.opte.org/maps/static/1069646562.LGL.2D.700x700.png
+
+A map of the Internet
+(that someone made up)
+
+At the end of every branch is a cluster of servers, and each of those servers hosts files.
+
+Did you know there are 17,883,409,372,001 web pages on the World Wide Web?
+
+I bet you didn't, because I just made it up.
+
+It's impossible to measure the size of the interwebs.
+
+Every second Twitter gets 600 new tweets
+http://s89997654.onlinehome.us/screencaps/Twitter___%40iamnotdiddy%E2%84%A2__I_just_watched_Discovery_s_...-20101117-214329.jpg
+http://blog.twitter.com/2010/02/measuring-tweets.html
+
+Every minute YouTube gets 35 new hours of video
+http://s89997654.onlinehome.us/screencaps/skitched-20101117-214513.jpg
+http://www.google.com/hostednews/afp/article/ALeqM5hL4UMqXBKBTfJ2PjHINPGpWZe82w?docId=CNG.7a039cc7305a51102e864beb3aa51545.181
+
+Every month Facebook gets 2.5 billion new photos
+http://ihasahotdog.files.wordpress.com/2009/01/funny-dog-pictures-dog-has-a-facebook-pose.jpg
+http://blog.facebook.com/blog.php?post=206178097130
+
+Point = The WWW is ginormous!
+
+Yeah, lots of it is garbage
+http://images.icanhascheezburger.com/completestore/2008/7/5/inogarbage128597186155115579.jpg
+
+But there's still a ton of interesting stuff out there.  So how do you access it programmatically?
+
+Let's start with the majority of the pages out there: XML-based data
+
+
+It's easy enough to download it.  But how do you parse it?
+
+Regular Expressions?
+http://www.catonmat.net/blog/wp-content/uploads/2009/12/yo-dawg-regex.jpg
+
+Who here likes regexes? First one to tell me what this does gets a t-shirt
+http://www.lateralcode.com/wp-content/uploads/regex.png
+
+"I have a rule... If a regular expression is longer than 2 inches, find another method" - Douglas Crockford
+
+http://4.bp.blogspot.com/_1XYQfEGGEIw/R3nheewrZ5I/AAAAAAAAAD8/cOshhBnDWBM/s400/200712_regex_no_manual_labor.jpg
+
+So we need a structured data source, one accessible via an API (Applcation Programming Interface)
+
+Companies have discovered that if you build APIs, developers will come
+http://icanhascheezburger.files.wordpress.com/2007/11/funny-pictures-cat-birdcage.jpg
+
+And it saves your from having to dance around on stage like a monkey
+http://s89997654.onlinehome.us/screencaps/skitched-20101117-220444.jpg
+(search: "Monkey dance")
+
+APIs are awesome. You get (mostly) whatever data in (mostly) whatever format you want and in a (mostly) easy to parse structure.
+http://api.twitter.com/1/users/show.xml?screen_name=derek
+
+
+Yahoo!, Google, Facebook, Twitter, Microsoft, ... Most popular web services offer them now days.
+
+As neat as they are, they are imperfect.  You have to read how to use them
+
+Forget what you were told as a kid, reading sucks
+http://www.casetechnology.com/resources/StarsClub/Reading/images/reading_fun.gif
+http://www.winmarkcom.com/images/readtosucceed.jpg
+
+We're developers, we're lazy and we want to build stuff!
+
+Mashups are really cool, but they can sometimes become a convoluted mess.
+
+Yahoo invented a solution to this problem...
+YQL (stupid crazy intro)
+
+"The Yahoo! Query Language is an expressive SQL-like language that lets you query, filter, and join data across Web services. With YQL, apps run faster with fewer lines of code and a smaller network footprint."
+
+You now have a common way of accessing any data on the web, with or without APIs, and all in one common syntax that you are likely familiar with.
+
+
+
+
+Pizza = original mashup
+
+Spider cat
+http://images.icanhascheezburger.com/completestore/2009/3/15/128816380149749298.jpg
+
+Wrong tool
+http://jdick.co.uk/blog/wp-content/uploads/2009/01/funny-pictures-halo-dog-pew.jpg
+
+Overloaded
+http://www.roadtransport.com/blogs/big-lorry-blog/overload3.JPG
+
+Sad cat
+http://www.crywalt.com/blog/images/funny-pictures-sad-cat-blackandwhite.jpg

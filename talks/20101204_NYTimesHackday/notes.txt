@@ -1,0 +1,4 @@
+# SELECT BESTSELLERS AND GENERATE LINK TO AMAZON
+USE "http://www.datatables.org/nyt/nyt.bestsellers.xml" AS nyt.bestsellers;
+USE "https://github.com/gcb/yql.opentable/raw/master/text.concat.xml" AS text.concat;
+SELECT text FROM text.concat WHERE text.key1 = "http://www.amazon.com/dp/" AND (text.key2) IN (SELECT isbns.isbn.isbn10 FROM nyt.bestsellers WHERE apikey='8a63c937a5409f755976508664793ad3:13:62033371' AND listname='Hardcover Fiction');

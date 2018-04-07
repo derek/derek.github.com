@@ -1,0 +1,19 @@
+<html>
+    <script src="http://yuim.in"></script>
+    <script>
+    YUI().use('yql', function(Y){
+
+        console.log(typeof Y.YQL); // function
+
+        Y.use(function(X){
+            console.log(typeof X.YQL); // function
+        });
+
+        YUI().use(function(Y){
+            console.log(typeof Y.YQL); // undefined
+        });
+
+    });
+    </script>
+
+</html>

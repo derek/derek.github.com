@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+	<script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+	<script>
+		var oneDay=1000*60*60*24,
+			lastLeak = new Date("July 19, 2012"),
+			today = new Date(),
+			since = Math.floor(Math.abs((lastLeak.getTime()-today.getTime())/oneDay));
+
+		YUI().use('node', function (Y) {
+			Y.one('#days').setContent(since);
+			Y.one('#until').setContent(365-since);
+		});
+	</script>
+	<style>
+		body{
+			position:relative;
+			top: 2em;
+			text-align:center;
+			font-size:4em;
+		}
+	</style>
+</head>
+
+<body>
+	<div>It's been <strong><span id="days">...</span> days</strong> since our <a href="http://allthingsd.com/20120719/yes-keep-moving-marissa-mayers-first-memo-to-yahoos-natch/">last leak</a>.</div>
+	<div>Only <strong><span id="until">...</span> days</strong> to go until free purple kittens!</div>
+	<img src="http://files.sharenator.com/purple_kitten-s300x309-230165.jpg">
+</body>
