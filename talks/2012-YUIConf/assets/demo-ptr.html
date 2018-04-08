@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>ScrollView Example</title>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr1/build/cssreset/reset-min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <script src="http://yui.yahooapis.com/3.8.0pr1/build/yui/yui-min.js" type="text/javascript" charset="utf-8"></script> 
+ 
+        <style>
+
+        #ptr {
+            height:100px;
+        }
+
+        #refreshing {
+            display:none;
+            position:relative;
+            left:100px;
+        }
+
+        #content { 
+            width:320px;
+        }
+        
+        #instructions img {
+            -webkit-transition: .25s;
+            transition: .25s;
+
+            -webkit-transform: rotate(270deg);
+            transform: rotate(270deg);
+        }
+
+        #instructions span{
+            font-size:20px;
+            position: relative;
+            top:-40px;
+        }
+
+        .yui3-scrollview {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            overflow: hidden;
+        }
+
+        .yui3-js-enabled .yui3-scrollview-loading {
+            visibility:hidden;
+        }
+
+        #title { 
+            font-weight: bold;
+            text-align:center;
+            font-size: 2em;
+        }
+
+        </style>
+        
+        <script type="text/javascript" charset="utf-8">
+        YUI().use('scrollview-base', 'yql', function(Y) {
+
+            var photos, ptrHeight, timer, scrollview;
+
+            // Fetch the kittehs
+            Y.YQL("use 'http://derek.io/~/executor/tables/6bd53742f7c796b4d6e8479bc407ff5a.xml' as datatable; SELECT * FROM datatable WHERE query='kittens' ;", function(r){
+                
+                photos = r.query.results.items.item;
+
+                init();
+            });
+
+            function init() {
+
+                // Show a random cat
+                setCat(getRandomCat());
+
+                // Get the height of the PTR box for offset purposes
+                ptrHeight = Y.one('#ptr').getComputedStyle('height');
+                ptrHeight.replace('px', '');
+                ptrHeight = parseInt(ptrHeight, 10);
+
+                // Instantiate ScrollView
+                scrollview = new Y.ScrollView({
+                    srcNode:"#scrollview",
+                    height:515,
+                    axis:'y'
+                }).render();
+
+                // Set the 'top' to {ptrHeight}px down 
+                scrollview.after('render', function (e) {
+                    console.log('render');
+                    scrollview._minScrollY += ptrHeight;
+                    scrollview._maxScrollY += ptrHeight; // This is not very intuitive
+                    scrollview.set('scrollY', ptrHeight);
+                });
+
+                // Listen for any changes on Y axis
+                scrollview.after('scrollYChange', function (e) {
+                    var y = e.newVal,
+                        node = Y.one("#instructions img"),
+                        rotation;
+
+                    clearTimeout(timer);
+                    
+                    if (y < 0) {
+                        rotation = 90;
+                        doTimer();
+                    }
+                    else {
+                        rotation = 270;
+                    }
+                    
+                    node.setStyle('transform', 'rotate(' + rotation + 'deg)');
+                });
+            }
+
+            // Begins a 500ms timer to trigger the refresh cycle
+            function doTimer (){
+                timer = setTimeout(doRefresh, 500)
+            }
+
+            // Begin the refresh cycle
+            function doRefresh () {
+                var slidingDuration = 200,
+                    cat = getRandomCat(), 
+                    img = new Image();
+
+                img.src = cat.thumb;
+                img.onload = function () {
+                    setCat(cat);
+                    scrollview.set('disabled', false);
+                    scrollview._minScrollY = ptrHeight;
+                    scrollview.scrollTo(null, ptrHeight, slidingDuration);
+                    setTimeout(resetPTR, slidingDuration);
+                };
+
+                Y.one('#instructions').hide();
+                Y.one('#refreshing').setStyle('display', 'block');
+                
+                scrollview._minScrollY = 0;
+                scrollview.scrollTo(null, 0, slidingDuration);
+                scrollview.set('disabled', true);
+            }
+
+            // Reset the UI back to its normal state.
+            function resetPTR () {
+                Y.one('#instructions').show();
+                Y.one('#refreshing').hide();
+            }
+
+            function setCat(cat) {
+                Y.one('#kitty img').set('src', cat.thumb);
+                Y.one('#kitty #title').setContent(cat.title);
+                Y.one('#kitty #description').setContent(cat.description);
+            }
+
+            function getRandomCat() {
+                return photos[Math.floor(Math.random()*photos.length)];
+            }
+        });
+        </script>
+    </head>
+
+    <body class="yui3-skin-sam">
+        <div id="scrollview">
+            <div id="ptr">
+                <div id="instructions"><img src="http://aux.iconpedia.net/uploads/135210286.png" height="100"><span>Pull down to refresh</span></div>
+                <div id="refreshing"><img src="http://www.deadmau5.com/wp-content/themes/deadmau5/images/ajax-loader.gif" height="100"></div>
+            </div>
+            <div id="content">
+                <div id="kitty">
+                    <img src="" width="320" />
+                    <p id="title"><p>
+                    <p id="description"><p>
+                </div>
+                <!-- <p style="margin-top:30px; font-weight:bold; text-align:center;">Pull down to load another kitteh</p> -->
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>ScrollView Deep Dive</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="Derek Gathright">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="assets/sunburst.css">
+		<script type="text/javascript" src="assets/prettify.js"></script>
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<style>
+
+      .strong{
+        color:yellow;
+        font-weight: bold;
+      }
+
+			pre code {
+				font-size:20px;
+			}
+
+			.twocolumn {
+				-webkit-column-count:2; /* Safari and Chrome */
+				width:600px;
+			}
+
+      body {
+       /* background: #2c2f3f;
+        background: -webkit-radial-gradient(center, circle cover, #555a5f 0%, #1c1e20 100%);*/
+      }
+
+      code {
+        color:orange;
+      }
+
+		</style>
+	</head>
+
+	<body onload="prettyPrint()">
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+        <!-- Section 1 -->
+        <section>
+
+  				<section>
+  					<h1>YUI ScrollView</h1>
+  					<h2>Deep Dive</h2>
+            <p><small>YUIConf 2012 - Santa Clara, CA</small></p>
+            <img height="250" src="assets/yui-logo.png" />
+  				</section>
+
+          <section>
+            <h2>What we're going to talk about</h2>
+            <ul>
+              <li>Why ScrollView?</li>
+              <li>Demos</li>
+              <li>Architecture</li>
+              <li>API (methods, properties, events, etc.)</li>
+              <li>Common configurations</li>
+              <li>Plugins</li>
+              <li>Unit Testing</li>
+              <li>Tips, tricks, and gotchas</li>
+              <li>Roadmap</li>
+            </ul>
+          </section>
+
+  				<section>
+  					<h2>About Me</h2>
+  					<ul>
+              <li>Hi! I'm <a href="http://derek.io">Derek Gathright</a></li>
+              <li>Software engineer @ Yahoo, YUI</li>
+  						<li>Author of Button, contributor to ScrollView (and other things)</li>
+              <li>Twitter &amp; Github as @derek</li>
+  					</ul>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>ScrollView:<br />What &amp; Why?</h1>
+            <ul>
+              <li>ScrollView provides a <span class="strong">cross-browser</span> scrollable content widget for mobile and desktop browsers</li>
+              <li>Great for supplementary widgets (carousels), <span class="strong">as well as</span> primary interface components</li>
+              <li>Fast, efficient, <span class="strong">unit tested</span></li>
+              <li>Used across Yahoo! in products such as Axis, Livestand, News, Y! Mail, <span class="strong">and dozens more</span>...</li>
+              <li>Built on top of a <span class="strong">solid foundation</span>, YUI.</li>
+            </ul>
+          </section>
+
+  				<section>
+              <h2>Supported Browsers</h2>
+              <img border="0" width="500" src="assets/browser_logos-256.png">
+              <p>Everything! Modern browsers, legacy (IE6+), <br> mobile (Safari, Android), etc.</p>
+          </section>
+
+				</section>
+
+
+
+        <!-- Section 2 -->
+				<section>
+
+					<section>
+						<h1>Demos</h1>
+							<img width="178" height="238" src="assets/down_arrow.png" alt="Down arrow">
+					</section>
+
+          <section>
+            <h2>No ScrollView</h2>
+            <iframe height="400" width="400" src="assets/demo00.html"></iframe>
+          </section>
+
+					<section>
+						<h2>With ScrollView</h2>
+						<iframe height="400" width="400" src="assets/demo01.html"></iframe>
+					</section>
+
+					<section>
+						<h2>Horizontal ScrollView</h2>
+            <iframe height="230" width="325" src="assets/demo02.html"></iframe>
+					</section>
+
+					<section>
+						<h2>Kitten Refresher</h2>
+						<iframe height="520" width="320" src="assets/demo-ptr.html"></iframe>
+					</section>
+
+					<!--<section>
+						<h2>Election 2012</h2>
+						<iframe height="500" width="1050" src="http://news.yahoo.com/control-room/"></iframe>
+					</section>-->
+
+				</section>
+
+
+
+        <!-- Section 3 -->
+				<section>
+
+          <section>
+            <h1>Architecture</h1>
+            <p>yui3/src/scrollview/meta/scrollview.json</p>
+            <pre class="prettyprint">
+"scrollview-base" : { // Y.ScrollView
+    "requires" : [
+        "widget",
+        "event-gestures",
+        "event-mousewheel",
+        "transition"
+    ]
+},
+"scrollview-base-ie":{...}, // Conditionally loaded
+"scrollview-scrollbars":{...}, // Y.Plugin.ScrollViewScrollbars
+"scrollview-paginator":{...} // Y.Plugin.ScrollViewPaginator</pre>
+          </section>
+
+					<section>
+            <h2>Y.Widget</h2>
+						<p><code>Y.Widget</code> is a foundation class that many UI components in YUI are built on top of.</p>
+<br />
+            <h3>Core Widgets</h3>
+            <ul class="twocolumn">
+              <li>AutoComplete</li>
+              <li>Button</li>
+              <li>Calendar</li>
+              <li>Charts</li>
+              <li>DataTable</li>
+              <li>Dial</li>
+              <li>MenuNav</li>
+              <li>Node Plugin</li>
+              <li>Overlay</li>
+              <li>Panel</li>
+              <li class="strong">ScrollView</li>
+              <li>Slider</li>
+              <li>TabView</li>
+            </ul>
+					</section>
+
+					<section>
+						<h2>Y.Widget provides</h2>
+						<ul>
+              <li>Attributes</li>
+              <li>EventTarget (Custom Events)</li>
+              <li>Plugability</li>
+							<li>Lifecycle &amp; Abstract Rendering Methods
+                <ul>
+                  <li>init()</li>
+                  <li>destroy()</li>
+                  <li>renderUI()</li>
+                  <li>bindUI()</li>
+                  <li>syncUI()</li>
+              </li>
+              <li>... and more</li>
+						</ul>
+            <br/>
+            <p>Docs @ <a href="http://yuilibrary.com/yui/docs/widget/">yuilibrary.com/yui/docs/widget/</a></p>
+					</section>
+
+<!-- 					<section>
+						<h2>Architecture</h2>
+						<img src="http://yuilibrary.com/yui/docs/assets/widget/widget-class-diagram.png">
+					</section> -->
+
+<!-- 					<section>
+						<h2>Abstract Rendering methods</h2>
+						<img src="http://yuilibrary.com/yui/docs/assets/widget/widget-template-diagram.png">
+					</section> -->
+
+					<section>
+						<h2>Extending Widget</h2>
+<pre class="prettyprint" style="font-size:20px;">/* MyWidget class constructor */
+function MyWidget(config) {
+    MyWidget.superclass.constructor.apply(this, arguments);
+}
+
+/* Identify the Widget class */
+MyWidget.NAME = "MyWidget";
+
+MyWidget.ATTRS = {
+    // Attributes defined w/ default values & get/set functions
+};
+
+/* Extend and export the Y.MyWidget class */
+Y.MyWidget = Y.extend(MyWidget, Y.Widget, {
+    // Methods/properties to add to the prototype of new class
+});
+</pre>
+					</section>
+
+					<section>
+						<h2>Instantiating MyWidget</h2>
+<pre class="prettyprint" style="font-size:20px;">
+YUI({...}).use('myWidget', function (Y) {
+	
+  var myWidget = new Y.MyWidget({
+    srcNode: '#someContainer'
+  });
+
+  myWidget.render();
+
+});
+</pre>
+					</section>
+
+					<section>
+						<h2>Instantiating ScrollView</h2>
+<pre class="prettyprint" style="font-size:20px;">
+YUI().use('scrollview', function (Y) {
+  
+  var scrollView = new Y.ScrollView({
+    srcNode: '#someContainer'
+  });
+
+  scrollView.render();
+
+});
+</pre>
+					</section>
+
+        </section>
+
+
+
+        <!-- Section 4 -->
+
+        <section>
+
+          <section>
+            <h1>API</h1>
+          </section>
+
+  				<section>
+  					<h2>ScrollView Methods, Properties, &amp; Events</h2>
+  					<p>Inherits from <code>Y.Widget</code>, and also includes:</p>
+  					<p><pre class="prettyprint" style="font-size:25px;">
+  // scrollTo(x,y,[duration],[easing]) 
+  scrollView.scrollTo(0, 100, 500, 'ease-out');
+
+  // Retrieve the last scrolled amount
+  scrollView.lastScrolledAmt; // 100
+
+  // Be notified when scrolling stops
+  scrollView.on('scrollEnd', fn);</pre></p>
+  				</section>
+
+  				<section>
+  					<h2>ScrollView Attributes</h2>
+  					<p>Inherits from <code>Y.Widget</code>, and also includes:</p>
+  					<ul class="twocolumn">
+  						<li class="strong">axis</li>
+  						<li>bounce</li>
+  						<li>bounceRange</li>
+  						<li>deceleration</li>
+  						<li>drag</li>
+  						<li>duration</li>
+  						<li>easing</li>
+  						<li class="strong">flick</li>
+  						<li>frameDuration</li>
+  						<li class="strong">scrollX</li>
+  						<li class="strong">scrollY</li>
+  						<li>snapDuration</li>
+  						<li>snapEasing</li>
+  					</ul>
+          </section>
+
+				</section>
+
+
+
+        <!-- Section 5 -->
+        <section>
+
+          <section>
+            <h1>Configuring</h1>
+          </section>
+
+          <section>
+            <h2>Basic</h2>
+<pre class="prettyprint" style="font-size:20px;">
+var scrollView = new Y.ScrollView({
+
+  srcNode: '#container',
+  height: 400,
+
+  axis: 'x', // 'x', 'y', or 'xy' (added in 3.7)
+  flick: {
+      minDistance:10,
+      minVelocity:0.3,
+      axis: "x"
+  }
+
+});
+
+scrollView.render();
+</pre>
+          </section>
+
+          <section>
+            <h2>No drag or flick</h2>
+<pre class="prettyprint" style="font-size:20px;">
+var scrollView = new Y.ScrollView({
+
+  srcNode: '#container',
+  height: 400,
+
+  flick: false,
+  drag: false
+
+});
+
+scrollView.render();
+</pre>
+            <p>Now the only interaction available is via the API, useful for carousels.</p>
+          </section>
+
+          <section>
+            <h2>Tweaking Physics</h2>
+<pre class="prettyprint" style="font-size:20px;">
+var scrollView = new Y.ScrollView({
+
+  srcNode: '#container',
+  height: 400,
+
+  frameDuration: 5, // ms between frames. default '15'
+  deceleration: 0.99, // default '0.93'
+  easing: 'cubic-bezier(0,.2,0,1)' // 'cubic-bezier(0,.1,0,1)'
+
+});
+
+scrollView.render();
+</pre>
+          </section>
+
+          <section>
+            <h2>Bézier Curves</h2>
+            <p>CSS3 Transitions add support for cubic curves. Normalized by YUI's <code>transition</code> module. P0 is (0,0) and P3 is (1,1), so you define P1, P2, &amp; duration</p>
+            <img width="300" src="assets/bezier.gif">
+<pre class="prettyprint" style="font-size:20px;">
+// Examples
+(0.0, 0.0, 1.0, 1.0) // linear
+(0.42, 0.0, 1.0, 1.0) // ease-in
+(0.0, 0.0, 0.58, 1.0) // ease-out
+</pre>
+          <aside>(Useful: <a href="http://www.roblaplaca.com/examples/bezierBuilder/">CSS cubic-bezier builder</a>)</aside>
+          </section>
+
+        </section>
+
+
+
+        <!-- Section 6 -->
+        <section>
+
+          <section>
+            <h1>Plugins</h1>
+            <p>ScrollView has two plugins:
+              <ol>
+                <li><code>scrollview-scrollbars</code></li>
+                <li><code>scrollview-paginator</code></li>
+              </ol>
+            </p>
+            <p></p>
+          </section>
+          <section>
+            <h2>Plugin: Paginator</h2>
+            <p><code>Y.Plugin.ScrollViewPaginator</code> adds pagination support so ScrollView will snap to discrete page boundaries, as opposed to scrolling continuously.</p>
+            <br />
+            <div style="margin-left:100px;">
+              <div style="float:left;">
+                <h3>Attributes</h3>
+                <ul>
+                  <li>axis</li>
+                  <li>selector</li>
+                  <li>index</li>
+                  <li>total</li>
+                </ul>
+              </div>
+              <div>
+                <h3>Methods</h3>
+                <ul>
+                  <li>scrollToIndex()</li>
+                  <li>next()</li>
+                  <li>prev()</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>Instantiation</h2>
+
+<pre class="prettyprint">YUI().use("scrollview", "scrollview-paginator", function(Y) {
+    var scrollview = new Y.ScrollView({
+        srcNode:"#container",
+        height:"400"
+    });
+
+    /* Plug in pagination support */
+    scrollview.plug(Y.Plugin.ScrollViewPaginator, {
+        selector: ">li" // elements definining page boundaries
+    });
+
+    scrollview.render();
+});
+</pre>
+<pre class="prettyprint">
+/* scrollview.pages is an instance of 
+   the ScrollViewPaginator plugin */
+scrollview.pages.set("index", 2);
+scrollview.pages.get("total");
+scrollview.pages.scrollToIndex(3, 500, "ease-in");
+scrollview.pages.next();
+</pre>
+          </section>
+
+          <section>
+            <h2>Continuous ScrollView</h2>
+            <iframe height="230" width="325" src="assets/demo02.html"></iframe>
+          </section>
+
+          <section>
+            <h2>Paginated ScrollView</h2>
+            <iframe height="270" width="325" src="assets/demo03.html"></iframe>
+          </section>
+
+          <section>
+            <h2>Plugin: Scroll Indicator</h2>
+            <p><code>Y.Plugin.ScrollViewScrollbars</code>, which adds X &amp; Y scroll indicators to mimic iOS/Android behavior.</p>
+            <p>Already included if you use the <code>scrollview</code> module.  Not included with <code>scrollview-base</code>.</p>
+          </section>
+
+        </section>
+
+
+
+        <!-- Section 7 -->
+        <section>
+
+          <section>
+            <h1>Unit Testing</h1>
+            <img class="fragment" width="496" src="assets/unit_cat.jpg">
+          </section>
+
+          <section>
+            <h2>Unit Testing</h2>
+            <p>ScrollView was not unit tested until 3.7 release.</p>
+            <br />
+            <p>Reason for delay?  No way to simulate gestures until <code>gesture-simulate</code> landed.</p>
+            <br />
+            <p>Coverage now 80+% on <code>scrollview-base</code> and <code>scrollview-paginator</code>. Increasing.</p>
+            <br />
+            <p>Tests @ yui3/src/scrollview/tests/unit/</p>
+          </section>
+
+          <section>
+            <h2>Testing ScrollView</h2>
+<pre class="prettyprint">"Move on Y should move that distance": function() {
+    var Test = this,
+        scrollview = renderVerticalScrollview(),
+        distance = 500;
+      
+    scrollview.on('scrollEnd', function(){
+        Test.resume(function(){
+            if (scrollview.get('scrollY') >= distance) {
+                Y.Assert.pass();
+            } else {
+                Y.Assert.fail();
+            }
+        });
+    });
+
+    scrollview.get('contentBox').simulateGesture('move', {
+        path: { ydist: -(distance) },
+        duration: 100 // milliseconds
+    });
+
+    Test.wait(2000);
+}</pre>
+          </section>
+
+          <section>
+              <h2>simulate-gesture</h2>
+              <p>Still very young, but it works, and it's awesome.</p>
+              <p>No user guide documentation yet, so the best documentation is the source code. <a href="https://github.com/yui/yui3/blob/master/src/gesture-simulate/js/gesture-simulate.js">yui3/src/gesture-simulate/js/gesture-simulate.js</a></p>
+          </section>
+
+        </section>
+
+
+
+        <!-- Section 8 -->
+        <section>
+
+          <section>
+            <h1>Tips, Tricks, &amp; Q's</h1>
+            <img height="220" src="assets/thisway.jpg">
+          </section>
+
+          <section>
+            <h2>DOM Optimization</h2>
+            <p><strong>Problem</strong>: ScrollView-based applications do not require page changes to load new content, so it becomes easy to max out the GPU memory on memory-restricted mobile devices.</p>
+            <br />
+            <div class="fragment">
+              <p><strong>Solution</strong>: Remove distant content from the rendering tree.</p>
+              <pre class="prettyprint">
+scrollview.plug(Y.Plugin.ScrollViewPaginator, {
+    selector: ">li",
+    _optimizeMemory: true // <-----------
+});
+              </pre>
+            </div>
+            
+          </section>
+          <section>
+            <h2>Demo</h2>
+            <iframe height="270" width="325" src="assets/demo05.html"></iframe>
+          </section>
+
+          <section>
+            <h2>Lazy Loading</h2>
+            <p><strong>Problem</strong>: On render, ScrollView will auto-calculate its min/max bounds and pagination offsets (if applicable).  If widget content changes size, it may modify the container's height or width which will cause it to be out of sync.</p>
+            <br />
+            <div class="fragment">
+              <p><strong>Solution</strong>: Execute <code>scrollView.syncUI()</code>  when content size in ScrollView changes.</p>
+              <pre class="prettyprint">// Recalculate container and page dimensions
+scrollView.syncUI();</pre>
+              <p>Also, specify <code>height</code> &amp; <code>width</code> &lt;img&gt; attributes!</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Right to Left Layouts</h2>
+            <p><strong>Problem</strong>: My target audience requires a right-to-left layout. How can I hack ScrollView to support that?</p>
+            <br />
+            <div class="fragment">
+              <p><strong>Solution</strong>: You don't have to. As of YUI 3.7, ScrollView and its paginator plugin natively support RTL layouts.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Accessibility</h2>
+            <p><strong>Problem</strong>: How can I make ScrollView content accessible to screen readers?</p>
+            <br />
+            <div class="fragment">
+              <p><strong>Solution</strong>: You don't have to do anything.  ScrollView is a visual-only interface enhancement and doesn't modify the underlying DOM structure.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Nested ScrollViews</h2>
+            <p><strong>Problem</strong>: I want a ScrollView of ScrollViews</p>
+            <br />
+            <div class="fragment">
+              <p><strong>Solution</strong>: No you don't.  You want a ScrollView that supports scrolling on the X and Y axes, which ScrollView now supports.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Dual-axis continuous</h2>
+            <iframe height="404" width="404" src="assets/demo-dual.html"></iframe>
+<pre class="prettyprint">new Y.ScrollView({
+  srcNode:'#container',
+  axis: 'xy'
+}).render();
+</pre>
+          </section>
+
+          <section>
+            <h2>Dual-axis paginated</h2>
+            <iframe height="404" width="404" src="assets/demo-dual-paginated.html"></iframe>
+<pre class="prettyprint">scrollview.plug(Y.Plugin.ScrollViewPaginator, {
+  selector: ">li",
+  axis:"x"
+});
+</pre>
+          </section>
+
+          <section>
+            <h2>Dual-axis paginated vertical</h2>
+            <iframe height="400" width="400" src="assets/demo-dual-paginated-vertical.html"></iframe>
+          </section>
+
+          <section>
+            <h2>Debugging</h2>
+            <ul>
+              <li>Get familiar with Chrome Dev Tools, Web Inspector, Firebug, etc.</li>
+              <li>Use Chrome to live edit code and export your ScrollView instance as a global
+                <pre class="prettyprint">
+  var scrollView = new Y.ScrollView({...});
+  window.sv = scrollView; // Globalize it!</pre>
+                Now you can interact with ScrollView from the console.
+              </li>
+              <li>Interesting stuff: <code>get('scroll{X/Y}')</code>, <code>_minScroll{X/Y}</code>, <code>_maxScroll{X/Y}</code>, <code>_isOutOfBounds()</code>, <code>pages._pageDims</code></li>
+            </ul>
+          </section>
+
+        </section>
+
+
+
+
+
+
+
+        <!-- Section 9 -->
+        <section>
+
+          <section>
+            <h1>What's next?</h1>
+            <ul>
+              <li class="fragment">Get it out of beta</li>
+              <li class="fragment">Improved coverage on functional &amp; unit tests</li>
+              <li class="fragment">More examples</li>
+              <li class="fragment">Memory optimization on by default</li>
+              <li class="fragment">Benchmarking &amp; performance enhancements</li>
+              <li class="fragment">CSS animated flicks (<a href="https://github.com/derek/yui3/blob/sv_flick_perf/src/scrollview/js/scrollview-base.js#L744">source</a>, <a href="http://derek.io/~/yui/branch/sv_flick_perf/src/scrollview/tests/manual/svtestbed.html">demo</a>)</li>
+              <li class="fragment"><code>webkit-overflow-scrolling:touch</code> ?</li>
+            </ul>
+          </section>
+
+        </section>
+
+
+
+        <!-- Section 10 -->
+        <section>
+
+          <section>
+            <h1>Conclusion</h1>
+            <h2>What did we learn?</h2>
+            <ul>
+              <li>ScrollView's purpose</li>
+              <li>Architecture</li>
+              <li>API</li>
+              <li>Plugins</li>
+              <li>Simulating gestures in unit tests</li>
+              <li>Reviewed solutions to common questions</li>
+              <li>ScrollView's roadmap</li>
+            </ul>
+          </section>
+
+        </section>
+
+
+
+
+				<section>
+					<h1>Thanks!</h1>
+<br />
+					<p>ScrollView documentation and examples <br /> <a href="http://yuilibrary.com/yui/docs/scrollview/">yuilibrary.com/yui/docs/scrollview/</a></p>
+<br />
+					<p>Slides <br /> html: <a href="http://derek.io/~/yui/yuiconf2012-presentation/">derek.io/~/yui/yuiconf2012-presentation/</a> <br /> repo: <a href="https://github.com/derek/yuiconf2012-presentation">github.com/derek/yuiconf2012-presentation</a></p>
+<br />
+					<p>Holla! <br /> <a href="http://twitter.com/derek">@derek</a></p>
+        </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '/socket.io/socket.io.js', async: true },
+          { src: 'plugin/notes-server/client.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
