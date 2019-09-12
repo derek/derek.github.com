@@ -1,0 +1,116 @@
+<html>
+
+<head>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    @keyframes pulseTypingComments {
+      0%,
+      100% {
+        background: hsl(208, 58.4%, 84.9%);
+      }
+      60% {
+        background: hsl(208, 35.1%, 62%);
+      }
+    }
+
+    .dots-container {
+      visibility: hidden;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 5px;
+      background: hsl(208, 35.1%, 62%);
+      display: inline-block;
+      animation: pulseTypingComments 1.5s infinite;
+    }
+
+    .dot:nth-of-type(2) {
+      animation-delay: 150ms;
+    }
+
+    .dot:nth-of-type(3) {
+      animation-delay: 300ms;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  User:
+  <select id='userID'>
+    <option value='1'>1</option>
+    <option value='2'>2</option>
+    <option value='3'>3</option>
+    <option value='4'>4</option>
+  </select>
+  <br />
+  <br />
+
+  1:
+  <input type='text' id='message-1' />
+  <span class='dots-container' id='status-1'>
+    <div class='dot'></div>
+    <div class='dot'></div>
+    <div class='dot'></div>
+  </span>
+  <br />
+  <br />
+
+  2:
+  <input type='text' id='message-2' />
+  <span class='dots-container' id='status-2'>
+    <div class='dot'></div>
+    <div class='dot'></div>
+    <div class='dot'></div>
+  </span>
+  <br />
+  <br />
+
+  3:
+  <input type='text' id='message-3' />
+  <span class='dots-container' id='status-3'>
+    <div class='dot'></div>
+    <div class='dot'></div>
+    <div class='dot'></div>
+  </span>
+
+  <script>
+    const TIMEOUT = 2000;
+    let socket = io();
+
+    const applyPrecogState = (state) => {
+      Object.entries(state).forEach(([conversationID, data]) => {
+        const hasPrecog = Object.entries(data).some(([userID, date]) => (date > (Date.now() - TIMEOUT)) && (userID != (document.getElementById('userID').selectedOptions[0].value)));
+        document.getElementById(`status-${conversationID}`).style.visibility = hasPrecog ? 'visible' : 'hidden'
+      });
+      window.precogRefresh = setTimeout(applyPrecogState.bind(null, state), TIMEOUT);
+    }
+
+    socket.on('precog-state', (state) => {
+      clearTimeout(window.precogRefresh);
+      applyPrecogState(state);
+    });
+
+    const handleEvent = (conversationID, e) => {
+      if (e.key === 'Enter') {
+        e.target.value = null;
+      }
+      socket.emit('update-status', {
+        conversationID,
+        enable: e.type !== 'blur' && e.target.value.length > 0,
+        user: document.getElementById('userID').selectedOptions[0].value,
+      });
+    }
+
+    for (let i = 1; i <= 3; i++) {
+      ['keydown', 'keyup', 'focus', 'blur'].forEach((type) => {
+        document.getElementById(`message-${i}`).addEventListener(type, handleEvent.bind(null, i));
+      });
+    }
+  </script>
+</body>
+
+</html>
