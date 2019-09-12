@@ -1,25 +1,24 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 
 <head>
-    <title>Resume - Derek Gathright - JavaScript Engineer</title>
+    <title>Resume - Derek Gathright - Front-end Engineer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="description" content="Resume for Derek Gathright, a web engineer / software engineer from San Francisco, CA.  Specialties are JavaScript, Web Standards, PHP, Linux, Apache, MySQL, PostgreSQL.">
+    <meta name="description" content="Resume for Derek Gathright, a web engineer / software engineer from San Francisco, CA. Specialties are JavaScript, Web Standards, PHP, Linux, Apache, MySQL, PostgreSQL.">
     <meta name="keywords" content="web, engineer, javascript, php, programmer, programming, california, san francisco, web, developer">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <style type="text/css">
+    <style>
         body {
             font-family: "Times New Roman", Georgia, Serif;
-            text-align: center;
             background-color: #dfdfdf;
-            margin: 0px;
+            margin: 0;
             padding: 20px;
             color: #2F2F2F;
         }
 
         #content {
-            width: 900px;
-            text-align: left;
+            max-width: 70%;
+            min-width: 500px;
             margin: 0 auto;
             padding: 10px;
             background-color: #ffffff;
@@ -29,16 +28,11 @@
             #content {
                 box-shadow: 1px 1px 5px rgba(0, 0, 0, 6);
             }
-
-            nav {
-                text-align: center;
-                margin-top: 10px;
-            }
         }
 
         @media print {
-            nav {
-                display: none;
+            #content {
+                max-width: 100%;
             }
         }
 
@@ -48,6 +42,15 @@
         a,
         a:visited {
             color: #2B67AF;
+            text-decoration: none;
+        }
+
+        h1 {
+            margin: 0px 0px;
+        }
+
+        h3 {
+            font-size: 1.5em;
         }
 
         #header {
@@ -61,7 +64,7 @@
         }
 
         #header h2 {
-            font-weight: bold;
+            font-weight: normal;
             font-size: 16px;
             color: #2F2F2F;
             margin: 5px;
@@ -79,50 +82,44 @@
             margin: 5px;
         }
 
-        .block {
-            margin: 15px;
+        .job-item {
+            display: grid;
+            grid-template-columns: 75px auto;
+            grid-template-areas: "logo details"
+                                 ". description";
+            margin-bottom: 15px;
         }
 
-        .left {
-            float: left;
-            width: 100px;
+        .job-logo {
+            grid-area: logo;
         }
 
-        .right {
-            clear: right;
-            margin: 0px 0px 0px 100px;
-            border-bottom: groove 2px;
+        .job-details {
+            grid-area: details;
         }
 
-        .block .organization {
-            font-size: 18px;
+        .job-description {
+            grid-area: description;
+        }
+
+        .job-details .title {
             font-weight: bold;
         }
-
-        .block .organization .location {
-            font-size: 12px;
+        .job-details .date,
+        .job-details .location {
+            color: rgba(0,0,0,.6)
         }
 
-        .block .title {
-            font-weight: bold;
-        }
-
-        .block .description {}
-
-        .block .additional {
-            font-size: 14px;
-            margin: 2px;
+        .gragg-logo {
+            height: 50px;
+            width: 50px;
+            background-size: 50px;
+            background-repeat: no-repeat;
+            background-image: url(./logos/gragg3.png);
         }
 
         #summary ul {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            height: 6em;
-        }
-
-        #summary ul li {
-            width: 50%;
+            display: grid;
         }
     </style>
 </head>
@@ -132,7 +129,7 @@
 
         <section id="header">
             <h1>Derek Gathright</h1>
-            <h2>Web Engineer / Full Stack / Front-end - San Francisco, CA</h2>
+            <h2>Web Engineer / Front-end / Full Stack</h2>
         </section>
 
         <section id="contact">
@@ -140,6 +137,7 @@
                 <a href="http://derek.io">derek.io</a>
                 <br /><a href="http://github.com/derek">github.com/derek</a>
                 <br /><a href="http://twitter.com/derek">twitter.com/derek</a>
+                <br /><a href="https://www.linkedin.com/in/derekgathright/">linkedin.com/in/derekgathright/</a>
                 <br /><a href="mailto:resume@derek.io">resume@derek.io</a>
             </p>
         </section>
@@ -147,185 +145,191 @@
         <div style="clear: both"></div>
 
         <section id="summary">
-            <h2>Summary</h2>
-            <div class="block">
-                <div class="left"></div>
-                <div class="right">
-                    <p>Highly motivated, skilled software engineer with over 15 years of professional experience building applications. Strong background in JavaScript, web standards, open source, and have worked on some of the largest sites on the internet.
-                        Proficient communication, leadership, and project management skills. Experience with a wide range of software libraries, tools, and languages. Able to plan &amp; lead full project life cycles. Patient and calm with excellent interpersonal
-                        abilities. Skilled at listening and gathering information. Excellent at research and problem finding.
-                    </p>
-
-                    <p>Overall, my professional experiences have included the following, but certainly not limited to:</p>
-                    <ul>
-                        <li>HTML, CSS, JavaScript, Ruby, Python, PHP, SQL, REST, Node.js, React, Rails, DOM, HTTP, jQuery</li>
-                        <li>Web applications, web standards, web performance</li>
-                        <li>Data visualization</li>
-                        <li>Databases, data storage</li>
-                        <li>API design, systems architecture</li>
-                        <li>Strong communication, collaboration, mentor skills</li>
-                        <li>Experience in IC, management, lead roles</li>
-                        <li>Open-source community management</li>
-                        <li>Developer advocacy</li>
-                    </ul>
-                </div>
-            </div>
+            <h3>Summary</h3>
+            <p>Software engineer with over 15 years of professional experience building web applications for the smallest of small startups, the web's largest sites. My specialties include JavaScript, React, CSS, HTML, Node.js, open-source, web performance, web standards, developer advocacy, and thought leadership.</p>
+            <p>Overall, my professional experiences have included the following, but certainly not limited to:</p>
+            <ul>
+                <li>HTML, CSS, JavaScript, Ruby, Python, PHP, SQL, REST, Node.js, React, Rails, DOM, HTTP</li>
+                <li>Web applications, web standards, web performance</li>
+                <li>Data visualization</li>
+                <li>Databases, data storage</li>
+                <li>API design, systems architecture</li>
+                <li>Strong communication, collaboration, mentorship skills</li>
+                <li>Open-source community management</li>
+                <li>Developer advocacy</li>
+            </ul>
         </section>
 
         <section id="history">
-            <h2>Employment</h2>
+            <h3>Experience</h3>
 
-            <div class="block">
-                <div class="left">
-                    2018 - 2019
+            <div class="job-item">
+                <div class="job-logo">
+                    <img height=50 width=50 src="./logos/front.png">
                 </div>
-                <div class="right">
-                    <div class="organization">FrontApp <span class="location"> - San Francisco, CA</span></div>
-                    <div class="title">Senior Software Engineer</div>
-                    <p class="description">
-                        Building a world-class communications application, so you can fall in love with email all over again. Was a member of the small front-end (3 engineers) who had the important mission of turning novel designs into reality using bleeding edge web technology paired with established best practices. As a Senior Software Engineer, I spent much of my time building a highly performant web-based communications application from scratch, using TypeScript, React, Redux, WebSockets, and a whole lot more. This also included working in the node.js API, and maintaining an Angular legacy application.
-                    </p>
+                <div class="job-details">
+                    <div class="title">Senior Software Engineer, Front-end</div>
+                    <div class="organization">Front</div>
+                    <div class="date">2018 - 2019</div>
+                    <div class="location">San Francisco, CA</div>
+                </div>
+                <div class="job-description">
+                    <p>Building a world-class communications application, so you can fall in love with email all over again. Was a member of the small front-end team (3 engineers) who had the important mission of turning novel designs into reality using bleeding edge web technology paired with established best practices. As a Senior Software Engineer, I spent much of my time building a highly performant web-based communications application from scratch, using TypeScript, React, Redux, WebSockets, and a whole lot more. This also included working in the node.js API, and maintaining an Angular legacy application.</p>
                 </div>
             </div>
 
-            <div class="block">
-                <div class="left">
-                    2014 - 2018
+            <div class="job-item">
+                <div class="job-logo">
+                    <img height=50 width=50 src="./logos/quid.png">
                 </div>
-                <div class="right">
-                    <div class="organization">Quid <span class="location"> - San Francisco, CA</span></div>
-                    <div class="title">Senior Software Engineer</div>
-                    <p class="description">Front is building a world-class communications application, so you can fall in love with email all over again. The front-end team is small, yet mighty, and turns novel designs & ideas into reality using bleeding edge technology paired with established best practices. As a Senior Software Engineer, I spent much of my time building a highly performant web-based communications application from scratch, using TypeScript, React, Redux, WebSockets, and a whole lot more. This also included working in our node.js API, and maintaining our Angular-based legacy application.
-
-                        <p>More specifically:</p>
-                        <ul>
-                            <li>Was part of a small team that rewrote Quid's Three.js-based visualization engine to a highly performant WebGL engine, built entirely in-house</li>
-                            <li>Led an initiative to give users the ability to save & restore visualization states, resulting in an ability to export WebGL visualizations to PowerPoint</li>
-                            <li>Was the UI lead on the Search team, which included a mix of feature development and modernization tasks, integration of React & ES6+</li>
-                            <li>Gave technical talks for both internal and external audiences to demonstrate Quid's amazing technology platform</li>
-                            <li>Championed team goals in testing, quality, innovation, effective communication, and developer happiness</li>
-                            <li>Authored dozens of documents & RFCs detailing proposals, modernizations, and a vision for Quid's future</li>
-                            <li>Spent most of my time working in JavaScript, CoffeeScript, HTML, CSS, Ruby, and Python. Also using libraries & tools such as Babel, React, Redux, Node.js, Rails, Backbone, jQuery, JSX, Webpack, Karma, and Docker.</li>
-                        </ul>
+                <div class="job-details">
+                    <div class="title">Senior Software Engineer, Front-end</div>
+                    <div class="organization">Quid</div>
+                    <div class="location">San Francisco, CA</div>
+                    <div class="date">2014 - 2018</div>
+                </div>
+                <div class="job-description">
+                    <p>The Quid web team transforms million of data points in to beautiful visualizations of information powered by big-data analytics. As a Senior Software Engineer on the team, my time has been spent building a world-class data visualization platform from scratch. Beginning with a simple search into a seemingly infinite dataset, Quid's users are able to generate rich visualizations and actionable insights that lead to industry influencing decisions. Closely collaborating with Product & UX, I've been heavily involved in building everything from the search interface, to the WebGL visualization engine, the Rails API, and everything in between.</p>
+                    <p>More specifically:</p>
+                    <ul>
+                        <li>Was part of a small team that rewrote Quid's Three.js-based visualization engine to a highly performant WebGL engine, built entirely in-house</li>
+                        <li>Led an initiative to give users the ability to save & restore visualization states, resulting in an ability to export WebGL visualizations to PowerPoint</li>
+                        <li>Was the UI lead on the Search team, which included a mix of feature development and modernization tasks, integration of React & ES6+</li>
+                        <li>Gave technical talks for both internal and external audiences to demonstrate Quid's amazing technology platform</li>
+                        <li>Championed team goals in testing, quality, innovation, effective communication, and developer happiness</li>
+                        <li>Authored dozens of documents & RFCs detailing proposals, modernizations, and a vision for Quid's future</li>
+                        <li>Spent most of my time working in JavaScript, CoffeeScript, HTML, CSS, Ruby, and Python. Also using libraries & tools such as Babel, React, Redux, Node.js, Rails, Backbone, jQuery, JSX, Webpack, Karma, and Docker.</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="block">
-                <div class="left">
-                    2011 - 2013
+            <div class="job-item">
+                <div class="job-logo">
+                    <img height=50 width=50 src="./logos/yahoo.png">
                 </div>
-                <div class="right">
-                    <div class="organization">Yahoo <span class="location"> - Sunnyvale, CA</span></div>
+                <div class="job-details">
                     <div class="title">Senior Software Engineer, YUI</div>
-                    <p class="description">
-                        YUI is a popular open-source JavaScript library, and as a senior engineer working on the project, my time was spent working on variety of tasks. This included building CSS &amp; JavaScript modules, Node.js developer tools, developer advocacy, and overall...
-                        just making the library as feature-rich and awesome as possible for the billion+ browsers we ship code to.
-                    </p>
+                    <div class="organization">Yahoo</div>
+                    <div class="date">2011 - 2013</div>
+                    <div class="location">Sunnyvale, CA</div>
+                </div>
+                <div class="job-description">
+                    <p>YUI is a popular open-source JavaScript library, and as a senior engineer working on the project, my time was spent working on variety of tasks. This included building CSS &amp; JavaScript modules, Node.js developer tools, developer advocacy, and overall just making the library as feature-rich and awesome as possible for the billion+ browsers we ship code to.</p>
                     <p>A few of the projects I led:</p>
                     <ul>
                         <li>Developed and released the <a href="http://yuilibrary.com/yui/docs/button/">Button component</a>, which is now part of the <a href="http://purecss.io/">Pure CSS library</a>.</li>
                         <li>Enhanced the <a href="http://yuilibrary.com/yui/docs/scrollview/">ScrollView widget</a> to improve performance, add new functionality, and introduce test coverage.</li>
                         <li>Developed <a href="https://github.com/derek/yui-benchmark">YUI Benchmark</a>, a JavaScript performance testing toolkit for web and Node.js applications.</li>
                         <li>Worked on YUI's continuous integration efforts, which included automated testing of functionality, performance, and code quality.</li>
-                        <li>Advocacy and community efforts, which included over 50 blog posts for the <a href="http://yuiblog.com/">YUI Blog</a> and the <a href="http://developer.yahoo.com/blogs/ydn/">YDN blog</a>, as well as representing Yahoo! at various
-                            conferences, hackathons, and recruiting events.</li>
+                        <li>Advocacy and community efforts, which included over 50 blog posts for the <a href="http://yuiblog.com/">YUI Blog</a> and the <a href="http://developer.yahoo.com/blogs/ydn/">YDN Blog</a>, as well as representing Yahoo! at various conferences, hackathons, and recruiting events.</li>
                     </ul>
                 </div>
             </div>
-            <div class="block">
-                <div class="left">
-                    2009 - 2011
+
+            <div class="job-item">
+                <div class="job-logo">
+                        <img height=50 width=50 src="./logos/yahoo.png">
                 </div>
-                <div class="right">
-                    <div class="organization">Yahoo <span class="location"> - Santa Monica, CA</span></div>
+                <div class="job-details">
                     <div class="title">Front-end Engineer, Media</div>
-                    <p class="description">
-                        Engineer, develop, and maintain Yahoo! Media websites. Products worked on: Yahoo Media, Yahoo Shine, Yahoo TV, Yahoo Movies, Yahoo Entertainment. Act as evangelist for Yahoo! Developer Network.</p>
+                    <div class="organization">Yahoo</div>
+                    <div class="date">2009 - 2011</div>
+                    <div class="location">Santa Monica, CA</div>
+                </div>
+                <div class="job-description">
+                    <p>Engineer, develop, and maintain Yahoo! Media websites. Products worked on: Yahoo Media, Yahoo Shine, Yahoo TV, Yahoo Movies, Yahoo Entertainment. Act as evangelist for Yahoo! Developer Network.</p>
                 </div>
             </div>
 
-            <div class="block">
-                <div class="left">
-                    2007 - 2009
+            <div class="job-item">
+                <div class="job-logo">
+                    <img height=50 width=50 src="./logos/mcv.png">
                 </div>
-                <div class="right">
-                    <div class="organization">Catholic Content <span class="location"> - Kansas City, KS</span></div>
-
+                <div class="job-details">
                     <div class="title">Lead Software Engineer</div>
-                    <p class="description">
-                        <ul>
-                            <li>Architected &amp; developed social media website <a href="http://www.mycatholicvoice.com">mycatholicvoice.com</a>.</li>
-                            <li>Evaluated and assessed software needs for development tools and web services.</li>
-                            <li>Interviewed &amp; hired additional in-house development resources and managed development tasks with outsourced &amp; contract resources.</li>
-                            <li>Developed multimedia transcoding queue and delivery platform for audio, video, images, documents, and downloads.</li>
-                            <li>Developed REST API interface for interaction with MyCatholicVoice front-end website.</li>
-                            <li>Designed relational database schema.</li>
-                            <li>Wrote specifications for development projects.</li>
-                            <li>Managed advertising platform and designed ad delivery network.</li>
-                            <li>Customized WordpressMU for use as the MyCatholicVoice Blogging Network.</li>
-                            <li>Established partnerships with companies such as Rackspace, Limelight Networks, Scribd, &amp; Burst Media.</li>
-                            <li>Configured &amp; managed development/production servers running on Red Hat Enterprise Edition 4, Ubuntu, and Windows.</li>
-                            <li>Patent: <a href="https://patents.google.com/patent/US20090271283">Network Media Distribution</a> (US20090271283A1)</li>
-                        </ul>
-                    </p>
-                    <p class="additional"><strong>Technology used</strong>: Amazon Web Services (EC2, S3, SQS), Linux, Apache, lighttpd, MySQL, PostgreSQL, PHP5, Kohana PHP framework, Code Igniter PHP framework, FFMPEG, jQuery, Memcached, Lucene, &amp; ADODB.</p>
+                    <div class="organization">Catholic Content</div>
+                    <div class="date">2007 - 2009</div>
+                    <div class="location">Kansas City, KS</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Architected &amp; developed social media website <a href="http://www.mycatholicvoice.com">mycatholicvoice.com</a>.</li>
+                        <li>Evaluated and assessed software needs for development tools and web services.</li>
+                        <li>Interviewed &amp; hired additional in-house development resources and managed development tasks with outsourced &amp; contract resources.</li>
+                        <li>Developed multimedia transcoding queue and delivery platform for audio, video, images, documents, and downloads.</li>
+                        <li>Developed REST API interface for interaction with MyCatholicVoice front-end website.</li>
+                        <li>Designed relational database schema.</li>
+                        <li>Wrote specifications for development projects.</li>
+                        <li>Managed advertising platform and designed ad delivery network.</li>
+                        <li>Customized WordpressMU for use as the MyCatholicVoice Blogging Network.</li>
+                        <li>Established partnerships with companies such as Rackspace, Limelight Networks, Scribd, &amp; Burst Media.</li>
+                        <li>Configured &amp; managed development/production servers running on Red Hat Enterprise Edition 4, Ubuntu, and Windows.</li>
+                        <li>Patent: <a href="https://patents.google.com/patent/US20090271283">Network Media Distribution</a> (US20090271283A1)</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="block">
-                <div class="left">
-                    2006 - 2007
+            <div class="job-item">
+                <div class="job-logo">
+                    <div class="gragg-logo"></div>
                 </div>
-
-                <div class="right">
-                    <div class="organization">Gragg Advertising <span class="location"> - Kansas City, MO</span></div>
+                <div class="job-details">
                     <div class="title">Software Engineer</div>
-                    <p class="description">
-                        <ul>
-                            <li>Develop internal/client web projects &amp; interactive marketing campaigns.</li>
-                            <li>Traffic analysis reports for client websites &amp; email campaigns.</li>
-                            <li>Utilize SEO strategies to design search engine optimized websites.</li>
-                            <li>Maintain &amp; troubleshoot employee computer systems and Linux based servers.</li>
-                            <li>Develop API clients to transfer data between Gragg and affiliate systems.</li>
-                        </ul>
-                    </p>
-                    <p class="additional"><strong>Technology used</strong>: Linux, Apache, PHP5, JavaScript, HTML, CSS, &amp; MySQL</p>
+                    <div class="organization">Gragg Advertising</div>
+                    <div class="date">2006 - 2007</div>
+                    <div class="location">Kansas City, MO</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Develop internal/client web projects &amp; interactive marketing campaigns.</li>
+                        <li>Traffic analysis reports for client websites &amp; email campaigns.</li>
+                        <li>Utilize SEO strategies to design search engine optimized websites.</li>
+                        <li>Maintain &amp; troubleshoot employee computer systems and Linux based servers.</li>
+                        <li>Develop API clients to transfer data between Gragg and affiliate systems.</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="block">
-                <div class="left">
-                    2004 - 2006
+            <div class="job-item">
+                <div class="job-logo">
+                    <img height=50 width=50 src="./logos/nuvio.png">
                 </div>
-
-                <div class="right">
-                    <div class="organization">Nuvio Corp. <span class="location"> - Kansas City, KS</span></div>
+                <div class="job-details">
                     <div class="title">Software Engineer</div>
-                    <p class="description">
-                        Developed user interfaces for Voice over IP services and company intranet. Manage Nuvio's corporate website and 200+ partner websites. Acted as technical contact for Nuvio's engineering department. Designed, developed, &amp; managed web API for remote
-                        interaction with between partners and Nuvio systems.
-                    </p>
-
-                    <p class="additional"><strong>Technology used</strong>: Linux, Apache, PHP5, JavaScript, HTML, CSS, PostgreSQL, &amp; MySQL</p>
+                    <div class="organization">Nuvio Corp.</div>
+                    <div class="date">2004 - 2006</div>
+                    <div class="location">Kansas City, KS</div>
+                </div>
+                <div class="job-description">
+                    <ul>
+                        <li>Developed user interfaces for Voice over IP services and company intranet.</li>
+                        <li>Nuvio's corporate website and 200+ partner websites.</li>
+                        <li>Acted as technical contact for Nuvio's engineering department.</li>
+                        <li>Designed, developed, &amp; managed web API for remote interaction with between partners and Nuvio systems.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <section id="education">
-            <h2>Education</h2>
-            <div class="block">
-                <div class="left">
-                    1999 - 2004
+            <h3>Education</h3>
+            <div class="job-item">
+                <div class="job-logo">
+                    <img height=50 width=50 src="./logos/kansas.png">
                 </div>
-                <div class="right">
-                    <div class="organization">University of Kansas <span class="location"> - Lawrence, KS</span></div>
-                    <p class="description">Bachelors degree in Communication Studies</p>
+                <div class="job-details">
+                    <div class="organization">University of Kansas</div>
+                    <div class="location">Lawrence, KS</div>
+                    <div class="date">1999 - 2004</div>
+                </div>
+                <div class="job-description">
+                    <p>Bachelors degree in Communication Studies</p>
                 </div>
             </div>
         </section>
 
         <section id="certifications">
-            <h2>Certifications</h2>
+            <h3>Certifications</h3>
             <div class="block">
                 <div class="right">
                     <p>Zend Certified PHP Engineer - Sept 2009</p>
@@ -334,7 +338,7 @@
         </section>
 
         <section id="speaking">
-            <h2>Speaking Experience</h2>
+            <h3>Speaking Experience</h3>
 
             <div class="block">
                 <div class="right">
@@ -359,7 +363,7 @@
         </section>
 
         <section id="organizations">
-            <h2>Organizations</h2>
+            <h3>Organizations</h3>
             <div class="block">
                 <div class="right">
                     <p>I am a strong believer that communities are an important component to generating ideas, sharing knowledge, and acting as a collective voice. Here are some communities of developers and enthusiasts I have helped create.</p>
@@ -377,7 +381,7 @@
         </section>
     </section>
 
-    <script type="text/javascript">
+    <script>
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-51709-1']);
         _gaq.push(['_trackPageview']);
