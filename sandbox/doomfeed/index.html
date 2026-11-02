@@ -853,7 +853,9 @@ const POOL = {
   classmate() {
     const c = classmate();
     const [ev, id] = R([['got engaged in Santorini 💍', 'milestone-ring'], ['just became a VP at 29', 'career-office'], ['bought a house with a real garden', 'milestone-sold'], ['just closed on their first house 🏡', 'milestone-sold'], ['is having a baby, and the nursery is already done', 'milestone-nursery'], ['has been to three festivals this month', 'social-festival'], ['launched a company that got funded', null], ['posted photos from another "little getaway"', 'island-bungalows'], ['ran a marathon and somehow looked rested', null], ['had twins and is already back at the gym', null], ['got a book deal', null], ['moved to Lisbon "for the light"', 'social-rooftop'], ['paid off their student loans', null], ['adopted a very photogenic dog', 'milestone-puppy'], ['started a podcast that people actually listen to', null], ['got a TED talk', null], ['renovated a farmhouse by hand', 'milestone-kitchen'], ['is now fluent in Japanese', 'social-dinner'], ['won an award you didn\'t know existed', null]]);
-    return { a: c, text: `Remember ${c.name.split(' ')[0]} from school? They ${ev}.`,
+    const first = c.name.split(' ')[0];
+    const lead = R([`Remember ${first} from school? They`, `${first}, who sat behind you in 10th grade,`, `Your old lab partner ${first}`, `${first} from your graduating class`, `Fun fact: ${first}, who peaked in high school (you thought),`]);
+    return { a: c, text: `${lead} ${ev}.`,
       media: id ? { t: 'photo', id } : null,
       trick: 'comparison', mood: -6, anx: 3, proofMutual: true };
   },
@@ -983,7 +985,7 @@ const POOL = {
     return { a: A.well, text, media: { t: 'photo', id }, trick: 'comparison', mood: -4, anx: 2 };
   },
   island() {
-    const kai = Math.random() < .5;
+    const kai = Math.random() < .75;
     const pics = PHOTO_SETS.island.slice();
     for (let i = pics.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pics[i], pics[j]] = [pics[j], pics[i]]; }
     const shots = pics.slice(0, rint(3, 5));
@@ -1024,7 +1026,7 @@ const MISINFO = [
   { claim: '🐟 Scientists confirmed it: goldfish now have longer attention spans than humans. 9 seconds vs. our 8.', fix: 'This one has circulated for years. It traces back to a marketing report, and people who checked could find no study behind either number.' },
   { claim: '🛏️ Harvard study: people who make their bed every morning are 206% more likely to become millionaires.', fix: 'There is no Harvard study. The 206% figure appears only in viral posts, with no source.' },
 ];
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2]];
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2]];
 const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
@@ -1600,7 +1602,7 @@ function showPill() {
 pill.addEventListener('click', () => {
   pill.classList.remove('show');
   const first = feed.querySelector('.stories-wrap')?.nextElementSibling || feed.firstElementChild;
-  for (let i = 0; i < 3; i++) feed.insertBefore(makePost(R(['breaking', 'alert', 'rage', 'classmate'])), first);
+  for (let i = 0; i < 3; i++) feed.insertBefore(makePost(R(['breaking', 'alert', 'rage', 'hottake'])), first);
   scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   toast(`You pulled up ${3} of ${pillCount} new posts. Now scroll back down past everything you already saw.`, { ico: '↑', trick: 'reward', ms: 5200 });
 });
