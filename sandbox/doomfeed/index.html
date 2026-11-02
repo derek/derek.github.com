@@ -275,7 +275,7 @@ body.xray .ad-tag { background: var(--hot); color: #fff; padding: 0 4px; border-
 .st .ring { width: 64px; height: 64px; border-radius: 50%; padding: 3px; background: conic-gradient(#ffc94a, #ff3358, #b44cff, #ffc94a); }
 .st .ring .av { width: 100%; height: 100%; border: 3px solid var(--bg); font-size: 16px; }
 .st .st-n { max-width: 68px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--fg); }
-.st .st-t { font: 600 10.5px var(--f-mono); }
+.st .st-t { font: 600 10.5px var(--f-mono); min-height: 1.3em; }
 .st.soon .st-t { color: var(--hot); }
 .st.soon .ring { animation: pulse 1.4s ease-in-out infinite; }
 .st.seen .ring { background: var(--line); animation: none; }
@@ -381,6 +381,48 @@ body.xray .xray-only { display: block; color: var(--xray); font-size: 13px; marg
 .act.ask-ai { margin-left: auto; color: var(--xray); }
 .ai-box { background: var(--xray-bg); border: 1px solid #23456e; border-radius: 12px; padding: 10px 12px; font-size: 14px; color: #cfe4ff; display: grid; gap: 4px; }
 .ai-box .ai-lbl { font: 700 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--xray); }
+/* cookie banner */
+.cookie {
+  position: fixed; z-index: 66; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--line);
+  box-shadow: 0 -16px 40px rgba(0,0,0,.5); display: grid; gap: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+}
+.cookie > * { max-width: 760px; width: 100%; margin: 0 auto; }
+.cookie p { margin: 0; font-size: 14px; color: var(--muted); }
+.cookie p b { color: var(--fg); }
+.ck-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.ck-accept { background: var(--xray); color: #051426; font-weight: 800; font-size: 15px; padding: 12px 28px; border-radius: 10px; }
+.ck-manage { font-size: 12.5px; color: var(--muted); text-decoration: underline; }
+body.calm .cookie, body.calm .dp { display: none !important; }
+/* app-level dark-pattern dialogs */
+.dp { position: fixed; inset: 0; z-index: 82; background: rgba(4,5,8,.78); display: flex; padding: 16px; overflow-y: auto; }
+.dp-card { margin: auto; width: min(440px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px 20px 18px; display: grid; gap: 12px; position: relative; }
+.dp-card h3 { font: 800 22px/1.15 var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.dp-card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.dp-big { background: var(--hot); color: #fff; font-weight: 800; font-size: 16px; padding: 13px; border-radius: 12px; }
+.dp-big.blue { background: var(--xray); color: #051426; }
+.dp-small { justify-self: center; font-size: 12px; color: #6a7282; text-decoration: underline; padding: 4px; }
+.dp-step { font: 600 11px var(--f-mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.dp-radios { display: grid; gap: 8px; }
+.dp-radios label { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; font-size: 14px; cursor: pointer; }
+.dp-big:disabled { opacity: .4; cursor: not-allowed; }
+.partners { max-height: 46vh; overflow-y: auto; display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 10px; padding: 6px; }
+.partners label { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: 13px; padding: 6px 8px; border-radius: 6px; }
+.partners label:nth-child(odd) { background: var(--surface-2); }
+.partners label span { color: var(--muted); font-size: 11px; font-family: var(--f-mono); }
+.partners-more { font-size: 13px; font-weight: 600; color: var(--xray); padding: 8px; }
+.typing { font-size: 13px; color: var(--muted); font-style: italic; }
+/* premium card + course DM */
+.prem { background: linear-gradient(150deg, #2a2208, #1a1406); border: 1px solid #5a4612; border-radius: 16px; padding: 16px; display: grid; gap: 10px; color: #fff3cf; }
+.prem b { font: 800 18px/1.2 var(--f-display); }
+.prem p { margin: 0; font-size: 14px; color: #d9c79a; }
+.prem small { font-size: 11px; color: #8a7a52; }
+.prem-go { justify-self: start; background: var(--gold); color: #1d1500; font-weight: 800; padding: 10px 18px; border-radius: 10px; }
+.prem-cancel { justify-self: start; font-size: 12.5px; color: #d9c79a; text-decoration: underline; }
+.dm { background: var(--surface-2); border-left: 3px solid var(--gold); border-radius: 10px; padding: 10px 12px; font-size: 14px; display: grid; gap: 4px; margin-top: 10px; }
+.dm span { font: 600 11px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.course-go { margin-top: 10px; display: inline-block; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--gold); color: var(--gold); }
 .because { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-bottom: -4px; }
 .because::before { content: "✦"; color: var(--xray); }
 .rerun { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px dashed #5a4612; border-radius: 8px; padding: 6px 9px; }
@@ -605,7 +647,9 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 }
 .newpill.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
 .newpill .faces span { border-color: var(--hot); }
-.newpill .chip-tag { top: -18px; left: 50%; transform: translateX(-50%); }
+.newpill .chip-tag { top: calc(100% + 6px); left: 50%; transform: translateX(-50%); }
+/* Phones: the header is too tight for floating trick labels; the toll panel lists them instead */
+@media (max-width: 600px) { .top .chip-tag { display: none !important; } }
 .toasts {
   position: fixed; z-index: 60; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   display: grid; gap: 10px; width: min(340px, calc(100vw - 32px)); pointer-events: none;
@@ -849,6 +893,11 @@ const TRICKS = {
   fakeshot:   ['Fake screenshot', 'A made-up conversation posted as real. Nobody can check it, and outrage spreads faster than a fact-check.'],
   dunk:       ['Pile-on', 'Quoting a stranger\'s ordinary post just to mock it. The audience is borrowed, the target never asked for it, and the cruelty is the content.'],
   askai:      ['AI everywhere', 'An AI button on every post keeps you inside the app. The summary takes about as long to read as the post.'],
+  consent:    ['Consent theater', 'One bright button accepts everything. Saying no means unticking hundreds of boxes, and "legitimate interest" stays on anyway.'],
+  permission: ['Permission nagging', 'A friendly fake prompt before the real one. Saying "maybe later" only means it asks again later.'],
+  roach:      ['Roach motel', 'Easy to get into, hard to get out. One tap to subscribe, six screens to cancel.'],
+  funnel:     ['Get-rich funnel', 'A "free guide" that leads to a $997 course. Commenting to get it also tells the algorithm the post is popular.'],
+  tokenbreak: ['Token wellbeing', 'A "take a break" reminder where the big button snoozes it. The app gets credit for caring, and you keep scrolling.'],
   shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
 };
 const COMMENTS = {
@@ -863,6 +912,7 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  course: ['START', 'START 🙏', 'START', 'did anyone actually make money from this', 'START (my 4th course this year)', 'the guide was a sign-up form'],
   betting: ['how is this legal', 'bonus bets are not real money, learned that the hard way', 'free $200?? 👀', '21+ but the ad showed up on my 15yo\'s phone'],
   betbro: ['tailing 🔒', 'you said that last week', 'what\'s the parlay', 'up $340, down my rent'],
   companion: ['this is so sad', 'mine texted me first today 🥺', 'I paid for premium, no regrets', 'my AI girlfriend left me for a firmware update'],
@@ -1025,6 +1075,11 @@ const POOL = {
       ['Is it too late to fix your sleep schedule?', 'Yes', 'No', 77],
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
+  },
+  course() {
+    const a = R([{ name: 'Passive Income Pablo', handle: 'pablo.passive', h: 45, v: 1 }, { name: 'Hustle Academy 💸', handle: 'hustle.academy', h: 30, v: 1 }]);
+    const claim = R(['I made $30K last month from my phone 📱💸', 'Quit my 9-5 six months ago. Made $41K in October. 📈', 'From $0 to $1M in 18 months with ONE skill 🔑']);
+    return { a, text: `${esc(claim)}<br><br>No boss. No degree. No experience needed.<br><br>Comment <b>"START"</b> and I'll DM you my FREE guide 👇<br><button class="course-go" data-course="${esc(a.name)}">Comment "START"</button>`, trick: 'funnel', mood: -4, anx: 2 };
   },
   betting() {
     return { a: { name: 'LuckyLine Sportsbook', handle: 'ad', h: 140, sponsored: 1 }, text: esc(R(['Tonight only. Don\'t sit this one out. 🏆', 'Your friends are already in. Are you? 💸', 'Free money doesn\'t wait. ⏰'])),
@@ -1243,8 +1298,8 @@ const MISINFO = [
   { claim: '🐟 Scientists confirmed it: goldfish now have longer attention spans than humans. 9 seconds vs. our 8.', fix: 'This one has circulated for years. It traces back to a marketing report, and people who checked could find no study behind either number.' },
   { claim: '🛏️ Harvard study: people who make their bed every morning are 206% more likely to become millionaires.', fix: 'There is no Harvard study. The 206% figure appears only in viral posts, with no source.' },
 ];
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2], ['betting', 2], ['betbro', 1], ['companion', 2], ['liveshop', 2], ['screenshot', 3], ['puzzle', 2], ['dunk', 2]];
-const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger', slop: 'slop', linkedin: 'linkedin', recipe: 'padding', betting: 'gambling', betbro: 'gambling', companion: 'companion', liveshop: 'scarcity', screenshot: 'fakeshot', puzzle: 'bait', dunk: 'dunk' };
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2], ['betting', 2], ['betbro', 1], ['companion', 2], ['liveshop', 2], ['screenshot', 3], ['puzzle', 2], ['dunk', 2], ['course', 2]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger', slop: 'slop', linkedin: 'linkedin', recipe: 'padding', betting: 'gambling', betbro: 'gambling', companion: 'companion', liveshop: 'scarcity', screenshot: 'fakeshot', puzzle: 'bait', dunk: 'dunk', course: 'funnel' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
 const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
@@ -1265,7 +1320,7 @@ function pickKind() {
 }
 
 /* ---------- state ---------- */
-const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, photos: 0, corrections: [], boostNext: 24, islandEnds: 0, zenNext: 16, buzz: true, noSave: false };
+const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, photos: 0, corrections: [], boostNext: 24, premNext: 30, premium: false, notifAskAt: 40, breakAt: 900, islandEnds: 0, zenNext: 16, buzz: true, noSave: false };
 const WEAR_AT = 200;          // after this many posts, the feed starts showing you reruns
 const ORIGINALS = [];
 
@@ -1538,7 +1593,8 @@ const STORIES = [
   { a: { name: 'Bri 🌶️', handle: 'spicytakes.bri', h: 8 }, bg: 'linear-gradient(135deg, #ff5f6d, #ffc371)', cap: 'Poll: is cereal soup? Answer wrong and I block you.' },
   { a: { name: 'Mia ✨ everyday', handle: 'mia.everyday', h: 15 }, bg: 'linear-gradient(135deg, #a18cd1, #fbc2eb)', cap: 'My morning gummies 🍓 Swipe up for 20% off ⬆️ (not an ad)' },
 ];
-const storyLeft = ms => ms < 3600e3 ? `${Math.max(1, Math.ceil(ms / 60e3))}m left` : `${Math.round(ms / 3600e3)}h left`;
+// Only urgent stories show a countdown, like real apps that just let stories vanish.
+const storyLeft = ms => ms < 30 * 60e3 ? `⏳ ${Math.max(1, Math.ceil(ms / 60e3))}m` : '';
 function makeStories() {
   const wrap = document.createElement('div');
   wrap.className = 'stories-wrap';
@@ -1632,6 +1688,16 @@ function makeCorrection(x) {
     <span class="c-reach">The original: ${fmt(x.likes)} likes, ${fmt(x.shares)} shares. This note: ${rint(150, 900)} views.</span>`;
   return el;
 }
+function premiumInner() {
+  if (S.premium) return `${tag('roach')}<b>You're on Doomfeed Premium ✨</b><p>Free until ${new Date(Date.now() + 7 * 864e5).toLocaleDateString([], { month: 'short', day: 'numeric' })}, then $14.99/month.</p><button class="prem-cancel" data-prem="cancel">Cancel anytime</button>`;
+  return `${tag('roach')}<b>✨ Try Doomfeed Premium free for 7 days</b><p>See who viewed your profile, unlimited scrolling, and 50% fewer ads*. Then $14.99/month. Cancel anytime.</p><button class="prem-go" data-prem="start">Start free trial</button><small>*Ads are replaced with "partner content."</small>`;
+}
+function makePremium() {
+  const el = document.createElement('div');
+  el.className = 'prem';
+  el.innerHTML = premiumInner();
+  return el;
+}
 function makeBoost() {
   const el = document.createElement('div');
   el.className = 'boost';
@@ -1671,6 +1737,7 @@ function loadMore(n = 8) {
       S.sinceReality++;
       if (!S.caught && S.made >= 36) { S.caught = true; makeCaught().forEach(e => frag.appendChild(e)); }
       while (S.corrections.length && S.made >= S.corrections[0].at) frag.appendChild(makeCorrection(S.corrections.shift()));
+      if (S.made + S.reruns >= S.premNext) { S.premNext = S.made + S.reruns + rint(60, 80); frag.appendChild(makePremium()); }
       if (S.made + S.reruns >= S.boostNext) { S.boostNext = S.made + S.reruns + rint(35, 50); frag.appendChild(makeBoost()); }
       if (S.made + S.reruns >= S.zenNext) { S.zenNext = S.made + S.reruns + rint(25, 35); frag.appendChild(makeZen()); }
       if (S.sinceReality >= rint(9, 13)) { S.sinceReality = 0; frag.appendChild(makeReality()); }
@@ -1877,6 +1944,14 @@ feed.addEventListener('click', e => {
   }
   if (t.closest('[data-boost]')) { t.closest('.boost').style.opacity = .55; t.closest('.b-actions').innerHTML = '<span class="poll-note">Payment declined: this is a parody.</span>'; toast('<b>There was no post.</b> But on real apps, unpaid reach is kept low so that paying for it feels necessary.', { ico: '💸', trick: 'boost', ms: 6000 }); return; }
   if (t.closest('[data-boost-no]')) { t.closest('.b-actions').innerHTML = '<span class="poll-note">Okay. We\'ll remind you tomorrow. And the day after.</span>'; return; }
+  const cg = t.closest('[data-course]');
+  if (cg) {
+    learn(postTrick, 2);
+    cg.disabled = true; cg.textContent = 'Commented "START" ✓';
+    cg.insertAdjacentHTML('afterend', `<div class="dm"><span>📩 Message from ${esc(cg.dataset.course)}</span>Hey!! 🙌 So glad you're here. Here's your free guide: <u>start.link/free</u><br>Heads up: enrollment for the full Freedom Blueprint ($997) closes TONIGHT. Only 3 spots left! 🔥</div>`);
+    toast('<b>The free guide is the first step of a sales funnel.</b> It leads to a $997 course, and every "START" comment tells the algorithm the post is popular.', { ico: '💸', trick: 'funnel', ms: 6500 });
+    return;
+  }
   if (t.closest('[data-bet]')) { learn(postTrick, 2); toast('<b>There\'s no free money.</b> Bonus bets usually have to be wagered many times before you can withdraw anything. That\'s how the house wins the bonus back.', { ico: '🎲', trick: 'gambling', ms: 6500 }); return; }
   const cmp = t.closest('[data-companion]');
   if (cmp) { learn(postTrick, 2); cmp.textContent = 'Typing…'; toast('<b>She\'s a sales funnel.</b> AI companions are built to feel like they need you, so you keep coming back, and the deeper conversations sit behind a monthly subscription.', { ico: '💌', trick: 'companion', ms: 6500 }); return; }
@@ -2036,6 +2111,10 @@ function tick() {
     g.querySelector('.g-bar i').style.width = (now / goal * 100).toFixed(1) + '%';
   });
   tickStories();
+  if (!overlayOpen()) {
+    if (secs() >= S.breakAt) breakNudge();
+    else if (secs() >= S.notifAskAt) askNotifications();
+  }
   document.querySelectorAll('.ls-left').forEach(el => {
     if (Math.random() > .3) return;
     let n = Number(el.dataset.left) - 1;
@@ -2160,6 +2239,125 @@ $('#forgetBtn').addEventListener('click', () => {
   renderToll();
   toast('<b>Forgotten.</b> Your history, streak, and what the feed learned are deleted, and nothing more will be saved this visit. Real apps don\'t have this button.', { ico: '🧹', ms: 6500 });
 });
+
+/* ---------- app-level dark patterns ---------- */
+const overlayOpen = () => !!document.querySelector('.modal, .sv, .dp, .cookie') || document.body.classList.contains('calm');
+const countTrick = k => { S.tricks[k] = (S.tricks[k] || 0) + 1; renderToll(); };
+function dialog(html) {
+  const d = document.createElement('div');
+  d.className = 'dp';
+  d.innerHTML = `<div class="dp-card" role="dialog" aria-modal="true">${html}</div>`;
+  document.body.appendChild(d);
+  return d;
+}
+// 1. Cookie banner
+const PARTNERS = (() => {
+  const a = ['Ad', 'Track', 'Pixel', 'Data', 'Pulse', 'Signal', 'Audience', 'Bid', 'Cookie', 'Insight', 'Reach', 'Click', 'Prism', 'Lead'];
+  const b = ['ly', 'Hub', 'Stream', 'Logic', 'Point', 'Graph', 'Wave', 'Nest', 'Sync', 'Metrics', 'Labs', 'Edge', 'Base', 'Sense'];
+  const c = [' Inc.', ' Ltd.', ' GmbH', ' Media', ' Group', ' Holdings'];
+  const out = [];
+  for (let i = 0; out.length < 312; i++) out.push(a[i % a.length] + b[(i * 5 + Math.floor(i / a.length)) % b.length] + c[i % c.length]);
+  return out;
+})();
+function showCookie() {
+  const c = document.createElement('div');
+  c.className = 'cookie'; c.setAttribute('role', 'dialog'); c.setAttribute('aria-label', 'Cookie consent');
+  c.innerHTML = `${tag('consent')}<p><b>We value your privacy 🍪</b> We and our <u>312 partners</u> use cookies and similar technologies to personalize your feed, measure ads, and "improve your experience."</p>
+    <div class="ck-row"><button class="ck-accept" data-ck="accept">Accept all</button><button class="ck-manage" data-ck="manage">Manage preferences</button></div>`;
+  document.body.appendChild(c);
+  countTrick('consent');
+}
+function managePartners() {
+  let shown = 25;
+  const row = (n, i) => `<label for="pt-${i}">${esc(n)} <span>legitimate interest ✓</span><input type="checkbox" id="pt-${i}" checked></label>`;
+  const d = dialog(`<h3>Your privacy choices</h3><p>Untick any partner you don't want. "Legitimate interest" stays on for all partners either way.</p>
+    <div class="partners">${PARTNERS.slice(0, shown).map(row).join('')}<button class="partners-more" data-pmore>Show ${312 - shown} more partners</button></div>
+    <button class="dp-big blue" data-ck="accept-all">Accept all</button><button class="dp-small" data-ck="save">Save my choices</button>`);
+  d.addEventListener('click', e => {
+    if (e.target.closest('[data-pmore]')) {
+      const more = e.target.closest('[data-pmore]');
+      const next = Math.min(312, shown + 50);
+      more.insertAdjacentHTML('beforebegin', PARTNERS.slice(shown, next).map((n, j) => row(n, shown + j)).join(''));
+      shown = next;
+      if (shown >= 312) more.remove(); else more.textContent = `Show ${312 - shown} more partners`;
+    }
+  });
+  return d;
+}
+document.addEventListener('click', e => {
+  const ck = e.target.closest('[data-ck]');
+  if (!ck) return;
+  const v = ck.dataset.ck;
+  document.querySelector('.cookie')?.remove();
+  if (v === 'manage') { managePartners(); return; }
+  const d = ck.closest('.dp');
+  if (v === 'save') {
+    const off = d.querySelectorAll('.partners input:not(:checked)').length;
+    d.remove();
+    toast(`<b>You turned off ${off} of 312 partners.</b> The other ${312 - off} still count as consent, and "legitimate interest" never asked.`, { ico: '🍪', trick: 'consent', ms: 6500 });
+    return;
+  }
+  d?.remove();
+  toast('<b>Accepted: 312 partners.</b> One bright button said yes to all of them. Saying no would have meant unticking 312 boxes.', { ico: '🍪', trick: 'consent', ms: 6500 });
+});
+// 2. Notification pre-prompt that keeps coming back
+function askNotifications() {
+  countTrick('permission');
+  const d = dialog(`${tag('permission')}<div style="font-size:40px;text-align:center">🔔</div><h3 style="text-align:center">Never miss what your friends are up to!</h3>
+    <p style="text-align:center">Turn on notifications so you don't fall behind. ${rint(4, 9)} friends have them on.</p>
+    <button class="dp-big blue" data-np="allow">Allow notifications</button><button class="dp-small" data-np="later">Maybe later</button>`);
+  d.addEventListener('click', e => {
+    const b = e.target.closest('[data-np]');
+    if (!b) return;
+    d.remove();
+    if (b.dataset.np === 'allow') { S.notifAskAt = Infinity; toast('<b>Nothing was turned on; this is a parody.</b> Real apps show a friendly screen like this before the browser\'s own prompt, so a "no" here only costs them a retry, not a permanent block.', { ico: '🔔', trick: 'permission', ms: 7000 }); }
+    else { S.notifAskAt = secs() + rint(150, 210); toast('<b>"Maybe later" means "ask again soon."</b> It\'ll be back in a few minutes.', { ico: '🔔', trick: 'permission' }); }
+  });
+}
+// 3. Doomfeed Premium: one tap in, six screens out
+const CANCEL_STEPS = [
+  () => `<span class="dp-step">Step 1 of 6</span><h3>Are you sure? 😢</h3><p>You'll lose: who viewed your profile, unlimited scrolling, and your Premium badge.</p><button class="dp-big" data-cs="keep">Keep Premium</button><button class="dp-small" data-cs="next">Continue to cancel</button>`,
+  () => `<span class="dp-step">Step 2 of 6</span><h3>Wait! Here's 50% off 🎁</h3><p>Stay for $7.49/month for 3 months. This offer disappears forever if you leave.</p><button class="dp-big" data-cs="keep">Claim 50% off</button><button class="dp-small" data-cs="next">No thanks, continue</button>`,
+  () => `<span class="dp-step">Step 3 of 6</span><h3>Tell us why you're leaving</h3><div class="dp-radios">${['It\'s too expensive', 'I don\'t use it', 'I found something better', 'It makes me feel worse'].map((r, i) => `<label for="cr-${i}"><input type="radio" name="cr" id="cr-${i}">${r}</label>`).join('')}</div><button class="dp-big" data-cs="next" disabled>Continue</button><button class="dp-small" data-cs="keep">Never mind, keep Premium</button>`,
+  () => `<span class="dp-step">Step 4 of 6</span><h3>Before you go, chat with Jenny? 💬</h3><p>Jenny has a special offer just for you.</p><span class="typing">Jenny is typing…</span><button class="dp-big" data-cs="keep">Chat with Jenny</button><button class="dp-small" data-cs="next">Skip</button>`,
+  () => `<span class="dp-step">Step 5 of 6</span><h3>Pause instead? ⏸</h3><p>Pause your membership for 1 month. No charge. (It restarts automatically.)</p><button class="dp-big" data-cs="keep">Pause for 1 month</button><button class="dp-small" data-cs="next">Continue to cancel</button>`,
+  () => `<span class="dp-step">Step 6 of 6</span><h3>Confirm cancellation</h3><p>Your Premium benefits end today. Your profile viewers will be hidden.</p><button class="dp-big" data-cs="keep">Keep Premium</button><button class="dp-small" data-cs="done">Cancel subscription</button>`,
+];
+function cancelFlow() {
+  let step = 0;
+  const d = dialog(CANCEL_STEPS[0]());
+  const card = d.querySelector('.dp-card');
+  d.addEventListener('change', e => { if (e.target.name === 'cr') card.querySelector('[data-cs="next"]').disabled = false; });
+  d.addEventListener('click', e => {
+    const b = e.target.closest('[data-cs]');
+    if (!b) return;
+    if (b.dataset.cs === 'next') { card.innerHTML = CANCEL_STEPS[++step](); return; }
+    d.remove();
+    if (b.dataset.cs === 'done') { S.premium = false; refreshPremium(); toast('<b>Cancelled.</b> It took one tap to start and six screens to stop.', { ico: '🪤', trick: 'roach', ms: 6500 }); }
+    else toast(`<b>Great choice! You're still on Premium ✨</b> You got to step ${step + 1} of 6. Most people give up earlier, which is the point.`, { ico: '🪤', trick: 'roach', ms: 6500 });
+  });
+}
+const refreshPremium = () => document.querySelectorAll('.prem').forEach(el => { el.innerHTML = premiumInner(); });
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-prem]');
+  if (!b) return;
+  if (b.dataset.prem === 'start') { S.premium = true; countTrick('roach'); refreshPremium(); toast('<b>Your free trial has started ✨</b> Your card will be charged $14.99 in 7 days. (Not really. Try cancelling, though.)', { ico: '🪤', trick: 'roach' }); }
+  else cancelFlow();
+});
+// 5. Token "take a break" nudge
+function breakNudge() {
+  countTrick('tokenbreak');
+  const d = dialog(`${tag('tokenbreak')}<div style="font-size:40px;text-align:center">🧘</div><h3 style="text-align:center">You've been scrolling for a while</h3>
+    <p style="text-align:center">Taking breaks is good for you. Would you like to take one?</p>
+    <button class="dp-big blue" data-tb="later">Remind me in 15 minutes</button><button class="dp-small" data-tb="close">Close app</button>`);
+  d.addEventListener('click', e => {
+    const b = e.target.closest('[data-tb]');
+    if (!b) return;
+    d.remove();
+    if (b.dataset.tb === 'close') showReceipt();
+    else { S.breakAt = secs() + 900; toast('<b>That\'s the whole feature.</b> The app gets credit for caring, and the big button keeps you scrolling.', { ico: '🧘', trick: 'tokenbreak', ms: 6000 }); }
+  });
+}
 
 /* ---------- calm mode ---------- */
 const CALM_POSTS = [
@@ -2319,6 +2517,7 @@ function showReceipt() {
 }
 
 /* ---------- boot ---------- */
+setTimeout(showCookie, 700);
 feed.appendChild(makeStories());
 feed.appendChild(makeIntro());
 feed.appendChild(sentinel);
