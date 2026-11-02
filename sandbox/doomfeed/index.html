@@ -388,10 +388,16 @@ body.xray .xray-only { display: block; color: var(--xray); font-size: 13px; marg
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-top: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
 }
-.cookie > * { max-width: 760px; width: 100%; margin: 0 auto; }
+/* 908px = the page's 940px column minus its 16px gutters, so the banner lines up with the feed and toll */
+.ck-in { max-width: 908px; margin: 0 auto; display: grid; gap: 12px; }
+@media (min-width: 760px) {
+  .ck-in { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 32px; }
+  .ck-in .trick-tag { grid-column: 1 / -1; }
+}
 .cookie p { margin: 0; font-size: 14px; color: var(--muted); }
 .cookie p b { color: var(--fg); }
-.ck-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.ck-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+@media (min-width: 760px) { .ck-row { flex-wrap: nowrap; } }
 .ck-accept { background: var(--xray); color: #051426; font-weight: 800; font-size: 15px; padding: 12px 28px; border-radius: 10px; }
 .ck-manage { font-size: 12.5px; color: var(--muted); text-decoration: underline; }
 body.calm .cookie, body.calm .dp { display: none !important; }
@@ -2262,8 +2268,8 @@ const PARTNERS = (() => {
 function showCookie() {
   const c = document.createElement('div');
   c.className = 'cookie'; c.setAttribute('role', 'dialog'); c.setAttribute('aria-label', 'Cookie consent');
-  c.innerHTML = `${tag('consent')}<p><b>We value your privacy 🍪</b> We and our <u>312 partners</u> use cookies and similar technologies to personalize your feed, measure ads, and "improve your experience."</p>
-    <div class="ck-row"><button class="ck-accept" data-ck="accept">Accept all</button><button class="ck-manage" data-ck="manage">Manage preferences</button></div>`;
+  c.innerHTML = `<div class="ck-in">${tag('consent')}<p><b>We value your privacy 🍪</b> We and our <u>312 partners</u> use cookies and similar technologies to personalize your feed, measure ads, and "improve your experience."</p>
+    <div class="ck-row"><button class="ck-manage" data-ck="manage">Manage preferences</button><button class="ck-accept" data-ck="accept">Accept all</button></div></div>`;
   document.body.appendChild(c);
   countTrick('consent');
 }
