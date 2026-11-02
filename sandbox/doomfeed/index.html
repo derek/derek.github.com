@@ -868,7 +868,9 @@ const POOL = {
     const [ev, id] = R([['got engaged in Santorini 💍', 'milestone-ring'], ['just became a VP at 29', 'career-office'], ['bought a house with a real garden', 'milestone-sold'], ['just closed on their first house 🏡', 'milestone-sold'], ['is having a baby, and the nursery is already done', 'milestone-nursery'], ['has been to three festivals this month', 'social-festival'], ['launched a company that got funded', null], ['posted photos from another "little getaway"', 'island-bungalows'], ['ran a marathon and somehow looked rested', null], ['had twins and is already back at the gym', null], ['got a book deal', null], ['moved to Lisbon "for the light"', 'social-rooftop'], ['paid off their student loans', null], ['adopted a very photogenic dog', 'milestone-puppy'], ['started a podcast that people actually listen to', null], ['got a TED talk', null], ['renovated a farmhouse by hand', 'milestone-kitchen'], ['is now fluent in Japanese', 'social-dinner'], ['won an award you didn\'t know existed', null]]);
     const first = c.name.split(' ')[0];
     const lead = R([`Remember ${first} from school? They`, `${first}, who sat behind you in 10th grade,`, `Your old lab partner ${first}`, `${first} from your graduating class`, `Fun fact: ${first}, who peaked in high school (you thought),`]);
-    return { a: c, text: `${lead} ${ev}.`,
+    // Some news only makes sense with its photo ("a very photogenic dog").
+    const needsPhoto = /photogenic|posted photos/.test(ev);
+    return { a: c, text: `${lead} ${ev}.`, needsPhoto,
       media: id ? { t: 'photo', id } : null,
       trick: 'comparison', mood: -6, anx: 3, proofMutual: true };
   },
@@ -1250,7 +1252,8 @@ function makePost(kind) {
   let k = kind || pickKind();
   let p = POOL[k]();
   if (hasPhoto(p) && (S.photos + 1) / (S.made + 1) > PHOTO_SHARE) {
-    if (PHOTO_ONLY.has(k)) { do { k = pickKind(); } while (PHOTO_ONLY.has(k)); p = POOL[k](); }
+    // Posts that are only a photo, or whose text points at the photo, are swapped out instead of losing it.
+    while (PHOTO_ONLY.has(k) || p.needsPhoto) { do { k = pickKind(); } while (PHOTO_ONLY.has(k)); p = POOL[k](); }
     if (hasPhoto(p)) p.media = null;
   }
   if (hasPhoto(p)) S.photos++;
