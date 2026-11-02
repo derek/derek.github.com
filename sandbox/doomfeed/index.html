@@ -225,6 +225,57 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .tags-more { color: var(--muted); font-weight: 600; padding: 0 2px; }
 .tags-more:hover { color: var(--fg); }
 body.xray .ad-tag { background: var(--hot); color: #fff; padding: 0 4px; border-radius: 3px; }
+/* stories */
+.stories-wrap { display: grid; gap: 8px; min-width: 0; }
+.stories { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 4px; }
+.stories::-webkit-scrollbar { display: none; }
+.st { flex: none; width: 68px; display: grid; justify-items: center; gap: 4px; font-size: 11.5px; color: var(--muted); }
+.st .ring { width: 64px; height: 64px; border-radius: 50%; padding: 3px; background: conic-gradient(#ffc94a, #ff3358, #b44cff, #ffc94a); }
+.st .ring .av { width: 100%; height: 100%; border: 3px solid var(--bg); font-size: 16px; }
+.st .st-n { max-width: 68px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--fg); }
+.st .st-t { font: 600 10.5px var(--f-mono); }
+.st.soon .st-t { color: var(--hot); }
+.st.soon .ring { animation: pulse 1.4s ease-in-out infinite; }
+.st.seen .ring { background: var(--line); animation: none; }
+.sv { position: fixed; inset: 0; z-index: 85; background: #000; display: flex; align-items: center; justify-content: center; }
+.sv-box { position: relative; width: min(420px, 100%); height: min(100%, 760px); overflow: hidden; border-radius: 12px; background: #111; }
+.sv-media { position: absolute; inset: 0; display: grid; place-items: center; }
+.sv-media img { width: 100%; height: 100%; object-fit: cover; }
+.sv-text { position: absolute; inset: 0; display: grid; place-items: center; padding: 40px 28px; text-align: center; font: 800 clamp(26px, 7vw, 34px)/1.15 var(--f-display); color: #fff; text-wrap: balance; }
+.sv-cap { position: absolute; left: 16px; right: 16px; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); color: #fff; font: 700 20px/1.25 var(--f-body); text-shadow: 0 2px 12px rgba(0,0,0,.6); text-align: center; }
+.sv-bars { position: absolute; top: calc(10px + env(safe-area-inset-top, 0px)); left: 10px; right: 10px; display: flex; gap: 4px; z-index: 3; }
+.sv-bars i { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.35); overflow: hidden; }
+.sv-bars b { display: block; height: 100%; width: 0; background: #fff; }
+.sv-bars b.done { width: 100%; }
+.sv-bars b.run { animation: svbar 5s linear forwards; }
+.sv-head { position: absolute; top: calc(22px + env(safe-area-inset-top, 0px)); left: 12px; right: 12px; display: flex; align-items: center; gap: 8px; z-index: 3; color: #fff; font-size: 14px; font-weight: 600; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+.sv-head .av { width: 32px; height: 32px; font-size: 12px; }
+.sv-head .sv-time { font-weight: 400; opacity: .8; }
+.sv-x { margin-left: auto; color: #fff; font-size: 30px; line-height: 1; width: 40px; height: 40px; }
+.sv-prev, .sv-next { position: absolute; top: 70px; bottom: 0; width: 35%; z-index: 2; }
+.sv-prev { left: 0; }
+.sv-next { right: 0; width: 65%; }
+.sv .trick-tag { position: absolute; left: 12px; right: 12px; top: calc(70px + env(safe-area-inset-top, 0px)); z-index: 3; }
+@keyframes svbar { to { width: 100%; } }
+/* cliffhanger goal */
+.goal { display: grid; gap: 5px; margin-top: 10px; font: 500 12.5px var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.goal .g-txt b { color: var(--gold); font-weight: 600; }
+.g-bar { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+.g-bar i { display: block; height: 100%; background: var(--gold); transition: width 1s linear; }
+/* correction note */
+.correction { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; background: var(--bg); font-size: 14px; color: var(--muted); }
+.correction .c-lbl { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; }
+.correction p { margin: 0; }
+.correction p b { color: var(--fg); font-weight: 500; }
+.correction .c-reach { font: 500 12px var(--f-mono); }
+/* boost upsell */
+.boost { background: var(--surface-2); border: 1px solid #3b3366; border-radius: 16px; padding: 16px; display: grid; gap: 12px; }
+.boost .b-row { display: flex; gap: 12px; align-items: flex-start; }
+.boost .b-ico { font-size: 26px; line-height: 1; }
+.boost p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.boost .b-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.boost .b-actions button { font-size: 14px; font-weight: 600; padding: 9px 16px; border-radius: 10px; border: 1px solid var(--line); }
+.boost .b-actions .b-go { background: linear-gradient(135deg, #6b5cff, #b44cff); color: #fff; border: 0; }
 .because { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-bottom: -4px; }
 .because::before { content: "✦"; color: var(--xray); }
 .rerun { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px dashed #5a4612; border-radius: 8px; padding: 6px 9px; }
@@ -677,6 +728,11 @@ const TRICKS = {
   rerun:      ['Reruns', 'There is nothing new left. The feed shows you the same things again, and you keep going anyway.'],
   guilt:      ['Guilt bait', 'Makes you feel like a bad person unless you share, like, or type "Amen." Scrolling past is framed as not caring.'],
   stealth:    ['Hidden ad', 'A paid ad dressed up as a personal recommendation. The disclosure, if there is one, is buried where you won\'t see it.'],
+  bots:       ['Bot swarm', 'Dozens of "people" saying the same sentence, word for word. A fake crowd makes an opinion look popular, and with AI it costs almost nothing.'],
+  misinfo:    ['Misinformation', 'A made-up fact stated with confidence and a big number. It spreads fast. The correction, if it ever comes, reaches a tiny fraction of the people who saw the original.'],
+  stories:    ['Disappearing stories', 'Stories vanish after 24 hours, and the next one plays by itself. Checking feels urgent, and stopping takes effort.'],
+  cliffhanger:['Cliffhanger bait', 'The rest of the story is held hostage until the post gets enough likes. The goal moves when it gets close.'],
+  boost:      ['Pay to be seen', 'Apps keep unpaid reach low, then sell the rest back to you. Feeling unseen is part of the business model.'],
   shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
 };
 const COMMENTS = {
@@ -691,6 +747,9 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  misinfo: ['sharing this with everyone I know', 'I KNEW something was off', 'source??', 'my aunt has sent me this three times', 'the source is "do your own research"', 'this explains SO much'],
+  thread: ['here for part 2 👀', 'liking so we get there faster', 'just tell us 😭', 'the goal moved AGAIN??', 'commenting to get notified (I will forget)'],
+  bots: ['Couldn\'t agree more.'],
   stealth: ['wait is this an ad', 'ordered two 🛒', 'what was the code again??', '"not sponsored" but there\'s a discount code 🤔', 'mine came and it\'s just a regular water bottle', 'link?? I need this immediately', 'she posted the exact same caption for a different gummy last week'],
   hottake: ['this is not a hot take, this is a crime', 'I\'ve read this 4 times and I\'m angrier every time', 'the replies are going to be a bloodbath and I brought snacks', 'unfollowing. refollowing to see the replies. unfollowing again.', 'who hurt you', 'Respectfully, absolutely not.', 'quote-tweeting this so my followers can be mad too', 'ok but you\'re kind of right and I hate it'],
   wellness: ['my breakfast was cold coffee and regret', 'what time do you WAKE UP', 'saving this for the version of me that has her life together', 'link in bio to what, exactly', 'I got winded reading this'],
@@ -706,6 +765,17 @@ const handle = () => `${R(HANDLE_A)}${R(HANDLE_B).replace('_0', '_' + rint(10, 9
 const ago = () => R(['now', '1m', '3m', '7m', '12m', '25m']);
 const cmHTML = (text, likes, op) => `<div class="cm"><b>@${esc(handle())}</b> ${esc(text)}<span class="cm-meta">${ago()} · ${fmt(likes)} likes · Reply${op ? ' · <span class="op">♥ by author</span>' : ''}</span></div>`;
 let repliesOpened = 0;
+const BOT_FIRST = ['jessica', 'mike', 'sarah', 'david', 'emily', 'chris', 'amanda', 'kevin', 'ashley', 'brian'];
+const botCm = text => `<div class="cm"><b>@${R(BOT_FIRST)}_${R(['m', 't', 'r', 'k', 'j'])}${rint(10000, 99999)}</b> ${esc(text)}<span class="cm-meta">${ago()} · ${rint(0, 3)} followers · joined this week</span></div>`;
+function threadHTML(k, p) {
+  if (p.botLine) return `<div class="thread" data-bot="${esc(p.botLine)}"><span class="lbl">Top replies</span>${[0, 1, 2, 3].map(() => botCm(p.botLine)).join('')}
+      <div class="replies"></div>
+      <div class="trick-tag"><b>Bot swarm</b>Same sentence, word for word, from accounts created this week with almost no followers.</div>
+      <button class="more-replies" data-replies="${rint(800, 4000)}">View more replies</button></div>`;
+  return `<div class="thread"><span class="lbl">Top comment</span>${cmHTML(R(COMMENTS[k]), rint(800, 30000), Math.random() < .25)}
+      <div class="replies">${cmHTML(R(REPLIES), rint(40, 4000))}</div>
+      <button class="more-replies" data-replies="${rint(300, 9000)}">View more replies</button></div>`;
+}
 const tag = k => `<div class="trick-tag"><b>${TRICKS[k][0]}</b>${TRICKS[k][1]}</div>`;
 
 /* ---------- content ---------- */
@@ -722,6 +792,7 @@ const A = {
   well:   { name: 'Juno Wellness', handle: 'wellness.with.juno', h: 160 },
   bait:   { name: 'Reply If You Agree', handle: 'reply.if.you.agree', h: 100 },
   poll:   { name: 'Everyone Agrees', handle: 'everyone.agrees', h: 330 },
+  truth:  { name: 'Truth Seekers Daily', handle: 'truthseekers.daily', h: 45, v: 1 },
   nana:   { name: 'Grandma Loves You ❤️', handle: 'grandma.loves.you', h: 335 },
   clips:  { name: 'ClipDump', handle: 'clipdump.daily', h: 200, v: 1 },
 };
@@ -825,6 +896,29 @@ const POOL = {
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
+  bots() {
+    const [a, text, line] = R([
+      [{ name: 'Real Talk Daily', handle: 'realtalk.daily', h: 12 }, 'Restaurants should ban kids after 7pm. Who agrees? 🙋', 'Couldn\'t agree more. Finally someone with common sense said it.'],
+      [{ name: 'The People\'s Voice', handle: 'peoples.voice', h: 220 }, 'Everyone I know is switching to Brewtein coffee. Is regular coffee over?', 'Switched last month and never going back. Best decision I\'ve made all year!'],
+      [{ name: 'Common Sense Corner', handle: 'commonsense.corner', h: 95 }, 'Working from home made people lazy. Prove me wrong.', 'This is so true. I\'ve been saying this for years and nobody listens.'],
+      [{ name: 'Real Talk Daily', handle: 'realtalk.daily', h: 12 }, 'Why is nobody talking about how bad the new app update is?', 'Finally someone said it! The new update is a disaster and everyone knows it.'],
+    ]);
+    return { a, text: esc(text), trick: 'bots', mood: -3, anx: 2, hot: true, botLine: line };
+  },
+  misinfo() {
+    const c = R(MISINFO);
+    return { a: A.truth, text: `${esc(c.claim)} <b>Do your own research.</b> 👇`, trick: 'misinfo', mood: -3, anx: 4, hot: true, misinfo: c };
+  },
+  thread() {
+    const [a, title, first] = R([
+      [A.grind, 'How I went from broke to $40K a month in 6 months', 'Month one, I had $212 in my account and a plan nobody believed in. Here\'s exactly what I did next…'],
+      [A.doc, 'The real reason you\'re tired all the time (it\'s not sleep)', 'I spent three years researching this. What I found changed everything about my mornings…'],
+      [{ name: 'Founder Mode', handle: 'founder.mode', h: 200, v: 1 }, 'I quit my job a year ago. Here\'s what nobody tells you', 'The first month was the best of my life. The second month, everything fell apart…'],
+      [{ name: 'Money Explained', handle: 'money.explained', h: 130, v: 1 }, 'Why everything costs more now, explained', 'Most people think it\'s simple. It isn\'t. And the answer is going to make you angry…'],
+    ]);
+    const goal = 5000, now = rint(4300, 4750);
+    return { a, text: `🧵 <b>${esc(title)}</b> (1/${rint(9, 15)})<br><br>${esc(first)}<div class="goal" data-goal="${goal}" data-now="${now}"><span class="g-txt">Part 2 drops at <b>${goal.toLocaleString('en-US')}</b> likes 👀 · ${now.toLocaleString('en-US')} so far</span><div class="g-bar"><i style="width:${(now / goal * 100).toFixed(1)}%"></i></div></div>`, trick: 'cliffhanger', mood: -2, anx: 2 };
+  },
   stealth() {
     const a = R([A.well, A.lux, { name: 'Mia ✨ everyday', handle: 'mia.everyday', h: 15, v: 1 }, { name: 'Bri 🌶️', handle: 'spicytakes.bri', h: 8, v: 1 }, { name: 'Coach Rick', handle: 'coachrick.mindset', h: 25, v: 1 }]);
     const [prod, claim] = R([
@@ -924,8 +1018,14 @@ const POOL = {
     ]), trick: 'bait', mood: -1, anx: 1 };
   },
 };
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3]];
-const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth' };
+const MISINFO = [
+  { claim: '🚨 A new study found 73% of people who drink tap water after 8pm report memory problems. Doctors don\'t want this shared.', fix: 'No such study exists. The 73% figure was made up, and there\'s no evidence linking drinking water at night to memory problems.' },
+  { claim: '📱 Sleep scientists say charging your phone next to your bed cuts your deep sleep by 40%.', fix: 'No study is behind the 40% figure. Sleep researchers do suggest keeping phones out of the bedroom, but because of the screen and the notifications, not the charger.' },
+  { claim: '🐟 Scientists confirmed it: goldfish now have longer attention spans than humans. 9 seconds vs. our 8.', fix: 'This one has circulated for years. It traces back to a marketing report, and people who checked could find no study behind either number.' },
+  { claim: '🛏️ Harvard study: people who make their bed every morning are 206% more likely to become millionaires.', fix: 'There is no Harvard study. The 206% figure appears only in viral posts, with no source.' },
+];
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
 const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
@@ -938,7 +1038,7 @@ function pickKind() {
 }
 
 /* ---------- state ---------- */
-const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, photos: 0, islandEnds: 0, zenNext: 16, buzz: true, noSave: false };
+const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, photos: 0, corrections: [], boostNext: 24, islandEnds: 0, zenNext: 16, buzz: true, noSave: false };
 const WEAR_AT = 200;          // after this many posts, the feed starts showing you reruns
 const ORIGINALS = [];
 
@@ -1124,22 +1224,41 @@ function makePost(kind) {
       <button class="act" data-comment aria-label="Comments">${I.chat}<span class="n">${fmt(Math.round(likes * (p.hot ? .4 : .06)))}</span></button>
       <button class="act" data-share aria-label="Share">${I.share}<span class="n">${fmt(Math.round(likes * .03))}</span></button>
     </footer>
-    <div class="thread"><span class="lbl">Top comment</span>${cmHTML(R(COMMENTS[k]), rint(800, 30000), Math.random() < .25)}
-      <div class="replies">${cmHTML(R(REPLIES), rint(40, 4000))}</div>
-      <button class="more-replies" data-replies="${rint(300, 9000)}">View more replies</button></div>`;
+    ${threadHTML(k, p)}`;
   const mr = el.querySelector('.more-replies'); mr.textContent = `View ${Number(mr.dataset.replies).toLocaleString('en-US')} more replies`;
   setupPhotos(el);
+  if (p.misinfo) S.corrections.push({ at: S.made + rint(15, 25), seenAt: S.made, c: p.misinfo, likes, shares: Math.round(likes * .4) });
   if (S.made <= WEAR_AT) ORIGINALS.push(el);
   watch(el);
   return el;
 }
+// Long sessions: posts far off screen are emptied (keeping their height) and refilled when you scroll back.
+const PRUNED = new WeakMap();
+const pruneObs = new IntersectionObserver(es => {
+  for (const e of es) {
+    const el = e.target;
+    if (!e.isIntersecting && !PRUNED.has(el) && el.isConnected && el.firstChild) {
+      el.style.height = el.offsetHeight + 'px';
+      const frag = document.createDocumentFragment();
+      while (el.firstChild) frag.appendChild(el.firstChild);
+      PRUNED.set(el, frag);
+    } else if (e.isIntersecting && PRUNED.has(el)) {
+      el.appendChild(PRUNED.get(el)); PRUNED.delete(el); el.style.height = '';
+    }
+  }
+}, { rootMargin: '4000px 0px' });
+function fullClone(el) {
+  const c = el.cloneNode(true);
+  if (PRUNED.has(el)) { c.appendChild(PRUNED.get(el).cloneNode(true)); c.style.height = ''; }
+  return c;
+}
 function watch(el) {
-  postObs.observe(el); dwellObs.observe(el);
+  postObs.observe(el); dwellObs.observe(el); pruneObs.observe(el);
   const v = el.querySelector('.m-video'); if (v) vidObs.observe(v);
 }
 function makeRerun() {
   S.reruns++;
-  const el = ORIGINALS[Math.floor(Math.random() * ORIGINALS.length)].cloneNode(true);
+  const el = fullClone(ORIGINALS[Math.floor(Math.random() * ORIGINALS.length)]);
   el.querySelectorAll('.rerun, .because').forEach(x => x.remove());
   el.querySelectorAll('.liked').forEach(x => x.classList.remove('liked'));
   delete el.dataset.dwell;
@@ -1170,6 +1289,69 @@ const REALITY = [
 function miniStats() {
   const n = Object.values(S.tricks).reduce((a, b) => a + b, 0);
   return `<div class="r-stats"><span>Time <b>${timeStr()}</b></span><span>Posts <b>${S.seen}</b></span><span>Scrolled <b>${distStr()}</b></span><span>Mood <b>${Math.round(S.mood)}</b></span><span>Tricks used on you <b>${n}</b></span></div>`;
+}
+const initialsOf = n => n.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?';
+const STORIES = [
+  { a: A.lux, id: 'island-drone', cap: 'Morning commute 🚤' },
+  { a: { name: 'Jordan (your ex)', handle: 'jordan.newchapter', h: 340 }, id: 'social-rooftop', cap: 'Best people, best night 🥂' },
+  { a: A.grind, id: 'money-car', cap: 'She\'s finally home 🔑' },
+  { a: A.well, id: 'wellness-yoga', cap: '5:02am ☀️ no excuses' },
+  { a: { name: 'Maya R.', handle: 'maya.r91', h: 20 }, id: 'milestone-ring', cap: 'SAID YES 💍😭' },
+  { a: { name: 'Bri 🌶️', handle: 'spicytakes.bri', h: 8 }, bg: 'linear-gradient(135deg, #ff5f6d, #ffc371)', cap: 'Poll: is cereal soup? Answer wrong and I block you.' },
+  { a: { name: 'Mia ✨ everyday', handle: 'mia.everyday', h: 15 }, bg: 'linear-gradient(135deg, #a18cd1, #fbc2eb)', cap: 'My morning gummies 🍓 Swipe up for 20% off ⬆️ (not an ad)' },
+];
+const storyLeft = ms => ms < 3600e3 ? `${Math.max(1, Math.ceil(ms / 60e3))}m left` : `${Math.round(ms / 3600e3)}h left`;
+function makeStories() {
+  const wrap = document.createElement('div');
+  wrap.className = 'stories-wrap';
+  const now = Date.now();
+  STORIES.forEach((st, i) => { st.exp = now + (i % 3 === 0 ? rint(4, 25) * 60e3 : rint(2, 20) * 3600e3); });
+  wrap.innerHTML = `${tag('stories')}<div class="stories" role="list">${STORIES.map((st, i) => `<button class="st" role="listitem" data-story="${i}" aria-label="${esc(st.a.name)}'s story"><span class="ring"><span class="av" style="--h:${st.a.h}">${esc(initialsOf(st.a.name))}</span></span><span class="st-n">${esc(st.a.name.split(' (')[0])}</span><span class="st-t" data-exp="${st.exp}">${storyLeft(st.exp - now)}</span></button>`).join('')}</div>`;
+  return wrap;
+}
+function tickStories() {
+  const now = Date.now();
+  document.querySelectorAll('.st-t[data-exp]').forEach(el => {
+    let left = Number(el.dataset.exp) - now;
+    const st = el.closest('.st');
+    if (left <= 0) { left = rint(2, 20) * 3600e3; el.dataset.exp = now + left; st.classList.remove('seen'); }
+    el.textContent = storyLeft(left);
+    st.classList.toggle('soon', left < 30 * 60e3);
+  });
+}
+function openStories(start) {
+  S.paused = true;
+  const v = document.createElement('div');
+  v.className = 'sv'; v.setAttribute('role', 'dialog'); v.setAttribute('aria-modal', 'true'); v.setAttribute('aria-label', 'Stories');
+  v.innerHTML = `<div class="sv-box"><div class="sv-bars">${STORIES.map(() => '<i><b></b></i>').join('')}</div><div class="sv-head"></div><div class="sv-media"></div><button class="sv-prev" aria-label="Previous story"></button><button class="sv-next" aria-label="Next story"></button>${tag('stories')}</div>`;
+  document.body.appendChild(v);
+  let i = start, timer, watched = 0;
+  const bars = [...v.querySelectorAll('.sv-bars b')];
+  const close = () => {
+    clearTimeout(timer); v.remove(); S.paused = false;
+    if (watched > 1 && !S.storiesToast) { S.storiesToast = true; toast(`<b>You watched ${watched} stories in a row.</b> You only chose the first one. Each one started the next.`, { ico: '⏭', trick: 'stories', ms: 6000 }); }
+    renderToll();
+  };
+  const show = n => {
+    if (n < 0) n = 0;
+    if (n >= STORIES.length) return close();
+    i = n; clearTimeout(timer);
+    const st = STORIES[i];
+    bars.forEach((b, j) => { b.className = j < i ? 'done' : ''; });
+    void bars[i].offsetWidth; bars[i].className = 'run';
+    v.querySelector('.sv-head').innerHTML = `<span class="av" style="--h:${st.a.h}">${esc(initialsOf(st.a.name))}</span><span>${esc(st.a.name)}</span><span class="sv-time">${rint(1, 23)}h</span><button class="sv-x" aria-label="Close stories">×</button>`;
+    v.querySelector('.sv-media').innerHTML = st.id ? `${imgHTML(st.id).replace(' loading="lazy"', '')}<span class="sv-cap">${esc(st.cap)}</span>` : `<div class="sv-text" style="background:${st.bg}">${esc(st.cap)}</div>`;
+    document.querySelector(`.st[data-story="${i}"]`)?.classList.add('seen');
+    watched++;
+    S.tricks.stories = (S.tricks.stories || 0) + 1;
+    timer = setTimeout(() => show(i + 1), 5000);
+  };
+  v.addEventListener('click', e => {
+    if (e.target.closest('.sv-x')) return close();
+    if (e.target.closest('.sv-next')) return show(i + 1);
+    if (e.target.closest('.sv-prev')) { watched--; return show(i - 1); }
+  });
+  show(start);
 }
 function makeIntro() {
   const el = document.createElement('div');
@@ -1202,6 +1384,24 @@ function makeZen() {
     <a href="https://www.zen-reader.app" target="_blank" rel="noopener">Visit zen-reader.app ↗</a>`;
   return el;
 }
+function makeCorrection(x) {
+  const el = document.createElement('div');
+  el.className = 'correction';
+  const short = x.c.claim.length > 80 ? x.c.claim.slice(0, 78) + '…' : x.c.claim;
+  el.innerHTML = `${tag('misinfo')}<span class="c-lbl">ⓘ Context added to a post you saw</span>
+    <p>"${esc(short)}"</p>
+    <p><b>${esc(x.c.fix)}</b></p>
+    <span class="c-reach">The original: ${fmt(x.likes)} likes, ${fmt(x.shares)} shares. This note: ${rint(150, 900)} views.</span>`;
+  return el;
+}
+function makeBoost() {
+  const el = document.createElement('div');
+  el.className = 'boost';
+  el.innerHTML = `${tag('boost')}<div class="b-row"><span class="b-ico" aria-hidden="true">📉</span><div><b>Your post is underperforming.</b>
+    <p>Your story from yesterday reached only ${rint(3, 9)}% of your followers. Boost it to ${R(['10,000', '25,000', '50,000'])} people for $${R(['4.99', '9.99', '19.99'])}?</p></div></div>
+    <div class="b-actions"><button class="b-go" data-boost>Boost now</button><button data-boost-no>Not now</button></div>`;
+  return el;
+}
 function makeCaught() {
   const el = document.createElement('div');
   el.className = 'caught';
@@ -1232,6 +1432,8 @@ function loadMore(n = 8) {
       frag.appendChild(S.worn && ORIGINALS.length && Math.random() < rerunOdds ? makeRerun() : makePost());
       S.sinceReality++;
       if (!S.caught && S.made >= 36) { S.caught = true; makeCaught().forEach(e => frag.appendChild(e)); }
+      while (S.corrections.length && S.made >= S.corrections[0].at) frag.appendChild(makeCorrection(S.corrections.shift()));
+      if (S.made + S.reruns >= S.boostNext) { S.boostNext = S.made + S.reruns + rint(35, 50); frag.appendChild(makeBoost()); }
       if (S.made + S.reruns >= S.zenNext) { S.zenNext = S.made + S.reruns + rint(25, 35); frag.appendChild(makeZen()); }
       if (S.sinceReality >= rint(9, 13)) { S.sinceReality = 0; frag.appendChild(makeReality()); }
     }
@@ -1397,7 +1599,7 @@ function showPill() {
 }
 pill.addEventListener('click', () => {
   pill.classList.remove('show');
-  const first = feed.firstElementChild;
+  const first = feed.querySelector('.stories-wrap')?.nextElementSibling || feed.firstElementChild;
   for (let i = 0; i < 3; i++) feed.insertBefore(makePost(R(['breaking', 'alert', 'rage', 'classmate'])), first);
   scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   toast(`You pulled up ${3} of ${pillCount} new posts. Now scroll back down past everything you already saw.`, { ico: '↑', trick: 'reward', ms: 5200 });
@@ -1414,6 +1616,10 @@ feed.addEventListener('click', e => {
     toast('<b>You had to say no.</b> Autoplay makes stopping the thing that takes effort. Continuing takes none.', { ico: '⏯', trick: 'autoplay' });
     return;
   }
+  if (t.closest('[data-boost]')) { t.closest('.boost').style.opacity = .55; t.closest('.b-actions').innerHTML = '<span class="poll-note">Payment declined: this is a parody.</span>'; toast('<b>There was no post.</b> But on real apps, unpaid reach is kept low so that paying for it feels necessary.', { ico: '💸', trick: 'boost', ms: 6000 }); return; }
+  if (t.closest('[data-boost-no]')) { t.closest('.b-actions').innerHTML = '<span class="poll-note">Okay. We\'ll remind you tomorrow. And the day after.</span>'; return; }
+  const stb = t.closest('[data-story]');
+  if (stb) { openStories(Number(stb.dataset.story)); return; }
   const tm = t.closest('[data-tags]');
   if (tm) {
     tm.previousElementSibling.querySelector('.tags-rest').hidden = false;
@@ -1444,7 +1650,9 @@ feed.addEventListener('click', e => {
   const mr = t.closest('.more-replies') || (t.closest('[data-comment]') && t.closest('.post').querySelector('.more-replies'));
   if (mr) {
     const box = mr.parentElement.querySelector('.replies');
-    for (let i = 0; i < 3; i++) box.insertAdjacentHTML('beforeend', cmHTML(R(REPLIES), rint(5, 2500)));
+    const bot = mr.parentElement.dataset.bot;
+    for (let i = 0; i < 3; i++) box.insertAdjacentHTML('beforeend', bot ? botCm(bot) : cmHTML(R(REPLIES), rint(5, 2500)));
+    if (bot && !S.botsSeen) { S.botsSeen = true; toast('<b>Notice anything?</b> Every reply is the same sentence from a brand-new account. That\'s a bot swarm: a fake crowd that makes an opinion look popular.', { ico: '🤖', trick: 'bots', ms: 6500 }); }
     // The count goes down by 3, then back up: people keep arguing while you read.
     const left = Math.max(40, Number(mr.dataset.replies) - 3 + rint(0, 9));
     mr.dataset.replies = left;
@@ -1518,6 +1726,16 @@ function tick() {
     nx.hidden = false; nx.querySelector('.v-n').textContent = Math.max(left, 1);
     if (left <= 0) { v.dataset.done = 1; nx.hidden = true; autoAdvance(v); }
   }
+  // Cliffhanger goals creep up, then move just before they're reached.
+  document.querySelectorAll('.goal').forEach(g => {
+    let goal = Number(g.dataset.goal), now = Number(g.dataset.now) + rint(1, 6);
+    let moved = g.dataset.moved === '1';
+    if (now >= goal * .996) { goal *= 2; moved = true; g.dataset.moved = '1'; }
+    g.dataset.goal = goal; g.dataset.now = now;
+    g.querySelector('.g-txt').innerHTML = `${moved ? 'So close! Goal moved: ' : ''}Part 2 drops at <b>${goal.toLocaleString('en-US')}</b> likes 👀 · ${now.toLocaleString('en-US')} so far`;
+    g.querySelector('.g-bar i').style.width = (now / goal * 100).toFixed(1) + '%';
+  });
+  tickStories();
   if (secs() % 5 === 0) save();
   const live = $('#liveN');
   live.textContent = (Number(live.textContent.replace(/,/g, '')) + rint(-40, 70)).toLocaleString('en-US');
@@ -1574,7 +1792,7 @@ function spinPtr() {
       ptr.classList.toggle('won', jackpot);
       ptrL.textContent = jackpot ? `Jackpot! ${n} new posts` : `${n} new posts. Pull again?`;
       buzz(jackpot ? [30, 40, 30, 40, 90] : 25);
-      const first = feed.firstElementChild;
+      const first = feed.querySelector('.stories-wrap')?.nextElementSibling || feed.firstElementChild;
       for (let i = 0; i < Math.min(n, 5); i++) feed.insertBefore(makePost(), first);
       S.pulls++;
       if (jackpot) toast('<b>🎰 Jackpot!</b> You won 12 new posts. That\'s the prize: more of this.', { ico: '🎰', trick: 'reward', ms: 5500 });
@@ -1734,6 +1952,7 @@ function showReceipt() {
 }
 
 /* ---------- boot ---------- */
+feed.appendChild(makeStories());
 feed.appendChild(makeIntro());
 feed.appendChild(sentinel);
 loadMore(10);
