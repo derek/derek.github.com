@@ -38,7 +38,7 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { background: var(--bg); }
+html { background: var(--bg); overscroll-behavior-y: none; }
 body {
   background: var(--bg);
   color: var(--fg);
@@ -190,6 +190,24 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .m-chart svg { width: 100%; height: 110px; display: block; margin-top: 4px; }
 .m-lux { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 16px; }
 .m-lux .place { font: 700 22px/1.05 var(--f-display); color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.45); letter-spacing: -0.02em; max-width: 16ch; }
+.m-video {
+  aspect-ratio: 4 / 5; max-height: 72vh; width: 100%; display: grid; place-items: center; padding: 28px 22px; color: #fff;
+  background: linear-gradient(125deg, hsl(var(--vh) 70% 30%), hsl(calc(var(--vh) + 70) 75% 45%), hsl(calc(var(--vh) + 140) 70% 28%), hsl(var(--vh) 70% 30%));
+  background-size: 300% 300%; animation: vid 7s ease-in-out infinite alternate;
+}
+.v-cap { font: 800 clamp(24px, 6vw, 34px)/1.05 var(--f-display); text-align: center; margin: 0; text-wrap: balance; text-shadow: 0 2px 20px rgba(0,0,0,.4); letter-spacing: -0.02em; }
+.v-live { position: absolute; top: 12px; left: 12px; font: 700 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; background: rgba(0,0,0,.45); padding: 4px 8px; border-radius: 6px; }
+.v-mute { position: absolute; top: 10px; right: 12px; font-size: 16px; }
+.v-views { position: absolute; left: 12px; bottom: 16px; font: 600 12px var(--f-mono); text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+.v-prog { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255,255,255,.25); }
+.v-prog i { display: block; height: 100%; width: 0; background: #fff; transition: width 1s linear; }
+.v-next { position: absolute; inset: 0; background: rgba(0,0,0,.74); display: grid; place-content: center; justify-items: center; gap: 12px; text-align: center; font: 600 17px var(--f-body); }
+.v-next b { font: 800 46px/1 var(--f-display); display: block; margin-top: 4px; }
+.v-next button { border: 1px solid rgba(255,255,255,.7); border-radius: 999px; padding: 8px 20px; font-size: 14px; }
+.because { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-bottom: -4px; }
+.because::before { content: "✦"; color: var(--xray); }
+.rerun { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px dashed #5a4612; border-radius: 8px; padding: 6px 9px; }
+.post.is-rerun { opacity: .82; }
 .m-quote {
   background: #000; aspect-ratio: 5 / 3; display: grid; place-items: center; padding: 24px;
   border: 1px solid var(--line);
@@ -301,6 +319,13 @@ body.xray .chip-tag { display: block; }
 body.xray .xray-toggle .sw { background: var(--xray); }
 body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #051426; }
 .fine { font-size: 12px; color: var(--muted); margin: 0; }
+.sw-btn { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; font-size: 13.5px; color: var(--muted); text-align: left; padding: 2px 0; }
+.sw-btn .sw { width: 34px; height: 20px; border-radius: 10px; background: var(--surface-2); position: relative; flex: none; transition: background .2s; border: 1px solid var(--line); }
+.sw-btn .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--muted); transition: transform .2s; }
+.sw-btn[aria-pressed="true"] .sw { background: var(--good); }
+.sw-btn[aria-pressed="true"] .sw::after { transform: translateX(14px); background: #04140c; }
+.forget { font-size: 12.5px; color: var(--muted); text-decoration: underline; justify-self: start; text-align: left; }
+.forget:hover { color: var(--fg); }
 
 /* mobile sheet + bar */
 .tollbar, .tb-flash { display: none; }
@@ -383,6 +408,17 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 .toast .trick-tag { font-size: 12px; }
 .floaty { position: fixed; z-index: 70; pointer-events: none; font: 700 13px var(--f-mono); color: var(--hot); animation: floatUp 1s ease-out forwards; }
 
+.ptr {
+  position: fixed; z-index: 31; left: 50%; top: calc(env(safe-area-inset-top, 0px) + var(--head-h) + 8px);
+  transform: translate(-50%, -90px); opacity: 0; pointer-events: none;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px;
+  display: grid; gap: 6px; justify-items: center; box-shadow: 0 12px 30px rgba(0,0,0,.5);
+}
+.ptr.settle { transition: transform .3s, opacity .3s; }
+.ptr .reels { display: flex; gap: 6px; }
+.ptr .reels span { width: 36px; height: 40px; display: grid; place-items: center; background: #000; border-radius: 8px; font-size: 22px; border: 1px solid var(--line); }
+.ptr .ptr-l { font: 600 11px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
+.ptr.won .ptr-l { color: var(--gold); }
 .bell-wrap { position: relative; }
 .bell-wrap .chip-tag { top: 44px; right: 0; }
 .notif {
@@ -397,7 +433,8 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 .notif .trick-tag { margin: 4px; }
 
 /* modal */
-.modal { position: fixed; inset: 0; z-index: 80; background: rgba(4,5,8,.82); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.modal { position: fixed; inset: 0; z-index: 80; background: rgba(4,5,8,.82); display: flex; padding: 16px; overflow-y: auto; }
+.modal > * { margin: auto; }
 .dialog {
   background: var(--surface); border: 1px solid var(--line); border-radius: 20px; width: min(440px, 100%);
   padding: 26px 22px 20px; display: grid; gap: 14px; text-align: center; animation: rise .3s ease-out both; position: relative;
@@ -424,6 +461,10 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 .receipt .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .receipt button { font-family: var(--f-body); font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--ink); color: var(--ink); }
 .receipt button.solid { background: var(--ink); color: var(--paper); }
+.receipt .steps h4 { font: 400 italic 24px/1.1 var(--f-serif); margin: 0 0 10px; }
+.receipt .steps ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; font-family: var(--f-body); font-size: 14px; line-height: 1.4; }
+.receipt .steps b { font-weight: 600; }
+.receipt .steps span { display: block; color: var(--ink-muted); font: 400 12px/1.45 var(--f-mono); margin-top: 2px; }
 .receipt .rule { border: 0; border-top: 2px dashed #9fb1a7; margin: 0; }
 
 .outside { position: fixed; inset: 0; z-index: 90; background: var(--paper); color: var(--ink); display: grid; place-items: center; padding: 24px; text-align: center; }
@@ -433,6 +474,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 .outside button { justify-self: center; font-size: 13px; text-decoration: underline; color: var(--ink-muted); }
 
 @media (max-width: 979.98px) { .toasts { bottom: calc(126px + env(safe-area-inset-bottom, 0px)); } }
+@keyframes vid { to { background-position: 100% 100% } }
 @keyframes nudge { 0%,100% { transform: none } 30% { transform: translateY(-10px) } 60% { transform: translateY(2px) } }
 @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
 @keyframes bump { 0% { transform: scale(.6) } 100% { transform: scale(1) } }
@@ -469,6 +511,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
   </div>
 </header>
 
+<div class="ptr" id="ptr" aria-hidden="true"><div class="reels"><span>🔥</span><span>💔</span><span>👀</span></div><span class="ptr-l" id="ptrL">Pull to refresh</span></div>
 <button class="newpill" id="newpill"><span class="faces"><span style="--h:20"></span><span style="--h:200"></span><span style="--h:300"></span></span><span id="newpillText">↑ 12 new posts</span><span class="chip-tag">Pull them back up</span></button>
 
 <main class="shell">
@@ -498,11 +541,21 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
       <ul class="tricks-list" id="tricksList"><li class="empty">None yet. Give it a few seconds.</li></ul>
     </div>
     <div>
+      <h4 class="sub-h">What the feed has learned about you</h4>
+      <ul class="tricks-list" id="learned"><li class="empty">Nothing yet. It's watching what you stop on.</li></ul>
+    </div>
+    <div>
       <h4 class="sub-h">In the same time you could have</h4>
       <div class="instead" id="instead"></div>
     </div>
+    <div>
+      <h4 class="sub-h">All your visits</h4>
+      <div class="instead" id="lifetime"></div>
+    </div>
     <button class="xray-toggle" id="xrayBtn" aria-pressed="false">Reveal the tricks <span class="sw" aria-hidden="true"></span></button>
-    <p class="fine">Doomfeed is a parody. Every post is generated. Nothing here is real except the time you spent.</p>
+    <button class="sw-btn" id="buzzBtn" aria-pressed="true">Buzz my phone with notifications (Android) <span class="sw" aria-hidden="true"></span></button>
+    <button class="forget" id="forgetBtn">Forget me: delete what Doomfeed saved in this browser</button>
+    <p class="fine">Doomfeed is a parody. Every post is generated. Your stats are saved only in this browser. Nothing here is real except the time you spent.</p>
   </aside>
 </main>
 
@@ -555,6 +608,10 @@ const TRICKS = {
   bait:       ['Engagement bait', 'Asks you to reply or like so the algorithm counts you as engaged and shows you more.'],
   doom:       ['Doom spiral', 'A huge problem you can\'t do anything about, served at the hour you\'re least able to shrug it off.'],
   ending:     ['Fake ending', 'It looks like a stopping point. The feed keeps going right underneath it.'],
+  algo:       ['Personalization', 'The feed watches what you pause on, tap, and argue with, then serves you more of exactly that.'],
+  streak:     ['Streaks', 'A number you lose if you skip a day. It turns a habit into an obligation.'],
+  autoplay:   ['Autoplay', 'The next thing starts before you decide whether you want it. Stopping takes effort. Continuing takes none.'],
+  rerun:      ['Reruns', 'There is nothing new left. The feed shows you the same things again, and you keep going anyway.'],
   shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
 };
 const COMMENTS = {
@@ -569,6 +626,7 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  video: ['the ending 💀', 'where is part 2??', 'watched this 6 times and I still don\'t get it', 'I was not ready for that', 'who else is here at 2am', 'part 2 or I riot'],
   bait: ['YES', 'yes 😭 and I have work in 5 hours', 'commenting so I see this later (I won\'t)', 'here. send help. or don\'t, I\'m comfortable', 'commenting to boost this for the algorithm', 'tired. just tired.'],
 };
 const REPLIES = ['source?', 'ok but nobody asked', 'this comment section is unhinged and I can\'t stop reading', 'you clearly didn\'t read the post', 'touch grass', 'screenshotting this whole thread', 'the replies are better than the post', 'came here for this comment', 'why is this on my feed', 'said it better than I could', 'dumbest thing I\'ve read today (it\'s 2am)', 'can we not do this here', 'this aged badly and it\'s been 4 minutes', 'not you replying to every single comment', 'real', 'facts', 'No. Absolutely not. Here\'s why: (1/7)', 'lol ok', 'not reading all that. happy for you, or sorry that happened', 'you\'re both wrong and I\'m staying to watch', 'the person who said "source?" is the only sane one here', 'imagine arguing on here at this hour (I\'m replying at this hour)', 'reported for being correct', 'my thumb hurts but I need to see how this ends', 'every reply makes this worse and I love it', 'wait who started this', 'I\'ve been in this thread for 20 minutes. help.', 'ok THIS is the take that ends the thread', 'it did not end the thread', 'blocked. (I\'ll unblock to see what you say back)'];
@@ -594,6 +652,7 @@ const A = {
   well:   { name: 'Juno Wellness', handle: 'wellness.with.juno', h: 160 },
   bait:   { name: 'Reply If You Agree', handle: 'reply.if.you.agree', h: 100 },
   poll:   { name: 'Everyone Agrees', handle: 'everyone.agrees', h: 330 },
+  clips:  { name: 'ClipDump', handle: 'clipdump.daily', h: 200, v: 1 },
 };
 const FIRST = ['Jordan', 'Maya', 'Priya', 'Sam', 'Leo', 'Ines', 'Theo', 'Nadia', 'Marcus', 'Elif', 'Casey', 'Rosa', 'Dev', 'Hana', 'Oskar'];
 const LASTI = 'ABCDEFGHJKLMNPRSTW';
@@ -686,6 +745,11 @@ const POOL = {
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
+  video() {
+    const cap = R(['Wait for the end 😳', 'POV: you said "one more video" 40 minutes ago', 'He had no idea what was about to happen…', 'This life hack changed everything (part 1 of 7)', 'Watch till the end. Trust me.', 'Nobody talks about this 👇', 'I can\'t believe this is real']);
+    return { a: A.clips, text: R(['😳😳😳', 'part 2 in comments', 'I watched this 9 times', 'the ending 💀', 'sound on 🔊']),
+      media: { t: 'video', cap, g: rint(0, 359) }, trick: 'autoplay', mood: -2, anx: 2 };
+  },
   bait() {
     return { a: Math.random() < .5 ? A.bait : A.well, text: R([
       'Reply "YES" if you\'re also scrolling instead of sleeping 🙋',
@@ -696,19 +760,70 @@ const POOL = {
     ]), trick: 'bait', mood: -1, anx: 1 };
   },
 };
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2]];
-const WSUM = WEIGHTS.reduce((s, w) => s + w[1], 0);
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay' };
+const LEARNABLE = new Set(Object.values(KIND_TRICK));
+// How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
+const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
 let lastKind = '';
 function pickKind() {
-  for (let i = 0; i < 6; i++) {
-    let r = Math.random() * WSUM;
-    for (const [k, w] of WEIGHTS) { r -= w; if (r <= 0) { if (k !== lastKind) { lastKind = k; return k; } break; } }
-  }
+  const ws = WEIGHTS.map(([k, w]) => [k, k === lastKind ? 0 : w * mult(KIND_TRICK[k])]);
+  let r = Math.random() * ws.reduce((sum, x) => sum + x[1], 0);
+  for (const [k, w] of ws) { r -= w; if (r <= 0) return lastKind = k; }
   return lastKind = 'rage';
 }
 
 /* ---------- state ---------- */
-const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, sinceReality: 0, realityIx: 0, caught: false, lastScroll: Date.now(), badge: 3, paused: false };
+const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, buzz: true, noSave: false };
+const WEAR_AT = 200;          // after this many posts, the feed starts showing you reruns
+const ORIGINALS = [];
+
+/* ---------- memory across visits (this browser only) ---------- */
+const STORE_KEY = 'doomfeed.v1';
+const dayKey = d => d.toLocaleDateString('en-CA');
+const freshStore = () => ({ visits: 0, totalSecs: 0, totalPosts: 0, streak: 0, lastDay: null, interest: {}, buzz: true });
+let store = null;
+try { store = JSON.parse(localStorage.getItem(STORE_KEY)); } catch (e) { store = null; }
+const isReturn = !!(store && store.visits);
+if (!store || typeof store !== 'object') store = freshStore();
+let brokeStreak = 0;
+{
+  const today = dayKey(new Date()), yesterday = dayKey(new Date(Date.now() - 864e5));
+  if (store.lastDay !== today) {
+    if (store.lastDay === yesterday) store.streak++;
+    else { if (store.streak > 1) brokeStreak = store.streak; store.streak = 1; }
+    store.lastDay = today;
+  }
+  store.visits++;
+}
+const base = { secs: store.totalSecs || 0, posts: store.totalPosts || 0 };
+S.interest = store.interest || {};
+S.buzz = store.buzz !== false;
+function save() {
+  if (S.noSave) return;
+  store.totalSecs = base.secs + secs();
+  store.totalPosts = base.posts + S.seen;
+  store.interest = S.interest;
+  store.buzz = S.buzz;
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { /* storage blocked: the feed just forgets you */ }
+}
+const fmtDur = s => s < 60 ? `${s} seconds` : s < 3600 ? `${Math.round(s / 60)} minute${Math.round(s / 60) === 1 ? '' : 's'}` : `${(s / 3600).toFixed(1)} hours`;
+const buzz = pattern => { if (!S.buzz) return; try { if (navigator.vibrate) navigator.vibrate(pattern); } catch (e) { /* not supported */ } };
+
+/* ---------- learning ---------- */
+const LEVELS = [1.5, 2, 3, 4];
+const levelOf = t => LEVELS.filter(l => mult(t) >= l).pop() || 0;
+for (const t of Object.keys(S.interest)) S.learnedShown[t] = levelOf(t);
+function learn(t, n) {
+  if (!LEARNABLE.has(t)) return;
+  S.interest[t] = (S.interest[t] || 0) + n;
+  const lvl = levelOf(t);
+  if (lvl > (S.learnedShown[t] || 0)) {
+    S.learnedShown[t] = lvl;
+    toast(`<b>The feed noticed you stop on ${TRICKS[t][0]} posts.</b> You'll see ${lvl}× more of them now.`, { ico: '🧠', trick: 'algo', ms: 5500 });
+  }
+}
+const topLearned = () => Object.keys(S.interest).filter(t => mult(t) >= 1.25).sort((a, b) => mult(b) - mult(a));
 const feed = $('#feed');
 const sentinel = document.createElement('div');
 
@@ -736,6 +851,7 @@ function mediaHTML(m) {
     case 'breaking': return `<div class="media m-breaking"><div class="flag"><span>BREAKING</span><em>LIVE · ${fmt(rint(4000, 90000))} watching</em></div><h3>${esc(m.h)}</h3><div class="ticker"><span>DEVELOPING ··· MORE DETAILS SOON ··· STAY TUNED ··· EXPERTS REACT ··· WHAT THIS MEANS FOR YOU ··· DON'T LOOK AWAY ··· DEVELOPING ···</span></div></div>`;
     case 'chart': return `<div class="media m-chart"><div class="row"><span class="sym">${esc(m.sym)} · 24H</span><span class="pct">−${m.pct}%</span></div>${chartSVG()}</div>`;
     case 'lux': return `<div class="media m-lux" style="background:${LUX[m.g]}"><div class="place">${esc(m.place)}</div></div>`;
+    case 'video': return `<div class="media m-video" style="--vh:${m.g}"><span class="v-live">▶ Autoplay</span><span class="v-mute" aria-hidden="true">🔇</span><p class="v-cap">${esc(m.cap)}</p><span class="v-views">${fmt(rint(200000, 9000000))} views</span><div class="v-prog"><i></i></div><div class="v-next" hidden><span>Next post in<b class="v-n">3</b></span><button data-vcancel>Cancel</button></div></div>`;
     case 'quote': return `<div class="media m-quote"><p>${esc(m.q)}<small>posted at 3:0${rint(1, 9)} AM</small></p></div>`;
     case 'ad': {
       const pct = Math.round(100 - m.left * 4);
@@ -771,7 +887,8 @@ function makePost(kind) {
   const proof = p.proofMutual
     ? `<div class="p-proof"><span class="faces">${randFace()}${randFace()}${randFace()}</span><span><b>${rint(12, 48)} people from your school</b> reacted</span></div>`
     : `<div class="p-proof"><span class="faces">${randFace()}${randFace()}</span><span>Liked by <b>${R(FIRST).toLowerCase()}_${rint(1, 99)}</b> and <span data-likes>${fmt(likes)}</span> others</span></div>`;
-  el.innerHTML = `${tag(p.trick)}
+  const boosted = !kind && mult(KIND_TRICK[k]) >= 1.75;
+  el.innerHTML = `${tag(p.trick)}${boosted ? '<div class="because">Suggested because you stopped on posts like this</div>' : ''}
     <header class="p-head"><div class="av" style="--h:${a.h}">${esc(initials)}</div>
       <div class="who"><span class="name">${esc(a.name)}${a.v ? I.check : ''}</span><span class="meta">${when}</span></div></header>
     <div class="p-body">${p.text}</div>
@@ -786,7 +903,25 @@ function makePost(kind) {
       <div class="replies">${cmHTML(R(REPLIES), rint(40, 4000))}</div>
       <button class="more-replies" data-replies="${rint(300, 9000)}">View more replies</button></div>`;
   const mr = el.querySelector('.more-replies'); mr.textContent = `View ${Number(mr.dataset.replies).toLocaleString('en-US')} more replies`;
-  postObs.observe(el);
+  if (S.made <= WEAR_AT) ORIGINALS.push(el);
+  watch(el);
+  return el;
+}
+function watch(el) {
+  postObs.observe(el); dwellObs.observe(el);
+  const v = el.querySelector('.m-video'); if (v) vidObs.observe(v);
+}
+function makeRerun() {
+  S.reruns++;
+  const el = ORIGINALS[Math.floor(Math.random() * ORIGINALS.length)].cloneNode(true);
+  el.querySelectorAll('.rerun, .because').forEach(x => x.remove());
+  el.querySelectorAll('.liked').forEach(x => x.classList.remove('liked'));
+  delete el.dataset.dwell;
+  el.classList.add('is-rerun');
+  el.insertAdjacentHTML('afterbegin', `<div class="rerun">↻ Rerun · You've seen this. You're still here.</div>${tag('rerun')}`);
+  const v = el.querySelector('.m-video');
+  if (v) { delete v.dataset.p; delete v.dataset.done; delete v.dataset.cancel; v.querySelector('.v-next').hidden = true; v.querySelector('.v-prog i').style.width = '0'; }
+  watch(el);
   return el;
 }
 
@@ -802,6 +937,7 @@ const REALITY = [
   () => `It's ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}. Is this what you wanted to be doing right now?`,
   () => '"Breaking" news with no details isn\'t information. It\'s a reason to come back.',
   () => `You've seen ${S.seen} posts. Can you remember three of them?`,
+  () => { const t = topLearned()[0]; return t ? `The feed has learned that you stop for <em>${TRICKS[t][0]}</em>. That's why you're seeing more of it.` : 'The feed is learning what makes you stop. Every pause counts as a vote.'; },
   () => 'You\'re allowed to stop. Nothing here needs you.',
 ];
 function miniStats() {
@@ -811,17 +947,16 @@ function miniStats() {
 function makeIntro() {
   const el = document.createElement('div');
   el.className = 'reality intro';
-  el.innerHTML = `<span class="eyebrow">Doomfeed · a parody</span>
+  el.innerHTML = `<span class="eyebrow">Doomfeed · a parody${isReturn ? ` · visit ${store.visits}` : ''}</span>
     <h2>This feed is designed to keep you here.</h2>
     <p>Every post, badge, and buzz below uses a real trick from real apps. While you scroll, <span class="mobile-only">the red bar at the bottom of your screen</span><span class="desk-only">the panel on the right</span> keeps score: your time, your mood, and every trick used on you.</p>
     <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-dismiss>Just scroll</button></div>`;
   return el;
 }
-function makeReality() {
+function makeReality(override) {
   const el = document.createElement('div');
   el.className = 'reality';
-  const line = REALITY[S.realityIx % REALITY.length]();
-  S.realityIx++;
+  const line = override || REALITY[S.realityIx++ % REALITY.length]();
   el.innerHTML = `<span class="eyebrow">Pause · ${timeStr()} in · ${S.seen} posts</span><p>${line}</p>
     ${miniStats()}
     <div class="r-actions"><button class="solid" data-toll>See what this cost</button><button data-dismiss>Keep scrolling</button></div>`;
@@ -848,7 +983,13 @@ function loadMore(n = 8) {
     sk.remove();
     const frag = document.createDocumentFragment();
     for (let i = 0; i < n; i++) {
-      frag.appendChild(makePost());
+      const total = S.made + S.reruns;
+      if (total >= WEAR_AT && !S.worn) {
+        S.worn = true;
+        frag.appendChild(makeReality('You\'ve reached the end of what\'s new. <em>Everything from here on is a rerun.</em> The feed didn\'t stop. It never does.'));
+      }
+      const rerunOdds = clamp(0.3 + (total - WEAR_AT) / 250, 0.3, 0.92);
+      frag.appendChild(S.worn && ORIGINALS.length && Math.random() < rerunOdds ? makeRerun() : makePost());
       S.sinceReality++;
       if (!S.caught && S.made >= 36) { S.caught = true; makeCaught().forEach(e => frag.appendChild(e)); }
       if (S.sinceReality >= rint(9, 13)) { S.sinceReality = 0; frag.appendChild(makeReality()); }
@@ -877,6 +1018,11 @@ const postObs = new IntersectionObserver(entries => {
   renderToll();
 }, { threshold: 0.6 });
 new IntersectionObserver(es => { if (es[0].isIntersecting) loadMore(); }, { rootMargin: '900px 0px' }).observe(sentinel);
+// Dwell: how long each post stays on screen. Lingering teaches the feed what to show you.
+const inView = new Set();
+const dwellObs = new IntersectionObserver(es => { for (const e of es) e.isIntersecting ? inView.add(e.target) : inView.delete(e.target); }, { threshold: 0.6 });
+const vidVisible = new Set();
+const vidObs = new IntersectionObserver(es => { for (const e of es) e.isIntersecting ? vidVisible.add(e.target) : vidVisible.delete(e.target); }, { threshold: 0.6 });
 
 /* ---------- scroll + distance ---------- */
 let lastY = scrollY;
@@ -919,6 +1065,9 @@ function renderToll() {
   const list = Object.entries(S.tricks).sort((a, b) => b[1] - a[1]);
   $('#tricksList').innerHTML = list.length ? list.map(([k, n]) => `<li><span>${TRICKS[k][0]}</span><span>×${n}</span></li>`).join('') : '<li class="empty">None yet. Give it a few seconds.</li>';
   const s = secs();
+  const learned = topLearned().slice(0, 3);
+  $('#learned').innerHTML = learned.length ? learned.map(t => `<li><span>${TRICKS[t][0]}</span><span>${mult(t).toFixed(1)}× more</span></li>`).join('') : '<li class="empty">Nothing yet. It\'s watching what you stop on.</li>';
+  $('#lifetime').innerHTML = `<span>Visits <b>${store.visits}</b></span><span>Time here, all visits <b>${fmtDur(base.secs + s)}</b></span><span>Posts, all visits <b>${fmt(base.posts + S.seen)}</b></span><span>Streak <b>${store.streak} day${store.streak === 1 ? '' : 's'}</b></span>`;
   $('#instead').innerHTML = `<span>Read <b>${Math.floor(s / 75)}</b> pages of a book</span><span>Walked <b>${fmt(Math.round(s * 1.7))}</b> steps</span><span>Listened to <b>${Math.floor(s / 210)}</b> whole songs</span><span>Been asleep for <b>${Math.floor(s / 60)}</b> minutes</span>`;
 }
 
@@ -940,6 +1089,7 @@ function flashTrick(k) {
 function toast(html, opts = {}) {
   const el = document.createElement('div');
   el.className = 'toast' + (opts.reward ? ' reward' : '');
+  if (opts.buzz) buzz(opts.buzz);
   el.innerHTML = `<div class="t-row"><span class="t-ico" aria-hidden="true">${opts.ico || '🔔'}</span><div>${html}</div></div>${opts.trick ? tag(opts.trick) : ''}`;
   const box = $('#toasts');
   box.appendChild(el);
@@ -982,6 +1132,7 @@ function bumpBadge(n) {
   badgeEl.textContent = S.badge > 99 ? '99+' : S.badge;
   badgeEl.classList.remove('bump'); void badgeEl.offsetWidth; badgeEl.classList.add('bump');
   document.title = `(${S.badge}) Doomfeed`;
+  buzz(40);
 }
 notifQueue = [NOTIFS[0](), NOTIFS[2](), NOTIFS[6]()];
 $('#bell').addEventListener('click', e => {
@@ -1014,6 +1165,14 @@ pill.addEventListener('click', () => {
 /* ---------- feed interactions ---------- */
 feed.addEventListener('click', e => {
   const t = e.target;
+  const postTrick = t.closest('.post')?.dataset.trick;
+  const vc = t.closest('[data-vcancel]');
+  if (vc) {
+    const v = vc.closest('.m-video');
+    v.dataset.cancel = 1; v.dataset.done = 1; vc.parentElement.hidden = true;
+    toast('<b>You had to say no.</b> Autoplay makes stopping the thing that takes effort. Continuing takes none.', { ico: '⏯', trick: 'autoplay' });
+    return;
+  }
   const like = t.closest('[data-like]');
   if (like) {
     const n = like.querySelector('.n');
@@ -1022,12 +1181,13 @@ feed.addEventListener('click', e => {
     if (like.classList.contains('liked')) {
       const r = like.getBoundingClientRect();
       floaty(r.left + 10, r.top - 6, '+1 hit');
+      buzz(12); learn(postTrick, 2);
       S.mood = clamp(S.mood + 2, 0, 100); renderToll();
       setTimeout(() => { S.mood = clamp(S.mood - 3, 3, 100); renderToll(); }, 4000);
     }
     return;
   }
-  if (t.closest('[data-more]')) { e.preventDefault(); toast('<b>Keep scrolling to find out.</b> The answer is somewhere further down. (It isn\'t.)', { ico: '👀', trick: 'curiosity' }); return; }
+  if (t.closest('[data-more]')) { e.preventDefault(); learn(postTrick, 2); toast('<b>Keep scrolling to find out.</b> The answer is somewhere further down. (It isn\'t.)', { ico: '👀', trick: 'curiosity' }); return; }
   const mr = t.closest('.more-replies') || (t.closest('[data-comment]') && t.closest('.post').querySelector('.more-replies'));
   if (mr) {
     const box = mr.parentElement.querySelector('.replies');
@@ -1037,18 +1197,20 @@ feed.addEventListener('click', e => {
     mr.dataset.replies = left;
     mr.textContent = `View ${left.toLocaleString('en-US')} more replies`;
     S.anx = clamp(S.anx + 0.6, 0, 100);
+    learn(postTrick, 1);
     repliesOpened++;
     if (repliesOpened === 1) toast('<b>The argument never ends.</b> Every time you read 3 replies, more show up. You won\'t change anyone\'s mind, but you could try for an hour.', { ico: '💬', trick: 'rage', ms: 6000 });
     if (repliesOpened === 8) toast('<b>You\'ve read 24 replies from strangers.</b> None of them will remember this thread tomorrow.', { ico: '💬', trick: 'rage', ms: 6000 });
     return;
   }
-  if (t.closest('[data-share]')) { toast('<b>Shared to your story.</b> Now three friends are scrolling too. (Not really. Nothing was shared.)', { ico: '📤', trick: 'proof' }); return; }
-  if (t.closest('[data-shop]')) { toast('<b>Added to cart.</b> There is no product. There is no cart. The timer will reset anyway.', { ico: '🛒', trick: 'scarcity' }); return; }
+  if (t.closest('[data-share]')) { learn(postTrick, 1); toast('<b>Shared to your story.</b> Now three friends are scrolling too. (Not really. Nothing was shared.)', { ico: '📤', trick: 'proof' }); return; }
+  if (t.closest('[data-shop]')) { learn(postTrick, 2); toast('<b>Added to cart.</b> There is no product. There is no cart. The timer will reset anyway.', { ico: '🛒', trick: 'scarcity' }); return; }
   const opt = t.closest('[data-opt]');
   if (opt) {
     const poll = opt.closest('.poll');
     if (poll.classList.contains('voted')) return;
     poll.classList.add('voted');
+    learn(postTrick, 1);
     const pct = Number(poll.dataset.pct);
     poll.querySelectorAll('[data-opt]').forEach((b, i) => { b.querySelector('.fill').style.width = (i ? 100 - pct : pct) + '%'; });
     poll.querySelector('.poll-note').textContent = opt.dataset.opt === '0' ? `You agree with ${pct}% of people. Feels good to belong, right?` : `Only ${100 - pct}% of people agree with you. Feels a little lonely, right?`;
@@ -1078,11 +1240,96 @@ function tick() {
     n.dataset.n = v; n.textContent = fmt(v);
     n.classList.add('tick'); setTimeout(() => n.classList.remove('tick'), 500);
   }
+  // Dwell: the post nearest the middle of the screen is the one you're looking at.
+  // 3, 6 and 10 seconds on it each count as interest.
+  let focus = null, best = Infinity;
+  for (const el of inView) {
+    if (!el.isConnected) { inView.delete(el); continue; }
+    const r = el.getBoundingClientRect(), off = Math.abs(r.top + r.height / 2 - innerHeight / 2);
+    if (off < best) { best = off; focus = el; }
+  }
+  if (focus) {
+    const d = Number(focus.dataset.dwell || 0) + 1;
+    focus.dataset.dwell = d;
+    if (d === 3 || d === 6 || d === 10) learn(focus.dataset.trick, 1);
+  }
+  // Autoplay: 8 seconds of "video", then a 3-second countdown, then it moves you along.
+  for (const v of vidVisible) {
+    if (!v.isConnected) { vidVisible.delete(v); continue; }
+    if (v.dataset.done) continue;
+    const LEN = 8, p = Number(v.dataset.p || 0) + 1;
+    v.dataset.p = p;
+    v.querySelector('.v-prog i').style.width = Math.min(100, p / LEN * 100) + '%';
+    if (p < LEN) continue;
+    const nx = v.querySelector('.v-next'), left = LEN + 3 - p;
+    nx.hidden = false; nx.querySelector('.v-n').textContent = Math.max(left, 1);
+    if (left <= 0) { v.dataset.done = 1; nx.hidden = true; autoAdvance(v); }
+  }
+  if (secs() % 5 === 0) save();
   const live = $('#liveN');
   live.textContent = (Number(live.textContent.replace(/,/g, '')) + rint(-40, 70)).toLocaleString('en-US');
   renderToll();
 }
 setInterval(tick, 1000);
+function autoAdvance(v) {
+  let next = v.closest('.post').nextElementSibling;
+  while (next && !next.matches('.post, .reality')) next = next.nextElementSibling;
+  if (!next) return;
+  scrollTo({ top: next.getBoundingClientRect().top + scrollY - $('.top').offsetHeight - 10, behavior: reduced ? 'auto' : 'smooth' });
+  learn('autoplay', 2);
+  buzz(20);
+  if (++S.autoplays === 1) toast('<b>Autoplay moved you to the next post.</b> You didn\'t decide to keep going. It decided for you.', { ico: '⏭', trick: 'autoplay', ms: 6000 });
+}
+
+/* ---------- pull to refresh (phones): a slot machine lever ---------- */
+const ptr = $('#ptr'), ptrL = $('#ptrL'), reels = [...ptr.querySelectorAll('.reels span')];
+const SYMBOLS = ['🔥', '💔', '👀', '😡', '💸', '✨'];
+let ptrY0 = null, ptrPull = 0, ptrBusy = false;
+function setPtr(px) {
+  ptr.classList.remove('settle');
+  ptr.style.transform = `translate(-50%, ${Math.min(px * 0.6, 90) - 90}px)`;
+  ptr.style.opacity = Math.min(1, px / 70);
+  ptrL.textContent = px > 90 ? 'Release to refresh' : 'Pull to refresh';
+}
+function hidePtr() { ptr.classList.add('settle'); ptr.style.transform = ''; ptr.style.opacity = ''; ptr.classList.remove('won'); }
+addEventListener('touchstart', e => { ptrY0 = (scrollY <= 0 && !ptrBusy && !S.paused && e.touches.length === 1) ? e.touches[0].clientY : null; ptrPull = 0; }, { passive: true });
+addEventListener('touchmove', e => {
+  if (ptrY0 == null) return;
+  if (scrollY > 0) { ptrY0 = null; hidePtr(); return; }
+  ptrPull = Math.max(0, e.touches[0].clientY - ptrY0);
+  setPtr(ptrPull);
+}, { passive: true });
+addEventListener('touchend', () => {
+  if (ptrY0 == null) return;
+  ptrY0 = null;
+  if (ptrPull > 90) spinPtr(); else hidePtr();
+}, { passive: true });
+function spinPtr() {
+  ptrBusy = true;
+  ptr.classList.add('settle'); ptr.style.transform = 'translate(-50%, 0)'; ptr.style.opacity = 1;
+  ptrL.textContent = 'Refreshing…';
+  const jackpot = Math.random() < 0.18;
+  const final = jackpot ? Array(3).fill(R(SYMBOLS)) : [R(SYMBOLS), R(SYMBOLS), R(SYMBOLS)];
+  if (!jackpot && final[0] === final[1] && final[1] === final[2]) final[2] = SYMBOLS[(SYMBOLS.indexOf(final[2]) + 1) % SYMBOLS.length];
+  const stops = [650, 950, 1250], t0 = Date.now();
+  const spin = setInterval(() => {
+    const el = Date.now() - t0;
+    reels.forEach((r, i) => { r.textContent = el < stops[i] ? R(SYMBOLS) : final[i]; });
+    if (el >= stops[2]) {
+      clearInterval(spin);
+      const n = jackpot ? 12 : rint(2, 5);
+      ptr.classList.toggle('won', jackpot);
+      ptrL.textContent = jackpot ? `Jackpot! ${n} new posts` : `${n} new posts. Pull again?`;
+      buzz(jackpot ? [30, 40, 30, 40, 90] : 25);
+      const first = feed.firstElementChild;
+      for (let i = 0; i < Math.min(n, 5); i++) feed.insertBefore(makePost(), first);
+      S.pulls++;
+      if (jackpot) toast('<b>🎰 Jackpot!</b> You won 12 new posts. That\'s the prize: more of this.', { ico: '🎰', trick: 'reward', ms: 5500 });
+      else if (S.pulls === 1) toast('<b>Pull, wait, see what you got.</b> Pull-to-refresh works like a slot machine lever. The little delay is part of it.', { ico: '↻', trick: 'reward', ms: 6000 });
+      setTimeout(() => { hidePtr(); ptrBusy = false; }, 1400);
+    }
+  }, 70);
+}
 
 /* ---------- engagement scheduler ---------- */
 function schedule(fn, min, max) { const go = () => { if (!S.paused && !document.hidden) fn(); setTimeout(go, rint(min, max)); }; setTimeout(go, rint(min, max)); }
@@ -1090,7 +1337,7 @@ schedule(() => bumpBadge(rint(1, 3)), 6000, 15000);
 schedule(showPill, 18000, 32000);
 schedule(() => {
   const [t, s] = R(NOTIFS)();
-  toast(`<b>${esc(t)}</b><br><span style="color:var(--muted)">${esc(s)}</span>`, { ico: '🔔', trick: 'reward' });
+  toast(`<b>${esc(t)}</b><br><span style="color:var(--muted)">${esc(s)}</span>`, { ico: '🔔', trick: 'reward', buzz: [20, 60, 20] });
 }, 22000, 45000);
 // Idle nudge: stop scrolling and the app notices.
 setInterval(() => {
@@ -1102,10 +1349,12 @@ setInterval(() => {
       '<b>Something big just happened.</b> Scroll down to catch up.',
       `<b>Don't stop now.</b> ${R(FIRST)} posted something you'll want to see.`,
       '<b>You were on a roll.</b> Pick up where you left off ↓',
-    ]), { ico: '👋', trick: 'proof' });
+    ]), { ico: '👋', trick: 'proof', buzz: 30 });
   }
 }, 1500);
+addEventListener('pagehide', save);
 document.addEventListener('visibilitychange', () => {
+  if (document.hidden) save();
   if (document.hidden) document.title = `(${Math.max(S.badge, 1)}) Come back, you're missing out`;
   else { document.title = S.badge ? `(${S.badge}) Doomfeed` : 'Doomfeed'; if (S.seen > 0) toast('<b>Welcome back!</b> We saved your spot. We always will.', { ico: '🫶', trick: 'reward' }); }
 });
@@ -1116,6 +1365,18 @@ xrayBtn.addEventListener('click', () => {
   const on = document.body.classList.toggle('xray');
   xrayBtn.setAttribute('aria-pressed', on);
   xrayBtn.firstChild.textContent = on ? 'Hide the tricks ' : 'Reveal the tricks ';
+});
+
+const buzzBtn = $('#buzzBtn');
+buzzBtn.setAttribute('aria-pressed', S.buzz);
+buzzBtn.addEventListener('click', () => { S.buzz = !S.buzz; buzzBtn.setAttribute('aria-pressed', S.buzz); save(); if (S.buzz) buzz(30); });
+$('#forgetBtn').addEventListener('click', () => {
+  try { localStorage.removeItem(STORE_KEY); } catch (e) { /* nothing saved */ }
+  S.noSave = true; S.interest = {}; S.learnedShown = {};
+  store = Object.assign(freshStore(), { visits: 1, streak: 1, lastDay: dayKey(new Date()) });
+  base.secs = 0; base.posts = 0;
+  renderToll();
+  toast('<b>Forgotten.</b> Your history, streak, and what the feed learned are deleted, and nothing more will be saved this visit. Real apps don\'t have this button.', { ico: '🧹', ms: 6500 });
 });
 
 /* ---------- mobile sheet ---------- */
@@ -1155,7 +1416,7 @@ $('#logoff').addEventListener('click', () => {
     if (e.target.closest('[data-next]')) {
       m.querySelector('.dialog').outerHTML = `<div class="dialog" role="dialog" aria-modal="true" aria-labelledby="d2">
         <div class="hero-ico" aria-hidden="true">🔥</div>
-        <h3 id="d2">You'll lose your ${S.seen >= 25 ? 'streak' : 'progress'}</h3>
+        <h3 id="d2">You'll lose your ${store.streak >= 2 ? `${store.streak}-day streak` : S.seen >= 25 ? 'streak' : 'progress'}</h3>
         <p>You've scrolled <b style="color:var(--fg)">${distStr()}</b> today. If you leave now, it won't count toward your weekly badge.</p>
         <button class="big" data-stay>Save my streak</button>
         <button class="tiny" data-final>Lose everything and leave</button>
@@ -1168,6 +1429,8 @@ $('#logoff').addEventListener('click', () => {
 
 function showReceipt() {
   S.paused = true;
+  save();
+  const learnedT = topLearned()[0];
   const top = Object.entries(S.tricks).sort((a, b) => b[1] - a[1]);
   const totalT = top.reduce((s, x) => s + x[1], 0);
   const s = secs();
@@ -1182,11 +1445,25 @@ function showReceipt() {
       <div><dt>Anxiety</dt><dd>0 → ${Math.round(S.anx)}</dd></div>
       <div><dt>Manipulation attempts</dt><dd>${totalT}</dd></div>
       ${top.slice(0, 4).map(([k, n]) => `<div><dt>&nbsp;&nbsp;${TRICKS[k][0]}</dt><dd>×${n}</dd></div>`).join('')}
+      ${learnedT ? `<div><dt>What the feed learned</dt><dd>You stop for ${TRICKS[learnedT][0]}</dd></div>` : ''}
+      <div><dt>Visits so far</dt><dd>${store.visits}</dd></div>
+      <div><dt>Time here, all visits</dt><dd>${fmtDur(base.secs + s)}</dd></div>
       <div><dt>Things you learned</dt><dd>0</dd></div>
       <div><dt>Problems you solved</dt><dd>0</dd></div>
     </dl>
     <hr class="rule">
-    <p class="close-line">The feed would have kept going forever. It had ${fmt(9e15)} more posts ready. You were the only thing that could stop it, and you did.</p>
+    <p class="close-line">The feed would have kept going forever. It had nine quadrillion more posts ready. You were the only thing that could stop it, and you did.</p>
+    <div class="steps">
+      <h4>Take your time back</h4>
+      <ol>
+        <li><b>Turn off every notification that isn't from a person.</b> Likes, "trending," and "you might have missed" can all go.<span>iPhone: Settings → Notifications · Android: Settings → Notifications</span></li>
+        <li><b>Set your screen to grayscale.</b> Color is part of the pull, and a gray feed is a lot less interesting.<span>iPhone: Settings → Accessibility → Display &amp; Text Size → Color Filters · Android: look under Digital Wellbeing → Bedtime mode</span></li>
+        <li><b>Move social apps off your home screen.</b> Put them in a folder on the last page, so opening one is a choice instead of a reflex.</li>
+        <li><b>Give each app a daily limit.</b><span>iPhone: Settings → Screen Time → App Limits · Android: Digital Wellbeing → Dashboard → App timer</span></li>
+        <li><b>Charge your phone outside the bedroom.</b> The 2am scroll starts with the phone being within reach.</li>
+      </ol>
+    </div>
+    <hr class="rule">
     <div class="r-actions"><button class="solid" data-out>Put the phone down</button><button data-back>Back to the feed</button></div>
   </div>`);
   m.addEventListener('click', e => {
@@ -1207,6 +1484,13 @@ feed.appendChild(makeIntro());
 feed.appendChild(sentinel);
 loadMore(10);
 renderToll();
+save();
+setTimeout(() => {
+  if (brokeStreak) toast(`<b>Your ${brokeStreak}-day streak is gone.</b> Start a new one today? It only takes one more visit tomorrow.`, { ico: '💔', trick: 'streak', ms: 6500 });
+  else if (isReturn) toast(`<b>Welcome back.</b> That's visit ${store.visits} and ${fmtDur(base.secs)} here so far.${store.streak > 1 ? ` 🔥 ${store.streak}-day streak. Don't break it.` : ' Come back tomorrow to start a streak.'}`, { ico: '🔥', trick: 'streak', ms: 6500 });
+  const t = topLearned()[0];
+  if (isReturn && t) setTimeout(() => toast(`<b>The feed remembers you.</b> Last time you stopped for ${TRICKS[t][0]}, so there's more of it today.`, { ico: '🧠', trick: 'algo', ms: 6000 }), 2500);
+}, 1500);
 })();
 </script>
 </body>
