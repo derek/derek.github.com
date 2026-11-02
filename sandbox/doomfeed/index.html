@@ -276,6 +276,13 @@ body.xray .ad-tag { background: var(--hot); color: #fff; padding: 0 4px; border-
 .boost .b-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .boost .b-actions button { font-size: 14px; font-weight: 600; padding: 9px 16px; border-radius: 10px; border: 1px solid var(--line); }
 .boost .b-actions .b-go { background: linear-gradient(135deg, #6b5cff, #b44cff); color: #fff; border: 0; }
+.recipe-box { background: var(--surface-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; margin-top: 10px; font-size: 14px; }
+.recipe-box input { font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); min-width: 0; }
+.recipe-box .rb-row { display: flex; gap: 8px; }
+.recipe-box .rb-row input { flex: 1; }
+.recipe-box .rb-go { background: var(--gold); color: #1d1500; font-weight: 700; padding: 8px 14px; border-radius: 8px; }
+.recipe-box .rb-no { justify-self: start; font-size: 12px; color: var(--muted); text-decoration: underline; }
+.jump { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--gold); }
 .because { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-bottom: -4px; }
 .because::before { content: "✦"; color: var(--xray); }
 .rerun { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px dashed #5a4612; border-radius: 8px; padding: 6px 9px; }
@@ -733,6 +740,9 @@ const TRICKS = {
   stories:    ['Disappearing stories', 'Stories vanish after 24 hours, and the next one plays by itself. Checking feels urgent, and stopping takes effort.'],
   cliffhanger:['Cliffhanger bait', 'The rest of the story is held hostage until the post gets enough likes. The goal moves when it gets close.'],
   boost:      ['Pay to be seen', 'Apps keep unpaid reach low, then sell the rest back to you. Feeling unseen is part of the business model.'],
+  slop:       ['AI sob story', 'An AI-made image and a sad caption, built to farm likes and "happy birthday" comments from kind strangers. Big pages like this get sold or turned into ad channels later.'],
+  linkedin:   ['Humblebrag', 'Bragging dressed up as a life lesson. The one-line paragraphs, the "see more" and the "Agree?" are all there to farm comments.'],
+  padding:    ['Padded content', 'The thing you came for is buried under a life story, pop-ups and sign-up forms, so you scroll past more of them on the way.'],
   shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
 };
 const COMMENTS = {
@@ -747,6 +757,9 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  slop: ['Happy birthday sweetheart!! 🎂🙏', 'Beautiful work, God bless you 🙏', 'Amazing!! 😍😍', 'why does he have six fingers', 'Happy birthday!!! ❤️❤️❤️', 'grandma this is AI', 'Typed amen 🙏'],
+  linkedin: ['Agree.', 'So powerful, Brad. Thanks for sharing. 🙏', 'This. 👏', 'Congrats on the journey!', 'Great insights! Let\'s connect.', 'your kid spilled juice', 'Reposting to my network of 14 ♻️'],
+  recipe: ['I just want the recipe 😭', 'scrolled for four minutes, still no pancakes', 'Greg seems nice', 'made this with oat milk and no ricotta. 2 stars.', 'Can I use flour instead of eggs?', 'where is the JUMP TO RECIPE button'],
   misinfo: ['sharing this with everyone I know', 'I KNEW something was off', 'source??', 'my aunt has sent me this three times', 'the source is "do your own research"', 'this explains SO much'],
   thread: ['here for part 2 👀', 'liking so we get there faster', 'just tell us 😭', 'the goal moved AGAIN??', 'commenting to get notified (I will forget)'],
   bots: ['Couldn\'t agree more.'],
@@ -898,6 +911,41 @@ const POOL = {
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
+  slop() {
+    const [id, text] = R([
+      ['slop-carving', 'I\'m 87 years old and I carved this myself out of one piece of oak. It took me 3 years. Nobody ever compliments my work 😢'],
+      ['slop-cake', 'Today is my 90th birthday 🎂 I baked my own cake. Nobody has wished me happy birthday yet 😢'],
+      ['slop-bottlecar', 'I built this car out of 14,000 plastic bottles. My family says it\'s a waste of time. Does anyone think it\'s beautiful? 🥺'],
+    ]);
+    return { a: R([{ name: 'Blessed Hearts Daily ❤️', handle: 'blessed.hearts.daily', h: 350 }, { name: 'Beautiful World 🌎', handle: 'beautiful.world.page', h: 190 }, { name: 'Amazing Grandpa Stories', handle: 'amazing.grandpa', h: 30 }]),
+      text: esc(text), media: { t: 'photo', id }, trick: 'slop', mood: -2, anx: 1, hot: true };
+  },
+  linkedin() {
+    const a = R([
+      { name: 'Brad Kellerman', handle: 'brad.kellerman', headline: 'Chief Vision Officer · Keynote Speaker · Girl Dad', h: 215, v: 1 },
+      { name: 'Ashley Huang-Moore', handle: 'ashley.hm', headline: 'Founder · Ex-Unicorn · Helping CEOs find their WHY', h: 160, v: 1 },
+      { name: 'Derrick Stone', handle: 'derrick.stone', headline: 'VP of Synergy · 2x TEDx · Ironman', h: 30, v: 1 },
+    ]);
+    const [lines, more] = R([
+      [['My 4-year-old spilled juice this morning.', 'I didn\'t get mad.', 'I got curious.', 'Here\'s what it taught me about B2B sales: 🧵'], ['1. Every spill is a pipeline opportunity.', '2. Your customer is a toddler. Meet them where they are.', '3. Always carry paper towels (and a CRM).', 'Agree? 👇 #Leadership #Sales #DadLife']],
+      [['I got rejected by 47 companies.', 'Today, I\'m humbled and honored to announce…'], ['…that I\'ve accepted a position as VP of Synergy at one of them.', 'Never give up. ♻️ Repost to inspire someone. #Grateful #Humbled #Blessed']],
+      [['Yesterday I saw a janitor smiling at work.', 'I asked him why.', 'He said: "Because I love what I do."'], ['That\'s leadership.', 'I didn\'t get his name.', 'Agree? 👇 #Leadership #Culture #Mindset']],
+      [['I fired my best employee today.', 'And it was the best thing that ever happened to her.'], ['Here\'s why:', 'She\'s "exploring new opportunities" now. You\'re welcome, Jessica.', '#Leadership #HardDecisions #Growth']],
+      [['I cried in a board meeting today.', 'And I\'m not ashamed.'], ['Here are 5 things vulnerability taught me about quarterly revenue:', '1. Tears are just emotional KPIs.', '(2 through 5 in my paid newsletter.)', '#Vulnerability #Leadership #Q3']],
+      [['My dog doesn\'t check email on weekends.', 'Neither should you.'], ['(I wrote this on a Saturday at 6am.)', 'Agree? 👇 #WorkLifeBalance #Hustle']],
+    ]);
+    return { a, text: `${lines.map(esc).join('<br><br>')}<span class="more-rest" hidden><br><br>${more.map(esc).join('<br><br>')}</span> <button class="tags-more" data-seemore>…see more</button>`, trick: 'linkedin', mood: -3, anx: 1 };
+  },
+  recipe() {
+    const [title, story, steps] = R([
+      ['The BEST Lemon Ricotta Pancakes 🍋', ['Before we get to the recipe, let me take you back to the summer of 2009. I was 22, heartbroken, and living above a bakery in Tuscany.', 'Every morning the smell of lemons drifted up through the floorboards. I didn\'t know it yet, but those mornings would change my life.', 'My nonna (not my real nonna, but she might as well have been) used to say: "Cara, the secret is patience." I didn\'t understand her then.', 'Anyway, my husband Greg and I redid our kitchen last spring (more on that in another post!), and it got me thinking about pancakes again…'], ['1. Make pancakes, but add lemon and ricotta.', '2. Eat them.', '3. Leave a 5-star review ⭐⭐⭐⭐⭐']],
+      ['Easy 3-Ingredient Banana Bread 🍌', ['Banana bread is more than a recipe to me. It\'s a feeling. It\'s my grandmother\'s kitchen in 1994, the radio on, rain against the windows.', 'But first, a quick word about bananas. Did you know there are over 1,000 varieties? Most of us only ever eat one. Isn\'t that a little sad?', 'When my youngest started kindergarten (sob!), I needed a project. This bread became that project.', 'Okay, okay, I know you\'re here for the recipe. But first, a quick story about my oven…'], ['1. Mash 3 bananas.', '2. Mix with the other 2 ingredients.', '3. Bake. That\'s it. That was always it.']],
+      ['Grandma\'s Famous 10-Minute Tomato Soup 🍅', ['This soup has a story, and I promise it\'s worth it.', 'It was a cold November in Vermont. Greg had just proposed (at a gas station, long story, I\'ll tell it another time), and we were snowed in.', 'Grandma always said the secret ingredient is love. Then she\'d wink. We never found out what she meant.', 'Before I share it, please remember to pin this recipe and follow me on all seven platforms!'], ['1. Open a can of tomato soup.', '2. Heat it for 10 minutes.', '3. Tell people it\'s Grandma\'s.']],
+    ]);
+    return { a: { name: 'Sunday Table Kitchen', handle: 'sundaytable.kitchen', h: 25, v: 1 },
+      text: `<b>${esc(title)}</b><br><br>${esc(story[0])}<span class="story-rest" hidden>${story.slice(1).map(x => '<br><br>' + esc(x)).join('')}</span><span class="steps-rest" hidden><br><br><b>Recipe</b><br>${steps.map(esc).join('<br>')}</span><br><button class="jump" data-recipe="0">Jump to recipe ↓</button>`,
+      trick: 'padding', mood: -2, anx: 1 };
+  },
   bots() {
     const [a, text, line] = R([
       [{ name: 'Real Talk Daily', handle: 'realtalk.daily', h: 12 }, 'Restaurants should ban kids after 7pm. Who agrees? 🙋', 'Couldn\'t agree more. Finally someone with common sense said it.'],
@@ -1026,8 +1074,8 @@ const MISINFO = [
   { claim: '🐟 Scientists confirmed it: goldfish now have longer attention spans than humans. 9 seconds vs. our 8.', fix: 'This one has circulated for years. It traces back to a marketing report, and people who checked could find no study behind either number.' },
   { claim: '🛏️ Harvard study: people who make their bed every morning are 206% more likely to become millionaires.', fix: 'There is no Harvard study. The 206% figure appears only in viral posts, with no source.' },
 ];
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2]];
-const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger' };
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger', slop: 'slop', linkedin: 'linkedin', recipe: 'padding' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
 const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
@@ -1120,6 +1168,9 @@ const PHOTO_ALT = {
   'social-yacht': 'The deck of a yacht with rosé on ice in a turquoise bay',
   'milestone-sold': 'A house with a white picket fence and a SOLD sign with balloons',
   'milestone-nursery': 'A sage-green baby nursery with a white crib and a cloud mobile',
+  'slop-carving': 'An obviously AI-generated old man beside a giant carved wooden dog',
+  'slop-cake': 'An obviously AI-generated grandmother with a lopsided birthday cake',
+  'slop-bottlecar': 'An obviously AI-generated old man beside a car made of plastic bottles',
 };
 const PHOTO_SETS = { island: ['island-boat', 'island-bungalows', 'island-feet', 'island-cocktail', 'island-drone'] };
 // Single photos get a random reframe (zoom, crop position, mirror, filter) so a repeat reads as another shot.
@@ -1193,7 +1244,7 @@ const I = {
 /* ---------- build ---------- */
 // Photos stay rare: at most 10% of posts carry one, however much the feed has learned.
 const PHOTO_SHARE = 0.10;
-const PHOTO_ONLY = new Set(['island', 'wellness']);
+const PHOTO_ONLY = new Set(['island', 'wellness', 'slop']);
 const hasPhoto = x => !!x.media && (x.media.t === 'photo' || x.media.t === 'photos');
 function makePost(kind) {
   let k = kind || pickKind();
@@ -1210,7 +1261,7 @@ function makePost(kind) {
   const a = p.a;
   const likes = rint(p.hot ? 8000 : 300, p.hot ? 240000 : 60000);
   const initials = a.name.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?';
-  const when = a.sponsored ? '<span class="sponsored">Sponsored</span>' : `@${esc(a.handle)} · ${R(['just now', '1m', '2m', '4m', '9m', '14m', '32m'])}`;
+  const when = a.sponsored ? '<span class="sponsored">Sponsored</span>' : `${a.headline ? esc(a.headline) : '@' + esc(a.handle)} · ${R(['just now', '1m', '2m', '4m', '9m', '14m', '32m'])}`;
   const proof = p.proofMutual
     ? `<div class="p-proof"><span class="faces">${randFace()}${randFace()}${randFace()}</span><span><b>${rint(12, 48)} people from your school</b> reacted</span></div>`
     : `<div class="p-proof"><span class="faces">${randFace()}${randFace()}</span><span>Liked by <b>${R(FIRST).toLowerCase()}_${rint(1, 99)}</b> and <span data-likes>${fmt(likes)}</span> others</span></div>`;
@@ -1620,6 +1671,25 @@ feed.addEventListener('click', e => {
   }
   if (t.closest('[data-boost]')) { t.closest('.boost').style.opacity = .55; t.closest('.b-actions').innerHTML = '<span class="poll-note">Payment declined: this is a parody.</span>'; toast('<b>There was no post.</b> But on real apps, unpaid reach is kept low so that paying for it feels necessary.', { ico: '💸', trick: 'boost', ms: 6000 }); return; }
   if (t.closest('[data-boost-no]')) { t.closest('.b-actions').innerHTML = '<span class="poll-note">Okay. We\'ll remind you tomorrow. And the day after.</span>'; return; }
+  const sm = t.closest('[data-seemore]');
+  if (sm) { sm.parentElement.querySelector('.more-rest').hidden = false; sm.remove(); learn(postTrick, 1); return; }
+  const rc = t.closest('[data-recipe]');
+  if (rc) {
+    const body = rc.closest('.p-body'), stage = Number(rc.dataset.recipe);
+    learn(postTrick, 1);
+    if (stage === 0) { body.querySelector('.story-rest').hidden = false; rc.dataset.recipe = 1; rc.textContent = 'Jump to recipe ↓ (for real this time)'; return; }
+    if (stage === 1) {
+      rc.dataset.recipe = 2; rc.hidden = true;
+      rc.insertAdjacentHTML('afterend', `<div class="recipe-box"><b>Wait! Want the recipe?</b><span>Join 2 million home cooks and get it in your inbox.</span><div class="rb-row"><input type="email" id="rb-${Date.now()}" placeholder="you@email.com" aria-label="Email address"><button class="rb-go" data-rb>Subscribe</button></div><button class="rb-no" data-rb>No thanks, I hate saving money on groceries</button></div>`);
+      return;
+    }
+  }
+  if (t.closest('[data-rb]')) {
+    const body = t.closest('.p-body');
+    body.querySelector('.recipe-box').remove(); body.querySelector('.steps-rest').hidden = false;
+    if (!S.recipeToast) { S.recipeToast = true; toast('<b>Three taps, a life story and a sign-up form to reach three lines.</b> Recipe pages are padded so you scroll past more ads on the way.', { ico: '🍋', trick: 'padding', ms: 6500 }); }
+    return;
+  }
   const stb = t.closest('[data-story]');
   if (stb) { openStories(Number(stb.dataset.story)); return; }
   const tm = t.closest('[data-tags]');
