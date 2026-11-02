@@ -234,7 +234,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
   text-shadow: 2px 2px 0 #5a1030, 0 0 14px rgba(0,0,0,.55); text-wrap: balance;
 }
 .g-mark { position: absolute; right: 12px; bottom: 10px; font: italic 600 11px var(--f-body); color: rgba(255,255,255,.85); text-shadow: 0 1px 4px rgba(0,0,0,.6); }
-.m-photo, .m-photos { position: relative; background: #000; }
+.m-photo, .m-photos { position: relative; background: #000; overflow: hidden; }
 .m-photo img, .ph-track img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; -webkit-user-drag: none; user-select: none; }
 .ai-chip { left: 10px; bottom: 10px; }
 .ph-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
@@ -754,19 +754,19 @@ const POOL = {
     return { a: Math.random() < .5 ? A.rage : A.rage2, text, trick: 'rage', mood: -5, anx: 3, hot: true };
   },
   lux() {
-    const [id, place] = R([['money-firstclass', 'Somewhere over the Pacific'], ['social-rooftop', 'The rooftop, again'], ['social-dinner', 'Course 9 of 14'], ['island-cocktail', 'A villa you can\'t afford'], ['island-feet', 'An undisclosed beach']]);
+    const [id, place] = R([['money-firstclass', 'Somewhere over the Pacific'], ['social-rooftop', 'The rooftop, again'], ['social-dinner', 'Course 9 of 14'], ['island-cocktail', 'A villa you can\'t afford'], ['island-feet', 'An undisclosed beach'], ['social-yacht', 'Somewhere off the coast'], ['social-festival', 'Weekend three of three'], ['money-penthouse', 'Home for the month']]);
     return { a: A.lux, text: `Day ${rint(80, 340)} of not checking email. Remember: the 9 to 5 is a choice. ✨`,
       media: { t: 'photo', id, loc: place }, trick: 'comparison', mood: -6, anx: 2 };
   },
   grind() {
     const ach = R(['already own three rental properties', 'paid off my parents\' house so they could quit their jobs and retire', 'ran 14 marathons this year', 'made my first million before most people finish college', 'sold my second company', 'read 112 books this year']);
     return { a: A.grind, text: `Haven't slept past 4:30 in 3 years. ${rint(22, 26)} years old, ${ach}. Sleep is a choice. So is being average. 💪`,
-      media: Math.random() < .75 ? { t: 'photo', id: R(['money-car', 'money-watch', 'money-firstclass', 'career-office']) } : null,
+      media: Math.random() < .75 ? { t: 'photo', id: R(['money-car', 'money-watch', 'money-firstclass', 'career-office', 'money-shopping', 'money-penthouse']) } : null,
       trick: 'comparison', mood: -6, anx: 3 };
   },
   classmate() {
     const c = classmate();
-    const [ev, id] = R([['got engaged in Santorini 💍', 'milestone-ring'], ['just became a VP at 29', 'career-office'], ['bought a house with a real garden', 'milestone-kitchen'], ['launched a company that got funded', null], ['posted photos from another "little getaway"', 'island-bungalows'], ['ran a marathon and somehow looked rested', null], ['had twins and is already back at the gym', null], ['got a book deal', null], ['moved to Lisbon "for the light"', 'social-rooftop'], ['paid off their student loans', null], ['adopted a very photogenic dog', 'milestone-puppy'], ['started a podcast that people actually listen to', null], ['got a TED talk', null], ['renovated a farmhouse by hand', 'milestone-kitchen'], ['is now fluent in Japanese', 'social-dinner'], ['won an award you didn\'t know existed', null]]);
+    const [ev, id] = R([['got engaged in Santorini 💍', 'milestone-ring'], ['just became a VP at 29', 'career-office'], ['bought a house with a real garden', 'milestone-sold'], ['just closed on their first house 🏡', 'milestone-sold'], ['is having a baby, and the nursery is already done', 'milestone-nursery'], ['has been to three festivals this month', 'social-festival'], ['launched a company that got funded', null], ['posted photos from another "little getaway"', 'island-bungalows'], ['ran a marathon and somehow looked rested', null], ['had twins and is already back at the gym', null], ['got a book deal', null], ['moved to Lisbon "for the light"', 'social-rooftop'], ['paid off their student loans', null], ['adopted a very photogenic dog', 'milestone-puppy'], ['started a podcast that people actually listen to', null], ['got a TED talk', null], ['renovated a farmhouse by hand', 'milestone-kitchen'], ['is now fluent in Japanese', 'social-dinner'], ['won an award you didn\'t know existed', null]]);
     return { a: c, text: `Remember ${c.name.split(' ')[0]} from school? They ${ev}.`,
       media: id ? { t: 'photo', id } : null,
       trick: 'comparison', mood: -6, anx: 3, proofMutual: true };
@@ -811,11 +811,15 @@ const POOL = {
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
   wellness() {
-    const yoga = Math.random() < .5;
-    return { a: A.well, text: yoga
-        ? R(['5am practice on the cliffs. No phone for the first two hours of my day. 🧘‍♀️ (posted at 5:04am)', 'Sunrise, stillness, gratitude. Your morning can look like this too. Link in bio ✨'])
-        : R(['Fuel for a 10-mile morning 🫐 What\'s in your bowl?', 'Breakfast is a love letter to your body 💜 (yours was probably a granola bar in the car)']),
-      media: { t: 'photo', id: yoga ? 'wellness-yoga' : 'wellness-bowl' }, trick: 'comparison', mood: -4, anx: 2 };
+    const [id, text] = R([
+      ['wellness-yoga', '5am practice on the cliffs. No phone for the first two hours of my day. 🧘‍♀️ (posted at 5:04am)'],
+      ['wellness-yoga', 'Sunrise, stillness, gratitude. Your morning can look like this too. Link in bio ✨'],
+      ['wellness-bowl', 'Fuel for a 10-mile morning 🫐 What\'s in your bowl?'],
+      ['wellness-bowl', 'Breakfast is a love letter to your body 💜 (yours was probably a granola bar in the car)'],
+      ['wellness-pilates', '6am reformer class done before most people hit snooze ✨ Discipline is self-love.'],
+      ['wellness-mealprep', 'Sunday reset 🥗 Ten meals, two hours, zero excuses. What did YOU do today?'],
+    ]);
+    return { a: A.well, text, media: { t: 'photo', id }, trick: 'comparison', mood: -4, anx: 2 };
   },
   island() {
     const kai = Math.random() < .5;
@@ -939,8 +943,24 @@ const PHOTO_ALT = {
   'social-rooftop': 'Friends clinking glasses at a rooftop party at sunset',
   'social-dinner': 'A tiny fine-dining dish by candlelight',
   'career-office': 'A corner office desk with a laptop and a city skyline view',
+  'wellness-pilates': 'A sunlit pilates studio with a row of reformer machines',
+  'wellness-mealprep': 'Ten glass meal-prep containers of salmon, quinoa, and vegetables',
+  'money-shopping': 'Designer shopping bags lined up in a hotel room',
+  'money-penthouse': 'A penthouse terrace with a fire pit above a city skyline at dusk',
+  'social-festival': 'A music festival crowd with hands up in front of a lit stage at sunset',
+  'social-yacht': 'The deck of a yacht with rosé on ice in a turquoise bay',
+  'milestone-sold': 'A house with a white picket fence and a SOLD sign with balloons',
+  'milestone-nursery': 'A sage-green baby nursery with a white crib and a cloud mobile',
 };
 const PHOTO_SETS = { island: ['island-boat', 'island-bungalows', 'island-feet', 'island-cocktail', 'island-drone'] };
+// Single photos get a random reframe (zoom, crop position, mirror, filter) so a repeat reads as another shot.
+const NO_FLIP = new Set(['milestone-sold']);
+const FILTERS = ['none', 'none', 'saturate(1.25) contrast(1.05)', 'sepia(.18) saturate(1.1)', 'contrast(1.12) brightness(.97)', 'saturate(.85) brightness(1.06)'];
+const variedImg = id => {
+  const flip = !NO_FLIP.has(id) && Math.random() < .5 ? -1 : 1, zoom = (1 + Math.random() * .22).toFixed(2);
+  const style = `transform:scale(${zoom}) scaleX(${flip});object-position:${rint(20, 80)}% ${rint(20, 80)}%;filter:${R(FILTERS)}`;
+  return imgHTML(id).replace('<img ', `<img style="${style}" `);
+};
 const imgHTML = id => `<img src="photos/${id}.jpg" alt="${esc(PHOTO_ALT[id])}" width="900" height="900" loading="lazy" decoding="async" draggable="false">`;
 function setupPhotos(el) {
   const box = el.querySelector('.m-photos'); if (!box) return;
@@ -977,7 +997,7 @@ function mediaHTML(m) {
   switch (m.t) {
     case 'breaking': return `<div class="media m-breaking"><div class="flag"><span>BREAKING</span><em>LIVE · ${fmt(rint(4000, 90000))} watching</em></div><h3>${esc(m.h)}</h3><div class="ticker"><span>DEVELOPING ··· MORE DETAILS SOON ··· STAY TUNED ··· EXPERTS REACT ··· WHAT THIS MEANS FOR YOU ··· DON'T LOOK AWAY ··· DEVELOPING ···</span></div></div>`;
     case 'chart': return `<div class="media m-chart"><div class="row"><span class="sym">${esc(m.sym)} · 24H</span><span class="pct">−${m.pct}%</span></div>${chartSVG()}</div>`;
-    case 'photo': return `<div class="media m-photo">${imgHTML(m.id)}${m.loc ? `<span class="ph-loc">📍 ${esc(m.loc)}</span>` : ''}<span class="chip-tag ai-chip">AI-generated photo</span></div>`;
+    case 'photo': return `<div class="media m-photo">${variedImg(m.id)}${m.loc ? `<span class="ph-loc">📍 ${esc(m.loc)}</span>` : ''}<span class="chip-tag ai-chip">AI-generated photo</span></div>`;
     case 'photos': return `<div class="media m-photos"><div class="ph-track">${m.shots.map(imgHTML).join('')}</div><span class="ph-loc">📍 ${esc(m.loc)}</span><span class="ph-count">1/${m.shots.length}</span><button class="ph-nav prev" data-ph="-1" aria-label="Previous photo">‹</button><button class="ph-nav next" data-ph="1" aria-label="Next photo">›</button><div class="ph-dots">${m.shots.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</div><span class="chip-tag ai-chip">AI-generated photos</span></div>`;
     case 'guilt': return `<div class="media m-guilt" style="background:${GUILT_BG[m.g]}"><span class="g-deco" aria-hidden="true">🌹💕🌹</span><p class="g-text">${esc(m.q)}</p><span class="g-mark">Shared from ${esc(m.page)}</span></div>`;
     case 'video': return `<div class="media m-video" style="--vh:${m.g}"><span class="v-live">▶ Autoplay</span><span class="v-mute" aria-hidden="true">🔇</span><p class="v-cap">${esc(m.cap)}</p><span class="v-views">${fmt(rint(200000, 9000000))} views</span><div class="v-prog"><i></i></div><div class="v-next" hidden><span>Next post in<b class="v-n">3</b></span><button data-vcancel>Cancel</button></div></div>`;
