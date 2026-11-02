@@ -100,6 +100,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
   font-variant-numeric: tabular-nums; white-space: nowrap; position: relative;
 }
 .live b { color: var(--fg); font-weight: 600; }
+.live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--hot); margin-right: 6px; vertical-align: 1px; animation: pulse 1.2s ease-in-out infinite; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+@media (max-width: 600px) {
+  .brand { flex-direction: column; align-items: flex-start; gap: 1px; }
+  .live { font-size: 11px; }
+}
 .spacer { flex: 1; }
 .icon-btn {
   position: relative; width: 40px; height: 40px; border-radius: 12px;
@@ -487,10 +493,6 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
   .tb-flash.show { opacity: 1; transform: none; }
   .mobile-only { display: inline; }
   .intro .desk-only { display: none; }
-  .live .hide-sm { display: none; }
-}
-@media (max-width: 420px) {
-  .live { display: none; }
 }
 .scrim { position: fixed; inset: 0; z-index: 45; background: rgba(0,0,0,.5); }
 
@@ -617,8 +619,10 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 
 <header class="top">
   <div class="top-in">
-    <div class="logo"><i aria-hidden="true"></i>doomfeed</div>
-    <div class="live" id="live"><b id="liveN">12,408</b> <span class="hide-sm">scrolling </span>now<span class="chip-tag" style="top:22px;left:0">Social proof</span></div>
+    <div class="brand">
+      <div class="logo"><i aria-hidden="true"></i>doomfeed</div>
+      <div class="live" id="live"><i class="live-dot" aria-hidden="true"></i><b id="liveN">12,408</b> people scrolling now<span class="chip-tag" style="top:18px;left:0">Social proof</span></div>
+    </div>
     <div class="spacer"></div>
     <div class="bell-wrap">
       <button class="icon-btn" id="bell" aria-label="Notifications">
@@ -1813,7 +1817,10 @@ function tick() {
   tickStories();
   if (secs() % 5 === 0) save();
   const live = $('#liveN');
-  live.textContent = (Number(live.textContent.replace(/,/g, '')) + rint(-40, 70)).toLocaleString('en-US');
+  // Drifts up and down around a target that moves every so often, so it looks alive without climbing forever.
+  if (!S.liveTarget || Math.random() < 1 / 30) S.liveTarget = rint(10500, 14500);
+  const cur = Number(live.textContent.replace(/,/g, ''));
+  live.textContent = Math.round(cur + (S.liveTarget - cur) * 0.06 + rint(-35, 35)).toLocaleString('en-US');
   renderToll();
 }
 setInterval(tick, 1000);
