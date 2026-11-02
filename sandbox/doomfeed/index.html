@@ -686,6 +686,7 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  hottake: ['this is not a hot take, this is a crime', 'I\'ve read this 4 times and I\'m angrier every time', 'the replies are going to be a bloodbath and I brought snacks', 'unfollowing. refollowing to see the replies. unfollowing again.', 'who hurt you', 'Respectfully, absolutely not.', 'quote-tweeting this so my followers can be mad too', 'ok but you\'re kind of right and I hate it'],
   wellness: ['my breakfast was cold coffee and regret', 'what time do you WAKE UP', 'saving this for the version of me that has her life together', 'link in bio to what, exactly', 'I got winded reading this'],
   island: ['how is everyone on vacation except me', 'that water isn\'t real. I refuse.', 'location?? (I will never go)', 'me looking at this from a parking garage', 'the drone shot broke me', 'the fact that this is someone\'s Tuesday', 'unfollowing for my mental health (I will not unfollow)'],
   guilt: ['Called mine right after reading this 😭', 'AMEN 🙏', 'My kids haven\'t called in 3 weeks. Sharing so they see it.', 'Typed amen. Didn\'t call. Will call tomorrow.', 'Shared to my wall 💕💕💕', 'This is why I\'m leaving everything to the cat', 'my grandma sent me this. directly. in a text.'],
@@ -810,6 +811,38 @@ const POOL = {
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
+  hottake() {
+    const a = R([
+      { name: 'Bri 🌶️', handle: 'spicytakes.bri', h: 8, v: 1 },
+      { name: 'Marcus Unfiltered', handle: 'marcus.unfiltered', h: 210, v: 1 },
+      { name: 'Devin', handle: 'devin.says.it', h: 280 },
+      { name: 'Coach Rick', handle: 'coachrick.mindset', h: 25, v: 1 },
+      { name: 'Tasha (no filter)', handle: 'tasha.nofilter', h: 320 },
+      { name: 'Professor of Nothing', handle: 'takes.by.prof', h: 170 },
+      { name: 'Lance', handle: 'lance.opinions', h: 55 },
+      { name: 'Jen from Accounting', handle: 'jen.has.thoughts', h: 300 },
+    ]);
+    const open = R(['Hot take incoming 🔥', 'Hot take incoming 🔥🔥🔥', 'Okay, hot take incoming and I don\'t care who it offends:', 'HOT TAKE INCOMING 🚨', 'Hot take incoming. Brace yourselves.', 'Not sorry. Hot take incoming:']);
+    const take = R([
+      'Breakfast is just a marketing scheme from the cereal people.',
+      'The beach is a hot sandbox next to a salty bathtub.',
+      'Brunch is late breakfast with a 40% markup and a wait list.',
+      'Dogs are fine. Just fine. Not "best friend" fine.',
+      'Cereal is soup. Fight me.',
+      'Movies peaked when they were 90 minutes long and nobody needed a part two.',
+      'If you need three alarms to wake up, you don\'t respect your future self.',
+      'Pineapple on pizza is good and you\'ve all been lying for years.',
+      'Reading in public is just a way to tell strangers you read.',
+      'Sleeping in on weekends is for people who don\'t want it badly enough.',
+      'Water is overrated. I said what I said.',
+      'Board games are just homework with snacks.',
+      'Your "cozy" apartment is just small.',
+      'Running is just walking for people with something to prove.',
+      'Group chats should have a 50-message daily limit.',
+      'Dessert before dinner is the correct order and always has been.',
+    ]);
+    return { a, text: `<b>${esc(open)}</b><br><br>${esc(take)}`, trick: 'rage', mood: -5, anx: 3, hot: true };
+  },
   wellness() {
     const [id, text] = R([
       ['wellness-yoga', '5am practice on the cliffs. No phone for the first two hours of my day. 🧘‍♀️ (posted at 5:04am)'],
@@ -857,8 +890,8 @@ const POOL = {
     ]), trick: 'bait', mood: -1, anx: 1 };
   },
 };
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2]];
-const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison' };
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
 const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
