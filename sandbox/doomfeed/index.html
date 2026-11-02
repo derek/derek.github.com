@@ -520,7 +520,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 }
 @media (min-width: 980px) { .toasts { bottom: 24px; } }
 .toast {
-  pointer-events: auto; background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px;
+  pointer-events: none; background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px;
   padding: 12px 14px; display: grid; gap: 6px; box-shadow: 0 16px 40px rgba(0,0,0,.5);
   animation: toastIn .35s cubic-bezier(.2,1.2,.4,1) both; font-size: 14px;
 }
@@ -1594,23 +1594,34 @@ function flashTrick(k) {
 }
 
 /* ---------- toasts ---------- */
-const phone = () => matchMedia('(max-width: 979.98px)').matches;
+// Popups are rationed: one on screen at a time, at least 10 seconds apart, never blocking taps.
+// Routine chatter only gets through when nothing has popped up for 20 seconds.
+// A popup that answers something you just tapped shows right away.
+const TOAST_GAP = 10000;
+const toastQ = [];
+let toastTimer = null;
 function toast(html, opts = {}) {
-  // On phones: one popup at a time, and routine chatter is dropped if anything popped up in the last 12 seconds.
-  const now = Date.now();
-  if (phone() && opts.chatter && now - (S.lastToast || 0) < 12000) return;
-  S.lastToast = now;
-  if (phone()) $('#toasts').replaceChildren();
+  if (Date.now() - (S.tapAt || 0) < 400) { toastQ.length = 0; clearTimeout(toastTimer); toastTimer = null; return showToast(html, opts); }
+  if (opts.chatter && (toastQ.length || Date.now() - (S.lastToast || 0) < 20000)) return;
+  toastQ.push([html, opts]);
+  if (toastQ.length > 2) toastQ.shift();
+  pumpToasts();
+}
+function pumpToasts() {
+  if (toastTimer || !toastQ.length) return;
+  const wait = Math.max(0, (S.lastToast || 0) + TOAST_GAP - Date.now());
+  toastTimer = setTimeout(() => { toastTimer = null; const next = toastQ.shift(); if (next) showToast(...next); pumpToasts(); }, wait);
+}
+function showToast(html, opts) {
+  S.lastToast = Date.now();
+  const box = $('#toasts');
+  box.replaceChildren();
   const el = document.createElement('div');
   el.className = 'toast' + (opts.reward ? ' reward' : '');
   if (opts.buzz) buzz(opts.buzz);
   el.innerHTML = `<div class="t-row"><span class="t-ico" aria-hidden="true">${opts.ico || '🔔'}</span><div>${html}</div></div>${opts.trick ? tag(opts.trick) : ''}`;
-  const box = $('#toasts');
   box.appendChild(el);
-  while (box.children.length > 3) box.firstChild.remove();
-  const kill = () => { el.classList.add('out'); setTimeout(() => el.remove(), 300); };
-  el.addEventListener('click', kill);
-  setTimeout(kill, phone() && opts.chatter ? 3500 : (opts.ms || 4800));
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 300); }, opts.chatter ? 3500 : (opts.ms || 5000));
 }
 function floaty(x, y, txt) {
   const f = document.createElement('div');
@@ -1677,6 +1688,7 @@ pill.addEventListener('click', () => {
 });
 
 /* ---------- feed interactions ---------- */
+addEventListener('click', () => { S.tapAt = Date.now(); }, true);
 feed.addEventListener('click', e => {
   const t = e.target;
   const postTrick = t.closest('.post')?.dataset.trick;
@@ -1899,10 +1911,6 @@ function spinPtr() {
 function schedule(fn, min, max) { const go = () => { if (!S.paused && !document.hidden) fn(); setTimeout(go, rint(min, max)); }; setTimeout(go, rint(min, max)); }
 schedule(() => bumpBadge(rint(1, 3)), 6000, 15000);
 schedule(showPill, 18000, 32000);
-schedule(() => {
-  const [t, s] = R(NOTIFS)();
-  toast(`<b>${esc(t)}</b><br><span style="color:var(--muted)">${esc(s)}</span>`, { ico: '🔔', trick: 'reward', buzz: [20, 60, 20], chatter: true });
-}, 22000, 45000);
 // Idle nudge: stop scrolling and the app notices.
 setInterval(() => {
   if (S.paused || document.hidden) return;
