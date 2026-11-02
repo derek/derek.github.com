@@ -904,7 +904,7 @@ function pickKind() {
 }
 
 /* ---------- state ---------- */
-const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, islandEnds: 0, zenNext: 16, buzz: true, noSave: false };
+const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, photos: 0, islandEnds: 0, zenNext: 16, buzz: true, noSave: false };
 const WEAR_AT = 200;          // after this many posts, the feed starts showing you reruns
 const ORIGINALS = [];
 
@@ -1055,9 +1055,18 @@ const I = {
 };
 
 /* ---------- build ---------- */
+// Photos stay rare: at most 10% of posts carry one, however much the feed has learned.
+const PHOTO_SHARE = 0.10;
+const PHOTO_ONLY = new Set(['island', 'wellness']);
+const hasPhoto = x => !!x.media && (x.media.t === 'photo' || x.media.t === 'photos');
 function makePost(kind) {
-  const k = kind || pickKind();
-  const p = POOL[k]();
+  let k = kind || pickKind();
+  let p = POOL[k]();
+  if (hasPhoto(p) && (S.photos + 1) / (S.made + 1) > PHOTO_SHARE) {
+    if (PHOTO_ONLY.has(k)) { do { k = pickKind(); } while (PHOTO_ONLY.has(k)); p = POOL[k](); }
+    if (hasPhoto(p)) p.media = null;
+  }
+  if (hasPhoto(p)) S.photos++;
   S.made++;
   const el = document.createElement('article');
   el.className = 'post';
