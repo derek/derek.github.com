@@ -563,7 +563,7 @@ const COMMENTS = {
   market: ['checking my account with one eye closed', 'so we\'re never retiring, got it', 'buy the dip? or is this the dip? is the dip dipping?', 'I\'m not looking. I refuse to look. (I looked.)', 'my uncle predicted this and now I have to hear about it at every holiday', 'drop your losses in the replies, let\'s cry together'],
   rage: ['This is exactly what\'s wrong with everyone.', 'Ratio + you\'re wrong + log off', 'Imagine thinking this is an opinion.', 'Blocked, reported, screenshotted.', 'My grandfather did this and he lived to 98. Do better.', 'I have never been this angry about something this small.', 'Deleted my reply three times. Posting it anyway: you are the problem.', 'This post is why aliens won\'t visit us.'],
   lux: ['must be nice 🙃', 'how does everyone afford this except me', 'me at my desk eating crackers over the keyboard:', 'what do you actually DO though', 'drop the itinerary. asking for my 3 days of PTO', 'I\'d be grateful too if I lived on a boat, Kai'],
-  grind: ['my excuse is that I\'m tired, Ty', 'I woke up at 11 and called it a win', 'what do you even do for work', 'this made me feel great about my life 🙃', '4:30 AM is a crime scene, not a schedule', 'bro is 24 and has "retired his parents" twice this year'],
+  grind: ['my excuse is that I\'m tired, Ty', 'I woke up at 11 and called it a win', 'what do you even do for work', 'this made me feel great about my life 🙃', '4:30 AM is a crime scene, not a schedule', 'bro has bought his parents a house twice this year'],
   classmate: ['wait THEY did that?? they used to eat glue', 'happy for them (lying)', 'going through their whole profile now. see you in an hour', 'we sat next to each other and I still can\'t find my car keys', 'congrats!! who\'s going to tell them about the photos from 2014', 'I\'m not jealous, I\'m just going to think about this until I die'],
   health: ['I do ALL of these. am I dying??', 'number 4 was not shocking. still reading.', 'just googled my symptoms and now I\'m here in the replies', 'why did my doctor never tell me this', 'saving this for 2am when I will definitely read it again', 'is this why I\'m tired?? I think this is why I\'m tired'],
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
@@ -636,8 +636,8 @@ const POOL = {
       media: { t: 'lux', place, g: rint(0, 3) }, trick: 'comparison', mood: -6, anx: 2 };
   },
   grind() {
-    const ach = R(['Just closed on my third rental property', 'Retired my parents', 'Ran my 14th marathon this year', 'Hit seven figures before breakfast', 'Sold my second company', 'Read 112 books this year']);
-    return { a: A.grind, text: `${rint(22, 27)} years old. ${ach}. Woke up at 4:30 again. What's your excuse? 💪`,
+    const ach = R(['already own three rental properties', 'paid off my parents\' house so they could quit their jobs and retire', 'ran 14 marathons this year', 'made my first million before most people finish college', 'sold my second company', 'read 112 books this year']);
+    return { a: A.grind, text: `Haven't slept past 4:30 in 3 years. ${rint(22, 26)} years old, ${ach}. Sleep is a choice. So is being average. 💪`,
       trick: 'comparison', mood: -6, anx: 3 };
   },
   classmate() {
