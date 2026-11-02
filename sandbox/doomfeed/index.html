@@ -756,7 +756,15 @@ const POOL = {
   },
   lux() {
     const [id, place] = R([['money-firstclass', 'Somewhere over the Pacific'], ['social-rooftop', 'The rooftop, again'], ['social-dinner', 'Course 9 of 14'], ['island-cocktail', 'A villa you can\'t afford'], ['island-feet', 'An undisclosed beach'], ['social-yacht', 'Somewhere off the coast'], ['social-festival', 'Weekend three of three'], ['money-penthouse', 'Home for the month']]);
-    return { a: A.lux, text: `Day ${rint(80, 340)} of not checking email. Remember: the 9 to 5 is a choice. ✨`,
+    return { a: A.lux, text: R([
+        `Day ${rint(80, 340)} of not checking email. Remember: the 9 to 5 is a choice. ✨`,
+        'Some of us build dreams. Some of us build someone else\'s. 🌴',
+        'Reminder: your boss\'s vacation is funded by your PTO request getting denied.',
+        'Woke up with no alarm again. Not bragging, just manifesting it for you. ✨',
+        'I don\'t do Mondays. I do whatever I want.',
+        'Passive income hits different when you\'re horizontal. 🏝️',
+        'You\'re not tired, you\'re just in the wrong tax bracket.',
+      ]),
       media: { t: 'photo', id, loc: place }, trick: 'comparison', mood: -6, anx: 2 };
   },
   grind() {
