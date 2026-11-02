@@ -71,7 +71,14 @@ body.calm .logo i { animation: none; background: #5fae8b; box-shadow: none; }
 .calm-btn { font-size: 13px; font-weight: 600; padding: 8px 12px; border-radius: 10px; border: 1px solid #2f5d4a; color: #8fd3b4; white-space: nowrap; }
 .calm-btn:hover { border-color: #8fd3b4; }
 body.calm .calm-btn { color: var(--fg); border-color: var(--line); background: var(--surface); }
-@media (max-width: 600px) { .calm-btn { display: none; } body.calm .calm-btn { display: inline-block; } }
+/* Phones: an icon-only leaf next to the bell; the full label returns in calm mode */
+@media (max-width: 600px) {
+  .top-in { gap: 8px; }
+  .logoff { padding: 7px 9px; font-size: 12.5px; }
+  body:not(.calm) .calm-btn { width: 38px; height: 38px; padding: 0; display: grid; place-items: center; font-size: 17px; }
+  body:not(.calm) .calm-btn .cb-txt { display: none; }
+}
+@media (max-width: 410px) { .lv-people { display: none; } }
 .calm-feed { display: grid; gap: 12px; min-width: 0; }
 .calm-note { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; display: grid; gap: 10px; }
 .calm-note h2 { font: 400 italic 28px/1.1 var(--f-serif); margin: 0; }
@@ -652,10 +659,10 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
   <div class="top-in">
     <div class="brand">
       <div class="logo"><i aria-hidden="true"></i>doomfeed</div>
-      <div class="live" id="live"><i class="live-dot" aria-hidden="true"></i><b id="liveN">12,408</b> people scrolling now<span class="chip-tag" style="top:18px;left:0">Social proof</span></div>
+      <div class="live" id="live"><i class="live-dot" aria-hidden="true"></i><b id="liveN">12,408</b><span class="lv-people"> people</span> scrolling now<span class="chip-tag" style="top:18px;left:0">Social proof</span></div>
     </div>
     <div class="spacer"></div>
-    <button class="calm-btn" id="calmBtn" data-calm="toggle">🌿 Calm mode</button>
+    <button class="calm-btn" id="calmBtn" data-calm="toggle" aria-label="Calm mode"><span class="cb-ico" aria-hidden="true">🌿</span><span class="cb-txt"> Calm mode</span></button>
     <div class="bell-wrap">
       <button class="icon-btn" id="bell" aria-label="Notifications">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
@@ -2029,7 +2036,8 @@ function setCalm(on) {
   document.body.classList.toggle('calm', on);
   feed.hidden = on; calmFeed.hidden = !on;
   if (on && !calmFeed.firstChild) calmFeed.append(...makeCalm());
-  calmBtn.textContent = on ? '← Back to Doomfeed' : '🌿 Calm mode';
+  calmBtn.innerHTML = on ? '← Back to Doomfeed' : '<span class="cb-ico" aria-hidden="true">🌿</span><span class="cb-txt"> Calm mode</span>';
+  calmBtn.setAttribute('aria-label', on ? 'Back to Doomfeed' : 'Calm mode');
   if (on) scrollTo(0, 0);
   else { S.paused = false; requestAnimationFrame(() => scrollTo(0, doomY)); }
 }
