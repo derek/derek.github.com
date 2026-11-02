@@ -44,6 +44,10 @@
   --ink: #15211b;
   --ink-muted: #4c5d54;
   --good: #6fd3a5;
+  --zen-bg: #dde8ee;
+  --zen-ink: #15232b;
+  --zen-muted: #4f6470;
+  --zen-accent: #2c6a87;
   --f-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
   --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -268,6 +272,22 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .reality button { font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ink); }
 .reality button.solid { background: var(--ink); color: var(--paper); }
 
+.zen {
+  background: var(--zen-bg); color: var(--zen-ink); border-radius: 18px; padding: 24px 22px 20px;
+  display: grid; gap: 12px; animation: rise .6s ease-out both;
+}
+.zen .z-lbl { font: 600 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--zen-muted); }
+.zen h3 { font: 400 italic 30px/1.05 var(--f-serif); margin: 0; letter-spacing: -0.01em; }
+.zen p { font: 400 18px/1.45 var(--f-serif); margin: 0; max-width: 46ch; }
+.zen a {
+  justify-self: start; background: var(--zen-accent); color: #fff; text-decoration: none; font: 600 14px var(--f-body);
+  padding: 10px 18px; border-radius: 999px;
+}
+.zen a:hover { filter: brightness(1.1); }
+.zen .trick-tag { background: #eef4f7; color: var(--zen-ink); border-color: var(--zen-accent); }
+.zen .trick-tag b { color: var(--zen-accent); }
+.receipt .zen-line { font: 400 17px/1.4 var(--f-serif); margin: 0; }
+.receipt .zen-line a { color: var(--zen-accent); font-weight: 500; }
 .caught {
   text-align: center; padding: 30px 16px; display: grid; gap: 6px; justify-items: center;
   border-block: 1px solid var(--line); position: relative;
@@ -789,7 +809,7 @@ function pickKind() {
 }
 
 /* ---------- state ---------- */
-const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, buzz: true, noSave: false };
+const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, reruns: 0, sinceReality: 0, realityIx: 0, caught: false, worn: false, lastScroll: Date.now(), badge: 3, paused: false, interest: {}, learnedShown: {}, autoplays: 0, pulls: 0, zenNext: 16, buzz: true, noSave: false };
 const WEAR_AT = 200;          // after this many posts, the feed starts showing you reruns
 const ORIGINALS = [];
 
@@ -977,6 +997,18 @@ function makeReality(override) {
     <div class="r-actions"><button class="solid" data-toll>See what this cost</button><button data-dismiss>Keep scrolling</button></div>`;
   return el;
 }
+// Not a trick: an honest pointer to the calmer alternative.
+function makeZen() {
+  const el = document.createElement('aside');
+  el.className = 'zen';
+  el.setAttribute('aria-label', 'Sponsored: Zen Reader');
+  el.innerHTML = `<div class="trick-tag"><b>Not a trick</b>This one is a real recommendation, from the people who made Doomfeed. No countdown, no badge.</div>
+    <span class="z-lbl">Sponsored · from the makers of Doomfeed</span>
+    <h3>Zen Reader</h3>
+    <p>${R(['If this doesn\'t feel right to you, and you need calm news, check out Zen Reader.', 'Still scrolling, and feeling worse for it? If you need calm news, check out Zen Reader.', 'If this feed is wearing you down and you still want to know what\'s going on, try Zen Reader for calm news.'])}</p>
+    <a href="https://www.zen-reader.app" target="_blank" rel="noopener">Visit zen-reader.app ↗</a>`;
+  return el;
+}
 function makeCaught() {
   const el = document.createElement('div');
   el.className = 'caught';
@@ -1007,6 +1039,7 @@ function loadMore(n = 8) {
       frag.appendChild(S.worn && ORIGINALS.length && Math.random() < rerunOdds ? makeRerun() : makePost());
       S.sinceReality++;
       if (!S.caught && S.made >= 36) { S.caught = true; makeCaught().forEach(e => frag.appendChild(e)); }
+      if (S.made + S.reruns >= S.zenNext) { S.zenNext = S.made + S.reruns + rint(25, 35); frag.appendChild(makeZen()); }
       if (S.sinceReality >= rint(9, 13)) { S.sinceReality = 0; frag.appendChild(makeReality()); }
     }
     feed.insertBefore(frag, sentinel);
@@ -1478,6 +1511,7 @@ function showReceipt() {
         <li><b>Charge your phone outside the bedroom.</b> The 2am scroll starts with the phone being within reach.</li>
       </ol>
     </div>
+    <p class="zen-line">If this didn't feel right to you, and you need calm news, check out <a href="https://www.zen-reader.app" target="_blank" rel="noopener">Zen Reader</a>.</p>
     <hr class="rule">
     <div class="r-actions"><button class="solid" data-out>Put the phone down</button><button data-back>Back to the feed</button></div>
   </div>`);
