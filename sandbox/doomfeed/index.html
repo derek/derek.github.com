@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Doomfeed: a parody of an endless social feed that uses every engagement trick in the book, then shows you what it cost you.">
+<title>Doomfeed</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&display=swap">
+<style>
+/* Layout: a 2am phone feed in the center, an honest "toll" ledger beside it (bottom sheet on phones).
+   Deliberately single-theme: this is what a screen looks like at 2am. */
+:root {
+  color-scheme: dark;
+  --bg: #0a0c11;
+  --surface: #12161e;
+  --surface-2: #1a1f2a;
+  --line: #242b38;
+  --fg: #e8ebf1;
+  --muted: #8a93a4;
+  --hot: #ff3358;
+  --hot-ink: #ffffff;
+  --gold: #ffc94a;
+  --xray: #74b4ff;
+  --xray-bg: #0d1f36;
+  --paper: #e4ece7;
+  --ink: #15211b;
+  --ink-muted: #4c5d54;
+  --good: #6fd3a5;
+  --f-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --f-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --head-h: 58px;
+  --anx: 0;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 40; background: var(--bg);
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-offset: 2px; border-radius: 6px; }
+
+/* ---------- header ---------- */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.top-in {
+  max-width: 940px; margin: 0 auto; height: var(--head-h);
+  display: flex; align-items: center; gap: 12px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.logo {
+  font-family: var(--f-display); font-weight: 800; font-size: 24px; letter-spacing: -0.03em;
+  display: flex; align-items: center; gap: 7px;
+}
+.logo i {
+  width: 11px; height: 11px; border-radius: 50%; background: var(--hot); display: inline-block;
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--hot) 25%, transparent);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.live {
+  font-family: var(--f-mono); font-size: 11.5px; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap; position: relative;
+}
+.live b { color: var(--fg); font-weight: 600; }
+.spacer { flex: 1; }
+.icon-btn {
+  position: relative; width: 40px; height: 40px; border-radius: 12px;
+  display: grid; place-items: center;
+}
+.icon-btn:hover { background: var(--surface-2); }
+.icon-btn svg { width: 22px; height: 22px; }
+.badge {
+  position: absolute; top: 3px; right: 1px; min-width: 19px; height: 19px; padding: 0 5px;
+  border-radius: 10px; background: var(--hot); color: var(--hot-ink);
+  font: 600 11px/19px var(--f-mono); text-align: center; border: 2px solid var(--bg);
+}
+.badge.bump { animation: bump .45s cubic-bezier(.3,1.6,.5,1); }
+.logoff {
+  font-size: 13px; font-weight: 600; padding: 8px 12px; border-radius: 10px;
+  border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+}
+.logoff:hover { color: var(--fg); border-color: var(--muted); }
+
+/* ---------- shell ---------- */
+.shell {
+  max-width: 940px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 120px;
+}
+@media (min-width: 980px) {
+  .shell { grid-template-columns: minmax(0, 580px) 300px; justify-content: center; padding-bottom: 60px; }
+}
+.feed {
+  display: flex; flex-direction: column; gap: 14px; min-width: 0;
+  filter: saturate(calc(1 - var(--anx) * 0.0065));
+  transition: filter 2s;
+}
+
+/* ---------- posts ---------- */
+.post {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 14px 16px 10px; display: flex; flex-direction: column; gap: 10px;
+  position: relative; min-width: 0;
+  animation: rise .35s ease-out both;
+}
+.p-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.av {
+  width: 40px; height: 40px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; font: 700 14px var(--f-display); color: #fff;
+  background: linear-gradient(140deg, hsl(var(--h) 70% 55%), hsl(calc(var(--h) + 40) 65% 35%));
+}
+.who { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.name { font-weight: 600; display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name svg { width: 15px; height: 15px; flex: none; color: var(--xray); }
+.meta { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sponsored { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+.p-body { font-size: 15.5px; overflow-wrap: anywhere; }
+.p-body .more-link { color: var(--xray); font-weight: 600; }
+.p-proof { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.faces { display: flex; }
+.faces span {
+  width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -6px;
+  background: linear-gradient(140deg, hsl(var(--h) 70% 60%), hsl(calc(var(--h) + 50) 60% 40%));
+}
+.faces span:first-child { margin-left: 0; }
+.p-proof b { color: var(--fg); font-weight: 600; }
+.p-actions { display: flex; gap: 4px; border-top: 1px solid var(--line); padding-top: 6px; margin-inline: -6px; }
+.act {
+  display: flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 10px;
+  color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; position: relative;
+}
+.act:hover { background: var(--surface-2); color: var(--fg); }
+.act svg { width: 19px; height: 19px; }
+.act.liked { color: var(--hot); }
+.act.liked svg { fill: var(--hot); }
+.act .n { font-family: var(--f-mono); font-size: 12px; }
+.act .n.tick { color: var(--fg); }
+.p-comment {
+  font-size: 14px; background: var(--surface-2); border-radius: 12px; padding: 9px 12px;
+  overflow-wrap: anywhere;
+}
+.p-comment .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); display: block; margin-bottom: 2px; }
+.p-comment b { font-weight: 600; }
+
+/* media */
+.media { border-radius: 12px; overflow: hidden; position: relative; max-width: 100%; }
+.m-breaking {
+  background: radial-gradient(120% 140% at 0% 0%, #3a0b16, #12060a 60%);
+  padding: 18px 18px 0; border: 1px solid #4a1422;
+}
+.m-breaking .flag { display: flex; gap: 8px; align-items: center; }
+.m-breaking .flag span {
+  font: 800 13px var(--f-display); letter-spacing: .08em; background: var(--hot); color: #fff; padding: 3px 8px; border-radius: 4px;
+}
+.m-breaking .flag em { font: 600 11px var(--f-mono); color: #ff8aa0; font-style: normal; display: flex; align-items: center; gap: 6px; }
+.m-breaking .flag em::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--hot); animation: pulse 1s infinite; }
+.m-breaking h3 {
+  font: 800 clamp(26px, 6vw, 38px)/1 var(--f-display); letter-spacing: -0.03em; margin: 14px 0 16px; text-wrap: balance; color: #fff;
+}
+.ticker { background: #000; color: #ffd7de; font: 500 12px/30px var(--f-mono); white-space: nowrap; overflow: hidden; margin-inline: -18px; }
+.ticker span { display: inline-block; padding-left: 100%; animation: ticker 18s linear infinite; }
+.m-chart { background: #0f0a0c; border: 1px solid #3a1a20; padding: 14px 16px 10px; }
+.m-chart .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.m-chart .sym { font: 600 13px var(--f-mono); color: var(--muted); }
+.m-chart .pct { font: 800 28px var(--f-display); color: var(--hot); font-variant-numeric: tabular-nums; }
+.m-chart svg { width: 100%; height: 110px; display: block; margin-top: 4px; }
+.m-lux { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 16px; }
+.m-lux .place { font: 700 22px/1.05 var(--f-display); color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.45); letter-spacing: -0.02em; max-width: 16ch; }
+.m-quote {
+  background: #000; aspect-ratio: 5 / 3; display: grid; place-items: center; padding: 24px;
+  border: 1px solid var(--line);
+}
+.m-quote p { font: 500 clamp(20px, 4.6vw, 28px)/1.15 var(--f-display); text-align: center; margin: 0; text-wrap: balance; color: #f3f3f3; letter-spacing: -0.02em; }
+.m-quote small { display: block; margin-top: 10px; font: 400 12px var(--f-mono); color: #777; }
+.m-ad { background: linear-gradient(160deg, #241c08, #120f08); border: 1px solid #4a3a12; padding: 16px; display: grid; gap: 10px; }
+.m-ad .prod { font: 800 24px/1.05 var(--f-display); letter-spacing: -0.02em; color: #fff3cf; }
+.m-ad .price { font: 600 15px var(--f-mono); color: var(--gold); }
+.m-ad .price s { color: #8a7a52; font-weight: 400; margin-left: 6px; }
+.m-ad .bar { height: 8px; background: #3a2e10; border-radius: 4px; overflow: hidden; }
+.m-ad .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), var(--hot)); }
+.m-ad .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.countdown { font: 600 13px var(--f-mono); color: #ffd9a0; font-variant-numeric: tabular-nums; }
+.shop { background: var(--gold); color: #1d1500; font-weight: 700; padding: 9px 16px; border-radius: 10px; font-size: 14px; }
+.poll { display: grid; gap: 8px; }
+.poll button {
+  text-align: left; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  position: relative; overflow: hidden; font-weight: 500; display: flex; justify-content: space-between; gap: 10px;
+}
+.poll button:hover { border-color: var(--muted); }
+.poll button .fill { position: absolute; inset: 0 auto 0 0; width: 0; background: color-mix(in oklab, var(--xray) 22%, transparent); transition: width .8s cubic-bezier(.2,.8,.2,1); }
+.poll button span { position: relative; }
+.poll button .pv { font-family: var(--f-mono); font-size: 13px; opacity: 0; transition: opacity .4s; }
+.poll.voted button .pv { opacity: 1; }
+.poll.voted button { cursor: default; }
+.poll-note { font-size: 13px; color: var(--muted); }
+
+/* reality checks: a paper-colored interruption in the glow */
+.reality {
+  background: var(--paper); color: var(--ink); border-radius: 4px; padding: 26px 24px 20px;
+  display: grid; gap: 14px; animation: rise .5s ease-out both;
+}
+.reality .eyebrow { font: 600 11px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); }
+.reality p { font: 400 clamp(21px, 4.4vw, 26px)/1.25 var(--f-serif); margin: 0; text-wrap: pretty; }
+.reality p em { font-style: italic; }
+.reality .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.reality button { font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ink); }
+.reality button.solid { background: var(--ink); color: var(--paper); }
+
+.caught {
+  text-align: center; padding: 30px 16px; display: grid; gap: 6px; justify-items: center;
+  border-block: 1px solid var(--line); position: relative;
+}
+.caught .ring { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--good), #3aa3ff); color: #04140c; font-size: 26px; font-weight: 800; }
+.caught h3 { font: 700 20px var(--f-display); margin: 6px 0 0; }
+.caught p { margin: 0; color: var(--muted); font-size: 14px; max-width: 42ch; text-wrap: balance; }
+.caught .but-more { color: var(--hot); font-weight: 600; margin-top: 6px; }
+.suggested { font: 700 13px var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 4px 2px; }
+
+.loader { display: grid; gap: 14px; }
+.skel { height: 180px; border-radius: 16px; background: linear-gradient(90deg, var(--surface) 0%, var(--surface-2) 50%, var(--surface) 100%); background-size: 200% 100%; animation: shimmer 1s linear infinite; border: 1px solid var(--line); }
+.skel.short { height: 110px; }
+
+/* ---------- x-ray tags ---------- */
+.trick-tag {
+  display: none; background: var(--xray-bg); color: #cfe4ff; border: 1px dashed var(--xray);
+  border-radius: 10px; padding: 8px 11px; font-size: 13px; line-height: 1.4;
+}
+.trick-tag b { color: var(--xray); font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+body.xray .trick-tag { display: block; }
+body.xray .post { border-color: color-mix(in oklab, var(--xray) 45%, var(--line)); }
+.chip-tag {
+  display: none; position: absolute; z-index: 2; white-space: nowrap;
+  background: var(--xray); color: #051426; font: 700 10px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase;
+  padding: 4px 6px; border-radius: 4px; pointer-events: none;
+}
+body.xray .chip-tag { display: block; }
+
+/* ---------- toll ledger ---------- */
+.toll {
+  min-width: 0; align-self: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px;
+  display: grid; gap: 16px;
+}
+@media (min-width: 980px) {
+  .toll { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--head-h) + 16px); max-height: calc(100vh - var(--head-h) - 32px); overflow: auto; }
+  .toll .close-sheet { display: none; }
+}
+.toll h2 { font: 800 13px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; margin: 0; color: var(--hot); display: flex; justify-content: space-between; align-items: center; }
+.stat { display: grid; gap: 2px; }
+.stat .k { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.stat .v { font: 600 26px/1.1 var(--f-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.stat .s { font-size: 13px; color: var(--muted); }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.meter { display: grid; gap: 6px; }
+.meter .row { display: flex; justify-content: space-between; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.meter .row b { font-family: var(--f-mono); color: var(--fg); font-weight: 600; }
+.meter .track { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.meter .track i { display: block; height: 100%; border-radius: 4px; transition: width .8s ease, background .8s; }
+.tricks-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 13.5px; }
+.tricks-list li { display: flex; justify-content: space-between; gap: 8px; }
+.tricks-list li span:last-child { font-family: var(--f-mono); color: var(--muted); }
+.tricks-list .empty { color: var(--muted); }
+.instead { font-size: 13.5px; color: var(--muted); display: grid; gap: 4px; }
+.instead b { color: var(--fg); font-family: var(--f-mono); font-weight: 600; }
+.sub-h { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 6px; font-weight: 500; }
+.xray-toggle {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%;
+  border: 1px solid var(--xray); color: var(--xray); border-radius: 12px; padding: 10px 12px; font-weight: 600; font-size: 14px;
+}
+.xray-toggle .sw { width: 34px; height: 20px; border-radius: 10px; background: var(--surface-2); position: relative; flex: none; transition: background .2s; }
+.xray-toggle .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--xray); transition: transform .2s; }
+body.xray .xray-toggle .sw { background: var(--xray); }
+body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #051426; }
+.fine { font-size: 12px; color: var(--muted); margin: 0; }
+
+/* mobile sheet + bar */
+.tollbar { display: none; }
+@media (max-width: 979.98px) {
+  .toll {
+    position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; border-radius: 18px 18px 0 0;
+    max-height: 82vh; overflow: auto; transform: translateY(105%); transition: transform .3s cubic-bezier(.2,.8,.2,1);
+    padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px));
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -20px 60px rgba(0,0,0,.6);
+  }
+  .toll.open { transform: none; }
+  .close-sheet { font-size: 13px; color: var(--muted); font-family: var(--f-body); letter-spacing: 0; text-transform: none; font-weight: 600; padding: 4px 8px; }
+  .tollbar {
+    display: flex; position: fixed; z-index: 35; left: 0; right: 0; bottom: 0;
+    background: color-mix(in oklab, var(--surface) 94%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line); align-items: center; gap: 14px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    font: 500 12.5px var(--f-mono); font-variant-numeric: tabular-nums; color: var(--muted);
+  }
+  .tollbar b { color: var(--fg); font-weight: 600; }
+  .tollbar .tb-stats { display: flex; gap: 14px; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; }
+  .tollbar button { color: var(--hot); font-weight: 700; font-family: var(--f-mono); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; padding: 6px 10px; border: 1px solid var(--hot); border-radius: 8px; }
+  .live .hide-sm { display: none; }
+}
+@media (max-width: 420px) {
+  .live { display: none; }
+}
+.scrim { position: fixed; inset: 0; z-index: 45; background: rgba(0,0,0,.5); }
+
+/* ---------- floating chrome ---------- */
+.vignette {
+  position: fixed; inset: 0; z-index: 20; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.9) 100%);
+  opacity: calc(var(--anx) * 0.008); transition: opacity 2s;
+}
+.newpill {
+  position: fixed; z-index: 32; left: 50%; top: calc(env(safe-area-inset-top, 0px) + var(--head-h) + 12px);
+  transform: translate(-50%, -20px); opacity: 0; pointer-events: none;
+  background: var(--hot); color: var(--hot-ink); font-weight: 700; font-size: 14px;
+  padding: 9px 16px; border-radius: 999px; box-shadow: 0 8px 30px rgba(255, 51, 88, .45);
+  display: flex; align-items: center; gap: 8px; transition: transform .3s, opacity .3s;
+}
+.newpill.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+.newpill .faces span { border-color: var(--hot); }
+.newpill .chip-tag { top: -18px; left: 50%; transform: translateX(-50%); }
+.toasts {
+  position: fixed; z-index: 60; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  display: grid; gap: 10px; width: min(340px, calc(100vw - 32px)); pointer-events: none;
+}
+@media (min-width: 980px) { .toasts { bottom: 24px; } }
+.toast {
+  pointer-events: auto; background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px;
+  padding: 12px 14px; display: grid; gap: 6px; box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  animation: toastIn .35s cubic-bezier(.2,1.2,.4,1) both; font-size: 14px;
+}
+.toast.out { animation: toastOut .3s ease-in forwards; }
+.toast .t-row { display: flex; gap: 10px; align-items: flex-start; }
+.toast .t-ico { width: 30px; height: 30px; border-radius: 50%; flex: none; display: grid; place-items: center; font-size: 15px; background: var(--hot); }
+.toast.reward .t-ico { background: var(--gold); }
+.toast.reward { border-color: #5a4612; }
+.toast b { font-weight: 600; }
+.toast .trick-tag { font-size: 12px; }
+.floaty { position: fixed; z-index: 70; pointer-events: none; font: 700 13px var(--f-mono); color: var(--hot); animation: floatUp 1s ease-out forwards; }
+
+.bell-wrap { position: relative; }
+.bell-wrap .chip-tag { top: 44px; right: 0; }
+.notif {
+  position: absolute; right: 0; top: 48px; width: min(330px, calc(100vw - 32px));
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.6); display: grid; gap: 2px; z-index: 31;
+}
+.notif .n-h { font: 700 13px var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 6px 8px; }
+.notif .n-i { padding: 9px 8px; border-radius: 10px; font-size: 14px; display: flex; gap: 8px; align-items: flex-start; }
+.notif .n-i::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--hot); margin-top: 6px; flex: none; }
+.notif .n-i small { display: block; color: var(--muted); font-size: 12px; }
+.notif .trick-tag { margin: 4px; }
+
+/* modal */
+.modal { position: fixed; inset: 0; z-index: 80; background: rgba(4,5,8,.82); display: grid; place-items: center; padding: 16px; overflow-y: auto; }
+.dialog {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px; width: min(440px, 100%);
+  padding: 26px 22px 20px; display: grid; gap: 14px; text-align: center; animation: rise .3s ease-out both; position: relative;
+}
+.dialog h3 { font: 800 26px/1.1 var(--f-display); margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+.dialog p { margin: 0; color: var(--muted); }
+.dialog .big { background: var(--hot); color: #fff; font-weight: 700; font-size: 17px; padding: 14px; border-radius: 14px; }
+.dialog .tiny { font-size: 12px; color: #5d6575; text-decoration: underline; padding: 6px; }
+.dialog .trick-tag { text-align: left; }
+.dialog .hero-ico { font-size: 40px; line-height: 1; }
+
+.receipt {
+  background: var(--paper); color: var(--ink); width: min(460px, 100%); border-radius: 4px;
+  padding: 28px 24px 22px; display: grid; gap: 16px; animation: rise .4s ease-out both;
+  font-family: var(--f-mono); font-size: 13.5px;
+}
+.receipt h3 { font: 400 italic 32px/1.05 var(--f-serif); margin: 0; letter-spacing: -0.01em; }
+.receipt .sub { color: var(--ink-muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+.receipt dl { margin: 0; display: grid; gap: 6px; }
+.receipt dl div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dotted #9fb1a7; padding-bottom: 4px; }
+.receipt dd { margin: 0; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.receipt dt { color: var(--ink-muted); }
+.receipt .close-line { font: 400 20px/1.3 var(--f-serif); color: var(--ink); }
+.receipt .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.receipt button { font-family: var(--f-body); font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--ink); color: var(--ink); }
+.receipt button.solid { background: var(--ink); color: var(--paper); }
+.receipt .rule { border: 0; border-top: 2px dashed #9fb1a7; margin: 0; }
+
+.outside { position: fixed; inset: 0; z-index: 90; background: var(--paper); color: var(--ink); display: grid; place-items: center; padding: 24px; text-align: center; }
+.outside div { display: grid; gap: 14px; max-width: 34ch; }
+.outside p { font: 400 26px/1.3 var(--f-serif); margin: 0; }
+.outside small { font-family: var(--f-mono); color: var(--ink-muted); }
+.outside button { justify-self: center; font-size: 13px; text-decoration: underline; color: var(--ink-muted); }
+
+@keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+@keyframes bump { 0% { transform: scale(.6) } 100% { transform: scale(1) } }
+@keyframes rise { from { opacity: .001; transform: translateY(10px) } to { opacity: 1; transform: none } }
+@keyframes ticker { to { transform: translateX(-100%) } }
+@keyframes shimmer { to { background-position: -200% 0 } }
+@keyframes toastIn { from { opacity: 0; transform: translateY(16px) scale(.96) } to { opacity: 1; transform: none } }
+@keyframes toastOut { to { opacity: 0; transform: translateX(30px) } }
+@keyframes floatUp { from { opacity: 1; transform: translateY(0) } to { opacity: 0; transform: translateY(-40px) } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  .ticker span { padding-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="vignette" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo"><i aria-hidden="true"></i>doomfeed</div>
+    <div class="live" id="live"><b id="liveN">12,408</b> <span class="hide-sm">scrolling </span>now<span class="chip-tag" style="top:22px;left:0">Social proof</span></div>
+    <div class="spacer"></div>
+    <div class="bell-wrap">
+      <button class="icon-btn" id="bell" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span class="badge" id="badge">3</span>
+      </button>
+      <span class="chip-tag">Timer, not news</span>
+      <div class="notif" id="notif" hidden></div>
+    </div>
+    <button class="logoff" id="logoff">Log off</button>
+  </div>
+</header>
+
+<button class="newpill" id="newpill"><span class="faces"><span style="--h:20"></span><span style="--h:200"></span><span style="--h:300"></span></span><span id="newpillText">↑ 12 new posts</span><span class="chip-tag">Pull them back up</span></button>
+
+<main class="shell">
+  <section class="feed" id="feed" aria-label="Feed"></section>
+
+  <aside class="toll" id="toll" aria-label="The toll">
+    <h2>The toll <button class="close-sheet" id="closeSheet">Close</button></h2>
+    <div class="stats-grid">
+      <div class="stat"><span class="k">Time here</span><span class="v" id="sTime">0:00</span></div>
+      <div class="stat"><span class="k">Posts eaten</span><span class="v" id="sPosts">0</span></div>
+    </div>
+    <div class="stat">
+      <span class="k">Thumb distance</span>
+      <span class="v" id="sDist">0.0 m</span>
+      <span class="s" id="sDistCmp">Just getting started.</span>
+    </div>
+    <div class="meter">
+      <div class="row"><span>Mood</span><b id="mMoodN">100</b></div>
+      <div class="track"><i id="mMood" style="width:100%;background:var(--good)"></i></div>
+    </div>
+    <div class="meter">
+      <div class="row"><span>Anxiety</span><b id="mAnxN">0</b></div>
+      <div class="track"><i id="mAnx" style="width:0%;background:var(--hot)"></i></div>
+    </div>
+    <div>
+      <h4 class="sub-h">Tricks used on you</h4>
+      <ul class="tricks-list" id="tricksList"><li class="empty">None yet. Give it a few seconds.</li></ul>
+    </div>
+    <div>
+      <h4 class="sub-h">In the same time you could have</h4>
+      <div class="instead" id="instead"></div>
+    </div>
+    <button class="xray-toggle" id="xrayBtn" aria-pressed="false">Reveal the tricks <span class="sw" aria-hidden="true"></span></button>
+    <p class="fine">Doomfeed is a parody. Every post is generated. Nothing here is real except the time you spent.</p>
+  </aside>
+</main>
+
+<div class="tollbar" id="tollbar">
+  <div class="tb-stats"><span><b id="bTime">0:00</b></span><span><b id="bPosts">0</b> posts</span><span><b id="bDist">0.0 m</b></span><span>mood <b id="bMood">100</b></span></div>
+  <button id="openSheet">Toll</button>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+// Shuffle-bag picker: every item in a list is used once before any repeats.
+const BAGS = new Map();
+const R = list => {
+  const a = typeof list === 'string' ? [...list] : list;
+  const key = a.join('\u0001');
+  let b = BAGS.get(key);
+  if (!b || !b.left.length) {
+    const left = a.map((_, i) => i);
+    for (let i = left.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [left[i], left[j]] = [left[j], left[i]]; }
+    if (b && left.length > 1 && left[left.length - 1] === b.last) [left[0], left[left.length - 1]] = [left[left.length - 1], left[0]];
+    b = { left, last: b ? b.last : -1 }; BAGS.set(key, b);
+  }
+  b.last = b.left.pop();
+  return a[b.last];
+};
+const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const fmt = n => n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : n >= 1e4 ? Math.round(n / 1e3) + 'K' : n >= 1e3 ? (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K' : String(n);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- the tricks ---------- */
+const TRICKS = {
+  rage:       ['Rage bait', 'Built to make you angry. Anger gets more replies and shares than any other feeling, so the feed ranks it higher.'],
+  urgency:    ['Manufactured urgency', '"Breaking" with no details. It keeps you checking for an update that may never come.'],
+  fear:       ['Fear appeal', 'A vague threat to your health, money, or safety. Your brain treats it as urgent, so you keep reading.'],
+  comparison: ['Social comparison', 'Someone else\'s best day, placed next to your ordinary one.'],
+  curiosity:  ['Curiosity gap', 'The post hides the one detail you want. The only way to close the gap is to tap or keep going.'],
+  scarcity:   ['Fake scarcity', 'The countdown resets when it hits zero. The stock number is invented.'],
+  proof:      ['Social proof', 'Big numbers and "people you know" make it feel like everyone else knows something you don\'t.'],
+  reward:     ['Variable reward', 'You never know when the next good thing will show up. Slot machines run on the same uncertainty.'],
+  bait:       ['Engagement bait', 'Asks you to reply or like so the algorithm counts you as engaged and shows you more.'],
+  doom:       ['Doom spiral', 'A huge problem you can\'t do anything about, served at the hour you\'re least able to shrug it off.'],
+  ending:     ['Fake ending', 'It looks like a stopping point. The feed keeps going right underneath it.'],
+  shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
+};
+const tag = k => `<div class="trick-tag"><b>${TRICKS[k][0]}</b>${TRICKS[k][1]}</div>`;
+
+/* ---------- content ---------- */
+const A = {
+  news:   { name: 'Breaking Now 24/7', handle: 'breakingnow247', h: 350, v: 1 },
+  alerts: { name: 'Local Alert Network', handle: 'localalerts', h: 20, v: 1 },
+  market: { name: 'Market Panic', handle: 'marketpanic', h: 140, v: 1 },
+  rage:   { name: 'not mad, just saying', handle: 'notmad.justsaying', h: 300 },
+  rage2:  { name: 'Hot Takes Daily', handle: 'hottakesdaily', h: 10, v: 1 },
+  lux:    { name: 'Kai · Nomad CEO', handle: 'kai.everywhere', h: 40, v: 1 },
+  grind:  { name: 'Ty Alpha', handle: 'alpha_mindset_ty', h: 220, v: 1 },
+  doc:    { name: 'Dr. Symptoms', handle: 'dr.symptoms', h: 190, v: 1 },
+  night:  { name: '3am thoughts', handle: 'cant.sleep.again', h: 260 },
+  well:   { name: 'Juno Wellness', handle: 'wellness.with.juno', h: 160 },
+  bait:   { name: 'Reply If You Agree', handle: 'reply.if.you.agree', h: 100 },
+  poll:   { name: 'Everyone Agrees', handle: 'everyone.agrees', h: 330 },
+};
+const FIRST = ['Jordan', 'Maya', 'Priya', 'Sam', 'Leo', 'Ines', 'Theo', 'Nadia', 'Marcus', 'Elif', 'Casey', 'Rosa', 'Dev', 'Hana', 'Oskar'];
+const LASTI = 'ABCDEFGHJKLMNPRSTW';
+const classmate = () => { const f = R(FIRST), l = R(LASTI); return { name: `${f} ${l}.`, handle: `${f.toLowerCase()}.${l.toLowerCase()}${rint(80, 99)}`, h: rint(0, 359) }; };
+const randFace = () => `<span style="--h:${rint(0, 359)}"></span>`;
+
+const POOL = {
+  breaking() {
+    const s = R(['Officials', 'Scientists', 'Experts', 'Sources close to the situation', 'A new report', 'Insiders']);
+    const v = R(['are warning about', 'can\'t explain', 'are "deeply concerned" about', 'are refusing to comment on', 'are scrambling over']);
+    const o = R(['something in the water', 'a trend that is spreading fast', 'what happens next', 'the thing everyone was afraid of', 'numbers nobody expected', 'a development that changes everything']);
+    return { a: A.news, text: `🚨 BREAKING: ${s} ${v} ${o}. Details still emerging. Stay with us.`,
+      media: { t: 'breaking', h: R(['Developing story', 'This is just the beginning', 'More to come', 'Situation unfolding']) },
+      trick: 'urgency', mood: -4, anx: 6, comment: R(['wait what is happening??', 'not again', 'can someone explain', 'I knew this would happen', 'refreshing every 10 seconds']) };
+  },
+  alert() {
+    const p = R(['your area', 'a town near you', 'the area you just searched', 'your region', 'a place you\'ve been']);
+    return { a: A.alerts, text: `⚠️ Residents near ${p} are being told to "stay alert." No further information is available at this time. Turn on notifications for updates.`,
+      trick: 'fear', mood: -3, anx: 7, comment: R(['stay alert for WHAT', 'my mom just sent me this', 'turned on notifications, thanks', 'this is so vague it\'s scary']) };
+  },
+  market() {
+    const asset = R(['Global markets', 'Tech stocks', 'Retirement funds', 'Housing prices', 'Savings rates', 'Crypto (again)']);
+    const pct = (Math.random() * 8 + 1.2).toFixed(1);
+    return { a: A.market, text: `📉 ${asset} fell ${pct}% overnight. Analysts say it "could get worse." Is your money next?`,
+      media: { t: 'chart', sym: asset.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5) || 'MKT', pct },
+      trick: 'fear', mood: -4, anx: 6, comment: R(['checking my account with one eye closed', 'so we\'re never retiring, got it', 'buy the dip? or is this the dip? or—', 'I\'m not looking. I refuse to look.']) };
+  },
+  rage() {
+    const habit = R(['clap when the plane lands', 'reply-all to company emails', 'put the milk in first', 'walk four across on the sidewalk', 'send voice notes longer than a minute', 'recline their seat on a two-hour flight', 'eat pizza with a fork', 'leave one sip in the carton and put it back', 'say "per my last email"', 'stand still at the top of the escalator']);
+    const text = R([
+      `Can't believe people still ${habit} in ${new Date().getFullYear()}. Genuinely embarrassing.`,
+      `Unpopular opinion: anyone who would ${habit} should lose their phone privileges. I said what I said.`,
+      `If you ${habit}, unfollow me. I'm serious. We have nothing in common.`,
+    ]);
+    return { a: Math.random() < .5 ? A.rage : A.rage2, text, trick: 'rage', mood: -5, anx: 3, hot: true,
+      comment: R(['This is exactly what\'s wrong with everyone.', 'Ratio.', 'Imagine thinking this is an opinion.', 'Blocked, reported, screenshotted.', 'My grandfather did this and he lived to 98. Do better.', 'The audacity of this post.', 'I have never been this angry about something this small.']) };
+  },
+  lux() {
+    const place = R(['Somewhere on the coast', 'A villa you can\'t afford', 'The rooftop pool, again', 'Island number four this year', 'An undisclosed beach']);
+    return { a: A.lux, text: `Day ${rint(80, 340)} of not checking email. Remember: the 9 to 5 is a choice. ✨`,
+      media: { t: 'lux', place, g: rint(0, 3) }, trick: 'comparison', mood: -6, anx: 2,
+      comment: R(['must be nice', 'how do people afford this', 'me at my desk eating crackers:', 'teach me your ways (I will not do them)']) };
+  },
+  grind() {
+    const ach = R(['Just closed on my third rental property', 'Retired my parents', 'Ran my 14th marathon this year', 'Hit seven figures before breakfast', 'Sold my second company', 'Read 112 books this year']);
+    return { a: A.grind, text: `${rint(22, 27)} years old. ${ach}. Woke up at 4:30 again. What's your excuse? 💪`,
+      trick: 'comparison', mood: -6, anx: 3, comment: R(['my excuse is that I\'m tired', 'I woke up at 11 and called it a win', 'what do you even do for work', 'this made me feel great about my life 🙃']) };
+  },
+  classmate() {
+    const c = classmate();
+    const ev = R(['got engaged in Santorini 💍', 'just became a VP at 29', 'bought a house with a real garden', 'launched a company that got funded', 'posted photos from another "little getaway"', 'ran a marathon and somehow looked rested', 'had twins and is already back at the gym', 'got a book deal', 'moved to Lisbon "for the light"', 'paid off their student loans', 'adopted a very photogenic dog', 'started a podcast that people actually listen to', 'got a TED talk', 'renovated a farmhouse by hand', 'is now fluent in Japanese', 'won an award you didn\'t know existed']);
+    return { a: c, text: `Remember ${c.name.split(' ')[0]} from school? They ${ev}.`,
+      media: Math.random() < .5 ? { t: 'lux', place: R(['So grateful for this life', 'Pinch me', 'Couldn\'t have planned it better', 'Living the dream']), g: rint(0, 3) } : null,
+      trick: 'comparison', mood: -6, anx: 3, proofMutual: true };
+  },
+  health() {
+    if (Math.random() < .5) {
+      const x = R(['doing this one thing', 'making this common mistake', 'drinking this', 'sleeping like this', 'scrolling. No wait, keep scrolling']);
+      return { a: A.doc, text: `Doctors are begging people to stop ${x} before bed. Number 4 will shock you. <a href="#" class="more-link" data-more>Read more ›</a>`,
+        trick: 'curiosity', mood: -2, anx: 5 };
+    }
+    const sym = R(['tired', 'a little off', 'a slight headache', 'like something is wrong but you can\'t say what', 'anything at all', 'fine (that\'s a warning sign too)']);
+    return { a: A.doc, text: `If you've ever felt ${sym}, you need to read this thread. 🧵 <a href="#" class="more-link" data-more>Read more ›</a>`,
+      trick: 'fear', mood: -3, anx: 6 };
+  },
+  night() {
+    const fact = R(['how many bacteria live on a phone screen', 'how much of the ocean is still unexplored', 'the heat death of the universe', 'how many of your memories might be wrong', 'how little of space we can actually see', 'how many hours a year people spend on their phones']);
+    return { a: A.night, text: 'can\'t stop thinking about this',
+      media: { t: 'quote', q: `It's 3am and I just learned about ${fact}. I will never sleep again.` },
+      trick: 'doom', mood: -3, anx: 5, comment: R(['why would you post this', 'saving this so I can be scared later', 'it\'s 3am for me too and now I\'m awake forever', 'deleting the app (I will not delete the app)']) };
+  },
+  ad() {
+    const p = R([
+      ['Weighted Anxiety Hoodie', 89, 'Feels like a hug from someone who wants your money.'],
+      ['Dopamine Detox Journal', 34, '200 blank pages you will never open.'],
+      ['Blue-Light Blocking Pillow', 59, 'Sleep next to your phone without the guilt.'],
+      ['Productivity Smart Ring', 299, 'Tracks how unproductive you are, in real time.'],
+      ['Scroll-Free Phone Case', 45, 'Covers the whole screen. Sold out twice.'],
+      ['Gratitude Alarm Clock', 72, 'Wakes you up by listing what you didn\'t get done.'],
+    ]);
+    const left = rint(2, 9);
+    return { a: { name: R(['CalmCore™', 'Grindset Supply', 'Unplugd', 'Mindful Merch Co.']), handle: 'ad', h: 45, sponsored: 1 },
+      text: `Only ${left} left in stock. ${p[2]}`, media: { t: 'ad', prod: p[0], price: p[1], left },
+      trick: 'scarcity', mood: -1, anx: 3, noComment: true };
+  },
+  poll() {
+    const q = R([
+      ['Is it just me or is everything getting worse?', 'Yes, obviously', 'No', 89],
+      ['Should you go to bed right now?', 'One more post', 'Yes', 84],
+      ['Do you feel better or worse than when you opened this app?', 'Worse', 'Better', 81],
+      ['Is it too late to fix your sleep schedule?', 'Yes', 'No', 77],
+    ]);
+    return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2, noComment: true };
+  },
+  bait() {
+    return { a: Math.random() < .5 ? A.bait : A.well, text: R([
+      'Reply "YES" if you\'re also scrolling instead of sleeping 🙋',
+      'Like this if you\'d rather stay in bed forever. Scroll past if you hate puppies.',
+      '5 signs you\'re addicted to your phone (read on your phone):<br>1. You\'re reading this.<br>2. You will keep reading.',
+      'Only 1% of people will read this to the end. Prove you\'re one of them. 👇',
+      'Comment one word that describes your week. I\'ll start: "scrolling."',
+    ]), trick: 'bait', mood: -1, anx: 1, comment: R(['YES', 'yes 😭', 'scrolling', 'tired', 'here', 'commenting so I see this later']) };
+  },
+};
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2]];
+const WSUM = WEIGHTS.reduce((s, w) => s + w[1], 0);
+let lastKind = '';
+function pickKind() {
+  for (let i = 0; i < 6; i++) {
+    let r = Math.random() * WSUM;
+    for (const [k, w] of WEIGHTS) { r -= w; if (r <= 0) { if (k !== lastKind) { lastKind = k; return k; } break; } }
+  }
+  return lastKind = 'rage';
+}
+
+/* ---------- state ---------- */
+const S = { start: Date.now(), seen: 0, dist: 0, mood: 100, anx: 0, tricks: {}, made: 0, sinceReality: 0, realityIx: 0, caught: false, lastScroll: Date.now(), badge: 3, paused: false };
+const feed = $('#feed');
+const sentinel = document.createElement('div');
+
+/* ---------- media ---------- */
+const LUX = [
+  'radial-gradient(circle at 70% 38%, #ffe7a3 0 9%, transparent 10%), linear-gradient(180deg, #ff9a6b 0%, #ff6f91 42%, #3a6ea5 43%, #12406b 100%)',
+  'radial-gradient(circle at 30% 30%, #fff6d6 0 7%, transparent 8%), linear-gradient(180deg, #7fd3ff 0%, #b2ecff 50%, #22b5b5 51%, #0b6f86 100%)',
+  'radial-gradient(circle at 60% 55%, #ffd36b 0 12%, transparent 13%), linear-gradient(180deg, #2d1b4e 0%, #b8437a 50%, #ff9a5a 62%, #1a3350 63%, #0d1d33 100%)',
+  'linear-gradient(160deg, #0f3a2f 0%, #2f8f6b 40%, #e8d29a 41%, #e0c07e 60%, #2b8fb8 61%, #135c80 100%)',
+];
+function chartSVG() {
+  let y = 20, pts = [];
+  for (let i = 0; i <= 40; i++) { y += (Math.random() - .3) * 7; y = clamp(y, 6, 104); pts.push(`${(i * 10).toFixed(0)},${y.toFixed(1)}`); }
+  const line = pts.join(' ');
+  return `<svg viewBox="0 0 400 110" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="g${S.made}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff3358" stop-opacity=".35"/><stop offset="1" stop-color="#ff3358" stop-opacity="0"/></linearGradient></defs>
+    <line x1="0" x2="400" y1="36" y2="36" stroke="#2a1a1e"/><line x1="0" x2="400" y1="72" y2="72" stroke="#2a1a1e"/>
+    <polygon points="0,110 ${line} 400,110" fill="url(#g${S.made})"/>
+    <polyline points="${line}" fill="none" stroke="#ff3358" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
+  </svg>`;
+}
+function mediaHTML(m) {
+  if (!m) return '';
+  switch (m.t) {
+    case 'breaking': return `<div class="media m-breaking"><div class="flag"><span>BREAKING</span><em>LIVE · ${fmt(rint(4000, 90000))} watching</em></div><h3>${esc(m.h)}</h3><div class="ticker"><span>DEVELOPING ··· MORE DETAILS SOON ··· STAY TUNED ··· EXPERTS REACT ··· WHAT THIS MEANS FOR YOU ··· DON'T LOOK AWAY ··· DEVELOPING ···</span></div></div>`;
+    case 'chart': return `<div class="media m-chart"><div class="row"><span class="sym">${esc(m.sym)} · 24H</span><span class="pct">−${m.pct}%</span></div>${chartSVG()}</div>`;
+    case 'lux': return `<div class="media m-lux" style="background:${LUX[m.g]}"><div class="place">${esc(m.place)}</div></div>`;
+    case 'quote': return `<div class="media m-quote"><p>${esc(m.q)}<small>posted at 3:0${rint(1, 9)} AM</small></p></div>`;
+    case 'ad': {
+      const pct = Math.round(100 - m.left * 4);
+      return `<div class="media m-ad"><div class="prod">${esc(m.prod)}</div><div class="price">$${m.price}<s>$${Math.round(m.price * 2.4)}</s></div>
+        <div class="bar"><i style="width:${pct}%"></i></div>
+        <div class="row"><span class="countdown" data-cd="${Date.now() + rint(90, 290) * 1000}">Sale ends in 04:59</span><button class="shop" data-shop>Shop now</button></div></div>`;
+    }
+    case 'poll': return `<div class="poll" data-pct="${m.pct}">${m.o.map((o, i) => `<button data-opt="${i}"><i class="fill"></i><span>${esc(o)}</span><span class="pv">${i ? 100 - m.pct : m.pct}%</span></button>`).join('')}<span class="poll-note">${fmt(rint(20000, 400000))} votes · ${rint(2, 9)} hours left</span></div>`;
+  }
+  return '';
+}
+
+/* ---------- icons ---------- */
+const I = {
+  heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.9 4 7.3 4c2 0 3.5 1.1 4.7 2.7C13.2 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.7C19.5 15.4 12 20 12 20Z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5Z"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7h16v-7M12 3v12M7 8l5-5 5 5"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="currentColor" aria-label="verified"><path d="M12 2l2.4 1.8 3-.2.9 2.9 2.5 1.7-1 2.8 1 2.8-2.5 1.7-.9 2.9-3-.2L12 22l-2.4-1.8-3 .2-.9-2.9-2.5-1.7 1-2.8-1-2.8 2.5-1.7.9-2.9 3 .2L12 2Zm-1.2 13.6 5.6-5.6-1.4-1.4-4.2 4.2-2-2-1.4 1.4 3.4 3.4Z"/></svg>',
+};
+
+/* ---------- build ---------- */
+function makePost(kind) {
+  const p = POOL[kind || pickKind()]();
+  S.made++;
+  const el = document.createElement('article');
+  el.className = 'post';
+  el.dataset.trick = p.trick; el.dataset.mood = p.mood; el.dataset.anx = p.anx;
+  const a = p.a;
+  const likes = rint(p.hot ? 8000 : 300, p.hot ? 240000 : 60000);
+  const initials = a.name.replace(/[^A-Za-z ]/g, '').split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?';
+  const when = a.sponsored ? '<span class="sponsored">Sponsored</span>' : `@${esc(a.handle)} · ${R(['just now', '1m', '2m', '4m', '9m', '14m', '32m'])}`;
+  const proof = p.proofMutual
+    ? `<div class="p-proof"><span class="faces">${randFace()}${randFace()}${randFace()}</span><span><b>${rint(12, 48)} people from your school</b> reacted</span></div>`
+    : `<div class="p-proof"><span class="faces">${randFace()}${randFace()}</span><span>Liked by <b>${R(FIRST).toLowerCase()}_${rint(1, 99)}</b> and <span data-likes>${fmt(likes)}</span> others</span></div>`;
+  el.innerHTML = `${tag(p.trick)}
+    <header class="p-head"><div class="av" style="--h:${a.h}">${esc(initials)}</div>
+      <div class="who"><span class="name">${esc(a.name)}${a.v ? I.check : ''}</span><span class="meta">${when}</span></div></header>
+    <div class="p-body">${p.text}</div>
+    ${mediaHTML(p.media)}
+    ${proof}
+    <footer class="p-actions">
+      <button class="act like" data-like aria-label="Like">${I.heart}<span class="n" data-n="${likes}">${fmt(likes)}</span></button>
+      <button class="act" data-comment aria-label="Comments">${I.chat}<span class="n">${fmt(Math.round(likes * (p.hot ? .4 : .06)))}</span></button>
+      <button class="act" data-share aria-label="Share">${I.share}<span class="n">${fmt(Math.round(likes * .03))}</span></button>
+    </footer>
+    ${p.comment && !p.noComment ? `<div class="p-comment"><span class="lbl">Top comment · ${fmt(rint(800, 30000))} likes</span><b>@${R(['ratio_king', 'well.actually', 'just_a_question', 'thread.reader', 'anon' + rint(100, 999), 'sleepless.sam'])}</b> ${esc(p.comment)}</div>` : ''}`;
+  postObs.observe(el);
+  return el;
+}
+
+const REALITY = [
+  () => 'This feed has no bottom. It was built without one, so there is never a natural place to stop.',
+  () => 'Notice how you feel right now compared to when you opened this. <em>Better, or worse?</em>',
+  () => 'Bad news catches your eye faster than good news. Researchers call it negativity bias. The ranking system is tuned to it.',
+  () => 'You can\'t fix any of the problems you\'ve read about in the last few minutes. Reading more about them won\'t change that.',
+  () => `The red badge on the bell says <em>${S.badge}</em>. It goes up on a timer. Nothing actually happened.`,
+  () => 'Not knowing whether the next post will be good is the hook. A slot machine works the same way.',
+  () => 'Everyone in this feed is showing you their best day. You are comparing it to your whole life.',
+  () => `Your thumb has pushed this page <em>${distStr()}</em>. The rest of you hasn't moved.`,
+  () => `It's ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}. Is this what you wanted to be doing right now?`,
+  () => '"Breaking" news with no details isn\'t information. It\'s a reason to come back.',
+  () => `You've seen ${S.seen} posts. Can you remember three of them?`,
+  () => 'You\'re allowed to stop. Nothing here needs you.',
+];
+function makeReality() {
+  const el = document.createElement('div');
+  el.className = 'reality';
+  const line = REALITY[S.realityIx % REALITY.length]();
+  S.realityIx++;
+  el.innerHTML = `<span class="eyebrow">Pause · ${timeStr()} in · ${S.seen} posts</span><p>${line}</p>
+    <div class="r-actions"><button class="solid" data-toll>See what this cost</button><button data-dismiss>Keep scrolling</button></div>`;
+  return el;
+}
+function makeCaught() {
+  const el = document.createElement('div');
+  el.className = 'caught';
+  el.innerHTML = `${tag('ending')}<div class="ring">✓</div><h3>You're all caught up!</h3><p>You've seen every new post from the past 3 days. Congratulations, you finished the internet. Your reward is more internet.</p><p class="but-more">…but here's more to make sure you stay engaged. ↓</p>`;
+  const s = document.createElement('div');
+  s.className = 'suggested'; s.textContent = 'Suggested for you (forever)';
+  return [el, s];
+}
+
+let loading = false;
+function loadMore(n = 8) {
+  if (loading) return;
+  loading = true;
+  const sk = document.createElement('div');
+  sk.className = 'loader';
+  sk.innerHTML = '<div class="skel"></div><div class="skel short"></div>';
+  feed.insertBefore(sk, sentinel);
+  setTimeout(() => {
+    sk.remove();
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < n; i++) {
+      frag.appendChild(makePost());
+      S.sinceReality++;
+      if (!S.caught && S.made >= 36) { S.caught = true; makeCaught().forEach(e => frag.appendChild(e)); }
+      if (S.sinceReality >= rint(9, 13)) { S.sinceReality = 0; frag.appendChild(makeReality()); }
+    }
+    feed.insertBefore(frag, sentinel);
+    loading = false;
+    // If the sentinel is still in view (tall screens), keep filling.
+    const r = sentinel.getBoundingClientRect();
+    if (r.top < innerHeight + 900) loadMore();
+  }, S.made === 0 ? 0 : rint(250, 900));
+}
+
+/* ---------- observers ---------- */
+const postObs = new IntersectionObserver(entries => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    const el = e.target;
+    postObs.unobserve(el);
+    S.seen++;
+    S.mood = clamp(S.mood + Number(el.dataset.mood) * 0.3, 3, 100);
+    S.anx = clamp(S.anx + Number(el.dataset.anx) * (S.anx > 70 ? .12 : .3), 0, 100);
+    S.tricks[el.dataset.trick] = (S.tricks[el.dataset.trick] || 0) + 1;
+    milestone();
+  }
+  renderToll();
+}, { threshold: 0.6 });
+new IntersectionObserver(es => { if (es[0].isIntersecting) loadMore(); }, { rootMargin: '900px 0px' }).observe(sentinel);
+
+/* ---------- scroll + distance ---------- */
+let lastY = scrollY;
+addEventListener('scroll', () => {
+  const d = scrollY - lastY;
+  if (d > 0) S.dist += d;
+  lastY = scrollY;
+  S.lastScroll = Date.now();
+}, { passive: true });
+
+const PX_PER_M = 96 / 0.0254;
+const LAND = [[0.0856, 'credit cards'], [0.3, 'rulers'], [1.75, 'grown adults'], [5.5, 'giraffes'], [30, 'blue whales'], [93, 'Statues of Liberty'], [330, 'Eiffel Towers'], [828, 'record-holding skyscrapers'], [8849, 'Mount Everests']];
+const meters = () => S.dist / PX_PER_M;
+function distStr() { const m = meters(); return m >= 1000 ? (m / 1000).toFixed(2) + ' km' : m.toFixed(1) + ' m'; }
+function distCmp() {
+  const m = meters();
+  let pick = null;
+  for (const l of LAND) if (m >= l[0]) pick = l;
+  if (!pick) return 'Just getting started.';
+  const x = m / pick[0];
+  return `About ${x < 10 ? x.toFixed(1) : Math.round(x)} ${pick[1]}, stacked.`;
+}
+const secs = () => Math.floor((Date.now() - S.start) / 1000);
+function timeStr() { const s = secs(), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, ss = String(s % 60).padStart(2, '0'); return h ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`; }
+
+/* ---------- toll render ---------- */
+function renderToll() {
+  const t = timeStr(), d = distStr(), mood = Math.round(S.mood), anx = Math.round(S.anx);
+  $('#sTime').textContent = t; $('#bTime').textContent = t;
+  $('#sPosts').textContent = S.seen; $('#bPosts').textContent = S.seen;
+  $('#sDist').textContent = d; $('#bDist').textContent = d;
+  $('#sDistCmp').textContent = distCmp();
+  $('#mMoodN').textContent = mood; $('#bMood').textContent = mood;
+  const mm = $('#mMood'); mm.style.width = mood + '%';
+  mm.style.background = mood > 60 ? 'var(--good)' : mood > 30 ? 'var(--gold)' : 'var(--hot)';
+  $('#mAnxN').textContent = anx; $('#mAnx').style.width = anx + '%';
+  document.documentElement.style.setProperty('--anx', anx);
+  const list = Object.entries(S.tricks).sort((a, b) => b[1] - a[1]);
+  $('#tricksList').innerHTML = list.length ? list.map(([k, n]) => `<li><span>${TRICKS[k][0]}</span><span>×${n}</span></li>`).join('') : '<li class="empty">None yet. Give it a few seconds.</li>';
+  const s = secs();
+  $('#instead').innerHTML = `<span>Read <b>${Math.floor(s / 75)}</b> pages of a book</span><span>Walked <b>${fmt(Math.round(s * 1.7))}</b> steps</span><span>Listened to <b>${Math.floor(s / 210)}</b> whole songs</span><span>Been asleep for <b>${Math.floor(s / 60)}</b> minutes</span>`;
+}
+
+/* ---------- toasts ---------- */
+function toast(html, opts = {}) {
+  const el = document.createElement('div');
+  el.className = 'toast' + (opts.reward ? ' reward' : '');
+  el.innerHTML = `<div class="t-row"><span class="t-ico" aria-hidden="true">${opts.ico || '🔔'}</span><div>${html}</div></div>${opts.trick ? tag(opts.trick) : ''}`;
+  const box = $('#toasts');
+  box.appendChild(el);
+  while (box.children.length > 3) box.firstChild.remove();
+  const kill = () => { el.classList.add('out'); setTimeout(() => el.remove(), 300); };
+  el.addEventListener('click', kill);
+  setTimeout(kill, opts.ms || 4800);
+}
+function floaty(x, y, txt) {
+  const f = document.createElement('div');
+  f.className = 'floaty'; f.textContent = txt;
+  f.style.left = x + 'px'; f.style.top = y + 'px';
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 1000);
+}
+
+const MILESTONES = { 10: ['🎉', '<b>10 posts!</b> You\'re a natural.'], 25: ['🔥', '<b>Streak started.</b> Come back tomorrow so you don\'t lose it.'], 50: ['🏅', '<b>Thumb Athlete.</b> You\'re in the top 5% of scrollers today.'], 100: ['💯', '<b>Centurion.</b> 100 posts. Your friends would be proud.'], 200: ['👑', '<b>Elite Scroller.</b> No one has ever been this informed.'] };
+function milestone() {
+  const m = MILESTONES[S.seen] || (S.seen > 200 && S.seen % 100 === 0 ? ['🌀', `<b>${S.seen} posts.</b> There is no prize at the end. There is no end.`] : null);
+  if (m) toast(m[1], { ico: m[0], reward: true, trick: 'reward', ms: 5200 });
+}
+
+/* ---------- bell ---------- */
+const NOTIFS = [
+  () => ['Someone viewed your profile', 'Find out who →'],
+  () => [`${rint(2, 6)} people you may know just joined`, 'Say hi before they forget you'],
+  () => ['You have memories from 4 years ago', 'You looked happier then'],
+  () => [`${classmate().name} reacted to a post you saw`, 'See what they think'],
+  () => ['Trending near you: something is happening', 'Tap to see what'],
+  () => [`You're missing posts from ${R(FIRST)}`, 'They posted 3 times today'],
+  () => [`${rint(8, 40)} new posts in your feed`, 'Don\'t fall behind'],
+];
+const badgeEl = $('#badge'), notifEl = $('#notif');
+let notifQueue = [];
+function bumpBadge(n) {
+  S.badge += n;
+  for (let i = 0; i < n; i++) notifQueue.unshift(R(NOTIFS)());
+  notifQueue = notifQueue.slice(0, 6);
+  badgeEl.hidden = false;
+  badgeEl.textContent = S.badge > 99 ? '99+' : S.badge;
+  badgeEl.classList.remove('bump'); void badgeEl.offsetWidth; badgeEl.classList.add('bump');
+  document.title = `(${S.badge}) Doomfeed`;
+}
+notifQueue = [NOTIFS[0](), NOTIFS[2](), NOTIFS[6]()];
+$('#bell').addEventListener('click', e => {
+  e.stopPropagation();
+  if (!notifEl.hidden) { notifEl.hidden = true; return; }
+  notifEl.innerHTML = `<div class="n-h">Notifications</div>${notifQueue.map(([t, s]) => `<div class="n-i"><div>${esc(t)}<small>${esc(s)}</small></div></div>`).join('')}<div class="trick-tag"><b>${TRICKS.reward[0]}</b>None of these lead anywhere. The number climbs on a random timer so you keep opening the app.</div>`;
+  notifEl.hidden = false;
+  S.badge = 0; badgeEl.hidden = true; document.title = 'Doomfeed';
+  setTimeout(() => bumpBadge(1), rint(2500, 5000));
+});
+document.addEventListener('click', e => { if (!notifEl.hidden && !e.target.closest('.bell-wrap')) notifEl.hidden = true; });
+
+/* ---------- new posts pill ---------- */
+const pill = $('#newpill');
+let pillCount = 0;
+function showPill() {
+  if (scrollY < 600) return;
+  pillCount = rint(6, 40);
+  $('#newpillText').textContent = `↑ ${pillCount} new posts`;
+  pill.classList.add('show');
+}
+pill.addEventListener('click', () => {
+  pill.classList.remove('show');
+  const first = feed.firstElementChild;
+  for (let i = 0; i < 3; i++) feed.insertBefore(makePost(R(['breaking', 'alert', 'rage', 'classmate'])), first);
+  scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+  toast(`You pulled up ${3} of ${pillCount} new posts. Now scroll back down past everything you already saw.`, { ico: '↑', trick: 'reward', ms: 5200 });
+});
+
+/* ---------- feed interactions ---------- */
+feed.addEventListener('click', e => {
+  const t = e.target;
+  const like = t.closest('[data-like]');
+  if (like) {
+    const n = like.querySelector('.n');
+    const v = Number(n.dataset.n) + (like.classList.toggle('liked') ? 1 : -1);
+    n.dataset.n = v; n.textContent = fmt(v);
+    if (like.classList.contains('liked')) {
+      const r = like.getBoundingClientRect();
+      floaty(r.left + 10, r.top - 6, '+1 hit');
+      S.mood = clamp(S.mood + 2, 0, 100); renderToll();
+      setTimeout(() => { S.mood = clamp(S.mood - 3, 3, 100); renderToll(); }, 4000);
+    }
+    return;
+  }
+  if (t.closest('[data-more]')) { e.preventDefault(); toast('<b>Keep scrolling to find out.</b> The answer is somewhere further down. (It isn\'t.)', { ico: '👀', trick: 'curiosity' }); return; }
+  if (t.closest('[data-comment]')) { toast(`<b>${fmt(rint(1200, 40000))} people are arguing in there.</b> You won't change anyone's mind, but you could try for an hour.`, { ico: '💬', trick: 'rage' }); return; }
+  if (t.closest('[data-share]')) { toast('<b>Shared to your story.</b> Now three friends are scrolling too. (Not really. Nothing was shared.)', { ico: '📤', trick: 'proof' }); return; }
+  if (t.closest('[data-shop]')) { toast('<b>Added to cart.</b> There is no product. There is no cart. The timer will reset anyway.', { ico: '🛒', trick: 'scarcity' }); return; }
+  const opt = t.closest('[data-opt]');
+  if (opt) {
+    const poll = opt.closest('.poll');
+    if (poll.classList.contains('voted')) return;
+    poll.classList.add('voted');
+    const pct = Number(poll.dataset.pct);
+    poll.querySelectorAll('[data-opt]').forEach((b, i) => { b.querySelector('.fill').style.width = (i ? 100 - pct : pct) + '%'; });
+    poll.querySelector('.poll-note').textContent = opt.dataset.opt === '0' ? `You agree with ${pct}% of people. Feels good to belong, right?` : `Only ${100 - pct}% of people agree with you. Feels a little lonely, right?`;
+    return;
+  }
+  if (t.closest('[data-toll]')) { openToll(); return; }
+  const dis = t.closest('[data-dismiss]');
+  if (dis) { const card = dis.closest('.reality'); card.style.opacity = .55; dis.textContent = 'Okay. Scrolling.'; dis.disabled = true; }
+});
+
+/* ---------- countdowns + ticking numbers ---------- */
+function tick() {
+  if (S.paused) return;
+  const now = Date.now();
+  document.querySelectorAll('[data-cd]').forEach(el => {
+    let end = Number(el.dataset.cd);
+    if (end <= now) { end = now + 299000; el.dataset.cd = end; }
+    const s = Math.ceil((end - now) / 1000);
+    el.textContent = `Sale ends in ${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+  });
+  const recent = feed.querySelectorAll('.post .act.like .n');
+  const start = Math.max(0, recent.length - 24);
+  for (let i = 0; i < 4 && recent.length; i++) {
+    const n = recent[rint(start, recent.length - 1)];
+    const v = Number(n.dataset.n) + rint(3, 180);
+    n.dataset.n = v; n.textContent = fmt(v);
+    n.classList.add('tick'); setTimeout(() => n.classList.remove('tick'), 500);
+  }
+  const live = $('#liveN');
+  live.textContent = (Number(live.textContent.replace(/,/g, '')) + rint(-40, 70)).toLocaleString('en-US');
+  renderToll();
+}
+setInterval(tick, 1000);
+
+/* ---------- engagement scheduler ---------- */
+function schedule(fn, min, max) { const go = () => { if (!S.paused && !document.hidden) fn(); setTimeout(go, rint(min, max)); }; setTimeout(go, rint(min, max)); }
+schedule(() => bumpBadge(rint(1, 3)), 6000, 15000);
+schedule(showPill, 18000, 32000);
+schedule(() => {
+  const [t, s] = R(NOTIFS)();
+  toast(`<b>${esc(t)}</b><br><span style="color:var(--muted)">${esc(s)}</span>`, { ico: '🔔', trick: 'reward' });
+}, 22000, 45000);
+// Idle nudge: stop scrolling and the app notices.
+setInterval(() => {
+  if (S.paused || document.hidden) return;
+  if (Date.now() - S.lastScroll > 9000 && S.seen > 2) {
+    S.lastScroll = Date.now();
+    toast(R([
+      `<b>Still there?</b> ${rint(20, 90)} people just reacted to a post you'd like. ↓`,
+      '<b>Something big just happened.</b> Scroll down to catch up.',
+      `<b>Don't stop now.</b> ${R(FIRST)} posted something you'll want to see.`,
+      '<b>You were on a roll.</b> Pick up where you left off ↓',
+    ]), { ico: '👋', trick: 'proof' });
+  }
+}, 1500);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) document.title = `(${Math.max(S.badge, 1)}) Come back, you're missing out`;
+  else { document.title = S.badge ? `(${S.badge}) Doomfeed` : 'Doomfeed'; if (S.seen > 0) toast('<b>Welcome back!</b> We saved your spot. We always will.', { ico: '🫶', trick: 'reward' }); }
+});
+
+/* ---------- x-ray ---------- */
+const xrayBtn = $('#xrayBtn');
+xrayBtn.addEventListener('click', () => {
+  const on = document.body.classList.toggle('xray');
+  xrayBtn.setAttribute('aria-pressed', on);
+  xrayBtn.firstChild.textContent = on ? 'Hide the tricks ' : 'Reveal the tricks ';
+});
+
+/* ---------- mobile sheet ---------- */
+const toll = $('#toll'), scrim = $('#scrim');
+function openToll() {
+  if (matchMedia('(min-width: 980px)').matches) {
+    toll.animate([{ boxShadow: '0 0 0 3px var(--hot)' }, { boxShadow: '0 0 0 0 transparent' }], { duration: 1200 });
+    return;
+  }
+  toll.classList.add('open'); scrim.hidden = false;
+}
+const closeToll = () => { toll.classList.remove('open'); scrim.hidden = true; };
+$('#openSheet').addEventListener('click', openToll);
+$('#closeSheet').addEventListener('click', closeToll);
+scrim.addEventListener('click', closeToll);
+
+/* ---------- log off (with every trick in the book) ---------- */
+function modal(html) {
+  const m = document.createElement('div');
+  m.className = 'modal';
+  m.innerHTML = html;
+  document.body.appendChild(m);
+  return m;
+}
+$('#logoff').addEventListener('click', () => {
+  S.paused = true;
+  const m = modal(`<div class="dialog" role="dialog" aria-modal="true" aria-labelledby="d1">
+    <div class="hero-ico" aria-hidden="true">🥺</div>
+    <h3 id="d1">Leaving so soon?</h3>
+    <p><b style="color:var(--fg)">${rint(23, 61)} new posts</b> from people you follow are waiting. ${R(FIRST)} just posted for the first time in a while.</p>
+    <button class="big" data-stay>Keep scrolling</button>
+    <button class="tiny" data-next>No thanks, I don't care about my friends</button>
+    ${tag('shame')}
+  </div>`);
+  m.addEventListener('click', e => {
+    if (e.target.closest('[data-stay]')) { m.remove(); S.paused = false; toast('<b>Good choice.</b> We knew you\'d stay.', { ico: '🫶', trick: 'reward' }); }
+    if (e.target.closest('[data-next]')) {
+      m.querySelector('.dialog').outerHTML = `<div class="dialog" role="dialog" aria-modal="true" aria-labelledby="d2">
+        <div class="hero-ico" aria-hidden="true">🔥</div>
+        <h3 id="d2">You'll lose your ${S.seen >= 25 ? 'streak' : 'progress'}</h3>
+        <p>You've scrolled <b style="color:var(--fg)">${distStr()}</b> today. If you leave now, it won't count toward your weekly badge.</p>
+        <button class="big" data-stay>Save my streak</button>
+        <button class="tiny" data-final>Lose everything and leave</button>
+        ${tag('shame')}
+      </div>`;
+    }
+    if (e.target.closest('[data-final]')) { m.remove(); showReceipt(); }
+  });
+});
+
+function showReceipt() {
+  S.paused = true;
+  const top = Object.entries(S.tricks).sort((a, b) => b[1] - a[1]);
+  const totalT = top.reduce((s, x) => s + x[1], 0);
+  const s = secs();
+  const m = modal(`<div class="receipt" role="dialog" aria-modal="true" aria-labelledby="rc">
+    <div class="sub">Receipt · ${new Date().toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</div>
+    <h3 id="rc">What the feed took</h3>
+    <dl>
+      <div><dt>Time</dt><dd>${timeStr()}</dd></div>
+      <div><dt>Posts consumed</dt><dd>${S.seen}</dd></div>
+      <div><dt>Thumb distance</dt><dd>${distStr()}</dd></div>
+      <div><dt>Mood</dt><dd>100 → ${Math.round(S.mood)}</dd></div>
+      <div><dt>Anxiety</dt><dd>0 → ${Math.round(S.anx)}</dd></div>
+      <div><dt>Manipulation attempts</dt><dd>${totalT}</dd></div>
+      ${top.slice(0, 4).map(([k, n]) => `<div><dt>&nbsp;&nbsp;${TRICKS[k][0]}</dt><dd>×${n}</dd></div>`).join('')}
+      <div><dt>Things you learned</dt><dd>0</dd></div>
+      <div><dt>Problems you solved</dt><dd>0</dd></div>
+    </dl>
+    <hr class="rule">
+    <p class="close-line">The feed would have kept going forever. It had ${fmt(9e15)} more posts ready. You were the only thing that could stop it, and you did.</p>
+    <div class="r-actions"><button class="solid" data-out>Put the phone down</button><button data-back>Back to the feed</button></div>
+  </div>`);
+  m.addEventListener('click', e => {
+    if (e.target.closest('[data-back]')) { m.remove(); S.paused = false; }
+    if (e.target.closest('[data-out]')) {
+      m.remove();
+      const o = document.createElement('div');
+      o.className = 'outside';
+      o.innerHTML = `<div><p>Close this tab. Drink some water. Text one person you actually like.</p><small>${s < 60 ? 'That was quick. Good.' : `That was ${timeStr()} well spent finding out.`}</small><button data-again>I'm going back in</button></div>`;
+      document.body.appendChild(o);
+      o.querySelector('[data-again]').addEventListener('click', () => { o.remove(); S.paused = false; });
+    }
+  });
+}
+
+/* ---------- boot ---------- */
+feed.appendChild(sentinel);
+loadMore(10);
+renderToll();
+})();
+</script>
+</body>
+</html>
