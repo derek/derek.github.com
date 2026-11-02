@@ -207,8 +207,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .m-chart .sym { font: 600 13px var(--f-mono); color: var(--muted); }
 .m-chart .pct { font: 800 28px var(--f-display); color: var(--hot); font-variant-numeric: tabular-nums; }
 .m-chart svg { width: 100%; height: 110px; display: block; margin-top: 4px; }
-.m-lux { aspect-ratio: 4 / 3; display: flex; align-items: flex-end; padding: 16px; }
-.m-lux .place { font: 700 22px/1.05 var(--f-display); color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.45); letter-spacing: -0.02em; max-width: 16ch; }
 .m-video {
   aspect-ratio: 4 / 5; max-height: 72vh; width: 100%; display: grid; place-items: center; padding: 28px 22px; color: #fff;
   background: linear-gradient(125deg, hsl(var(--vh) 70% 30%), hsl(calc(var(--vh) + 70) 75% 45%), hsl(calc(var(--vh) + 140) 70% 28%), hsl(var(--vh) 70% 30%));
@@ -236,10 +234,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
   text-shadow: 2px 2px 0 #5a1030, 0 0 14px rgba(0,0,0,.55); text-wrap: balance;
 }
 .g-mark { position: absolute; right: 12px; bottom: 10px; font: italic 600 11px var(--f-body); color: rgba(255,255,255,.85); text-shadow: 0 1px 4px rgba(0,0,0,.6); }
-.m-photos { position: relative; background: #000; }
+.m-photo, .m-photos { position: relative; background: #000; }
+.m-photo img, .ph-track img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; -webkit-user-drag: none; user-select: none; }
+.ai-chip { left: 10px; bottom: 10px; }
 .ph-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .ph-track::-webkit-scrollbar { display: none; }
-.ph-track canvas { flex: 0 0 100%; width: 100%; height: auto; aspect-ratio: 1 / 1; display: block; scroll-snap-align: start; }
+.ph-track img { flex: 0 0 100%; scroll-snap-align: start; }
 .ph-loc, .ph-count { position: absolute; top: 10px; font: 600 12px var(--f-body); color: #fff; background: rgba(0,0,0,.45); padding: 4px 9px; border-radius: 999px; pointer-events: none; }
 .ph-loc { left: 10px; }
 .ph-count { right: 10px; font-family: var(--f-mono); }
@@ -291,6 +291,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .intro h2 { font: 800 clamp(26px, 6vw, 34px)/1.05 var(--f-display); letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
 .intro .eyebrow { color: #a3122f; }
 .intro p { font-size: clamp(18px, 4vw, 21px); }
+.intro .ai-note { font: 500 15px/1.45 var(--f-body); color: var(--ink-muted); border-left: 3px solid #a3122f; padding-left: 12px; }
 .reality .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .reality button { font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ink); }
 .reality button.solid { background: var(--ink); color: var(--paper); }
@@ -613,7 +614,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
     <button class="xray-toggle" id="xrayBtn" aria-pressed="false">Reveal the tricks <span class="sw" aria-hidden="true"></span></button>
     <button class="sw-btn" id="buzzBtn" aria-pressed="true">Buzz my phone with notifications (Android) <span class="sw" aria-hidden="true"></span></button>
     <button class="forget" id="forgetBtn">Forget me: delete what Doomfeed saved in this browser</button>
-    <p class="fine">Doomfeed is a parody. Every post is generated. Your stats are saved only in this browser. Nothing here is real except the time you spent.</p>
+    <p class="fine">Doomfeed is a parody, made entirely with AI. Every post and photo is generated. Your stats are saved only in this browser. Nothing here is real except the time you spent.</p>
   </aside>
 </main>
 
@@ -685,6 +686,7 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  wellness: ['my breakfast was cold coffee and regret', 'what time do you WAKE UP', 'saving this for the version of me that has her life together', 'link in bio to what, exactly', 'I got winded reading this'],
   island: ['how is everyone on vacation except me', 'that water isn\'t real. I refuse.', 'location?? (I will never go)', 'me looking at this from a parking garage', 'the drone shot broke me', 'the fact that this is someone\'s Tuesday', 'unfollowing for my mental health (I will not unfollow)'],
   guilt: ['Called mine right after reading this 😭', 'AMEN 🙏', 'My kids haven\'t called in 3 weeks. Sharing so they see it.', 'Typed amen. Didn\'t call. Will call tomorrow.', 'Shared to my wall 💕💕💕', 'This is why I\'m leaving everything to the cat', 'my grandma sent me this. directly. in a text.'],
   video: ['the ending 💀', 'where is part 2??', 'watched this 6 times and I still don\'t get it', 'I was not ready for that', 'who else is here at 2am', 'part 2 or I riot'],
@@ -752,20 +754,21 @@ const POOL = {
     return { a: Math.random() < .5 ? A.rage : A.rage2, text, trick: 'rage', mood: -5, anx: 3, hot: true };
   },
   lux() {
-    const place = R(['Somewhere on the coast', 'A villa you can\'t afford', 'The rooftop pool, again', 'Island number four this year', 'An undisclosed beach']);
+    const [id, place] = R([['money-firstclass', 'Somewhere over the Pacific'], ['social-rooftop', 'The rooftop, again'], ['social-dinner', 'Course 9 of 14'], ['island-cocktail', 'A villa you can\'t afford'], ['island-feet', 'An undisclosed beach']]);
     return { a: A.lux, text: `Day ${rint(80, 340)} of not checking email. Remember: the 9 to 5 is a choice. ✨`,
-      media: { t: 'lux', place, g: rint(0, 3) }, trick: 'comparison', mood: -6, anx: 2 };
+      media: { t: 'photo', id, loc: place }, trick: 'comparison', mood: -6, anx: 2 };
   },
   grind() {
     const ach = R(['already own three rental properties', 'paid off my parents\' house so they could quit their jobs and retire', 'ran 14 marathons this year', 'made my first million before most people finish college', 'sold my second company', 'read 112 books this year']);
     return { a: A.grind, text: `Haven't slept past 4:30 in 3 years. ${rint(22, 26)} years old, ${ach}. Sleep is a choice. So is being average. 💪`,
+      media: Math.random() < .75 ? { t: 'photo', id: R(['money-car', 'money-watch', 'money-firstclass', 'career-office']) } : null,
       trick: 'comparison', mood: -6, anx: 3 };
   },
   classmate() {
     const c = classmate();
-    const ev = R(['got engaged in Santorini 💍', 'just became a VP at 29', 'bought a house with a real garden', 'launched a company that got funded', 'posted photos from another "little getaway"', 'ran a marathon and somehow looked rested', 'had twins and is already back at the gym', 'got a book deal', 'moved to Lisbon "for the light"', 'paid off their student loans', 'adopted a very photogenic dog', 'started a podcast that people actually listen to', 'got a TED talk', 'renovated a farmhouse by hand', 'is now fluent in Japanese', 'won an award you didn\'t know existed']);
+    const [ev, id] = R([['got engaged in Santorini 💍', 'milestone-ring'], ['just became a VP at 29', 'career-office'], ['bought a house with a real garden', 'milestone-kitchen'], ['launched a company that got funded', null], ['posted photos from another "little getaway"', 'island-bungalows'], ['ran a marathon and somehow looked rested', null], ['had twins and is already back at the gym', null], ['got a book deal', null], ['moved to Lisbon "for the light"', 'social-rooftop'], ['paid off their student loans', null], ['adopted a very photogenic dog', 'milestone-puppy'], ['started a podcast that people actually listen to', null], ['got a TED talk', null], ['renovated a farmhouse by hand', 'milestone-kitchen'], ['is now fluent in Japanese', 'social-dinner'], ['won an award you didn\'t know existed', null]]);
     return { a: c, text: `Remember ${c.name.split(' ')[0]} from school? They ${ev}.`,
-      media: Math.random() < .5 ? { t: 'lux', place: R(['So grateful for this life', 'Pinch me', 'Couldn\'t have planned it better', 'Living the dream']), g: rint(0, 3) } : null,
+      media: id ? { t: 'photo', id } : null,
       trick: 'comparison', mood: -6, anx: 3, proofMutual: true };
   },
   health() {
@@ -807,11 +810,18 @@ const POOL = {
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
+  wellness() {
+    const yoga = Math.random() < .5;
+    return { a: A.well, text: yoga
+        ? R(['5am practice on the cliffs. No phone for the first two hours of my day. 🧘‍♀️ (posted at 5:04am)', 'Sunrise, stillness, gratitude. Your morning can look like this too. Link in bio ✨'])
+        : R(['Fuel for a 10-mile morning 🫐 What\'s in your bowl?', 'Breakfast is a love letter to your body 💜 (yours was probably a granola bar in the car)']),
+      media: { t: 'photo', id: yoga ? 'wellness-yoga' : 'wellness-bowl' }, trick: 'comparison', mood: -4, anx: 2 };
+  },
   island() {
     const kai = Math.random() < .5;
-    const scenes = ['horizon', 'beach', 'bungalows', 'aerial'];
-    for (let i = scenes.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [scenes[i], scenes[j]] = [scenes[j], scenes[i]]; }
-    const shots = Array.from({ length: rint(3, 5) }, (_, i) => ({ scene: scenes[i % 4], pal: R(['noon', 'golden', 'sunset', 'dawn']), seed: rint(1, 1e9) }));
+    const pics = PHOTO_SETS.island.slice();
+    for (let i = pics.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pics[i], pics[j]] = [pics[j], pics[i]]; }
+    const shots = pics.slice(0, rint(3, 5));
     return { a: kai ? A.lux : classmate(), text: R(['Island dump 🏝️ Couldn\'t pick just one', 'Woke up here. Again. 🌅', 'No WiFi, no stress (posting this from the WiFi)', 'Day 3 of "just a long weekend" 🌴', 'Somewhere between "reply all" and "out of office" 🐚', 'Swipe to see where I\'ll be for the next 3 weeks →', 'POV: you finally said yes to yourself ✨']),
       media: { t: 'photos', shots, loc: R(['Undisclosed island', 'A private island', 'Somewhere off the grid', 'Island #4 this year', 'Where the WiFi is weirdly good']) },
       trick: 'comparison', mood: -5, anx: 2, proofMutual: !kai };
@@ -843,8 +853,8 @@ const POOL = {
     ]), trick: 'bait', mood: -1, anx: 1 };
   },
 };
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2]];
-const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison' };
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
 const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
@@ -911,154 +921,29 @@ const feed = $('#feed');
 const sentinel = document.createElement('div');
 
 /* ---------- media ---------- */
-const LUX = [
-  'radial-gradient(circle at 70% 38%, #ffe7a3 0 9%, transparent 10%), linear-gradient(180deg, #ff9a6b 0%, #ff6f91 42%, #3a6ea5 43%, #12406b 100%)',
-  'radial-gradient(circle at 30% 30%, #fff6d6 0 7%, transparent 8%), linear-gradient(180deg, #7fd3ff 0%, #b2ecff 50%, #22b5b5 51%, #0b6f86 100%)',
-  'radial-gradient(circle at 60% 55%, #ffd36b 0 12%, transparent 13%), linear-gradient(180deg, #2d1b4e 0%, #b8437a 50%, #ff9a5a 62%, #1a3350 63%, #0d1d33 100%)',
-  'linear-gradient(160deg, #0f3a2f 0%, #2f8f6b 40%, #e8d29a 41%, #e0c07e 60%, #2b8fb8 61%, #135c80 100%)',
-];
-/* ---------- island "photos", painted on canvas from a seed so reruns redraw identically ---------- */
-const PW = 600;
-const SCENE_ALT = { horizon: 'A small island with palm trees on the horizon', beach: 'A sandy beach with turquoise water and a palm tree', bungalows: 'Overwater bungalows on a turquoise lagoon', aerial: 'Drone shot of a tiny island ringed by a reef' };
-const PAL = {
-  noon:   { sky: ['#2f86d6', '#bfe6ff'], sea: ['#1fb3c4', '#07587a'], shallow: '#7ff0e0', sun: '#fffbe8', sunY: .14, glow: null, sil: '#24502f', palm: '#2c4a2a', sand: ['#f6e7c1', '#e2c48f'], clouds: true },
-  golden: { sky: ['#4f7fc4', '#ffd29a'], sea: ['#3a86a8', '#123c58'], shallow: '#8fd0c8', sun: '#ffd36b', sunY: .38, glow: 'rgba(255,190,100,.5)', sil: '#2a2420', palm: '#2f261c', sand: ['#f1c98f', '#c99a62'], clouds: true },
-  sunset: { sky: ['#2b1a4d', '#ffa36b'], mid: '#e3607a', sea: ['#4a2f60', '#160f2b'], shallow: '#9a5a78', sun: '#ffd98a', sunY: .5, glow: 'rgba(255,150,110,.6)', sil: '#140c1c', palm: '#140c1c', sand: ['#c98a74', '#7a4a52'], clouds: false },
-  dawn:   { sky: ['#8fb9e6', '#fbd3c4'], sea: ['#7cc0d2', '#2b6a88'], shallow: '#a8e3e0', sun: '#fff1dc', sunY: .4, glow: 'rgba(255,220,200,.45)', sil: '#3b4b52', palm: '#34443c', sand: ['#f4dcc6', '#d8b394'], clouds: true },
+/* ---------- photos (AI-generated, stored next to the page in photos/) ---------- */
+const PHOTO_ALT = {
+  'island-boat': 'A small palm-covered island in turquoise water, seen from the edge of a boat',
+  'island-bungalows': 'Overwater bungalows and a wooden boardwalk over a turquoise lagoon',
+  'island-feet': 'Bare feet on a beach lounger facing turquoise water',
+  'island-cocktail': 'A tropical cocktail on the edge of an infinity pool at golden hour',
+  'island-drone': 'Drone shot of a tiny palm island ringed by reef, with a speedboat nearby',
+  'money-car': 'A hand holding a car key in front of a red sports car in a showroom',
+  'money-firstclass': 'A first-class airplane suite with champagne above the clouds at sunset',
+  'money-watch': 'A gold watch in an open gift box on a marble counter',
+  'milestone-ring': 'A hand with a diamond engagement ring, candles and rose petals behind it',
+  'milestone-kitchen': 'A bright, newly renovated farmhouse kitchen',
+  'milestone-puppy': 'A golden retriever puppy with a red bow in a sunny living room',
+  'wellness-bowl': 'An acai smoothie bowl with fruit and granola on a sunny windowsill',
+  'wellness-yoga': 'A yoga mat on a grassy clifftop above the ocean at sunrise',
+  'social-rooftop': 'Friends clinking glasses at a rooftop party at sunset',
+  'social-dinner': 'A tiny fine-dining dish by candlelight',
+  'career-office': 'A corner office desk with a laptop and a city skyline view',
 };
-function rng(seed) { return () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-function grad(c, y0, y1, stops) { const g = c.createLinearGradient(0, y0, 0, y1); stops.forEach((col, i) => g.addColorStop(i / (stops.length - 1), col)); return g; }
-function drawSky(c, P, hy) { c.fillStyle = grad(c, 0, hy, P.mid ? [P.sky[0], P.mid, P.sky[1]] : P.sky); c.fillRect(0, 0, PW, hy); }
-function drawSun(c, P, x, y, r) {
-  if (P.glow) { const g = c.createRadialGradient(x, y, r * .5, x, y, r * 6); g.addColorStop(0, P.glow); g.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = g; c.fillRect(0, 0, PW, PW); }
-  c.fillStyle = P.sun; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill();
-}
-function drawClouds(c, rand, top, bottom) {
-  c.fillStyle = 'rgba(255,255,255,.55)';
-  for (let i = 0; i < 4; i++) {
-    const x = rand() * PW, y = top + rand() * (bottom - top), w = 70 + rand() * 130;
-    for (let j = 0; j < 5; j++) { c.beginPath(); c.ellipse(x - w / 2 + j * w / 5, y - (j % 2) * 7, w / 4, 12 + rand() * 9, 0, 0, 7); c.fill(); }
-  }
-}
-function drawGlitter(c, P, x, hy, bottom, rand) {
-  c.fillStyle = P.sun;
-  for (let i = 0; i < 80; i++) {
-    const f = Math.pow(rand(), 1.5), y = hy + 3 + f * (bottom - hy), spread = 30 + f * 220, w = 6 + rand() * 26 * f;
-    c.globalAlpha = .12 + rand() * .5 * (1 - f);
-    c.fillRect(x - spread / 2 + rand() * spread - w / 2, y, w, 1.5 + rand() * 1.5);
-  }
-  c.globalAlpha = 1;
-}
-function drawPalm(c, x, by, h, lean, col, rand) {
-  const tx = x + lean, ty = by - h;
-  c.strokeStyle = col; c.fillStyle = col; c.lineCap = 'round';
-  c.lineWidth = Math.max(3, h * .055);
-  c.beginPath(); c.moveTo(x, by); c.quadraticCurveTo(x + lean * .15, by - h * .6, tx, ty); c.stroke();
-  // Fronds rise from the crown and droop outward; the outer ones droop the most.
-  for (const d0 of [-1, -.72, -.45, -.2, .2, .45, .72, 1]) {
-    const d = d0 + (rand() - .5) * .12, ad = Math.abs(d), len = h * (.34 + rand() * .14) * (ad < .3 ? .7 : 1);
-    const ex = tx + d * len, ey = ad < .3 ? ty - len * .35 : ty + len * (.1 + .45 * ad);
-    const cx = tx + d * len * .5, cy = ty - len * (.12 + .3 * (1 - ad));
-    c.lineWidth = Math.max(2, h * .035);
-    c.beginPath(); c.moveTo(tx, ty); c.quadraticCurveTo(cx, cy, ex, ey); c.stroke();
-    c.lineWidth = Math.max(1, h * .01);
-    for (let k = 2; k < 10; k++) {
-      const t = k / 10, px = (1 - t) * (1 - t) * tx + 2 * (1 - t) * t * cx + t * t * ex, py = (1 - t) * (1 - t) * ty + 2 * (1 - t) * t * cy + t * t * ey, l = len * .16 * (1 - t * .6);
-      c.beginPath(); c.moveTo(px, py); c.lineTo(px + l * .35, py + l); c.moveTo(px, py); c.lineTo(px - l * .35, py + l); c.stroke();
-    }
-  }
-  c.beginPath(); c.arc(tx, ty + 3, h * .03, 0, 7); c.fill();
-}
-const SCENES = {
-  horizon(c, P, rand) {
-    const hy = PW * .58, sx = 120 + rand() * 360;
-    drawSky(c, P, hy);
-    if (P.clouds) drawClouds(c, rand, 30, hy * .55);
-    drawSun(c, P, sx, Math.min(PW * P.sunY, hy - 30), 26);
-    c.fillStyle = grad(c, hy, PW, P.sea); c.fillRect(0, hy, PW, PW - hy);
-    drawGlitter(c, P, sx, hy, PW, rand);
-    const ix = 100 + rand() * 400, rx = 90 + rand() * 70, ry = 16 + rand() * 12;
-    c.fillStyle = P.sil; c.beginPath(); c.ellipse(ix, hy + 2, rx, ry, 0, Math.PI, 0); c.fill();
-    c.globalAlpha = .25; c.beginPath(); c.ellipse(ix, hy + 2, rx, ry * 1.4, 0, 0, Math.PI); c.fill(); c.globalAlpha = 1;
-    const np = 2 + Math.floor(rand() * 3);
-    for (let i = 0; i < np; i++) { const dx = (rand() - .5) * rx * 1.2, by = hy + 2 - ry * Math.sqrt(Math.max(0, 1 - (dx / rx) ** 2)) + 3; drawPalm(c, ix + dx, by, 50 + rand() * 40, (rand() - .5) * 40, P.sil, rand); }
-  },
-  beach(c, P, rand) {
-    const hy = PW * .42, shore = PW * .66;
-    drawSky(c, P, hy);
-    if (P.clouds) drawClouds(c, rand, 20, hy * .6);
-    drawSun(c, P, 380 + rand() * 160, Math.min(PW * P.sunY * .8, hy - 25), 22);
-    c.fillStyle = grad(c, hy, shore, [P.sea[1], P.sea[0], P.shallow]); c.fillRect(0, hy, PW, shore - hy + 20);
-    const wave = x => shore + Math.sin(x / 38 + rand() * .01) * 5 + Math.sin(x / 13) * 2;
-    c.fillStyle = 'rgba(255,255,255,.85)'; c.beginPath(); c.moveTo(0, PW);
-    for (let x = 0; x <= PW; x += 6) c.lineTo(x, wave(x) - 4);
-    c.lineTo(PW, PW); c.fill();
-    c.fillStyle = grad(c, shore, PW, P.sand); c.beginPath(); c.moveTo(0, PW);
-    for (let x = 0; x <= PW; x += 6) c.lineTo(x, wave(x) + 3);
-    c.lineTo(PW, PW); c.fill();
-    if (rand() < .6) {
-      const ux = 300 + rand() * 180, uy = PW * .86;
-      c.strokeStyle = '#ddd'; c.lineWidth = 3; c.beginPath(); c.moveTo(ux, uy); c.lineTo(ux - 8, uy - 90); c.stroke();
-      for (let i = 0; i < 6; i++) { c.fillStyle = i % 2 ? '#fff' : '#e8414f'; c.beginPath(); c.moveTo(ux - 8, uy - 92); c.arc(ux - 8, uy - 80, 60, Math.PI + i * Math.PI / 6, Math.PI + (i + 1) * Math.PI / 6); c.closePath(); c.fill(); }
-      c.fillStyle = '#f7c948'; c.fillRect(ux - 70, uy + 10, 80, 26);
-    }
-    drawPalm(c, 10, PW + 20, PW * .62, 110 + rand() * 50, P.palm, rand);
-  },
-  bungalows(c, P, rand) {
-    const hy = PW * .48;
-    drawSky(c, P, hy);
-    if (P.clouds) drawClouds(c, rand, 25, hy * .6);
-    const sx = 100 + rand() * 400; drawSun(c, P, sx, Math.min(PW * P.sunY, hy - 30), 22);
-    c.fillStyle = grad(c, hy, PW, [P.sea[1], P.sea[0], P.shallow]); c.fillRect(0, hy, PW, PW - hy);
-    if (P.glow) drawGlitter(c, P, sx, hy, PW, rand);
-    const row = hy + 70, n = 5;
-    c.strokeStyle = '#5b4030'; c.lineWidth = 5; c.beginPath(); c.moveTo(30, row + 10); c.lineTo(570, row + 10); c.stroke();
-    // A wooden pier widening toward the camera
-    c.fillStyle = 'rgba(0,0,0,.2)'; c.beginPath(); c.moveTo(286, row + 16); c.lineTo(310, row + 16); c.lineTo(330, PW); c.lineTo(214, PW); c.fill();
-    c.fillStyle = P === PAL.sunset ? '#4a2e32' : '#9a7350'; c.beginPath(); c.moveTo(288, row + 10); c.lineTo(308, row + 10); c.lineTo(320, PW); c.lineTo(220, PW); c.fill();
-    c.strokeStyle = 'rgba(0,0,0,.18)'; c.lineWidth = 1.5;
-    for (let k = 1; k < 14; k++) { const t = (k / 14) ** 1.6, y = row + 10 + t * (PW - row - 10); c.beginPath(); c.moveTo(288 - 68 * t, y); c.lineTo(308 + 12 * t, y); c.stroke(); }
-    for (let i = 0; i < n; i++) {
-      const x = 40 + i * 110 + rand() * 10, w = 78, bh = 30;
-      c.fillStyle = 'rgba(0,0,0,.18)'; c.fillRect(x, row + 14, w, 30);
-      c.strokeStyle = '#4a3326'; c.lineWidth = 3;
-      for (let k = 0; k < 4; k++) { c.beginPath(); c.moveTo(x + 6 + k * 22, row + 10); c.lineTo(x + 6 + k * 22, row + 38); c.stroke(); }
-      c.fillStyle = P === PAL.sunset ? '#5a3a40' : '#ead6b2'; c.fillRect(x, row - bh + 10, w, bh);
-      c.fillStyle = P === PAL.sunset ? '#2a1820' : '#8a5a2b'; c.beginPath(); c.moveTo(x - 10, row - bh + 12); c.lineTo(x + w / 2, row - bh - 26); c.lineTo(x + w + 10, row - bh + 12); c.fill();
-      c.fillStyle = P === PAL.sunset ? '#ffcf86' : '#3a2a20'; c.fillRect(x + w / 2 - 8, row - 12, 16, 22);
-    }
-  },
-  aerial(c, P, rand) {
-    const cx = 240 + rand() * 120, cy = 250 + rand() * 100, R0 = 110 + rand() * 40, ph = rand() * 6, ps = rand() * 6;
-    const g = c.createRadialGradient(cx, cy, R0 * .9, cx, cy, R0 * 2.4);
-    g.addColorStop(0, '#6fe6dc'); g.addColorStop(.35, '#22b6c6'); g.addColorStop(1, '#064a72');
-    c.fillStyle = g; c.fillRect(0, 0, PW, PW);
-    const blob = (k, col, stroke) => {
-      c.beginPath();
-      for (let a = 0; a <= Math.PI * 2 + .01; a += .05) { const r = R0 * k * (1 + .16 * Math.sin(3 * a + ph) + .07 * Math.sin(7 * a + ps)); a ? c.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r) : c.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); }
-      if (stroke) { c.strokeStyle = col; c.lineWidth = 6; c.stroke(); } else { c.fillStyle = col; c.fill(); }
-    };
-    blob(1.08, 'rgba(255,255,255,.45)', true);
-    blob(1, '#f4e3bd');
-    blob(.78, '#2f7d3f');
-    c.fillStyle = '#21632f';
-    for (let i = 0; i < 90; i++) { const a = rand() * 7, r = rand() * R0 * .62; c.beginPath(); c.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 4 + rand() * 7, 0, 7); c.fill(); }
-    const bx = 60 + rand() * 120, by = 470 + rand() * 80;
-    c.strokeStyle = 'rgba(255,255,255,.6)'; c.lineWidth = 2; c.beginPath(); c.moveTo(bx, by); c.lineTo(bx - 70, by + 40); c.moveTo(bx, by); c.lineTo(bx - 80, by + 10); c.stroke();
-    c.fillStyle = '#fff'; c.beginPath(); c.ellipse(bx + 6, by, 12, 5, -.3, 0, 7); c.fill();
-  },
-};
-function drawShot(cv) {
-  const c = cv.getContext('2d'); if (!c) return;
-  const scene = cv.dataset.scene, P = scene === 'aerial' ? PAL.noon : PAL[cv.dataset.pal];
-  SCENES[scene](c, P, rng(Number(cv.dataset.seed)));
-  const v = c.createRadialGradient(PW / 2, PW / 2, PW * .45, PW / 2, PW / 2, PW * .8);
-  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.28)');
-  c.fillStyle = v; c.fillRect(0, 0, PW, PW);
-}
+const PHOTO_SETS = { island: ['island-boat', 'island-bungalows', 'island-feet', 'island-cocktail', 'island-drone'] };
+const imgHTML = id => `<img src="photos/${id}.jpg" alt="${esc(PHOTO_ALT[id])}" width="900" height="900" loading="lazy" decoding="async" draggable="false">`;
 function setupPhotos(el) {
   const box = el.querySelector('.m-photos'); if (!box) return;
-  box.querySelectorAll('canvas').forEach(drawShot);
   const tr = box.querySelector('.ph-track'), dots = [...box.querySelectorAll('.ph-dots i')], cnt = box.querySelector('.ph-count'), n = dots.length;
   delete tr.dataset.end; tr.scrollLeft = 0;
   dots.forEach((d, i) => d.classList.toggle('on', i === 0)); cnt.textContent = `1/${n}`;
@@ -1092,8 +977,8 @@ function mediaHTML(m) {
   switch (m.t) {
     case 'breaking': return `<div class="media m-breaking"><div class="flag"><span>BREAKING</span><em>LIVE · ${fmt(rint(4000, 90000))} watching</em></div><h3>${esc(m.h)}</h3><div class="ticker"><span>DEVELOPING ··· MORE DETAILS SOON ··· STAY TUNED ··· EXPERTS REACT ··· WHAT THIS MEANS FOR YOU ··· DON'T LOOK AWAY ··· DEVELOPING ···</span></div></div>`;
     case 'chart': return `<div class="media m-chart"><div class="row"><span class="sym">${esc(m.sym)} · 24H</span><span class="pct">−${m.pct}%</span></div>${chartSVG()}</div>`;
-    case 'lux': return `<div class="media m-lux" style="background:${LUX[m.g]}"><div class="place">${esc(m.place)}</div></div>`;
-    case 'photos': return `<div class="media m-photos"><div class="ph-track">${m.shots.map(x => `<canvas width="600" height="600" data-scene="${x.scene}" data-pal="${x.pal}" data-seed="${x.seed}" role="img" aria-label="${esc(SCENE_ALT[x.scene])}"></canvas>`).join('')}</div><span class="ph-loc">📍 ${esc(m.loc)}</span><span class="ph-count">1/${m.shots.length}</span><button class="ph-nav prev" data-ph="-1" aria-label="Previous photo">‹</button><button class="ph-nav next" data-ph="1" aria-label="Next photo">›</button><div class="ph-dots">${m.shots.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</div></div>`;
+    case 'photo': return `<div class="media m-photo">${imgHTML(m.id)}${m.loc ? `<span class="ph-loc">📍 ${esc(m.loc)}</span>` : ''}<span class="chip-tag ai-chip">AI-generated photo</span></div>`;
+    case 'photos': return `<div class="media m-photos"><div class="ph-track">${m.shots.map(imgHTML).join('')}</div><span class="ph-loc">📍 ${esc(m.loc)}</span><span class="ph-count">1/${m.shots.length}</span><button class="ph-nav prev" data-ph="-1" aria-label="Previous photo">‹</button><button class="ph-nav next" data-ph="1" aria-label="Next photo">›</button><div class="ph-dots">${m.shots.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</div><span class="chip-tag ai-chip">AI-generated photos</span></div>`;
     case 'guilt': return `<div class="media m-guilt" style="background:${GUILT_BG[m.g]}"><span class="g-deco" aria-hidden="true">🌹💕🌹</span><p class="g-text">${esc(m.q)}</p><span class="g-mark">Shared from ${esc(m.page)}</span></div>`;
     case 'video': return `<div class="media m-video" style="--vh:${m.g}"><span class="v-live">▶ Autoplay</span><span class="v-mute" aria-hidden="true">🔇</span><p class="v-cap">${esc(m.cap)}</p><span class="v-views">${fmt(rint(200000, 9000000))} views</span><div class="v-prog"><i></i></div><div class="v-next" hidden><span>Next post in<b class="v-n">3</b></span><button data-vcancel>Cancel</button></div></div>`;
     case 'quote': return `<div class="media m-quote"><p>${esc(m.q)}<small>posted at 3:0${rint(1, 9)} AM</small></p></div>`;
@@ -1196,6 +1081,7 @@ function makeIntro() {
   el.innerHTML = `<span class="eyebrow">Doomfeed · a parody${isReturn ? ` · visit ${store.visits}` : ''}</span>
     <h2>This feed is designed to keep you here.</h2>
     <p>Every post, badge, and buzz below uses a real trick from real apps. While you scroll, <span class="mobile-only">the red bar at the bottom of your screen</span><span class="desk-only">the panel on the right</span> keeps score: your time, your mood, and every trick used on you.</p>
+    <p class="ai-note">This entire project, every post, photo, and trick, was crafted using AI, to show how easy it has become to manipulate you.</p>
     <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-dismiss>Just scroll</button></div>`;
   return el;
 }
