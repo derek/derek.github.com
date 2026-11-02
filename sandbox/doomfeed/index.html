@@ -58,6 +58,35 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { background: var(--bg); overscroll-behavior-y: none; }
+/* Calm mode: the same app with every trick switched off */
+body.calm {
+  --bg: #eef3f1; --surface: #ffffff; --surface-2: #f3f6f5; --line: #d6e0dc; --fg: #1d2a26; --muted: #5b6c66;
+  color-scheme: light;
+}
+html:has(body.calm) { background: #eef3f1; }
+body.calm .vignette, body.calm .newpill, body.calm .toasts, body.calm .tb-flash, body.calm .bell-wrap, body.calm .logoff,
+body.calm .live, body.calm .tollbar, body.calm #toll, body.calm .scrim, body.calm .ptr { display: none !important; }
+body.calm .shell { grid-template-columns: minmax(0, 580px); justify-content: center; padding-bottom: 60px; }
+body.calm .logo i { animation: none; background: #5fae8b; box-shadow: none; }
+.calm-btn { font-size: 13px; font-weight: 600; padding: 8px 12px; border-radius: 10px; border: 1px solid #2f5d4a; color: #8fd3b4; white-space: nowrap; }
+.calm-btn:hover { border-color: #8fd3b4; }
+body.calm .calm-btn { color: var(--fg); border-color: var(--line); background: var(--surface); }
+@media (max-width: 600px) { .calm-btn { display: none; } body.calm .calm-btn { display: inline-block; } }
+.calm-feed { display: grid; gap: 12px; min-width: 0; }
+.calm-note { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; display: grid; gap: 10px; }
+.calm-note h2 { font: 400 italic 28px/1.1 var(--f-serif); margin: 0; }
+.calm-note p { margin: 0; font: 400 17px/1.45 var(--f-serif); color: var(--muted); }
+.calm-note .cn-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.calm-note button, .calm-note a { font: 600 14px var(--f-body); padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--fg); text-decoration: none; }
+.calm-note .cn-zen { background: var(--zen-accent); color: #fff; border-color: transparent; }
+.calm-post { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; }
+.cp-head { display: flex; gap: 10px; align-items: center; }
+.cp-head > div { display: grid; line-height: 1.25; }
+.cp-head .cp-t { font-size: 12.5px; color: var(--muted); }
+.calm-post p { margin: 0; font-size: 15.5px; }
+.calm-end { text-align: center; padding: 28px 16px 8px; display: grid; gap: 6px; justify-items: center; color: var(--muted); }
+.calm-end b { font: 400 italic 26px var(--f-serif); color: var(--fg); }
+.calm-link { justify-self: start; font-size: 13.5px; font-weight: 600; color: var(--good); text-align: left; }
 body {
   background: var(--bg);
   color: var(--fg);
@@ -626,6 +655,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
       <div class="live" id="live"><i class="live-dot" aria-hidden="true"></i><b id="liveN">12,408</b> people scrolling now<span class="chip-tag" style="top:18px;left:0">Social proof</span></div>
     </div>
     <div class="spacer"></div>
+    <button class="calm-btn" id="calmBtn" data-calm="toggle">🌿 Calm mode</button>
     <div class="bell-wrap">
       <button class="icon-btn" id="bell" aria-label="Notifications">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
@@ -643,6 +673,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 
 <main class="shell">
   <section class="feed" id="feed" aria-label="Feed"></section>
+  <section class="calm-feed" id="calmFeed" aria-label="Calm feed" hidden></section>
 
   <aside class="toll" id="toll" aria-label="The toll">
     <h2>The toll <button class="close-sheet" id="closeSheet">Close</button></h2>
@@ -680,6 +711,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
       <div class="instead" id="lifetime"></div>
     </div>
     <button class="xray-toggle" id="xrayBtn" aria-pressed="false">Reveal the tricks <span class="sw" aria-hidden="true"></span></button>
+    <button class="calm-link" data-calm="on">🌿 See this feed without the tricks</button>
     <button class="sw-btn" id="buzzBtn" aria-pressed="true">Buzz my phone with notifications (Android) <span class="sw" aria-hidden="true"></span></button>
     <button class="forget" id="forgetBtn">Forget me: delete what Doomfeed saved in this browser</button>
     <p class="fine">Doomfeed is a parody, made entirely with AI. Every post and photo is generated. Your stats are saved only in this browser. Nothing here is real except the time you spent.</p>
@@ -1297,6 +1329,7 @@ function makePost(kind) {
 // Long sessions: posts far off screen are emptied (keeping their height) and refilled when you scroll back.
 const PRUNED = new WeakMap();
 const pruneObs = new IntersectionObserver(es => {
+  if (document.body.classList.contains('calm')) return;
   for (const e of es) {
     const el = e.target;
     if (!e.isIntersecting && !PRUNED.has(el) && el.isConnected && el.firstChild) {
@@ -1422,7 +1455,7 @@ function makeIntro() {
     <h2>This feed is designed to keep you here.</h2>
     <p>Every post, badge, and buzz below uses a real trick from real apps. While you scroll, <span class="mobile-only">the red bar at the bottom of your screen</span><span class="desk-only">the panel on the right</span> keeps score: your time, your mood, and every trick used on you.</p>
     <p class="ai-note">This entire project, every post, photo, and trick, was crafted using AI, to show how easy it has become to manipulate you.</p>
-    <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-dismiss>Just scroll</button></div>`;
+    <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-calm="on">Try calm mode</button><button data-dismiss>Just scroll</button></div>`;
   return el;
 }
 function makeReality(override) {
@@ -1431,7 +1464,7 @@ function makeReality(override) {
   const line = override || REALITY[S.realityIx++ % REALITY.length]();
   el.innerHTML = `<span class="eyebrow">Pause · ${timeStr()} in · ${S.seen} posts</span><p>${line}</p>
     ${miniStats()}
-    <div class="r-actions"><button class="solid" data-toll>See what this cost</button><button data-dismiss>Keep scrolling</button></div>`;
+    <div class="r-actions"><button class="solid" data-toll>See what this cost</button><button data-calm="on">Try calm mode</button><button data-dismiss>Keep scrolling</button></div>`;
   return el;
 }
 // Not a trick: an honest pointer to the calmer alternative.
@@ -1951,6 +1984,60 @@ $('#forgetBtn').addEventListener('click', () => {
   base.secs = 0; base.posts = 0;
   renderToll();
   toast('<b>Forgotten.</b> Your history, streak, and what the feed learned are deleted, and nothing more will be saved this visit. Real apps don\'t have this button.', { ico: '🧹', ms: 6500 });
+});
+
+/* ---------- calm mode ---------- */
+const CALM_POSTS = [
+  ['Maya R.', 20, '2h', 'Made soup tonight. It was fine. 🍲'],
+  ['Neighborhood Bulletin', 150, '3h', 'The library on Elm Street is adding Sunday hours starting next month.'],
+  ['Dad', 210, '4h', 'Tomatoes are finally coming in. Come grab some this weekend.'],
+  ['Weather', 195, '5h', 'Tomorrow: sunny, high of 64°. A good day for a walk.'],
+  ['Sam', 280, '6h', 'Anyone free for lunch Thursday?'],
+  ['Riverside Volunteers', 120, '8h', 'Thanks to everyone who came out Saturday. We planted 300 trees along the river.'],
+  ['Priya', 330, '9h', 'Finished the book you lent me. Loved it. I\'ll bring it back Sunday.'],
+  ['City Updates', 175, '11h', 'Road work on Main Street wraps up Friday.'],
+  ['Leo', 45, 'Yesterday', 'Ran a slow 5K this morning. Felt good.'],
+  ['Grandma', 335, 'Yesterday', 'Thanks for calling yesterday. It made my week. ❤️'],
+  ['Farmers Market', 95, 'Yesterday', 'Open Saturday from 8 to 12. Peaches are back.'],
+];
+function makeCalm() {
+  const intro = document.createElement('div');
+  intro.className = 'calm-note';
+  intro.innerHTML = `<h2>Calm mode</h2>
+    <p>Same app, every trick switched off. No counts, no badges, no autoplay, no ranking, and no endless feed. Just posts from people you follow, newest first, and an end.</p>
+    <div class="cn-actions"><button data-calm="off">← Back to Doomfeed</button></div>`;
+  const posts = CALM_POSTS.map(([name, h, t, text]) => {
+    const el = document.createElement('article');
+    el.className = 'calm-post';
+    el.innerHTML = `<div class="cp-head"><span class="av" style="--h:${h}">${esc(initialsOf(name))}</span><div><b>${esc(name)}</b><span class="cp-t">${esc(t)}</span></div></div><p>${esc(text)}</p>`;
+    return el;
+  });
+  const end = document.createElement('div');
+  end.className = 'calm-end';
+  end.innerHTML = `<b>That's everything. You're done.</b><span>Nothing is ranked, counted, or waiting below this line.</span>`;
+  const zen = document.createElement('div');
+  zen.className = 'calm-note';
+  zen.innerHTML = `<p>This is what a feed looks like when it isn't trying to keep you. If you want calm news like this every day, check out Zen Reader.</p>
+    <div class="cn-actions"><a class="cn-zen" href="https://www.zen-reader.app" target="_blank" rel="noopener">Visit zen-reader.app ↗</a><button data-calm="off">← Back to Doomfeed</button></div>`;
+  return [intro, ...posts, end, zen];
+}
+const calmFeed = $('#calmFeed'), calmBtn = $('#calmBtn');
+let doomY = 0;
+function setCalm(on) {
+  if (on === document.body.classList.contains('calm')) return;
+  if (on) { doomY = scrollY; S.paused = true; closeToll(); notifEl.hidden = true; }
+  document.body.classList.toggle('calm', on);
+  feed.hidden = on; calmFeed.hidden = !on;
+  if (on && !calmFeed.firstChild) calmFeed.append(...makeCalm());
+  calmBtn.textContent = on ? '← Back to Doomfeed' : '🌿 Calm mode';
+  if (on) scrollTo(0, 0);
+  else { S.paused = false; requestAnimationFrame(() => scrollTo(0, doomY)); }
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-calm]');
+  if (!c) return;
+  const v = c.dataset.calm;
+  setCalm(v === 'toggle' ? !document.body.classList.contains('calm') : v === 'on');
 });
 
 /* ---------- mobile sheet ---------- */
