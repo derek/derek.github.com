@@ -476,14 +476,16 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
     padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   }
   .tollbar.nudge { animation: nudge .9s cubic-bezier(.3,1.5,.5,1) 2; }
-  .tb-main { flex: 1; min-width: 0; display: grid; gap: 4px; }
+  .tb-main { flex: 1; min-width: 0; display: grid; gap: 4px; text-align: left; }
   .tb-label { font: 800 11px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--hot); display: flex; align-items: center; gap: 6px; }
   .tb-label i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); animation: pulse 1.2s infinite; }
   .tb-stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 10px; font: 500 11px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
   .tb-stats span { display: grid; line-height: 1.15; white-space: nowrap; }
   .tb-stats b { font: 600 16px var(--f-mono); color: var(--fg); font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: -0.02em; }
   .tb-stats b.bad { color: var(--hot); }
-  .tb-open { flex: none; color: #fff; background: var(--hot); font: 700 12px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; padding: 10px 11px; border-radius: 10px; line-height: 1.1; text-align: center; }
+  .tb-xray { flex: none; display: grid; justify-items: center; gap: 2px; color: var(--xray); border: 1px solid var(--xray); font: 700 10.5px/1.15 var(--f-mono); text-transform: uppercase; letter-spacing: .05em; padding: 7px 10px; border-radius: 10px; text-align: center; }
+  .tb-xray .tb-x-ico { font-size: 15px; line-height: 1; }
+  body.xray .tb-xray { background: var(--xray); color: #051426; }
   .tb-flash {
     display: block; position: fixed; z-index: 36; left: max(16px, env(safe-area-inset-left, 0px));
     bottom: calc(84px + env(safe-area-inset-bottom, 0px)); pointer-events: none;
@@ -684,13 +686,13 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
   </aside>
 </main>
 
-<button class="tollbar" id="tollbar" aria-label="Open the toll: what this feed is costing you">
-  <div class="tb-main">
-    <span class="tb-label"><i aria-hidden="true"></i>The toll · live</span>
-    <div class="tb-stats"><span>time<b id="bTime">0:00</b></span><span>posts<b id="bPosts">0</b></span><span>mood<b id="bMood">100</b></span><span>tricks<b id="bTricks" class="bad">0</b></span></div>
-  </div>
-  <span class="tb-open">See<br>all ↑</span>
-</button>
+<div class="tollbar" id="tollbar">
+  <button class="tb-main" id="tbOpen" aria-label="Open the toll: what this feed is costing you">
+    <span class="tb-label"><i aria-hidden="true"></i>The toll · tap for details ↑</span>
+    <span class="tb-stats"><span>time<b id="bTime">0:00</b></span><span>posts<b id="bPosts">0</b></span><span>mood<b id="bMood">100</b></span><span>tricks<b id="bTricks" class="bad">0</b></span></span>
+  </button>
+  <button class="tb-xray" id="tbXray" aria-pressed="false"><span class="tb-x-ico" aria-hidden="true">◎</span><span id="tbXrayL">Show<br>tricks</span></button>
+</div>
 <div class="tb-flash" id="tbFlash" aria-hidden="true"></div>
 <div class="scrim" id="scrim" hidden></div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
@@ -1578,10 +1580,13 @@ function renderToll() {
 const tbFlash = $('#tbFlash');
 let flashT;
 function flashTrick(k) {
-  tbFlash.textContent = `+1 ${TRICKS[k][0]}`;
-  tbFlash.classList.add('show');
-  clearTimeout(flashT);
-  flashT = setTimeout(() => tbFlash.classList.remove('show'), 1400);
+  // Only announce a trick the first time it's used on you; after that the counter just ticks up.
+  if (S.tricks[k] === 1) {
+    tbFlash.textContent = `New trick: ${TRICKS[k][0]}`;
+    tbFlash.classList.add('show');
+    clearTimeout(flashT);
+    flashT = setTimeout(() => tbFlash.classList.remove('show'), 1600);
+  }
   if (S.seen === 6 || S.seen === 30) {
     const bar = $('#tollbar');
     bar.classList.remove('nudge'); void bar.offsetWidth; bar.classList.add('nudge');
@@ -1589,7 +1594,13 @@ function flashTrick(k) {
 }
 
 /* ---------- toasts ---------- */
+const phone = () => matchMedia('(max-width: 979.98px)').matches;
 function toast(html, opts = {}) {
+  // On phones: one popup at a time, and routine chatter is dropped if anything popped up in the last 12 seconds.
+  const now = Date.now();
+  if (phone() && opts.chatter && now - (S.lastToast || 0) < 12000) return;
+  S.lastToast = now;
+  if (phone()) $('#toasts').replaceChildren();
   const el = document.createElement('div');
   el.className = 'toast' + (opts.reward ? ' reward' : '');
   if (opts.buzz) buzz(opts.buzz);
@@ -1599,7 +1610,7 @@ function toast(html, opts = {}) {
   while (box.children.length > 3) box.firstChild.remove();
   const kill = () => { el.classList.add('out'); setTimeout(() => el.remove(), 300); };
   el.addEventListener('click', kill);
-  setTimeout(kill, opts.ms || 4800);
+  setTimeout(kill, phone() && opts.chatter ? 3500 : (opts.ms || 4800));
 }
 function floaty(x, y, txt) {
   const f = document.createElement('div');
@@ -1612,7 +1623,7 @@ function floaty(x, y, txt) {
 const MILESTONES = { 10: ['🎉', '<b>10 posts!</b> You\'re a natural.'], 25: ['🔥', '<b>Streak started.</b> Come back tomorrow so you don\'t lose it.'], 50: ['🏅', '<b>Thumb Athlete.</b> You\'re in the top 5% of scrollers today.'], 100: ['💯', '<b>Centurion.</b> 100 posts. Your friends would be proud.'], 200: ['👑', '<b>Elite Scroller.</b> No one has ever been this informed.'] };
 function milestone() {
   const m = MILESTONES[S.seen] || (S.seen > 200 && S.seen % 100 === 0 ? ['🌀', `<b>${S.seen} posts.</b> There is no prize at the end. There is no end.`] : null);
-  if (m) toast(m[1], { ico: m[0], reward: true, trick: 'reward', ms: 5200 });
+  if (m) toast(m[1], { ico: m[0], reward: true, trick: 'reward', ms: 5200, chatter: true });
 }
 
 /* ---------- bell ---------- */
@@ -1890,7 +1901,7 @@ schedule(() => bumpBadge(rint(1, 3)), 6000, 15000);
 schedule(showPill, 18000, 32000);
 schedule(() => {
   const [t, s] = R(NOTIFS)();
-  toast(`<b>${esc(t)}</b><br><span style="color:var(--muted)">${esc(s)}</span>`, { ico: '🔔', trick: 'reward', buzz: [20, 60, 20] });
+  toast(`<b>${esc(t)}</b><br><span style="color:var(--muted)">${esc(s)}</span>`, { ico: '🔔', trick: 'reward', buzz: [20, 60, 20], chatter: true });
 }, 22000, 45000);
 // Idle nudge: stop scrolling and the app notices.
 setInterval(() => {
@@ -1902,14 +1913,14 @@ setInterval(() => {
       '<b>Something big just happened.</b> Scroll down to catch up.',
       `<b>Don't stop now.</b> ${R(FIRST)} posted something you'll want to see.`,
       '<b>You were on a roll.</b> Pick up where you left off ↓',
-    ]), { ico: '👋', trick: 'proof', buzz: 30 });
+    ]), { ico: '👋', trick: 'proof', buzz: 30, chatter: true });
   }
 }, 1500);
 addEventListener('pagehide', save);
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) save();
   if (document.hidden) document.title = `(${Math.max(S.badge, 1)}) Come back, you're missing out`;
-  else { document.title = S.badge ? `(${S.badge}) Doomfeed` : 'Doomfeed'; if (S.seen > 0) toast('<b>Welcome back!</b> We saved your spot. We always will.', { ico: '🫶', trick: 'reward' }); }
+  else { document.title = S.badge ? `(${S.badge}) Doomfeed` : 'Doomfeed'; if (S.seen > 0) toast('<b>Welcome back!</b> We saved your spot. We always will.', { ico: '🫶', trick: 'reward', chatter: true }); }
 });
 
 /* ---------- x-ray ---------- */
@@ -1918,6 +1929,8 @@ xrayBtn.addEventListener('click', () => {
   const on = document.body.classList.toggle('xray');
   xrayBtn.setAttribute('aria-pressed', on);
   xrayBtn.firstChild.textContent = on ? 'Hide the tricks ' : 'Reveal the tricks ';
+  $('#tbXray').setAttribute('aria-pressed', on);
+  $('#tbXrayL').innerHTML = on ? 'Hide<br>tricks' : 'Show<br>tricks';
 });
 
 const buzzBtn = $('#buzzBtn');
@@ -1942,7 +1955,8 @@ function openToll() {
   toll.classList.add('open'); scrim.hidden = false;
 }
 const closeToll = () => { toll.classList.remove('open'); scrim.hidden = true; };
-$('#tollbar').addEventListener('click', openToll);
+$('#tbOpen').addEventListener('click', openToll);
+$('#tbXray').addEventListener('click', () => xrayBtn.click());
 $('#closeSheet').addEventListener('click', closeToll);
 scrim.addEventListener('click', closeToll);
 
