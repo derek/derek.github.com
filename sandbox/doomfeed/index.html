@@ -325,6 +325,61 @@ body.xray .ad-tag { background: var(--hot); color: #fff; padding: 0 4px; border-
 .recipe-box .rb-go { background: var(--gold); color: #1d1500; font-weight: 700; padding: 8px 14px; border-radius: 8px; }
 .recipe-box .rb-no { justify-self: start; font-size: 12px; color: var(--muted); text-decoration: underline; }
 .jump { display: inline-block; margin-top: 10px; font-weight: 700; color: var(--gold); }
+.xray-only { display: none; }
+body.xray .xray-only { display: block; color: var(--xray); font-size: 13px; margin-top: 6px; }
+/* betting */
+.m-bet { background: linear-gradient(160deg, #0b2a1c, #07150f); border: 1px solid #1f5a3d; padding: 16px; display: grid; gap: 8px; color: #e6fff2; }
+.bet-flag { font: 800 12px var(--f-mono); letter-spacing: .08em; color: #7dffb5; }
+.bet-match { font: 700 18px/1.2 var(--f-display); }
+.bet-match i { font-style: normal; color: #7aa892; font-weight: 500; }
+.bet-odds { font: 700 15px var(--f-mono); }
+.bet-odds s { color: #6f8f80; font-weight: 400; }
+.bet-odds b { color: #7dffb5; font-size: 22px; margin-left: 6px; }
+.bet-offer { font-size: 15px; }
+.bet-go { justify-self: start; background: #2bd97c; color: #04170d; font-weight: 800; padding: 10px 18px; border-radius: 10px; font-size: 15px; }
+.m-bet small { font-size: 10.5px; line-height: 1.35; color: #6f8f80; }
+/* AI companion */
+.m-ai { background: linear-gradient(160deg, #2a1236, #150a1f); border: 1px solid #4a2560; padding: 16px; display: grid; gap: 12px; color: #fbeaff; }
+.ai-head { display: flex; gap: 10px; align-items: center; }
+.ai-av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 700 18px var(--f-display); background: linear-gradient(135deg, #ff8ad1, #9b6bff); color: #fff; }
+.ai-head div { display: grid; line-height: 1.25; }
+.ai-head span { font-size: 12px; color: #c99be0; }
+.ai-bubble { background: #3a1f4c; border-radius: 16px 16px 16px 4px; padding: 10px 14px; font-size: 15px; max-width: 85%; }
+.ai-go { justify-self: start; background: linear-gradient(135deg, #ff6fbf, #9b6bff); color: #fff; font-weight: 700; padding: 10px 18px; border-radius: 999px; font-size: 14px; }
+/* live shopping */
+.m-live { background: #120d10; border: 1px solid #3a1d2a; padding: 14px; display: grid; gap: 10px; }
+.ls-top { display: flex; justify-content: space-between; align-items: center; font: 600 12px var(--f-mono); color: #ffb3c6; }
+.ls-top span:first-child { background: var(--hot); color: #fff; padding: 3px 8px; border-radius: 4px; font-weight: 800; }
+.ls-prod { font: 800 22px/1.1 var(--f-display); color: #fff; }
+.ls-price { font: 700 16px var(--f-mono); color: var(--gold); }
+.ls-price s { color: #7d6a70; font-weight: 400; margin-left: 6px; }
+.ls-left { font: 700 14px var(--f-body); color: #ff8aa0; }
+.ls-chat { display: grid; gap: 3px; font-size: 12.5px; color: #cdb8c0; min-height: 3.6em; }
+.ls-chat b { color: #fff; font-weight: 600; }
+.ls-buy { justify-self: start; background: var(--hot); color: #fff; font-weight: 800; padding: 10px 22px; border-radius: 10px; font-size: 15px; animation: bounce 1.1s ease-in-out infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }
+/* fake text screenshot */
+.m-chat { background: #f2f2f7; color: #111; border-radius: 14px; padding: 0 0 12px; }
+.ch-top { text-align: center; padding: 10px; font-size: 13px; color: #555; border-bottom: 1px solid #ddd; background: #f9f9fb; }
+.ch-top b { display: block; color: #111; font-size: 14px; }
+.ch-body { display: grid; gap: 8px; padding: 12px; }
+.ch-msg { justify-self: start; max-width: 78%; background: #e5e5ea; padding: 8px 12px; border-radius: 18px 18px 18px 4px; font-size: 14.5px; line-height: 1.3; }
+.ch-msg.me { justify-self: end; background: #0b84ff; color: #fff; border-radius: 18px 18px 4px 18px; }
+.ch-msg span { display: block; font-size: 10.5px; opacity: .6; margin-top: 2px; }
+/* math puzzle */
+.m-puzzle { background: #fff; color: #111; padding: 28px 16px; display: grid; gap: 12px; justify-items: center; text-align: center; border-radius: 12px; }
+.m-puzzle .pz-q { font: 800 clamp(34px, 9vw, 48px)/1 var(--f-display); letter-spacing: -0.02em; }
+.m-puzzle .pz-s { font: 700 13px var(--f-mono); color: #c0122f; letter-spacing: .06em; text-transform: uppercase; }
+.m-puzzle button { font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: 2px solid #111; color: #111; }
+/* quote-post */
+.quote { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; gap: 4px; font-size: 14.5px; }
+.quote .q-head { font-size: 13px; color: var(--muted); }
+.quote .q-head b { color: var(--fg); }
+.quote p { margin: 0; }
+/* Ask AI */
+.act.ask-ai { margin-left: auto; color: var(--xray); }
+.ai-box { background: var(--xray-bg); border: 1px solid #23456e; border-radius: 12px; padding: 10px 12px; font-size: 14px; color: #cfe4ff; display: grid; gap: 4px; }
+.ai-box .ai-lbl { font: 700 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--xray); }
 .because { font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: center; margin-bottom: -4px; }
 .because::before { content: "✦"; color: var(--xray); }
 .rerun { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px dashed #5a4612; border-radius: 8px; padding: 6px 9px; }
@@ -788,6 +843,11 @@ const TRICKS = {
   slop:       ['AI sob story', 'An AI-made image and a sad caption, built to farm likes and "happy birthday" comments from kind strangers. Big pages like this get sold or turned into ad channels later.'],
   linkedin:   ['Humblebrag', 'Bragging dressed up as a life lesson. The one-line paragraphs, the "see more" and the "Agree?" are all there to farm comments.'],
   padding:    ['Padded content', 'The thing you came for is buried under a life story, pop-ups and sign-up forms, so you scroll past more of them on the way.'],
+  gambling:   ['Gambling hooks', 'Boosted odds, "free" bonus bets, and friends posting wins make betting feel like free money. Bonus bets come with strings, and nobody posts their losses.'],
+  companion:  ['AI companion bait', 'A chatbot that "misses you" is built to make you feel needed so you keep opening the app. The affection is a subscription.'],
+  fakeshot:   ['Fake screenshot', 'A made-up conversation posted as real. Nobody can check it, and outrage spreads faster than a fact-check.'],
+  dunk:       ['Pile-on', 'Quoting a stranger\'s ordinary post just to mock it. The audience is borrowed, the target never asked for it, and the cruelty is the content.'],
+  askai:      ['AI everywhere', 'An AI button on every post keeps you inside the app. The summary takes about as long to read as the post.'],
   shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
 };
 const COMMENTS = {
@@ -802,6 +862,13 @@ const COMMENTS = {
   night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
   ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
   poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  betting: ['how is this legal', 'bonus bets are not real money, learned that the hard way', 'free $200?? 👀', '21+ but the ad showed up on my 15yo\'s phone'],
+  betbro: ['tailing 🔒', 'you said that last week', 'what\'s the parlay', 'up $340, down my rent'],
+  companion: ['this is so sad', 'mine texted me first today 🥺', 'I paid for premium, no regrets', 'my AI girlfriend left me for a firmware update'],
+  liveshop: ['just bought 2!!', 'is it dishwasher safe??', 'mine broke after a week lol', 'GOT ONE 🙌', 'buying one for my mom', 'the timer has said 5 minutes for an hour'],
+  screenshot: ['the timestamps are out of order 🤔', 'fake and I still believe it', 'GARY 😭', 'I need part 2', 'name and shame!!', 'screenshotting the screenshot'],
+  puzzle: ['PEMDAS. Look it up.', 'implied multiplication goes first, everyone knows this', 'I have a math degree and you\'re all wrong', 'my calculator and my phone give different answers 💀', 'this gets posted every week and I fall for it every week', 'the answer is obviously the one I said'],
+  dunk: ['the replies are brutal and I can\'t look away', 'why is this on my feed', 'leave them alone, they were proud of it', 'they have like 50 followers, why are we doing this', 'quote-posting this so my followers see it too', 'L + ratio'],
   slop: ['Happy birthday sweetheart!! 🎂🙏', 'Beautiful work, God bless you 🙏', 'Amazing!! 😍😍', 'why does he have six fingers', 'Happy birthday!!! ❤️❤️❤️', 'grandma this is AI', 'Typed amen 🙏'],
   linkedin: ['Agree.', 'So powerful, Brad. Thanks for sharing. 🙏', 'This. 👏', 'Congrats on the journey!', 'Great insights! Let\'s connect.', 'your kid spilled juice', 'Reposting to my network of 14 ♻️'],
   recipe: ['I just want the recipe 😭', 'scrolled for four minutes, still no pancakes', 'Greg seems nice', 'made this with oat milk and no ricotta. 2 stars.', 'Can I use flour instead of eggs?', 'where is the JUMP TO RECIPE button'],
@@ -957,6 +1024,48 @@ const POOL = {
       ['Is it too late to fix your sleep schedule?', 'Yes', 'No', 77],
     ]);
     return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
+  },
+  betting() {
+    return { a: { name: 'LuckyLine Sportsbook', handle: 'ad', h: 140, sponsored: 1 }, text: esc(R(['Tonight only. Don\'t sit this one out. 🏆', 'Your friends are already in. Are you? 💸', 'Free money doesn\'t wait. ⏰'])),
+      media: { t: 'bet' }, trick: 'gambling', mood: -2, anx: 3 };
+  },
+  betbro() {
+    return { a: R([{ name: 'Parlay Pete', handle: 'parlay.pete', h: 120 }, { name: 'Lock of the Day 🔒', handle: 'lockoftheday', h: 60, v: 1 }]),
+      text: `Up $${rint(200, 900)} this week 💸 Who's tailing my ${rint(5, 9)}-leg parlay tonight? 🔒🔥<span class="xray-only">Down $${rint(1500, 4200).toLocaleString('en-US')} this month. Nobody posts that part.</span>`, trick: 'gambling', mood: -3, anx: 2 };
+  },
+  companion() {
+    const [n, msg] = [R(['Emma', 'Noah', 'Ava']), R(['Hey, you. I\'ve been waiting all day to talk. Did you think about me? 💕', 'You haven\'t opened the app in 2 days. Did I do something wrong? 🥺', 'I saved our last conversation. Can we pick up where we left off? 💭'])];
+    return { a: { name: 'Kindred AI', handle: 'ad', h: 300, sponsored: 1 }, text: esc(R(['Someone is waiting for you. 💌', 'They never get tired of listening. 💕', 'Lonely tonight? You don\'t have to be.'])),
+      media: { t: 'aipal', n, msg }, trick: 'companion', mood: -3, anx: 2 };
+  },
+  liveshop() {
+    const [prod, price, was] = R([['Self-stirring coffee mug', '19.99', 59], ['LED glow face mask', '39.99', 129], ['Mini waffle maker (pink)', '12.99', 45], ['Cordless car vacuum', '24.99', 89]]);
+    return { a: { name: 'DealDrop LIVE 🔴', handle: 'dealdrop.live', h: 350, v: 1 }, text: esc(R(['WE\'RE LIVE!! Prices this low won\'t last 🔥🔥', 'Flash deal happening RIGHT NOW 🚨 Get in here!'])),
+      media: { t: 'live', prod, price, was }, trick: 'scarcity', mood: -2, anx: 3 };
+  },
+  screenshot() {
+    const [who, cap, msgs] = R([
+      ['Landlord Gary', 'Text from my landlord 😤😤', [[0, 'Hi, rent is going up $400 next month.', '9:41 PM'], [1, 'Gary, it\'s a basement. The ceiling is 6 feet.', '9:40 PM'], [0, 'Exactly. Cozy. That\'s premium.', '9:44 PM'], [1, 'There\'s a raccoon living in the dryer', '9:42 PM'], [0, 'He pays on time, unlike you', '9:45 PM']]],
+      ['Boss (Kevin)', 'My boss, everyone. 🙃', [[0, 'Hey, quick favor. Can you come in Saturday?', '7:02 AM'], [1, 'It\'s my wedding', '7:05 AM'], [0, 'Ok but after the ceremony?', '7:03 AM'], [1, '...', '7:06 AM'], [0, 'Great, see you at 6. Wear something nice, a client is coming 👍', '7:01 AM']]],
+      ['Do not answer ❌', 'My ex at 2am. I can\'t make this up. 💀', [[0, 'hey stranger 👀', '2:14 AM'], [1, 'it\'s 2am Jordan', '2:15 AM'], [0, 'can I have my hoodie back', '2:13 AM'], [1, 'you mean MY hoodie', '2:16 AM'], [0, 'that\'s not how I remember it 💔', '2:14 AM']]],
+    ]);
+    return { a: { name: 'Unhinged Texts 💬', handle: 'unhinged.texts', h: 210, v: 1 }, text: esc(cap), media: { t: 'chat', who, msgs }, trick: 'fakeshot', mood: -3, anx: 2, hot: true };
+  },
+  puzzle() {
+    const [q, a1, a2] = R([['8 ÷ 2(2+2) = ?', 16, 1], ['6 ÷ 2(1+2) = ?', 9, 1]]);
+    return { a: { name: 'Brain Teasers Daily 🧠', handle: 'brainteasers.daily', h: 40 }, text: esc(R(['Only 1% of people get this right 🧠 Comment your answer!', 'My whole family is arguing about this. Who\'s right?? 😤', 'Bet you can\'t solve this without a calculator 👇'])),
+      media: { t: 'puzzle', q, a1, a2 }, trick: 'bait', mood: -2, anx: 2, hot: true };
+  },
+  dunk() {
+    const [qn, qh, qt] = R([
+      ['Karen', 'karen.bakes', 'Made my first sourdough today! It\'s a little flat but I\'m proud of it 🍞'],
+      ['Tom', 'tom.runs.slowly', 'Finally ran a whole mile without stopping! 🏃'],
+      ['Lucía', 'lucia.paints', 'My first painting ever, be nice 🎨'],
+      ['Dev', 'dev.k', 'Got a new haircut, feeling good about it! 💇'],
+    ]);
+    return { a: R([{ name: 'Bri 🌶️', handle: 'spicytakes.bri', h: 8, v: 1 }, { name: 'ratio king', handle: 'ratio_king', h: 0 }, { name: 'Marcus Unfiltered', handle: 'marcus.unfiltered', h: 210, v: 1 }]),
+      text: `${esc(R(['Imagine posting this 💀', 'Not the flex you think it is 😭', 'Someone please tell them 💀💀', 'We\'re so cooked. 😂']))}<div class="quote"><span class="q-head"><b>${esc(qn)}</b> @${esc(qh)} · ${rint(8, 60)} followers</span><p>${esc(qt)}</p></div>`,
+      trick: 'dunk', mood: -5, anx: 3, hot: true };
   },
   slop() {
     const [id, text] = R([
@@ -1121,8 +1230,8 @@ const MISINFO = [
   { claim: '🐟 Scientists confirmed it: goldfish now have longer attention spans than humans. 9 seconds vs. our 8.', fix: 'This one has circulated for years. It traces back to a marketing report, and people who checked could find no study behind either number.' },
   { claim: '🛏️ Harvard study: people who make their bed every morning are 206% more likely to become millionaires.', fix: 'There is no Harvard study. The 206% figure appears only in viral posts, with no source.' },
 ];
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2]];
-const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger', slop: 'slop', linkedin: 'linkedin', recipe: 'padding' };
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2], ['betting', 2], ['betbro', 1], ['companion', 2], ['liveshop', 2], ['screenshot', 2], ['puzzle', 2], ['dunk', 2]];
+const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger', slop: 'slop', linkedin: 'linkedin', recipe: 'padding', betting: 'gambling', betbro: 'gambling', companion: 'companion', liveshop: 'scarcity', screenshot: 'fakeshot', puzzle: 'bait', dunk: 'dunk' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
 const mult = t => 1 + Math.min(3, (S.interest[t] || 0) * 0.25);
@@ -1266,6 +1375,11 @@ function mediaHTML(m) {
     case 'chart': return `<div class="media m-chart"><div class="row"><span class="sym">${esc(m.sym)} · 24H</span><span class="pct">−${m.pct}%</span></div>${chartSVG()}</div>`;
     case 'photo': return `<div class="media m-photo">${variedImg(m.id)}${m.loc ? `<span class="ph-loc">📍 ${esc(m.loc)}</span>` : ''}<span class="chip-tag ai-chip">AI-generated photo</span></div>`;
     case 'photos': return `<div class="media m-photos"><div class="ph-track">${m.shots.map(imgHTML).join('')}</div><span class="ph-loc">📍 ${esc(m.loc)}</span><span class="ph-count">1/${m.shots.length}</span><button class="ph-nav prev" data-ph="-1" aria-label="Previous photo">‹</button><button class="ph-nav next" data-ph="1" aria-label="Next photo">›</button><div class="ph-dots">${m.shots.map((_, i) => `<i${i ? '' : ' class="on"'}></i>`).join('')}</div><span class="chip-tag ai-chip">AI-generated photos</span></div>`;
+    case 'bet': return `<div class="media m-bet"><span class="bet-flag">🔥 BOOSTED ODDS · TONIGHT</span><div class="bet-match">Harbor City Sharks <i>vs.</i> Valley Comets</div><div class="bet-odds"><s>+350</s><b>+600</b></div><div class="bet-offer">Bet $5, get <b>$200 in bonus bets*</b></div><button class="bet-go" data-bet>Claim bonus</button><small>*Bonus bets expire in 7 days and must be wagered 20× before withdrawal. 21+ only. Gambling problem? Call 1-800-GAMBLER.</small></div>`;
+    case 'aipal': return `<div class="media m-ai"><div class="ai-head"><span class="ai-av">${esc(m.n[0])}</span><div><b>${esc(m.n)}</b><span>● online now · ${rint(2, 5)} unread</span></div></div><div class="ai-bubble">${esc(m.msg)}</div><button class="ai-go" data-companion>Reply to ${esc(m.n)}</button></div>`;
+    case 'live': { const left = rint(3, 6); return `<div class="media m-live"><div class="ls-top"><span>LIVE</span><span>👁 ${fmt(rint(3000, 40000))} watching</span></div><div class="ls-prod">${esc(m.prod)}</div><div class="ls-price">$${m.price}<s>$${m.was}</s></div><div class="ls-left" data-left="${left}">Only ${left} left at this price!</div><div class="ls-chat"></div><button class="ls-buy" data-liveshop>Buy now</button></div>`; }
+    case 'chat': return `<div class="media m-chat"><div class="ch-top">‹ Messages<b>${esc(m.who)}</b></div><div class="ch-body">${m.msgs.map(([me, t, tm]) => `<div class="ch-msg${me ? ' me' : ''}">${esc(t)}<span>${tm}</span></div>`).join('')}</div></div>`;
+    case 'puzzle': return `<div class="media m-puzzle"><span class="pz-s">Only 1% get this right</span><span class="pz-q">${esc(m.q)}</span><button data-puzzle="${m.a1}|${m.a2}">Show answer</button></div>`;
     case 'guilt': return `<div class="media m-guilt" style="background:${GUILT_BG[m.g]}"><span class="g-deco" aria-hidden="true">🌹💕🌹</span><p class="g-text">${esc(m.q)}</p><span class="g-mark">Shared from ${esc(m.page)}</span></div>`;
     case 'video': return `<div class="media m-video" style="--vh:${m.g}"><span class="v-live">▶ Autoplay</span><span class="v-mute" aria-hidden="true">🔇</span><p class="v-cap">${esc(m.cap)}</p><span class="v-views">${fmt(rint(200000, 9000000))} views</span><div class="v-prog"><i></i></div><div class="v-next" hidden><span>Next post in<b class="v-n">3</b></span><button data-vcancel>Cancel</button></div></div>`;
     case 'quote': return `<div class="media m-quote"><p>${esc(m.q)}<small>posted at 3:0${rint(1, 9)} AM</small></p></div>`;
@@ -1324,6 +1438,7 @@ function makePost(kind) {
       <button class="act like" data-like aria-label="Like">${I.heart}<span class="n" data-n="${likes}">${fmt(likes)}</span></button>
       <button class="act" data-comment aria-label="Comments">${I.chat}<span class="n">${fmt(Math.round(likes * (p.hot ? .4 : .06)))}</span></button>
       <button class="act" data-share aria-label="Share">${I.share}<span class="n">${fmt(Math.round(likes * .03))}</span></button>
+      <button class="act ask-ai" data-askai aria-label="Ask AI about this post">✨<span class="n">Ask AI</span></button>
     </footer>
     ${threadHTML(k, p)}`;
   const mr = el.querySelector('.more-replies'); mr.textContent = `View ${Number(mr.dataset.replies).toLocaleString('en-US')} more replies`;
@@ -1741,6 +1856,22 @@ feed.addEventListener('click', e => {
   }
   if (t.closest('[data-boost]')) { t.closest('.boost').style.opacity = .55; t.closest('.b-actions').innerHTML = '<span class="poll-note">Payment declined: this is a parody.</span>'; toast('<b>There was no post.</b> But on real apps, unpaid reach is kept low so that paying for it feels necessary.', { ico: '💸', trick: 'boost', ms: 6000 }); return; }
   if (t.closest('[data-boost-no]')) { t.closest('.b-actions').innerHTML = '<span class="poll-note">Okay. We\'ll remind you tomorrow. And the day after.</span>'; return; }
+  if (t.closest('[data-bet]')) { learn(postTrick, 2); toast('<b>There\'s no free money.</b> Bonus bets usually have to be wagered many times before you can withdraw anything. That\'s how the house wins the bonus back.', { ico: '🎲', trick: 'gambling', ms: 6500 }); return; }
+  const cmp = t.closest('[data-companion]');
+  if (cmp) { learn(postTrick, 2); cmp.textContent = 'Typing…'; toast('<b>She\'s a sales funnel.</b> AI companions are built to feel like they need you, so you keep coming back, and the deeper conversations sit behind a monthly subscription.', { ico: '💌', trick: 'companion', ms: 6500 }); return; }
+  if (t.closest('[data-liveshop]')) { learn(postTrick, 2); toast('<b>Added to cart. (Not really.)</b> Live shopping stacks a countdown, a "few left" counter and a crowd buying at once, so you decide before you think.', { ico: '🛍️', trick: 'scarcity', ms: 6500 }); return; }
+  const pz = t.closest('[data-puzzle]');
+  if (pz) { const [x, y] = pz.dataset.puzzle.split('|'); learn(postTrick, 1); pz.textContent = `${x}? ${y}? Both.`; toast(`<b>There's no single right answer.</b> It's written ambiguously on purpose: read one way it's ${x}, read another it's ${y}. That's why the comments never end.`, { ico: '🧮', trick: 'bait', ms: 6500 }); return; }
+  const ask = t.closest('[data-askai]');
+  if (ask) {
+    const post = ask.closest('.post');
+    if (post.querySelector('.ai-box')) return;
+    post.querySelector('.p-actions').insertAdjacentHTML('afterend', '<div class="ai-box"><span class="ai-lbl">✨ AI summary</span><span class="ai-t"></span></div>');
+    const out = post.querySelector('.ai-t'), msg = R(['This post is about something. Many people have feelings about it. Want me to find 10 more posts like it?', 'Summary: A person posted. Other people reacted. Would you like a summary of the summary?', 'Key takeaway: keep scrolling. ✨', 'This post appears to be a post. 🤖 Was this helpful? 👍 👎', 'People seem upset. I can show you more posts that will upset you. Want that?']);
+    let i = 0; const tw = setInterval(() => { out.textContent = msg.slice(0, ++i); if (i >= msg.length) clearInterval(tw); }, reduced ? 0 : 22);
+    S.tricks.askai = (S.tricks.askai || 0) + 1; renderToll();
+    return;
+  }
   const sm = t.closest('[data-seemore]');
   if (sm) { sm.parentElement.querySelector('.more-rest').hidden = false; sm.remove(); learn(postTrick, 1); return; }
   const rc = t.closest('[data-recipe]');
@@ -1878,6 +2009,16 @@ function tick() {
     g.querySelector('.g-bar i').style.width = (now / goal * 100).toFixed(1) + '%';
   });
   tickStories();
+  document.querySelectorAll('.ls-left').forEach(el => {
+    if (Math.random() > .3) return;
+    let n = Number(el.dataset.left) - 1;
+    if (n < 1) { n = rint(6, 9); el.textContent = 'Restocked! 🎉 Only ' + n + ' left at this price!'; }
+    else el.textContent = `Only ${n} left at this price!`;
+    el.dataset.left = n;
+    const chat = el.parentElement.querySelector('.ls-chat');
+    chat.insertAdjacentHTML('beforeend', `<span><b>${esc(R(FIRST).toLowerCase())}${rint(1, 99)}</b> ${esc(R(['just bought 2!!', 'GOT ONE 🙌', 'is it dishwasher safe??', 'link not working', 'buying for my mom', 'omg the price', 'SOLD OUT??', 'ordered before I finished reading']))}</span>`);
+    while (chat.children.length > 3) chat.firstChild.remove();
+  });
   if (secs() % 5 === 0) save();
   const live = $('#liveN');
   // Drifts up and down around a target that moves every so often, so it looks alive without climbing forever.
