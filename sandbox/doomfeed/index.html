@@ -156,12 +156,15 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .act.liked svg { fill: var(--hot); }
 .act .n { font-family: var(--f-mono); font-size: 12px; }
 .act .n.tick { color: var(--fg); }
-.p-comment {
-  font-size: 14px; background: var(--surface-2); border-radius: 12px; padding: 9px 12px;
-  overflow-wrap: anywhere;
-}
-.p-comment .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); display: block; margin-bottom: 2px; }
-.p-comment b { font-weight: 600; }
+.thread { background: var(--surface-2); border-radius: 12px; padding: 10px 12px; display: grid; gap: 8px; font-size: 14px; overflow-wrap: anywhere; }
+.thread .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.cm b { font-weight: 600; }
+.cm .cm-meta { display: block; font: 400 11.5px var(--f-mono); color: var(--muted); margin-top: 2px; }
+.cm .cm-meta .op { color: var(--gold); }
+.replies { display: grid; gap: 8px; border-left: 2px solid var(--line); padding-left: 10px; margin-left: 2px; }
+.replies .cm { animation: rise .3s ease-out both; }
+.more-replies { justify-self: start; font-size: 13px; font-weight: 600; color: var(--xray); padding: 2px 0; }
+.more-replies:hover { text-decoration: underline; }
 
 /* media */
 .media { border-radius: 12px; overflow: hidden; position: relative; max-width: 100%; }
@@ -223,6 +226,11 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--xray); outline-
 .reality .eyebrow { font: 600 11px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); }
 .reality p { font: 400 clamp(21px, 4.4vw, 26px)/1.25 var(--f-serif); margin: 0; text-wrap: pretty; }
 .reality p em { font-style: italic; }
+.r-stats { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 12px var(--f-mono); color: var(--ink-muted); border-top: 1px solid #b9c8bf; padding-top: 10px; font-variant-numeric: tabular-nums; }
+.r-stats b { color: var(--ink); font-weight: 600; }
+.intro h2 { font: 800 clamp(26px, 6vw, 34px)/1.05 var(--f-display); letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.intro .eyebrow { color: #a3122f; }
+.intro p { font-size: clamp(18px, 4vw, 21px); }
 .reality .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .reality button { font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ink); }
 .reality button.solid { background: var(--ink); color: var(--paper); }
@@ -295,7 +303,9 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 .fine { font-size: 12px; color: var(--muted); margin: 0; }
 
 /* mobile sheet + bar */
-.tollbar { display: none; }
+.tollbar, .tb-flash { display: none; }
+.mobile-only { display: none; }
+.intro .desk-only { display: inline; }
 @media (max-width: 979.98px) {
   .toll {
     position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; border-radius: 18px 18px 0 0;
@@ -307,16 +317,30 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
   .toll.open { transform: none; }
   .close-sheet { font-size: 13px; color: var(--muted); font-family: var(--f-body); letter-spacing: 0; text-transform: none; font-weight: 600; padding: 4px 8px; }
   .tollbar {
-    display: flex; position: fixed; z-index: 35; left: 0; right: 0; bottom: 0;
-    background: color-mix(in oklab, var(--surface) 94%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid var(--line); align-items: center; gap: 14px;
+    display: flex; position: fixed; z-index: 35; left: 0; right: 0; bottom: 0; width: 100%; text-align: left;
+    background: var(--surface); border-top: 2px solid var(--hot);
+    align-items: center; gap: 12px; box-shadow: 0 -10px 30px rgba(0,0,0,.5);
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
     padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-    font: 500 12.5px var(--f-mono); font-variant-numeric: tabular-nums; color: var(--muted);
   }
-  .tollbar b { color: var(--fg); font-weight: 600; }
-  .tollbar .tb-stats { display: flex; gap: 14px; flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; }
-  .tollbar button { color: var(--hot); font-weight: 700; font-family: var(--f-mono); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; padding: 6px 10px; border: 1px solid var(--hot); border-radius: 8px; }
+  .tollbar.nudge { animation: nudge .9s cubic-bezier(.3,1.5,.5,1) 2; }
+  .tb-main { flex: 1; min-width: 0; display: grid; gap: 4px; }
+  .tb-label { font: 800 11px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--hot); display: flex; align-items: center; gap: 6px; }
+  .tb-label i { width: 7px; height: 7px; border-radius: 50%; background: var(--hot); animation: pulse 1.2s infinite; }
+  .tb-stats { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 10px; font: 500 11px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .tb-stats span { display: grid; line-height: 1.15; white-space: nowrap; }
+  .tb-stats b { font: 600 16px var(--f-mono); color: var(--fg); font-variant-numeric: tabular-nums; text-transform: none; letter-spacing: -0.02em; }
+  .tb-stats b.bad { color: var(--hot); }
+  .tb-open { flex: none; color: #fff; background: var(--hot); font: 700 12px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; padding: 10px 11px; border-radius: 10px; line-height: 1.1; text-align: center; }
+  .tb-flash {
+    display: block; position: fixed; z-index: 36; left: max(16px, env(safe-area-inset-left, 0px));
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px)); pointer-events: none;
+    background: var(--xray); color: #051426; font: 700 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase;
+    padding: 6px 9px; border-radius: 6px; opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s;
+  }
+  .tb-flash.show { opacity: 1; transform: none; }
+  .mobile-only { display: inline; }
+  .intro .desk-only { display: none; }
   .live .hide-sm { display: none; }
 }
 @media (max-width: 420px) {
@@ -408,6 +432,8 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
 .outside small { font-family: var(--f-mono); color: var(--ink-muted); }
 .outside button { justify-self: center; font-size: 13px; text-decoration: underline; color: var(--ink-muted); }
 
+@media (max-width: 979.98px) { .toasts { bottom: calc(126px + env(safe-area-inset-bottom, 0px)); } }
+@keyframes nudge { 0%,100% { transform: none } 30% { transform: translateY(-10px) } 60% { transform: translateY(2px) } }
 @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
 @keyframes bump { 0% { transform: scale(.6) } 100% { transform: scale(1) } }
 @keyframes rise { from { opacity: .001; transform: translateY(10px) } to { opacity: 1; transform: none } }
@@ -480,10 +506,14 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
   </aside>
 </main>
 
-<div class="tollbar" id="tollbar">
-  <div class="tb-stats"><span><b id="bTime">0:00</b></span><span><b id="bPosts">0</b> posts</span><span><b id="bDist">0.0 m</b></span><span>mood <b id="bMood">100</b></span></div>
-  <button id="openSheet">Toll</button>
-</div>
+<button class="tollbar" id="tollbar" aria-label="Open the toll: what this feed is costing you">
+  <div class="tb-main">
+    <span class="tb-label"><i aria-hidden="true"></i>The toll · live</span>
+    <div class="tb-stats"><span>time<b id="bTime">0:00</b></span><span>posts<b id="bPosts">0</b></span><span>mood<b id="bMood">100</b></span><span>tricks<b id="bTricks" class="bad">0</b></span></div>
+  </div>
+  <span class="tb-open">See<br>all ↑</span>
+</button>
+<div class="tb-flash" id="tbFlash" aria-hidden="true"></div>
 <div class="scrim" id="scrim" hidden></div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
@@ -527,6 +557,27 @@ const TRICKS = {
   ending:     ['Fake ending', 'It looks like a stopping point. The feed keeps going right underneath it.'],
   shame:      ['Confirmshaming', 'Making the "leave" option feel like a personal failure so you pick the other one.'],
 };
+const COMMENTS = {
+  breaking: ['wait what is happening?? someone explain in the replies', 'not again. I literally just calmed down from the last one', 'refreshing every 10 seconds, will update this comment', 'my group chat is losing it over this', 'anyone else\'s phone just buzz like 8 times', 'I KNEW this would happen. Check my posts from March.', 'they always post BREAKING and then nothing. staying anyway'],
+  alert: ['stay alert for WHAT', 'my mom sent me this four times', 'turned on notifications, now I can\'t turn them off', 'this is so vague it\'s actually scarier', 'reply if you\'re in the area, let\'s figure this out', 'I heard sirens earlier. is this related??'],
+  market: ['checking my account with one eye closed', 'so we\'re never retiring, got it', 'buy the dip? or is this the dip? is the dip dipping?', 'I\'m not looking. I refuse to look. (I looked.)', 'my uncle predicted this and now I have to hear about it at every holiday', 'drop your losses in the replies, let\'s cry together'],
+  rage: ['This is exactly what\'s wrong with everyone.', 'Ratio + you\'re wrong + log off', 'Imagine thinking this is an opinion.', 'Blocked, reported, screenshotted.', 'My grandfather did this and he lived to 98. Do better.', 'I have never been this angry about something this small.', 'Deleted my reply three times. Posting it anyway: you are the problem.', 'This post is why aliens won\'t visit us.'],
+  lux: ['must be nice 🙃', 'how does everyone afford this except me', 'me at my desk eating crackers over the keyboard:', 'what do you actually DO though', 'drop the itinerary. asking for my 3 days of PTO', 'I\'d be grateful too if I lived on a boat, Kai'],
+  grind: ['my excuse is that I\'m tired, Ty', 'I woke up at 11 and called it a win', 'what do you even do for work', 'this made me feel great about my life 🙃', '4:30 AM is a crime scene, not a schedule', 'bro is 24 and has "retired his parents" twice this year'],
+  classmate: ['wait THEY did that?? they used to eat glue', 'happy for them (lying)', 'going through their whole profile now. see you in an hour', 'we sat next to each other and I still can\'t find my car keys', 'congrats!! who\'s going to tell them about the photos from 2014', 'I\'m not jealous, I\'m just going to think about this until I die'],
+  health: ['I do ALL of these. am I dying??', 'number 4 was not shocking. still reading.', 'just googled my symptoms and now I\'m here in the replies', 'why did my doctor never tell me this', 'saving this for 2am when I will definitely read it again', 'is this why I\'m tired?? I think this is why I\'m tired'],
+  night: ['why would you post this', 'saving this so I can be scared later', 'it\'s 3am here too and now I\'m awake forever', 'deleting the app (I will not delete the app)', 'reply with a worse fact. I dare you.', 'thanks I hate it. sending to everyone I know.'],
+  ad: ['is this legit? reply before I buy it', 'bought one. it\'s just a hoodie. buying another.', 'the timer reset when I refreshed?? what', 'ad is lying but I respect the hustle', 'only 3 left?? it said 3 left yesterday'],
+  poll: ['voted with the majority so I feel normal', 'the other side is lying and we all know it', 'there should be a third option: "scrolling"', 'changed my vote after I saw the results, sue me', 'the fact this is even close is why I can\'t sleep'],
+  bait: ['YES', 'yes 😭 and I have work in 5 hours', 'commenting so I see this later (I won\'t)', 'here. send help. or don\'t, I\'m comfortable', 'commenting to boost this for the algorithm', 'tired. just tired.'],
+};
+const REPLIES = ['source?', 'ok but nobody asked', 'this comment section is unhinged and I can\'t stop reading', 'you clearly didn\'t read the post', 'touch grass', 'screenshotting this whole thread', 'the replies are better than the post', 'came here for this comment', 'why is this on my feed', 'said it better than I could', 'dumbest thing I\'ve read today (it\'s 2am)', 'can we not do this here', 'this aged badly and it\'s been 4 minutes', 'not you replying to every single comment', 'real', 'facts', 'No. Absolutely not. Here\'s why: (1/7)', 'lol ok', 'not reading all that. happy for you, or sorry that happened', 'you\'re both wrong and I\'m staying to watch', 'the person who said "source?" is the only sane one here', 'imagine arguing on here at this hour (I\'m replying at this hour)', 'reported for being correct', 'my thumb hurts but I need to see how this ends', 'every reply makes this worse and I love it', 'wait who started this', 'I\'ve been in this thread for 20 minutes. help.', 'ok THIS is the take that ends the thread', 'it did not end the thread', 'blocked. (I\'ll unblock to see what you say back)'];
+const HANDLE_A = ['ratio', 'well.actually', 'just.asking', 'thread', 'sleepless', 'hot.take', 'not.a.bot', 'lurker', 'chronically.online', 'main.character', 'devils.advocate', 'reply.guy', 'doom', 'night.owl', 'touchgrass'];
+const HANDLE_B = ['king', 'queen', 'enjoyer', '_irl', '.exe', '_again', 'fan', 'haver', '_' + 0, 'mode', 'era'];
+const handle = () => `${R(HANDLE_A)}${R(HANDLE_B).replace('_0', '_' + rint(10, 99))}`;
+const ago = () => R(['now', '1m', '3m', '7m', '12m', '25m']);
+const cmHTML = (text, likes, op) => `<div class="cm"><b>@${esc(handle())}</b> ${esc(text)}<span class="cm-meta">${ago()} · ${fmt(likes)} likes · Reply${op ? ' · <span class="op">♥ by author</span>' : ''}</span></div>`;
+let repliesOpened = 0;
 const tag = k => `<div class="trick-tag"><b>${TRICKS[k][0]}</b>${TRICKS[k][1]}</div>`;
 
 /* ---------- content ---------- */
@@ -556,19 +607,19 @@ const POOL = {
     const o = R(['something in the water', 'a trend that is spreading fast', 'what happens next', 'the thing everyone was afraid of', 'numbers nobody expected', 'a development that changes everything']);
     return { a: A.news, text: `🚨 BREAKING: ${s} ${v} ${o}. Details still emerging. Stay with us.`,
       media: { t: 'breaking', h: R(['Developing story', 'This is just the beginning', 'More to come', 'Situation unfolding']) },
-      trick: 'urgency', mood: -4, anx: 6, comment: R(['wait what is happening??', 'not again', 'can someone explain', 'I knew this would happen', 'refreshing every 10 seconds']) };
+      trick: 'urgency', mood: -4, anx: 6 };
   },
   alert() {
     const p = R(['your area', 'a town near you', 'the area you just searched', 'your region', 'a place you\'ve been']);
     return { a: A.alerts, text: `⚠️ Residents near ${p} are being told to "stay alert." No further information is available at this time. Turn on notifications for updates.`,
-      trick: 'fear', mood: -3, anx: 7, comment: R(['stay alert for WHAT', 'my mom just sent me this', 'turned on notifications, thanks', 'this is so vague it\'s scary']) };
+      trick: 'fear', mood: -3, anx: 7 };
   },
   market() {
     const asset = R(['Global markets', 'Tech stocks', 'Retirement funds', 'Housing prices', 'Savings rates', 'Crypto (again)']);
     const pct = (Math.random() * 8 + 1.2).toFixed(1);
     return { a: A.market, text: `📉 ${asset} fell ${pct}% overnight. Analysts say it "could get worse." Is your money next?`,
       media: { t: 'chart', sym: asset.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5) || 'MKT', pct },
-      trick: 'fear', mood: -4, anx: 6, comment: R(['checking my account with one eye closed', 'so we\'re never retiring, got it', 'buy the dip? or is this the dip? or—', 'I\'m not looking. I refuse to look.']) };
+      trick: 'fear', mood: -4, anx: 6 };
   },
   rage() {
     const habit = R(['clap when the plane lands', 'reply-all to company emails', 'put the milk in first', 'walk four across on the sidewalk', 'send voice notes longer than a minute', 'recline their seat on a two-hour flight', 'eat pizza with a fork', 'leave one sip in the carton and put it back', 'say "per my last email"', 'stand still at the top of the escalator']);
@@ -577,19 +628,17 @@ const POOL = {
       `Unpopular opinion: anyone who would ${habit} should lose their phone privileges. I said what I said.`,
       `If you ${habit}, unfollow me. I'm serious. We have nothing in common.`,
     ]);
-    return { a: Math.random() < .5 ? A.rage : A.rage2, text, trick: 'rage', mood: -5, anx: 3, hot: true,
-      comment: R(['This is exactly what\'s wrong with everyone.', 'Ratio.', 'Imagine thinking this is an opinion.', 'Blocked, reported, screenshotted.', 'My grandfather did this and he lived to 98. Do better.', 'The audacity of this post.', 'I have never been this angry about something this small.']) };
+    return { a: Math.random() < .5 ? A.rage : A.rage2, text, trick: 'rage', mood: -5, anx: 3, hot: true };
   },
   lux() {
     const place = R(['Somewhere on the coast', 'A villa you can\'t afford', 'The rooftop pool, again', 'Island number four this year', 'An undisclosed beach']);
     return { a: A.lux, text: `Day ${rint(80, 340)} of not checking email. Remember: the 9 to 5 is a choice. ✨`,
-      media: { t: 'lux', place, g: rint(0, 3) }, trick: 'comparison', mood: -6, anx: 2,
-      comment: R(['must be nice', 'how do people afford this', 'me at my desk eating crackers:', 'teach me your ways (I will not do them)']) };
+      media: { t: 'lux', place, g: rint(0, 3) }, trick: 'comparison', mood: -6, anx: 2 };
   },
   grind() {
     const ach = R(['Just closed on my third rental property', 'Retired my parents', 'Ran my 14th marathon this year', 'Hit seven figures before breakfast', 'Sold my second company', 'Read 112 books this year']);
     return { a: A.grind, text: `${rint(22, 27)} years old. ${ach}. Woke up at 4:30 again. What's your excuse? 💪`,
-      trick: 'comparison', mood: -6, anx: 3, comment: R(['my excuse is that I\'m tired', 'I woke up at 11 and called it a win', 'what do you even do for work', 'this made me feel great about my life 🙃']) };
+      trick: 'comparison', mood: -6, anx: 3 };
   },
   classmate() {
     const c = classmate();
@@ -612,7 +661,7 @@ const POOL = {
     const fact = R(['how many bacteria live on a phone screen', 'how much of the ocean is still unexplored', 'the heat death of the universe', 'how many of your memories might be wrong', 'how little of space we can actually see', 'how many hours a year people spend on their phones']);
     return { a: A.night, text: 'can\'t stop thinking about this',
       media: { t: 'quote', q: `It's 3am and I just learned about ${fact}. I will never sleep again.` },
-      trick: 'doom', mood: -3, anx: 5, comment: R(['why would you post this', 'saving this so I can be scared later', 'it\'s 3am for me too and now I\'m awake forever', 'deleting the app (I will not delete the app)']) };
+      trick: 'doom', mood: -3, anx: 5 };
   },
   ad() {
     const p = R([
@@ -626,7 +675,7 @@ const POOL = {
     const left = rint(2, 9);
     return { a: { name: R(['CalmCore™', 'Grindset Supply', 'Unplugd', 'Mindful Merch Co.']), handle: 'ad', h: 45, sponsored: 1 },
       text: `Only ${left} left in stock. ${p[2]}`, media: { t: 'ad', prod: p[0], price: p[1], left },
-      trick: 'scarcity', mood: -1, anx: 3, noComment: true };
+      trick: 'scarcity', mood: -1, anx: 3 };
   },
   poll() {
     const q = R([
@@ -635,7 +684,7 @@ const POOL = {
       ['Do you feel better or worse than when you opened this app?', 'Worse', 'Better', 81],
       ['Is it too late to fix your sleep schedule?', 'Yes', 'No', 77],
     ]);
-    return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2, noComment: true };
+    return { a: A.poll, text: q[0], media: { t: 'poll', o: [q[1], q[2]], pct: q[3] }, trick: 'proof', mood: -2, anx: 2 };
   },
   bait() {
     return { a: Math.random() < .5 ? A.bait : A.well, text: R([
@@ -644,7 +693,7 @@ const POOL = {
       '5 signs you\'re addicted to your phone (read on your phone):<br>1. You\'re reading this.<br>2. You will keep reading.',
       'Only 1% of people will read this to the end. Prove you\'re one of them. 👇',
       'Comment one word that describes your week. I\'ll start: "scrolling."',
-    ]), trick: 'bait', mood: -1, anx: 1, comment: R(['YES', 'yes 😭', 'scrolling', 'tired', 'here', 'commenting so I see this later']) };
+    ]), trick: 'bait', mood: -1, anx: 1 };
   },
 };
 const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 3], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2]];
@@ -709,7 +758,8 @@ const I = {
 
 /* ---------- build ---------- */
 function makePost(kind) {
-  const p = POOL[kind || pickKind()]();
+  const k = kind || pickKind();
+  const p = POOL[k]();
   S.made++;
   const el = document.createElement('article');
   el.className = 'post';
@@ -732,7 +782,10 @@ function makePost(kind) {
       <button class="act" data-comment aria-label="Comments">${I.chat}<span class="n">${fmt(Math.round(likes * (p.hot ? .4 : .06)))}</span></button>
       <button class="act" data-share aria-label="Share">${I.share}<span class="n">${fmt(Math.round(likes * .03))}</span></button>
     </footer>
-    ${p.comment && !p.noComment ? `<div class="p-comment"><span class="lbl">Top comment · ${fmt(rint(800, 30000))} likes</span><b>@${R(['ratio_king', 'well.actually', 'just_a_question', 'thread.reader', 'anon' + rint(100, 999), 'sleepless.sam'])}</b> ${esc(p.comment)}</div>` : ''}`;
+    <div class="thread"><span class="lbl">Top comment</span>${cmHTML(R(COMMENTS[k]), rint(800, 30000), Math.random() < .25)}
+      <div class="replies">${cmHTML(R(REPLIES), rint(40, 4000))}</div>
+      <button class="more-replies" data-replies="${rint(300, 9000)}">View more replies</button></div>`;
+  const mr = el.querySelector('.more-replies'); mr.textContent = `View ${Number(mr.dataset.replies).toLocaleString('en-US')} more replies`;
   postObs.observe(el);
   return el;
 }
@@ -751,12 +804,26 @@ const REALITY = [
   () => `You've seen ${S.seen} posts. Can you remember three of them?`,
   () => 'You\'re allowed to stop. Nothing here needs you.',
 ];
+function miniStats() {
+  const n = Object.values(S.tricks).reduce((a, b) => a + b, 0);
+  return `<div class="r-stats"><span>Time <b>${timeStr()}</b></span><span>Posts <b>${S.seen}</b></span><span>Scrolled <b>${distStr()}</b></span><span>Mood <b>${Math.round(S.mood)}</b></span><span>Tricks used on you <b>${n}</b></span></div>`;
+}
+function makeIntro() {
+  const el = document.createElement('div');
+  el.className = 'reality intro';
+  el.innerHTML = `<span class="eyebrow">Doomfeed · a parody</span>
+    <h2>This feed is designed to keep you here.</h2>
+    <p>Every post, badge, and buzz below uses a real trick from real apps. While you scroll, <span class="mobile-only">the red bar at the bottom of your screen</span><span class="desk-only">the panel on the right</span> keeps score: your time, your mood, and every trick used on you.</p>
+    <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-dismiss>Just scroll</button></div>`;
+  return el;
+}
 function makeReality() {
   const el = document.createElement('div');
   el.className = 'reality';
   const line = REALITY[S.realityIx % REALITY.length]();
   S.realityIx++;
   el.innerHTML = `<span class="eyebrow">Pause · ${timeStr()} in · ${S.seen} posts</span><p>${line}</p>
+    ${miniStats()}
     <div class="r-actions"><button class="solid" data-toll>See what this cost</button><button data-dismiss>Keep scrolling</button></div>`;
   return el;
 }
@@ -804,6 +871,7 @@ const postObs = new IntersectionObserver(entries => {
     S.mood = clamp(S.mood + Number(el.dataset.mood) * 0.3, 3, 100);
     S.anx = clamp(S.anx + Number(el.dataset.anx) * (S.anx > 70 ? .12 : .3), 0, 100);
     S.tricks[el.dataset.trick] = (S.tricks[el.dataset.trick] || 0) + 1;
+    flashTrick(el.dataset.trick);
     milestone();
   }
   renderToll();
@@ -839,9 +907,11 @@ function renderToll() {
   const t = timeStr(), d = distStr(), mood = Math.round(S.mood), anx = Math.round(S.anx);
   $('#sTime').textContent = t; $('#bTime').textContent = t;
   $('#sPosts').textContent = S.seen; $('#bPosts').textContent = S.seen;
-  $('#sDist').textContent = d; $('#bDist').textContent = d;
+  $('#sDist').textContent = d;
   $('#sDistCmp').textContent = distCmp();
   $('#mMoodN').textContent = mood; $('#bMood').textContent = mood;
+  $('#bMood').classList.toggle('bad', mood < 50);
+  $('#bTricks').textContent = Object.values(S.tricks).reduce((a, b) => a + b, 0);
   const mm = $('#mMood'); mm.style.width = mood + '%';
   mm.style.background = mood > 60 ? 'var(--good)' : mood > 30 ? 'var(--gold)' : 'var(--hot)';
   $('#mAnxN').textContent = anx; $('#mAnx').style.width = anx + '%';
@@ -850,6 +920,20 @@ function renderToll() {
   $('#tricksList').innerHTML = list.length ? list.map(([k, n]) => `<li><span>${TRICKS[k][0]}</span><span>×${n}</span></li>`).join('') : '<li class="empty">None yet. Give it a few seconds.</li>';
   const s = secs();
   $('#instead').innerHTML = `<span>Read <b>${Math.floor(s / 75)}</b> pages of a book</span><span>Walked <b>${fmt(Math.round(s * 1.7))}</b> steps</span><span>Listened to <b>${Math.floor(s / 210)}</b> whole songs</span><span>Been asleep for <b>${Math.floor(s / 60)}</b> minutes</span>`;
+}
+
+/* ---------- toll bar flash (phones) ---------- */
+const tbFlash = $('#tbFlash');
+let flashT;
+function flashTrick(k) {
+  tbFlash.textContent = `+1 ${TRICKS[k][0]}`;
+  tbFlash.classList.add('show');
+  clearTimeout(flashT);
+  flashT = setTimeout(() => tbFlash.classList.remove('show'), 1400);
+  if (S.seen === 6 || S.seen === 30) {
+    const bar = $('#tollbar');
+    bar.classList.remove('nudge'); void bar.offsetWidth; bar.classList.add('nudge');
+  }
 }
 
 /* ---------- toasts ---------- */
@@ -944,7 +1028,20 @@ feed.addEventListener('click', e => {
     return;
   }
   if (t.closest('[data-more]')) { e.preventDefault(); toast('<b>Keep scrolling to find out.</b> The answer is somewhere further down. (It isn\'t.)', { ico: '👀', trick: 'curiosity' }); return; }
-  if (t.closest('[data-comment]')) { toast(`<b>${fmt(rint(1200, 40000))} people are arguing in there.</b> You won't change anyone's mind, but you could try for an hour.`, { ico: '💬', trick: 'rage' }); return; }
+  const mr = t.closest('.more-replies') || (t.closest('[data-comment]') && t.closest('.post').querySelector('.more-replies'));
+  if (mr) {
+    const box = mr.parentElement.querySelector('.replies');
+    for (let i = 0; i < 3; i++) box.insertAdjacentHTML('beforeend', cmHTML(R(REPLIES), rint(5, 2500)));
+    // The count goes down by 3, then back up: people keep arguing while you read.
+    const left = Math.max(40, Number(mr.dataset.replies) - 3 + rint(0, 9));
+    mr.dataset.replies = left;
+    mr.textContent = `View ${left.toLocaleString('en-US')} more replies`;
+    S.anx = clamp(S.anx + 0.6, 0, 100);
+    repliesOpened++;
+    if (repliesOpened === 1) toast('<b>The argument never ends.</b> Every time you read 3 replies, more show up. You won\'t change anyone\'s mind, but you could try for an hour.', { ico: '💬', trick: 'rage', ms: 6000 });
+    if (repliesOpened === 8) toast('<b>You\'ve read 24 replies from strangers.</b> None of them will remember this thread tomorrow.', { ico: '💬', trick: 'rage', ms: 6000 });
+    return;
+  }
   if (t.closest('[data-share]')) { toast('<b>Shared to your story.</b> Now three friends are scrolling too. (Not really. Nothing was shared.)', { ico: '📤', trick: 'proof' }); return; }
   if (t.closest('[data-shop]')) { toast('<b>Added to cart.</b> There is no product. There is no cart. The timer will reset anyway.', { ico: '🛒', trick: 'scarcity' }); return; }
   const opt = t.closest('[data-opt]');
@@ -958,6 +1055,7 @@ feed.addEventListener('click', e => {
     return;
   }
   if (t.closest('[data-toll]')) { openToll(); return; }
+  if (t.closest('[data-xray]')) { if (!document.body.classList.contains('xray')) xrayBtn.click(); t.closest('[data-xray]').textContent = 'Tricks revealed'; return; }
   const dis = t.closest('[data-dismiss]');
   if (dis) { const card = dis.closest('.reality'); card.style.opacity = .55; dis.textContent = 'Okay. Scrolling.'; dis.disabled = true; }
 });
@@ -1030,7 +1128,7 @@ function openToll() {
   toll.classList.add('open'); scrim.hidden = false;
 }
 const closeToll = () => { toll.classList.remove('open'); scrim.hidden = true; };
-$('#openSheet').addEventListener('click', openToll);
+$('#tollbar').addEventListener('click', openToll);
 $('#closeSheet').addEventListener('click', closeToll);
 scrim.addEventListener('click', closeToll);
 
@@ -1105,6 +1203,7 @@ function showReceipt() {
 }
 
 /* ---------- boot ---------- */
+feed.appendChild(makeIntro());
 feed.appendChild(sentinel);
 loadMore(10);
 renderToll();
