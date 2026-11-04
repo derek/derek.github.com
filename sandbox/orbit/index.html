@@ -5,25 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orbit: get your ship into a stable orbit</title>
 <style>
-  :root { --bg: #05060d; --text: #d9def5; --muted: #8189a8; --accent: #ffcf70; --panel: rgba(15,18,32,0.85); }
+  :root { --bg: #05060d; --text: #d9def5; --muted: #8189a8; --accent: #ffcf70; --panel: rgba(15,18,32,0.9); --line: #222844; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
     font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
   canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair;
     -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
-  #hud { position: fixed; top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right)); display: flex; flex-wrap: wrap; gap: 8px 16px;
-    align-items: center; pointer-events: none; }
-  .stat { background: var(--panel); border: 1px solid #222844; border-radius: 8px; padding: 6px 10px;
-    font-variant-numeric: tabular-nums; }
+  #hud { position: fixed; top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right)); display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; pointer-events: none; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-variant-numeric: tabular-nums; }
   .stat b { color: var(--accent); font-weight: 600; }
   #fuelbar { display: inline-block; vertical-align: middle; width: 90px; height: 8px; background: #1b2140; border-radius: 4px; overflow: hidden; margin-left: 4px; }
   #fuel { display: block; height: 100%; width: 100%; background: var(--accent); }
-  #msg { position: fixed; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(560px, calc(100vw - 32px));
-    background: var(--panel); border: 1px solid #222844; border-radius: 10px; padding: 10px 14px; text-align: center; }
-  #help { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  #panel { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    width: min(560px, calc(100vw - 32px)); background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; text-align: center; }
+  #text { font-size: 15px; min-height: 2.8em; display: flex; align-items: center; justify-content: center; }
+  #help { color: var(--muted); font-size: 12px; margin-top: 6px; }
+
+  button { background: #1b2140; color: var(--text); border: 1px solid #323a64; border-radius: 8px; padding: 10px 12px;
+    font: inherit; cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:disabled { opacity: 0.4; cursor: default; }
+  button.active { background: var(--accent); color: #1a1408; border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .big { background: var(--accent); color: #1a1408; border-color: var(--accent); font-weight: 600; width: 100%; padding: 12px; margin-top: 10px; }
+  #burns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+  @media (min-width: 520px) { #burns { grid-template-columns: repeat(4, 1fr); } }
 </style>
 </head>
 <body>
-<canvas id="game" aria-label="Orbit game: drag to launch a ship around the sun"></canvas>
+<canvas id="game" aria-label="Orbit game: aim a ship and launch it around the sun"></canvas>
 
 <div id="hud">
   <div class="stat">Laps <b id="laps">0</b></div>
@@ -33,9 +46,21 @@
   <div class="stat">Distance <b id="dist">0</b></div>
 </div>
 
-<div id="msg">
+<div id="panel">
   <div id="text"></div>
-  <div id="help">Aim: drag away from the ship and release to launch. Hold to thrust (uses fuel).</div>
+
+  <button id="launch" class="big" type="button">Launch</button>
+
+  <div id="burns" hidden>
+    <button type="button" data-burn="faster" title="Speed up along your path (Up arrow)">Faster</button>
+    <button type="button" data-burn="slower" title="Slow down along your path (Down arrow)">Slower</button>
+    <button type="button" data-burn="in" title="Fire toward the sun (Left arrow)">Toward sun</button>
+    <button type="button" data-burn="out" title="Fire away from the sun (Right arrow)">Away from sun</button>
+  </div>
+
+  <button id="again" class="big" type="button" hidden>Try again</button>
+
+  <div id="help"></div>
 </div>
 
 <script>
@@ -45,17 +70,23 @@
   const $ = id => document.getElementById(id);
 
   // Tuning
-  const GM = 1000;              // sun's gravitational parameter
-  const SUN_R = 14;             // crash radius
-  const MIN_OK = 40, MAX_OK = 220; // target band for a counted lap
-  const ESC = 340;              // beyond this you've escaped
-  const DT = 0.05, STEPS = 8;   // physics step and steps per frame
-  const THRUST = 3;             // thrust acceleration
-  const FUEL_PER_SEC = 12;
+  const GM = 1000;                 // sun's gravitational parameter
+  const SUN_R = 14;                // crash radius
+  const MIN_OK = 40, MAX_OK = 220; // dashed rings: a lap counts only if it stays between them
+  const ESC = 340;                 // beyond this you've escaped
+  const DT = 0.05, STEPS = 8;      // physics step and steps per frame
+  const BURN_ACCEL = 0.05;         // acceleration from a burn (~1.2 speed per real second at 8 steps/frame, 60 fps)
+  const FUEL_PER_STEP = 0.03;      // ~7 seconds of continuous burn from a full tank (8 steps per frame, 60 fps)
   const START = { x: 150, y: 0 };
-  const AIM_K = 0.8;            // slingshot strength
+  const AIM_K = 0.15;              // drag distance -> launch speed
   const MAX_V = 12;
-  const WORLD = 360;            // half-width of visible world
+  const MIN_LAUNCH = 0.5;
+  const WORLD = 360;               // half-width of visible world
+
+  const KEY_BURNS = { ArrowUp: 'faster', ArrowDown: 'slower', ArrowLeft: 'in', ArrowRight: 'out' };
+  const HELP_TOUCH = 'Tip: the dotted line is the predicted path with no burns.';
+  const HELP_KEYS = 'Keys: arrows to burn, Space to launch. Your best lap count is saved on this device.';
+  const HELP = matchMedia('(pointer: fine)').matches ? HELP_KEYS : HELP_TOUCH;
 
   let W = 0, H = 0, dpr = 1, scale = 1, cx = 0, cy = 0;
   function resize() {
@@ -80,7 +111,7 @@
   }));
 
   let ship, phase, trail, fuel, laps, sweep, lastTh, lapMin, lapMax;
-  let aiming = false, aimVel = null, thrusting = false, thrustPtr = [0, 0];
+  let aiming = false, aimVel = null, burn = null;
   let message = '';
 
   function reset() {
@@ -92,8 +123,23 @@
     sweep = 0;
     lastTh = Math.atan2(ship.y, ship.x);
     lapMin = lapMax = Math.hypot(ship.x, ship.y);
-    aimVel = null; aiming = false; thrusting = false;
-    message = 'Drag away from the ship to aim, then release to launch.';
+    aimVel = null; aiming = false; setBurn(null);
+    message = 'Step 1: drag anywhere to aim. The arrow shows where the ship will go and how fast.';
+    setPhaseUI();
+  }
+
+  function setPhaseUI() {
+    $('launch').hidden = phase !== 'aim';
+    $('burns').hidden = phase !== 'flight';
+    $('again').hidden = phase !== 'over';
+    $('help').textContent = HELP;
+  }
+
+  function setBurn(b) {
+    burn = b;
+    for (const btn of document.querySelectorAll('[data-burn]')) {
+      btn.classList.toggle('active', btn.dataset.burn === b);
+    }
   }
 
   function accel(x, y) {
@@ -101,34 +147,49 @@
     return [f * x, f * y];
   }
 
+  function canLaunch() {
+    return phase === 'aim' && aimVel && Math.hypot(aimVel.vx, aimVel.vy) >= MIN_LAUNCH;
+  }
+
   function launch() {
+    if (!canLaunch()) {
+      message = 'Drag farther from the ship to set a launch speed.';
+      return;
+    }
     ship.vx = aimVel.vx; ship.vy = aimVel.vy;
     phase = 'flight';
     lastTh = Math.atan2(ship.y, ship.x);
     lapMin = lapMax = Math.hypot(ship.x, ship.y);
     sweep = 0;
-    message = 'Get between the dashed rings and go all the way around.';
+    message = 'Step 2: stay between the dashed rings and go all the way around. Hold a burn to adjust (uses fuel).';
+    setPhaseUI();
   }
 
   function end(text) {
     phase = 'over';
-    thrusting = false;
-    message = text + ' Tap to try again.';
+    setBurn(null);
+    message = text + ' Press Try again.';
     if (laps > best) {
       best = laps;
       try { localStorage.setItem('orbit-best', String(best)); } catch (e) {}
     }
+    setPhaseUI();
   }
 
   function step() {
     const [ax0, ay0] = accel(ship.x, ship.y);
     let tx = 0, ty = 0;
-    if (thrusting) {
-      const dx = thrustPtr[0] - ship.x, dy = thrustPtr[1] - ship.y;
-      const d = Math.hypot(dx, dy) || 1;
-      tx = dx / d * THRUST; ty = dy / d * THRUST;
-      fuel = Math.max(0, fuel - FUEL_PER_SEC * DT);
-      if (fuel === 0) thrusting = false;
+    if (burn) {
+      const r = Math.hypot(ship.x, ship.y);
+      const sp = Math.hypot(ship.vx, ship.vy) || 1;
+      let dx = 0, dy = 0;
+      if (burn === 'faster') { dx = ship.vx / sp; dy = ship.vy / sp; }
+      else if (burn === 'slower') { dx = -ship.vx / sp; dy = -ship.vy / sp; }
+      else if (burn === 'in') { dx = -ship.x / r; dy = -ship.y / r; }
+      else if (burn === 'out') { dx = ship.x / r; dy = ship.y / r; }
+      tx = dx * BURN_ACCEL; ty = dy * BURN_ACCEL;
+      fuel = Math.max(0, fuel - FUEL_PER_STEP);
+      if (fuel === 0) { setBurn(null); message = 'Out of fuel. The rest of the flight is coasting.'; }
     }
     // Velocity Verlet
     ship.x += ship.vx * DT + 0.5 * (ax0 + tx) * DT * DT;
@@ -153,13 +214,13 @@
       sweep -= Math.sign(sweep) * 2 * Math.PI;
       if (lapMin >= MIN_OK && lapMax <= MAX_OK) {
         laps++;
-        message = `Stable orbit! ${laps} lap${laps > 1 ? 's' : ''} so far. Keep going or tap to restart.`;
+        message = `Lap ${laps} counted! Keep going, or press Try again to start over.`;
         if (laps > best) {
           best = laps;
           try { localStorage.setItem('orbit-best', String(best)); } catch (e) {}
         }
       } else {
-        message = `That lap didn't count: it dipped to ${Math.round(lapMin)} or rose to ${Math.round(lapMax)}. Stay between the rings.`;
+        message = `That lap didn't count: it went as close as ${Math.round(lapMin)} and as far as ${Math.round(lapMax)}. Stay between the rings.`;
       }
       lapMin = lapMax = r;
     }
@@ -168,7 +229,7 @@
     if (trail.length > 500) trail.shift();
   }
 
-  // Dotted preview of the path the current aim would take (ignores thrust)
+  // Dotted preview of the path the current aim would take (no burns)
   function preview() {
     let x = ship.x, y = ship.y, vx = aimVel.vx, vy = aimVel.vy;
     const pts = []; let hit = null;
@@ -187,41 +248,71 @@
     return { pts, hit };
   }
 
-  // ---- input ----
+  // ---- aiming: the arrow points from the ship to your finger, i.e. the direction of travel ----
   function updateAim(wx, wy) {
-    let vx = (ship.x - wx) * AIM_K, vy = (ship.y - wy) * AIM_K;
+    let vx = (wx - ship.x) * AIM_K, vy = (wy - ship.y) * AIM_K;
     const sp = Math.hypot(vx, vy);
     if (sp > MAX_V) { vx *= MAX_V / sp; vy *= MAX_V / sp; }
     aimVel = { vx, vy };
+    const r = Math.hypot(ship.x, ship.y);
+    const circular = Math.sqrt(GM / r);
+    message = `Speed ${sp.toFixed(1)}. A circular orbit at this distance needs about ${circular.toFixed(1)}. Press Launch when ready.`;
   }
 
+  // ---- input ----
   canvas.addEventListener('pointerdown', e => {
+    if (phase !== 'aim') return;
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
+    aiming = true;
     const [wx, wy] = toWorld(e.clientX, e.clientY);
-    if (phase === 'aim') { aiming = true; updateAim(wx, wy); }
-    else if (phase === 'flight') { if (fuel > 0) { thrusting = true; thrustPtr = [wx, wy]; } }
-    else reset();
+    updateAim(wx, wy);
   });
-
   canvas.addEventListener('pointermove', e => {
+    if (!aiming) return;
     const [wx, wy] = toWorld(e.clientX, e.clientY);
-    if (aiming) updateAim(wx, wy);
-    if (thrusting) thrustPtr = [wx, wy];
+    updateAim(wx, wy);
   });
+  const stopAiming = () => { aiming = false; };
+  canvas.addEventListener('pointerup', stopAiming);
+  canvas.addEventListener('pointercancel', stopAiming);
 
-  function release() {
-    if (aiming) {
-      aiming = false;
-      if (aimVel && Math.hypot(aimVel.vx, aimVel.vy) >= 0.8) launch();
-      else { aimVel = null; message = 'Drag farther to set a launch speed.'; }
-    }
-    thrusting = false;
+  $('launch').addEventListener('click', launch);
+  $('again').addEventListener('click', reset);
+
+  // Burn buttons: hold to fire. Releasing anywhere stops the burn.
+  for (const btn of document.querySelectorAll('[data-burn]')) {
+    btn.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      if (phase === 'flight' && fuel > 0) setBurn(btn.dataset.burn);
+    });
   }
-  canvas.addEventListener('pointerup', release);
-  canvas.addEventListener('pointercancel', release);
+  window.addEventListener('pointerup', () => { if (burn) setBurn(null); });
+  window.addEventListener('pointercancel', () => { if (burn) setBurn(null); });
+
+  // Keyboard: arrows burn while held, Space launches
+  window.addEventListener('keydown', e => {
+    if (e.key === ' ' && phase === 'aim') { e.preventDefault(); launch(); return; }
+    if (phase === 'flight' && KEY_BURNS[e.key] && fuel > 0) {
+      e.preventDefault();
+      setBurn(KEY_BURNS[e.key]);
+    }
+  });
+  window.addEventListener('keyup', e => {
+    if (KEY_BURNS[e.key] && KEY_BURNS[e.key] === burn) setBurn(null);
+  });
 
   // ---- drawing ----
+  function arrow(x0, y0, x1, y1) {
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    const ang = Math.atan2(y1 - y0, x1 - x0), L = 10;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - L * Math.cos(ang - 0.4), y1 - L * Math.sin(ang - 0.4));
+    ctx.lineTo(x1 - L * Math.cos(ang + 0.4), y1 - L * Math.sin(ang + 0.4));
+    ctx.closePath(); ctx.fill();
+  }
+
   function draw() {
     ctx.fillStyle = '#05060d';
     ctx.fillRect(0, 0, W, H);
@@ -231,9 +322,10 @@
       ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); ctx.fill();
     }
 
-    // Target band
+    // Target rings
     ctx.setLineDash([6, 8]);
     ctx.strokeStyle = 'rgba(120,200,255,0.35)';
+    ctx.lineWidth = 1;
     for (const R of [MIN_OK, MAX_OK]) {
       ctx.beginPath(); ctx.arc(cx, cy, R * scale, 0, Math.PI * 2); ctx.stroke();
     }
@@ -250,10 +342,10 @@
     ctx.fillStyle = '#ffd98a';
     ctx.beginPath(); ctx.arc(sx, sy, SUN_R * scale, 0, Math.PI * 2); ctx.fill();
 
-    // Aim preview
+    // Predicted path while aiming
     if (phase === 'aim' && aimVel) {
       const { pts, hit } = preview();
-      ctx.fillStyle = hit === 'sun' ? 'rgba(255,110,110,0.8)' : 'rgba(200,220,255,0.6)';
+      ctx.fillStyle = hit === 'sun' ? 'rgba(255,110,110,0.85)' : 'rgba(200,220,255,0.6)';
       for (const [x, y] of pts) {
         const [px, py] = toScreen(x, y);
         ctx.beginPath(); ctx.arc(px, py, 1.6, 0, Math.PI * 2); ctx.fill();
@@ -272,20 +364,25 @@
       }
     }
 
-    // Launch vector
     const [shx, shy] = toScreen(ship.x, ship.y);
+
+    // Launch arrow: from the ship toward the finger
     if (phase === 'aim' && aimVel) {
-      const [px, py] = toScreen(ship.x - aimVel.vx / AIM_K, ship.y - aimVel.vy / AIM_K);
-      ctx.strokeStyle = 'rgba(255,207,112,0.8)';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(shx, shy); ctx.lineTo(px, py); ctx.stroke();
+      const [px, py] = toScreen(ship.x + aimVel.vx / AIM_K, ship.y + aimVel.vy / AIM_K);
+      ctx.strokeStyle = ctx.fillStyle = 'rgba(255,207,112,0.9)';
+      ctx.lineWidth = 2.5;
+      arrow(shx, shy, px, py);
     }
 
-    // Thrust flame
-    if (thrusting && phase === 'flight') {
-      const dx = thrustPtr[0] - ship.x, dy = thrustPtr[1] - ship.y;
-      const d = Math.hypot(dx, dy) || 1;
-      const [fx, fy] = toScreen(ship.x - dx / d * 4, ship.y - dy / d * 4);
+    // Burn flame: opposite to the burn direction
+    if (burn && phase === 'flight') {
+      const r = Math.hypot(ship.x, ship.y), sp = Math.hypot(ship.vx, ship.vy) || 1;
+      let dx = 0, dy = 0;
+      if (burn === 'faster') { dx = ship.vx / sp; dy = ship.vy / sp; }
+      else if (burn === 'slower') { dx = -ship.vx / sp; dy = -ship.vy / sp; }
+      else if (burn === 'in') { dx = -ship.x / r; dy = -ship.y / r; }
+      else if (burn === 'out') { dx = ship.x / r; dy = ship.y / r; }
+      const [fx, fy] = toScreen(ship.x - dx * 5, ship.y - dy * 5);
       ctx.strokeStyle = '#ff9a4a'; ctx.lineWidth = 3;
       ctx.beginPath(); ctx.moveTo(shx, shy); ctx.lineTo(fx, fy); ctx.stroke();
     }
@@ -301,13 +398,14 @@
     ctx.fill();
     ctx.restore();
 
-    // HUD and message
+    // HUD
     $('laps').textContent = laps;
     $('best').textContent = best;
     $('fuel').style.width = fuel + '%';
     $('speed').textContent = Math.hypot(ship.vx, ship.vy).toFixed(1);
     $('dist').textContent = Math.round(Math.hypot(ship.x, ship.y));
     $('text').textContent = message;
+    $('launch').disabled = !canLaunch();
   }
 
   function frame() {
