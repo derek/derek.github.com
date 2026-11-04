@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orbit: get your ship into a stable orbit</title>
 <style>
   :root { --bg: #05060d; --text: #d9def5; --muted: #8189a8; --accent: #ffcf70; --panel: rgba(15,18,32,0.85); }
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
     font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
-  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
-  #hud { position: fixed; top: 12px; left: 12px; right: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px;
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair;
+    -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+  #hud { position: fixed; top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right)); display: flex; flex-wrap: wrap; gap: 8px 16px;
     align-items: center; pointer-events: none; }
   .stat { background: var(--panel); border: 1px solid #222844; border-radius: 8px; padding: 6px 10px;
     font-variant-numeric: tabular-nums; }
   .stat b { color: var(--accent); font-weight: 600; }
   #fuelbar { display: inline-block; vertical-align: middle; width: 90px; height: 8px; background: #1b2140; border-radius: 4px; overflow: hidden; margin-left: 4px; }
   #fuel { display: block; height: 100%; width: 100%; background: var(--accent); }
-  #msg { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); width: min(560px, calc(100vw - 32px));
+  #msg { position: fixed; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(560px, calc(100vw - 32px));
     background: var(--panel); border: 1px solid #222844; border-radius: 10px; padding: 10px 14px; text-align: center; }
   #help { color: var(--muted); font-size: 12px; margin-top: 4px; }
 </style>

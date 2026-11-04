@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Toy Cosmos: N-body gravity and expansion</title>
 <style>
   :root {
@@ -14,11 +14,13 @@
   }
   html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
     font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
-  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair;
+    touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
   #panel {
-    position: fixed; top: 12px; left: 12px; width: min(260px, calc(100vw - 24px));
+    position: fixed; top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left));
+    width: min(260px, calc(100vw - 24px));
     background: var(--panel); border: 1px solid #222844; border-radius: 10px;
-    padding: 12px 14px; backdrop-filter: blur(6px);
+    padding: 12px 14px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   }
   h1 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
   label { display: block; margin: 10px 0 2px; color: var(--muted); }
@@ -27,7 +29,7 @@
   .row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
   button {
     background: #1b2140; color: var(--text); border: 1px solid #323a64; border-radius: 6px;
-    padding: 6px 10px; font: inherit; cursor: pointer;
+    padding: 6px 10px; font: inherit; cursor: pointer; touch-action: manipulation;
   }
   button:hover { border-color: var(--accent); }
   button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -37,7 +39,7 @@
   #toggle {
     display: flex; justify-content: space-between; align-items: center; width: 100%;
     background: none; border: 0; padding: 0; margin: 0 0 8px; color: var(--text);
-    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; text-align: left;
+    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; text-align: left; touch-action: manipulation;
   }
   #toggle::after { content: "\25BE"; color: var(--muted); transition: transform .2s; }
   #panel.collapsed #toggle::after { transform: rotate(-90deg); }
