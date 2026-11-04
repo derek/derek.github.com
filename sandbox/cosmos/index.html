@@ -33,6 +33,16 @@
   button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   #readout { margin-top: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
   #hint { margin-top: 8px; color: var(--muted); font-size: 12px; }
+  #panel.collapsed #body { display: none; }
+  #toggle {
+    display: flex; justify-content: space-between; align-items: center; width: 100%;
+    background: none; border: 0; padding: 0; margin: 0 0 8px; color: var(--text);
+    font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; text-align: left;
+  }
+  #toggle::after { content: "\25BE"; color: var(--muted); transition: transform .2s; }
+  #panel.collapsed #toggle::after { transform: rotate(-90deg); }
+  #panel.collapsed #toggle { margin-bottom: 0; }
+  #toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
   @media (max-width: 480px) { #panel { top: auto; bottom: 12px; } }
 </style>
 </head>
@@ -40,7 +50,8 @@
 <canvas id="sky" aria-label="Particle simulation of gravitating mass"></canvas>
 
 <div id="panel">
-  <h1>Toy Cosmos</h1>
+  <button id="toggle" type="button" aria-expanded="true" aria-controls="body">Toy Cosmos</button>
+  <div id="body">
   <label>Particles <span id="nVal"></span></label>
   <input id="n" type="range" min="50" max="600" step="10" value="300">
   <label>Gravity G <span id="gVal"></span></label>
@@ -59,6 +70,7 @@
   </div>
   <div id="readout"></div>
   <div id="hint">Click the sky to drop a massive body.</div>
+  </div>
 </div>
 
 <script>
@@ -238,6 +250,15 @@
     draw();
     requestAnimationFrame(frame);
   }
+
+  // Collapsible control panel. Starts collapsed on phone-width screens so the sky is visible.
+  const panel = $('panel'), toggle = $('toggle');
+  function setCollapsed(c) {
+    panel.classList.toggle('collapsed', c);
+    toggle.setAttribute('aria-expanded', String(!c));
+  }
+  toggle.addEventListener('click', () => setCollapsed(!panel.classList.contains('collapsed')));
+  setCollapsed(window.matchMedia('(max-width: 480px)').matches);
 
   bindLabels();
   reset();
