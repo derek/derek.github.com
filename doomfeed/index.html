@@ -1304,7 +1304,7 @@ const MISINFO = [
   { claim: '🐟 Scientists confirmed it: goldfish now have longer attention spans than humans. 9 seconds vs. our 8.', fix: 'This one has circulated for years. It traces back to a marketing report, and people who checked could find no study behind either number.' },
   { claim: '🛏️ Harvard study: people who make their bed every morning are 206% more likely to become millionaires.', fix: 'There is no Harvard study. The 206% figure appears only in viral posts, with no source.' },
 ];
-const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 2], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 2], ['wellness', 2], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2], ['betting', 2], ['betbro', 1], ['companion', 2], ['liveshop', 2], ['screenshot', 3], ['puzzle', 2], ['dunk', 2], ['course', 2]];
+const WEIGHTS = [['breaking', 3], ['alert', 2], ['market', 2], ['rage', 4], ['lux', 3], ['grind', 2], ['classmate', 1], ['health', 3], ['night', 2], ['ad', 2], ['poll', 1], ['bait', 2], ['video', 2], ['guilt', 2], ['island', 3], ['wellness', 3], ['hottake', 4], ['stealth', 3], ['bots', 2], ['misinfo', 2], ['thread', 2], ['slop', 2], ['linkedin', 3], ['recipe', 2], ['betting', 2], ['betbro', 1], ['companion', 2], ['liveshop', 2], ['screenshot', 3], ['puzzle', 2], ['dunk', 2], ['course', 2]];
 const KIND_TRICK = { breaking: 'urgency', alert: 'fear', market: 'fear', rage: 'rage', lux: 'comparison', grind: 'comparison', classmate: 'comparison', health: 'curiosity', night: 'doom', ad: 'scarcity', poll: 'proof', bait: 'bait', video: 'autoplay', guilt: 'guilt', island: 'comparison', wellness: 'comparison', hottake: 'rage', stealth: 'stealth', bots: 'bots', misinfo: 'misinfo', thread: 'cliffhanger', slop: 'slop', linkedin: 'linkedin', recipe: 'padding', betting: 'gambling', betbro: 'gambling', companion: 'companion', liveshop: 'scarcity', screenshot: 'fakeshot', puzzle: 'bait', dunk: 'dunk', course: 'funnel' };
 const LEARNABLE = new Set(Object.values(KIND_TRICK));
 // How much more often the feed serves a kind of post, based on what you've lingered on or tapped.
@@ -1485,14 +1485,15 @@ const I = {
 };
 
 /* ---------- build ---------- */
-// Photos stay rare: at most 10% of posts carry one, however much the feed has learned.
-const PHOTO_SHARE = 0.10;
+// Photos stay rare: about 15% of posts carry one, however much the feed has learned.
+// The +4 head start lets the first photo show up within the first few posts.
+const PHOTO_SHARE = 0.15;
 const PHOTO_ONLY = new Set(['island', 'wellness', 'slop']);
 const hasPhoto = x => !!x.media && (x.media.t === 'photo' || x.media.t === 'photos');
 function makePost(kind) {
   let k = kind || pickKind();
   let p = POOL[k]();
-  if (hasPhoto(p) && (S.photos + 1) / (S.made + 1) > PHOTO_SHARE) {
+  if (hasPhoto(p) && (S.photos + 1) / (S.made + 4) > PHOTO_SHARE) {
     // Posts that are only a photo, or whose text points at the photo, are swapped out instead of losing it.
     while (PHOTO_ONLY.has(k) || p.needsPhoto) { do { k = pickKind(); } while (PHOTO_ONLY.has(k)); p = POOL[k](); }
     if (hasPhoto(p)) p.media = null;
