@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit: get your ship into a stable orbit</title>
+<style>
+  :root { --bg: #05060d; --text: #d9def5; --muted: #8189a8; --accent: #ffcf70; --panel: rgba(15,18,32,0.85); }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
+  #hud { position: fixed; top: 12px; left: 12px; right: 12px; display: flex; flex-wrap: wrap; gap: 8px 16px;
+    align-items: center; pointer-events: none; }
+  .stat { background: var(--panel); border: 1px solid #222844; border-radius: 8px; padding: 6px 10px;
+    font-variant-numeric: tabular-nums; }
+  .stat b { color: var(--accent); font-weight: 600; }
+  #fuelbar { display: inline-block; vertical-align: middle; width: 90px; height: 8px; background: #1b2140; border-radius: 4px; overflow: hidden; margin-left: 4px; }
+  #fuel { display: block; height: 100%; width: 100%; background: var(--accent); }
+  #msg { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); width: min(560px, calc(100vw - 32px));
+    background: var(--panel); border: 1px solid #222844; border-radius: 10px; padding: 10px 14px; text-align: center; }
+  #help { color: var(--muted); font-size: 12px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<canvas id="game" aria-label="Orbit game: drag to launch a ship around the sun"></canvas>
+
+<div id="hud">
+  <div class="stat">Laps <b id="laps">0</b></div>
+  <div class="stat">Best <b id="best">0</b></div>
+  <div class="stat">Fuel <span id="fuelbar"><span id="fuel"></span></span></div>
+  <div class="stat">Speed <b id="speed">0.0</b></div>
+  <div class="stat">Distance <b id="dist">0</b></div>
+</div>
+
+<div id="msg">
+  <div id="text"></div>
+  <div id="help">Aim: drag away from the ship and release to launch. Hold to thrust (uses fuel).</div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const $ = id => document.getElementById(id);
+
+  // Tuning
+  const GM = 1000;              // sun's gravitational parameter
+  const SUN_R = 14;             // crash radius
+  const MIN_OK = 40, MAX_OK = 220; // target band for a counted lap
+  const ESC = 340;              // beyond this you've escaped
+  const DT = 0.05, STEPS = 8;   // physics step and steps per frame
+  const THRUST = 3;             // thrust acceleration
+  const FUEL_PER_SEC = 12;
+  const START = { x: 150, y: 0 };
+  const AIM_K = 0.8;            // slingshot strength
+  const MAX_V = 12;
+  const WORLD = 360;            // half-width of visible world
+
+  let W = 0, H = 0, dpr = 1, scale = 1, cx = 0, cy = 0;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W / 2; cy = H / 2;
+    scale = Math.min(W, H) / (2 * WORLD);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const toScreen = (x, y) => [cx + x * scale, cy + y * scale];
+  const toWorld = (sx, sy) => [(sx - cx) / scale, (sy - cy) / scale];
+
+  let best = 0;
+  try { best = parseInt(localStorage.getItem('orbit-best') || '0', 10) || 0; } catch (e) {}
+
+  const stars = Array.from({ length: 160 }, () => ({
+    x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.2, a: Math.random() * 0.5 + 0.2,
+  }));
+
+  let ship, phase, trail, fuel, laps, sweep, lastTh, lapMin, lapMax;
+  let aiming = false, aimVel = null, thrusting = false, thrustPtr = [0, 0];
+  let message = '';
+
+  function reset() {
+    ship = { x: START.x, y: START.y, vx: 0, vy: 0 };
+    phase = 'aim';
+    trail = [];
+    fuel = 100;
+    laps = 0;
+    sweep = 0;
+    lastTh = Math.atan2(ship.y, ship.x);
+    lapMin = lapMax = Math.hypot(ship.x, ship.y);
+    aimVel = null; aiming = false; thrusting = false;
+    message = 'Drag away from the ship to aim, then release to launch.';
+  }
+
+  function accel(x, y) {
+    const r2 = x * x + y * y, r = Math.sqrt(r2), f = -GM / (r2 * r);
+    return [f * x, f * y];
+  }
+
+  function launch() {
+    ship.vx = aimVel.vx; ship.vy = aimVel.vy;
+    phase = 'flight';
+    lastTh = Math.atan2(ship.y, ship.x);
+    lapMin = lapMax = Math.hypot(ship.x, ship.y);
+    sweep = 0;
+    message = 'Get between the dashed rings and go all the way around.';
+  }
+
+  function end(text) {
+    phase = 'over';
+    thrusting = false;
+    message = text + ' Tap to try again.';
+    if (laps > best) {
+      best = laps;
+      try { localStorage.setItem('orbit-best', String(best)); } catch (e) {}
+    }
+  }
+
+  function step() {
+    const [ax0, ay0] = accel(ship.x, ship.y);
+    let tx = 0, ty = 0;
+    if (thrusting) {
+      const dx = thrustPtr[0] - ship.x, dy = thrustPtr[1] - ship.y;
+      const d = Math.hypot(dx, dy) || 1;
+      tx = dx / d * THRUST; ty = dy / d * THRUST;
+      fuel = Math.max(0, fuel - FUEL_PER_SEC * DT);
+      if (fuel === 0) thrusting = false;
+    }
+    // Velocity Verlet
+    ship.x += ship.vx * DT + 0.5 * (ax0 + tx) * DT * DT;
+    ship.y += ship.vy * DT + 0.5 * (ay0 + ty) * DT * DT;
+    const [ax1, ay1] = accel(ship.x, ship.y);
+    ship.vx += 0.5 * (ax0 + ax1 + 2 * tx) * DT;
+    ship.vy += 0.5 * (ay0 + ay1 + 2 * ty) * DT;
+
+    const r = Math.hypot(ship.x, ship.y);
+    if (r < SUN_R) return end('Swallowed by the sun.');
+    if (r > ESC) return end('Escaped the system.');
+
+    // Track one full revolution about the sun
+    const th = Math.atan2(ship.y, ship.x);
+    let d = th - lastTh;
+    if (d > Math.PI) d -= 2 * Math.PI;
+    if (d < -Math.PI) d += 2 * Math.PI;
+    lastTh = th;
+    sweep += d;
+    lapMin = Math.min(lapMin, r); lapMax = Math.max(lapMax, r);
+    if (Math.abs(sweep) >= 2 * Math.PI) {
+      sweep -= Math.sign(sweep) * 2 * Math.PI;
+      if (lapMin >= MIN_OK && lapMax <= MAX_OK) {
+        laps++;
+        message = `Stable orbit! ${laps} lap${laps > 1 ? 's' : ''} so far. Keep going or tap to restart.`;
+        if (laps > best) {
+          best = laps;
+          try { localStorage.setItem('orbit-best', String(best)); } catch (e) {}
+        }
+      } else {
+        message = `That lap didn't count: it dipped to ${Math.round(lapMin)} or rose to ${Math.round(lapMax)}. Stay between the rings.`;
+      }
+      lapMin = lapMax = r;
+    }
+
+    trail.push([ship.x, ship.y]);
+    if (trail.length > 500) trail.shift();
+  }
+
+  // Dotted preview of the path the current aim would take (ignores thrust)
+  function preview() {
+    let x = ship.x, y = ship.y, vx = aimVel.vx, vy = aimVel.vy;
+    const pts = []; let hit = null;
+    for (let i = 0; i < 1500; i++) {
+      const [ax0, ay0] = accel(x, y);
+      x += vx * DT + 0.5 * ax0 * DT * DT;
+      y += vy * DT + 0.5 * ay0 * DT * DT;
+      const [ax1, ay1] = accel(x, y);
+      vx += 0.5 * (ax0 + ax1) * DT;
+      vy += 0.5 * (ay0 + ay1) * DT;
+      const r = Math.hypot(x, y);
+      if (i % 6 === 0) pts.push([x, y]);
+      if (r < SUN_R) { hit = 'sun'; break; }
+      if (r > ESC) { hit = 'esc'; break; }
+    }
+    return { pts, hit };
+  }
+
+  // ---- input ----
+  function updateAim(wx, wy) {
+    let vx = (ship.x - wx) * AIM_K, vy = (ship.y - wy) * AIM_K;
+    const sp = Math.hypot(vx, vy);
+    if (sp > MAX_V) { vx *= MAX_V / sp; vy *= MAX_V / sp; }
+    aimVel = { vx, vy };
+  }
+
+  canvas.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    canvas.setPointerCapture(e.pointerId);
+    const [wx, wy] = toWorld(e.clientX, e.clientY);
+    if (phase === 'aim') { aiming = true; updateAim(wx, wy); }
+    else if (phase === 'flight') { if (fuel > 0) { thrusting = true; thrustPtr = [wx, wy]; } }
+    else reset();
+  });
+
+  canvas.addEventListener('pointermove', e => {
+    const [wx, wy] = toWorld(e.clientX, e.clientY);
+    if (aiming) updateAim(wx, wy);
+    if (thrusting) thrustPtr = [wx, wy];
+  });
+
+  function release() {
+    if (aiming) {
+      aiming = false;
+      if (aimVel && Math.hypot(aimVel.vx, aimVel.vy) >= 0.8) launch();
+      else { aimVel = null; message = 'Drag farther to set a launch speed.'; }
+    }
+    thrusting = false;
+  }
+  canvas.addEventListener('pointerup', release);
+  canvas.addEventListener('pointercancel', release);
+
+  // ---- drawing ----
+  function draw() {
+    ctx.fillStyle = '#05060d';
+    ctx.fillRect(0, 0, W, H);
+
+    for (const s of stars) {
+      ctx.fillStyle = `rgba(220,225,255,${s.a})`;
+      ctx.beginPath(); ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Target band
+    ctx.setLineDash([6, 8]);
+    ctx.strokeStyle = 'rgba(120,200,255,0.35)';
+    for (const R of [MIN_OK, MAX_OK]) {
+      ctx.beginPath(); ctx.arc(cx, cy, R * scale, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    // Sun
+    const [sx, sy] = toScreen(0, 0);
+    const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, SUN_R * scale * 4);
+    glow.addColorStop(0, 'rgba(255,200,110,0.9)');
+    glow.addColorStop(0.3, 'rgba(255,150,60,0.25)');
+    glow.addColorStop(1, 'rgba(255,150,60,0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath(); ctx.arc(sx, sy, SUN_R * scale * 4, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffd98a';
+    ctx.beginPath(); ctx.arc(sx, sy, SUN_R * scale, 0, Math.PI * 2); ctx.fill();
+
+    // Aim preview
+    if (phase === 'aim' && aimVel) {
+      const { pts, hit } = preview();
+      ctx.fillStyle = hit === 'sun' ? 'rgba(255,110,110,0.8)' : 'rgba(200,220,255,0.6)';
+      for (const [x, y] of pts) {
+        const [px, py] = toScreen(x, y);
+        ctx.beginPath(); ctx.arc(px, py, 1.6, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    // Trail
+    if (trail.length > 1) {
+      ctx.lineWidth = 1.5;
+      for (let i = 1; i < trail.length; i++) {
+        const a = i / trail.length;
+        const [x0, y0] = toScreen(trail[i - 1][0], trail[i - 1][1]);
+        const [x1, y1] = toScreen(trail[i][0], trail[i][1]);
+        ctx.strokeStyle = `rgba(120,200,255,${a * 0.6})`;
+        ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      }
+    }
+
+    // Launch vector
+    const [shx, shy] = toScreen(ship.x, ship.y);
+    if (phase === 'aim' && aimVel) {
+      const [px, py] = toScreen(ship.x - aimVel.vx / AIM_K, ship.y - aimVel.vy / AIM_K);
+      ctx.strokeStyle = 'rgba(255,207,112,0.8)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(shx, shy); ctx.lineTo(px, py); ctx.stroke();
+    }
+
+    // Thrust flame
+    if (thrusting && phase === 'flight') {
+      const dx = thrustPtr[0] - ship.x, dy = thrustPtr[1] - ship.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const [fx, fy] = toScreen(ship.x - dx / d * 4, ship.y - dy / d * 4);
+      ctx.strokeStyle = '#ff9a4a'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(shx, shy); ctx.lineTo(fx, fy); ctx.stroke();
+    }
+
+    // Ship, pointing along its velocity
+    const ang = Math.atan2(ship.vy, ship.vx) || 0;
+    ctx.save();
+    ctx.translate(shx, shy);
+    ctx.rotate(ang);
+    ctx.fillStyle = phase === 'over' ? '#7a7f96' : '#e8f1ff';
+    ctx.beginPath();
+    ctx.moveTo(8, 0); ctx.lineTo(-6, 5); ctx.lineTo(-6, -5); ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // HUD and message
+    $('laps').textContent = laps;
+    $('best').textContent = best;
+    $('fuel').style.width = fuel + '%';
+    $('speed').textContent = Math.hypot(ship.vx, ship.vy).toFixed(1);
+    $('dist').textContent = Math.round(Math.hypot(ship.x, ship.y));
+    $('text').textContent = message;
+  }
+
+  function frame() {
+    if (phase === 'flight') {
+      for (let i = 0; i < STEPS && phase === 'flight'; i++) step();
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  reset();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
