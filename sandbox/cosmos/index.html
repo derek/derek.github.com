@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toy Cosmos: N-body gravity and expansion</title>
+<style>
+  :root {
+    --bg: #05060d;
+    --panel: rgba(15, 18, 32, 0.85);
+    --text: #d9def5;
+    --muted: #8189a8;
+    --accent: #ffcf70;
+  }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+  #panel {
+    position: fixed; top: 12px; left: 12px; width: min(260px, calc(100vw - 24px));
+    background: var(--panel); border: 1px solid #222844; border-radius: 10px;
+    padding: 12px 14px; backdrop-filter: blur(6px);
+  }
+  h1 { font-size: 15px; margin: 0 0 8px; font-weight: 600; }
+  label { display: block; margin: 10px 0 2px; color: var(--muted); }
+  label span { color: var(--text); float: right; font-variant-numeric: tabular-nums; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  button {
+    background: #1b2140; color: var(--text); border: 1px solid #323a64; border-radius: 6px;
+    padding: 6px 10px; font: inherit; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #readout { margin-top: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  #hint { margin-top: 8px; color: var(--muted); font-size: 12px; }
+  @media (max-width: 480px) { #panel { top: auto; bottom: 12px; } }
+</style>
+</head>
+<body>
+<canvas id="sky" aria-label="Particle simulation of gravitating mass"></canvas>
+
+<div id="panel">
+  <h1>Toy Cosmos</h1>
+  <label>Particles <span id="nVal"></span></label>
+  <input id="n" type="range" min="50" max="600" step="10" value="300">
+  <label>Gravity G <span id="gVal"></span></label>
+  <input id="g" type="range" min="0" max="3" step="0.05" value="1">
+  <label>Softening <span id="sVal"></span></label>
+  <input id="s" type="range" min="0.5" max="10" step="0.5" value="4">
+  <label>Time step <span id="dtVal"></span></label>
+  <input id="dt" type="range" min="0.05" max="1" step="0.05" value="0.3">
+  <div class="row">
+    <input id="exp" type="checkbox">
+    <label for="exp" style="margin:0;color:var(--text)">Expanding universe (Hubble drag)</label>
+  </div>
+  <div class="row">
+    <button id="reset">Reset</button>
+    <button id="pause">Pause</button>
+  </div>
+  <div id="readout"></div>
+  <div id="hint">Click the sky to drop a massive body.</div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('sky');
+  const ctx = canvas.getContext('2d');
+  const $ = id => document.getElementById(id);
+
+  const ui = {
+    n: $('n'), g: $('g'), s: $('s'), dt: $('dt'), exp: $('exp'),
+    reset: $('reset'), pause: $('pause'), readout: $('readout'),
+  };
+
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.floor(W * dpr); canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // World units: the box is centred on the origin and scaled to fit the screen.
+  const WORLD = 200;          // half-width of the visible world, in simulation units
+  let scale = 1;              // pixels per simulation unit
+  function fit() { scale = Math.min(W, H) / (2 * WORLD); }
+  fit();
+  window.addEventListener('resize', fit);
+
+  let P = [];                 // particles: {x, y, vx, vy, m, mass-tag}
+  let t = 0;                  // simulation time
+  let a = 1;                  // scale factor (only grows when expansion is on)
+  let paused = false;
+  const TRAIL_ALPHA = 0.25;
+
+  // Seeded RNG so a reset is reproducible within a session.
+  let seed = 12345;
+  function rand() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+  function gauss() { return Math.sqrt(-2 * Math.log(rand() + 1e-9)) * Math.cos(2 * Math.PI * rand()); }
+
+  function makeClusters(N) {
+    // Two rotating clumps with a loose halo: enough structure to watch them merge.
+    const out = [];
+    const centres = [[-60, 0, 0.6], [60, 0, -0.6]];
+    for (let i = 0; i < N; i++) {
+      const c = centres[i % 2];
+      const r = Math.abs(gauss()) * 18;
+      const th = rand() * Math.PI * 2;
+      const x = c[0] + r * Math.cos(th), y = c[1] + r * Math.sin(th);
+      const v = Math.sqrt(Math.max(0, 0.6 * (r + 2)));
+      out.push({
+        x, y,
+        vx: -Math.sin(th) * v * c[2] + gauss() * 0.05,
+        vy:  Math.cos(th) * v * c[2] + gauss() * 0.05,
+        m: 0.5 + rand() * 1.5,
+        tag: i % 2,
+      });
+    }
+    return out;
+  }
+
+  function reset() {
+    seed = 12345 + Math.floor(Math.random() * 1e6); // different each reset
+    P = makeClusters(parseInt(ui.n.value, 10));
+    t = 0; a = 1;
+  }
+
+  // Direct O(N^2) gravity with Plummer softening. Fine for a few hundred bodies.
+  function accelerations(parts, G, soft) {
+    const n = parts.length, ax = new Float64Array(n), ay = new Float64Array(n);
+    const eps2 = soft * soft;
+    for (let i = 0; i < n; i++) {
+      const pi = parts[i];
+      for (let j = i + 1; j < n; j++) {
+        const pj = parts[j];
+        const dx = pj.x - pi.x, dy = pj.y - pi.y;
+        const r2 = dx * dx + dy * dy + eps2;
+        const inv = 1 / (r2 * Math.sqrt(r2));
+        const fi = G * pj.m * inv, fj = G * pi.m * inv;
+        ax[i] += fi * dx; ay[i] += fi * dy;
+        ax[j] -= fj * dx; ay[j] -= fj * dy;
+      }
+    }
+    return { ax, ay };
+  }
+
+  function step(dt) {
+    const G = parseFloat(ui.g.value), soft = parseFloat(ui.s.value);
+    const expanding = ui.exp.checked;
+
+    // Leapfrog (kick-drift-kick). Stable enough for a toy.
+    const acc0 = accelerations(P, G, soft);
+    for (let i = 0; i < P.length; i++) {
+      P[i].vx += 0.5 * dt * acc0.ax[i];
+      P[i].vy += 0.5 * dt * acc0.ay[i];
+      P[i].x += dt * P[i].vx;
+      P[i].y += dt * P[i].vy;
+    }
+    const acc1 = accelerations(P, G, soft);
+    for (let i = 0; i < P.length; i++) {
+      P[i].vx += 0.5 * dt * acc1.ax[i];
+      P[i].vy += 0.5 * dt * acc1.ay[i];
+    }
+
+    t += dt;
+    if (expanding) {
+      // Toy Einstein-de Sitter background: a(t) = (1 + t)^(2/3), so H = a'/a = (2/3)/(1 + t).
+      // Peculiar velocities feel Hubble drag, and the drawn scale shrinks as a grows.
+      const H = (2 / 3) / (1 + t);
+      a = Math.pow(1 + t, 2 / 3);
+      for (const p of P) { p.vx *= 1 - H * dt; p.vy *= 1 - H * dt; }
+    }
+  }
+
+  function draw() {
+    ctx.fillStyle = `rgba(5, 6, 13, ${TRAIL_ALPHA})`;
+    ctx.fillRect(0, 0, W, H);
+
+    // Draw in comoving coordinates. Dividing by the scale factor would shrink the whole view
+    // toward the centre, so expansion shows up as Hubble drag on the clumps instead.
+    const cx = W / 2, cy = H / 2;
+    const expanding = ui.exp.checked;
+    const s = scale;
+
+    // Mass glow is drawn additively so clumps brighten where they overlap.
+    ctx.globalCompositeOperation = 'lighter';
+    for (const p of P) {
+      const sx = cx + p.x * s, sy = cy + p.y * s;
+      if (sx < -10 || sx > W + 10 || sy < -10 || sy > H + 10) continue;
+      const r = Math.max(1, Math.sqrt(p.m) * 1.6);
+      const hue = p.tag === 0 ? 205 : 35;
+      ctx.fillStyle = `hsla(${hue}, 90%, 70%, 0.55)`;
+      ctx.beginPath();
+      ctx.arc(sx, sy, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    ui.readout.textContent =
+      `t = ${t.toFixed(1)}   ·   N = ${P.length}` +
+      (expanding ? `   ·   a = ${a.toFixed(2)}` : '');
+  }
+
+  function bindLabels() {
+    $('nVal').textContent = ui.n.value;
+    $('gVal').textContent = parseFloat(ui.g.value).toFixed(2);
+    $('sVal').textContent = parseFloat(ui.s.value).toFixed(1);
+    $('dtVal').textContent = parseFloat(ui.dt.value).toFixed(2);
+  }
+  ['n', 'g', 's', 'dt'].forEach(k => ui[k].addEventListener('input', () => {
+    bindLabels();
+    if (k === 'n') reset();
+  }));
+  ui.exp.addEventListener('change', () => { if (!ui.exp.checked) a = 1; });
+  ui.reset.addEventListener('click', reset);
+  ui.pause.addEventListener('click', () => {
+    paused = !paused;
+    ui.pause.textContent = paused ? 'Play' : 'Pause';
+  });
+
+  // Click to drop a heavy body at the cursor (in simulation coordinates).
+  canvas.addEventListener('pointerdown', e => {
+    const x = (e.clientX - W / 2) / scale, y = (e.clientY - H / 2) / scale;
+    P.push({ x, y, vx: 0, vy: 0, m: 12, tag: 2 });
+  });
+
+  let last = performance.now();
+  function frame(now) {
+    const elapsed = Math.min(0.05, (now - last) / 1000); // clamp after tab switches
+    last = now;
+    if (!paused) {
+      const steps = 2;
+      const dt = parseFloat(ui.dt.value) * elapsed * 60 / steps;
+      for (let k = 0; k < steps; k++) step(dt);
+    }
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  bindLabels();
+  reset();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
