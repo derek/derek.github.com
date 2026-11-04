@@ -499,7 +499,7 @@ body.calm .cookie, body.calm .dp { display: none !important; }
 .intro h2 { font: 800 clamp(26px, 6vw, 34px)/1.05 var(--f-display); letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
 .intro .eyebrow { color: #a3122f; }
 .intro p { font-size: clamp(18px, 4vw, 21px); }
-.intro .ai-note { font: 500 15px/1.45 var(--f-body); color: var(--ink-muted); border-left: 3px solid #a3122f; padding-left: 12px; }
+.intro .real-note { font: 500 15px/1.45 var(--f-body); color: var(--ink-muted); border-left: 3px solid #a3122f; padding-left: 12px; }
 .reality .r-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .reality button { font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ink); }
 .reality button.solid { background: var(--ink); color: var(--paper); }
@@ -827,7 +827,7 @@ body.xray .xray-toggle .sw::after { transform: translateX(14px); background: #05
     <button class="calm-link" data-calm="on">🌿 See this feed without the tricks</button>
     <button class="sw-btn" id="buzzBtn" aria-pressed="true">Buzz my phone with notifications (Android) <span class="sw" aria-hidden="true"></span></button>
     <button class="forget" id="forgetBtn">Forget me: delete what Doomfeed saved in this browser</button>
-    <p class="fine">Doomfeed is a parody, made entirely with AI. Every post and photo is generated. Your stats are saved only in this browser. Nothing here is real except the time you spent.</p>
+    <p class="fine">Doomfeed is a parody. Every post and photo is made up. Your stats are saved only in this browser. Nothing here is real except the time you spent.</p>
   </aside>
 </main>
 
@@ -1660,7 +1660,7 @@ function makeIntro() {
   el.innerHTML = `<span class="eyebrow">Doomfeed · a parody${isReturn ? ` · visit ${store.visits}` : ''}</span>
     <h2>This feed is designed to keep you here.</h2>
     <p>Every post, badge, and buzz below uses a real trick from real apps. While you scroll, <span class="mobile-only">the red bar at the bottom of your screen</span><span class="desk-only">the panel on the right</span> keeps score: your time, your mood, and every trick used on you.</p>
-    <p class="ai-note">This entire project, every post, photo, and trick, was crafted using AI, to show how easy it has become to manipulate you.</p>
+    <p class="real-note">Nothing here is real except the tricks. Every person, post, photo, number, and notification is made up. There's no tracking and no real notifications: nothing you do leaves your browser, and your stats stay on this device until you tap "Forget me" in the toll.</p>
     <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-calm="on">Try calm mode</button><button data-dismiss>Just scroll</button></div>`;
   return el;
 }
