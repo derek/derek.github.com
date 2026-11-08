@@ -1,0 +1,6 @@
+{
+  "lookback_days": 8,
+  "max_stories": 120,
+  "max_changes_per_run": 8,
+  "feeds": []
+}

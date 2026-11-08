@@ -1,0 +1,1419 @@
+{
+  "technologies": [
+    {
+      "id": "replicator",
+      "name": "Replicator",
+      "trek_description": "A wall unit that produces meals, tools and spare parts on request from stored patterns. It needs no raw material loaded and finishes in seconds.",
+      "capabilities": [
+        {
+          "name": "Printing solid objects from a digital design",
+          "status": "shipping",
+          "note": "Consumer 3D printers are sold widely. Output is mostly one material at a time and takes hours.",
+          "evidence_url": "https://www.prusa3d.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Atomically precise assembly of arbitrary objects",
+          "status": "research",
+          "note": "Mechanosynthesis has been demonstrated on a few atoms at a time in labs. Scaling it to everyday objects is unsolved.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Mechanosynthesis",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Creating matter from energy on demand",
+          "status": "fiction",
+          "note": "Particle physics can make single particle pairs. There is no route to bulk matter.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Desktop 3D printers make plastic parts from a file in hours. Nothing builds arbitrary matter on demand.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Printing solid objects from a digital design",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.prusa3d.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Atomically precise assembly of arbitrary objects",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Mechanosynthesis"
+        }
+      ]
+    },
+    {
+      "id": "universal-translator",
+      "name": "Universal translator",
+      "trek_description": "A device that lets two speakers understand each other even when neither knows the other's language. It works with languages it has never met before.",
+      "capabilities": [
+        {
+          "name": "Written translation between major languages",
+          "status": "shipping",
+          "note": "Free, built into browsers and phones, and good enough for the gist of most text.",
+          "evidence_url": "https://translate.google.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Live spoken translation",
+          "status": "shipping",
+          "note": "Conversation modes on phones translate speech back and forth with a noticeable delay and occasional errors.",
+          "evidence_url": "https://translate.google.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Translating a language with no prior examples",
+          "status": "research",
+          "note": "Machine translation needs large bodies of text. Projects such as whale-communication research are early and have not produced translations.",
+          "evidence_url": "https://www.projectceti.org/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Conveying meaning across completely alien minds",
+          "status": "fiction",
+          "note": "No known method. It would need shared concepts that may not exist.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Phones translate text and speech between major languages. Quality drops for rare languages and noisy rooms.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Written translation between major languages",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://translate.google.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Live spoken translation",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://translate.google.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Translating a language with no prior examples",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.projectceti.org/"
+        }
+      ]
+    },
+    {
+      "id": "tricorder",
+      "name": "Tricorder",
+      "trek_description": "A handheld scanner that reads the environment, a person's body or a strange object, and interprets the readings on the spot.",
+      "capabilities": [
+        {
+          "name": "Heart and vital-sign sensing",
+          "status": "shipping",
+          "note": "Pocket ECG devices and smartwatches are sold to consumers and cleared by regulators in some countries.",
+          "evidence_url": "https://alivecor.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Handheld medical imaging",
+          "status": "prototype",
+          "note": "Pocket ultrasound probes exist but are sold to clinicians, not to the general public.",
+          "evidence_url": "https://www.butterflynetwork.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Automated diagnosis of many conditions",
+          "status": "research",
+          "note": "A $10 million competition ended in 2017 with no team meeting every requirement. Reduced prizes went to the strongest entries.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Tricorder_X_Prize",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Environmental sensing (air quality, radiation)",
+          "status": "shipping",
+          "note": "Consumer monitors exist, but each measures only a few things.",
+          "evidence_url": "https://www.airthings.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "One device that senses and interprets everything",
+          "status": "fiction",
+          "note": "Nothing combines medical, chemical and structural analysis in one handheld unit.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Single-purpose gadgets cover heart rhythm, air quality or ultrasound. No one device does it all.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Heart and vital-sign sensing",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://alivecor.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Handheld medical imaging",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.butterflynetwork.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Automated diagnosis of many conditions",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Tricorder_X_Prize"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Environmental sensing (air quality, radiation)",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.airthings.com/"
+        }
+      ]
+    },
+    {
+      "id": "padd",
+      "name": "PADD",
+      "trek_description": "A thin handheld slate used for reports, orders and reading. Crew members pass them around and pick up where the last person left off.",
+      "capabilities": [
+        {
+          "name": "Touchscreen handheld computing",
+          "status": "shipping",
+          "note": "Tablets are mainstream consumer products.",
+          "evidence_url": "https://www.apple.com/ipad/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Automatic sync of documents across devices",
+          "status": "shipping",
+          "note": "Cloud storage keeps files current across phones, tablets and computers.",
+          "evidence_url": "https://www.google.com/drive/",
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Tablets do this today, and cloud sync makes the pick-up-where-you-left-off part ordinary.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Touchscreen handheld computing",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.apple.com/ipad/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Automatic sync of documents across devices",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.google.com/drive/"
+        }
+      ]
+    },
+    {
+      "id": "comm-badge",
+      "name": "Comm badge",
+      "trek_description": "A small pin worn on the chest. A tap opens a voice channel to a person, a group or the ship itself, with no handset needed.",
+      "capabilities": [
+        {
+          "name": "Calling by tap or voice with no phone in hand",
+          "status": "shipping",
+          "note": "Cellular smartwatches place calls from the wrist.",
+          "evidence_url": "https://www.apple.com/watch/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Messaging with no cell coverage",
+          "status": "shipping",
+          "note": "Some phones can text emergency services and contacts through satellites, outdoors with a clear sky.",
+          "evidence_url": "https://support.apple.com/en-us/101573",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Radio contact with no network at all",
+          "status": "shipping",
+          "note": "Licence-free handheld radios have worked for decades, over short distances.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Family_Radio_Service",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Chest-worn voice assistant badge",
+          "status": "prototype",
+          "note": "One startup sold such a pin in 2024 and has since stopped selling it.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Humane_AI_Pin",
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Smartwatches and phones handle calls, and satellite messaging works without cell coverage. The badge form factor has not caught on.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Calling by tap or voice with no phone in hand",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.apple.com/watch/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Messaging with no cell coverage",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://support.apple.com/en-us/101573"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Radio contact with no network at all",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Family_Radio_Service"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Chest-worn voice assistant badge",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Humane_AI_Pin"
+        }
+      ]
+    },
+    {
+      "id": "holodeck",
+      "name": "Holodeck",
+      "trek_description": "A room that builds lifelike scenes and characters you can walk through and touch, then clears them away when the program ends.",
+      "capabilities": [
+        {
+          "name": "Immersive headset visuals and audio",
+          "status": "shipping",
+          "note": "Consumer VR headsets are sold in large numbers.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Meta_Quest",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Touch and force feedback",
+          "status": "prototype",
+          "note": "Haptic gloves exist and are sold to businesses and researchers.",
+          "evidence_url": "https://haptx.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "AI-generated interactive worlds",
+          "status": "prototype",
+          "note": "Research models can generate explorable 3D worlds as you move. The scenes stay consistent only for a short time.",
+          "evidence_url": "https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Solid objects shaped from light and force fields",
+          "status": "fiction",
+          "note": "No known way to make intangible light behave like solid matter.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "VR headsets give convincing sight and sound. Touch, free walking and believable characters remain limited.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Immersive headset visuals and audio",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Meta_Quest"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Touch and force feedback",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://haptx.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "AI-generated interactive worlds",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/"
+        }
+      ]
+    },
+    {
+      "id": "warp-drive",
+      "name": "Warp drive",
+      "trek_description": "A propulsion system that bends space around a ship so it can travel faster than light would allow in ordinary space.",
+      "capabilities": [
+        {
+          "name": "Theoretical warp-bubble spacetimes",
+          "status": "research",
+          "note": "A 1994 paper showed that general relativity permits such a solution. Later work has reduced the energy estimates but needs exotic matter or unavailable scales.",
+          "evidence_url": "https://arxiv.org/abs/gr-qc/0009013",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Lab demonstration of any warp effect",
+          "status": "fiction",
+          "note": "No credible experiment has produced one.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Faster-than-light travel",
+          "status": "fiction",
+          "note": "No evidence it is possible.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "The mathematics of a warp bubble has been published. The energy it needs and the materials it needs are unavailable.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Theoretical warp-bubble spacetimes",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://arxiv.org/abs/gr-qc/0009013"
+        }
+      ]
+    },
+    {
+      "id": "transporter",
+      "name": "Transporter",
+      "trek_description": "A device that scans a person or object, dissolves it, and rebuilds it at a distant location in an instant.",
+      "capabilities": [
+        {
+          "name": "Teleporting the quantum state of a particle",
+          "status": "prototype",
+          "note": "Lab demonstrations have worked over long distances, using a classical channel as well.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Quantum_teleportation",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Mapping every atom in a small sample",
+          "status": "prototype",
+          "note": "Atom probe instruments reconstruct a sample atom by atom, but they destroy the sample as they go.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Atom_probe",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Moving everyday objects instantly",
+          "status": "fiction",
+          "note": "No method known.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Moving a person",
+          "status": "fiction",
+          "note": "It would require scanning and rebuilding roughly 10^28 atoms. No path exists.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Physicists teleport the quantum state of single particles. That is information transfer, not moving matter.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Teleporting the quantum state of a particle",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Quantum_teleportation"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Mapping every atom in a small sample",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Atom_probe"
+        }
+      ]
+    },
+    {
+      "id": "phaser",
+      "name": "Phaser",
+      "trek_description": "A handheld energy weapon that fires an adjustable beam, from a harmless stun to a destructive blast.",
+      "capabilities": [
+        {
+          "name": "Short-range stun",
+          "status": "shipping",
+          "note": "Conducted-energy devices are sold to civilians in many places. They use wires or contact, not a beam.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Taser",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Directed energy at range",
+          "status": "prototype",
+          "note": "Military systems use microwaves or lasers against people and drones. They are vehicle-sized.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Active_Denial_System",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Laser weapon systems",
+          "status": "prototype",
+          "note": "Armed forces have fielded ship- and truck-mounted lasers.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Laser_weapon",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Handheld beam with selectable settings",
+          "status": "fiction",
+          "note": "Power supplies and cooling make this impractical at handheld size.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Stun devices and military directed-energy weapons exist as separate products. None is a single adjustable handheld.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Short-range stun",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Taser"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Directed energy at range",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Active_Denial_System"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Laser weapon systems",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Laser_weapon"
+        }
+      ]
+    },
+    {
+      "id": "tractor-beam",
+      "name": "Tractor beam",
+      "trek_description": "A beam that grabs a distant object and pulls it in or holds it steady.",
+      "capabilities": [
+        {
+          "name": "Trapping and moving microscopic particles with light",
+          "status": "prototype",
+          "note": "Optical tweezers are standard lab instruments, sold to laboratories.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Optical_tweezers",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Levitating small objects with sound",
+          "status": "prototype",
+          "note": "Acoustic levitation holds droplets and beads in the air in lab setups.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Acoustic_levitation",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Pushing orbital debris without contact",
+          "status": "research",
+          "note": "Studies show a thruster beam could nudge a defunct satellite. No flight test has happened.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Ion_beam_shepherd",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Pulling a ship-sized object",
+          "status": "fiction",
+          "note": "Light and sound can push but cannot pull at that scale.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Lasers and sound waves can trap and move microscopic particles. Nothing pulls large objects across a distance.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Trapping and moving microscopic particles with light",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Optical_tweezers"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Levitating small objects with sound",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Acoustic_levitation"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Pushing orbital debris without contact",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Ion_beam_shepherd"
+        }
+      ]
+    },
+    {
+      "id": "deflector-shields",
+      "name": "Deflector shields",
+      "trek_description": "An invisible energy barrier that absorbs or turns away incoming weapons fire and space debris.",
+      "capabilities": [
+        {
+          "name": "Stopping debris in space with sacrificial layers",
+          "status": "prototype",
+          "note": "Spaced multi-layer shields protect spacecraft from small meteoroids.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Whipple_shield",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Intercepting incoming projectiles",
+          "status": "prototype",
+          "note": "Vehicle protection systems detect and destroy incoming rounds. They are military hardware.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Active_protection_system",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "An invisible force-field barrier",
+          "status": "fiction",
+          "note": "No known physics lets a field stop matter and energy without a physical structure.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Physical armour and active defence systems stop some projectiles. No invisible barrier exists.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Stopping debris in space with sacrificial layers",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Whipple_shield"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Intercepting incoming projectiles",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Active_protection_system"
+        }
+      ]
+    },
+    {
+      "id": "cloaking-device",
+      "name": "Cloaking device",
+      "trek_description": "A system that hides a ship from sight and sensors by bending or absorbing the signals that would reveal it.",
+      "capabilities": [
+        {
+          "name": "Hiding a small object from one band of light",
+          "status": "research",
+          "note": "Lab cloaks work for specific wavelengths and viewing angles, and on small objects.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Metamaterial_cloaking",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Reducing radar visibility",
+          "status": "prototype",
+          "note": "Stealth aircraft shrink their radar signature but remain visible to other sensors.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Stealth_technology",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Full-spectrum invisibility of a large object",
+          "status": "fiction",
+          "note": "No method hides something from every sensor at once.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Metamaterials have hidden small objects from narrow bands of microwave light. Stealth aircraft just reduce radar returns.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Hiding a small object from one band of light",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Metamaterial_cloaking"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Reducing radar visibility",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Stealth_technology"
+        }
+      ]
+    },
+    {
+      "id": "hypospray",
+      "name": "Hypospray",
+      "trek_description": "A pressurised injector that pushes medicine through the skin without a needle, using doses the device chooses.",
+      "capabilities": [
+        {
+          "name": "Needle-free injection",
+          "status": "shipping",
+          "note": "Jet injectors push liquid through skin with a high-pressure stream. Needle-free insulin injectors are sold in some markets, with a prescription. Most patients still use needles.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Jet_injector",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Microneedle patches for painless delivery",
+          "status": "research",
+          "note": "Researchers are developing patches that deliver vaccines, insulin and other drugs. Drug-delivery patches are still mostly experimental.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Microneedle_drug_delivery",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "A device that chooses the drug and dose itself",
+          "status": "fiction",
+          "note": "Diagnosis and prescribing remain human decisions.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Needle-free jet injectors work today. The self-selecting dose does not.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Needle-free injection",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Jet_injector"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Microneedle patches for painless delivery",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Microneedle_drug_delivery"
+        }
+      ]
+    },
+    {
+      "id": "dermal-regenerator",
+      "name": "Dermal regenerator",
+      "trek_description": "A handheld tool that heals wounds and regrows skin by passing over the injury.",
+      "capabilities": [
+        {
+          "name": "Sealing minor wounds quickly",
+          "status": "shipping",
+          "note": "Liquid and spray bandages are sold over the counter.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Liquid_bandage",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Printing skin directly onto a wound",
+          "status": "research",
+          "note": "Labs can print layers of skin cells. Printing onto a patient's wound is experimental.",
+          "evidence_url": "https://en.wikipedia.org/wiki/3D_bioprinting",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Scar-free healing of deep wounds with a handheld device",
+          "status": "fiction",
+          "note": "No technique heals deep tissue without scarring.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Liquid bandages seal small cuts. Spray-on skin from the patient's own cells is used in burn units.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Sealing minor wounds quickly",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Liquid_bandage"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Printing skin directly onto a wound",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/3D_bioprinting"
+        }
+      ]
+    },
+    {
+      "id": "ship-computer-voice",
+      "name": "Ship computer voice interface",
+      "trek_description": "A computer that anyone aboard can talk to in plain speech, asking questions or giving orders, and gets accurate answers.",
+      "capabilities": [
+        {
+          "name": "Spoken commands to control devices",
+          "status": "shipping",
+          "note": "Smart speakers and phones do this in the home.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Amazon_Alexa",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Open-ended spoken conversation",
+          "status": "shipping",
+          "note": "Chatbots offer voice modes that discuss almost any topic.",
+          "evidence_url": "https://gemini.google/overview/gemini-live/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Answers that are reliably correct",
+          "status": "research",
+          "note": "Language models still produce confident errors. Reducing them is an active research area.",
+          "evidence_url": "https://arxiv.org/abs/2202.03629",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Running a whole ship's systems without supervision",
+          "status": "fiction",
+          "note": "No AI system is trusted with that responsibility.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Voice assistants and chatbots handle commands and conversation. They still make mistakes with confidence.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Spoken commands to control devices",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Amazon_Alexa"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Open-ended spoken conversation",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://gemini.google/overview/gemini-live/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Answers that are reliably correct",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://arxiv.org/abs/2202.03629"
+        }
+      ]
+    },
+    {
+      "id": "subspace-comms",
+      "name": "Subspace communications",
+      "trek_description": "A radio-like link that carries messages across light-years in little or no time.",
+      "capabilities": [
+        {
+          "name": "Global internet access by satellite",
+          "status": "shipping",
+          "note": "Consumers can buy satellite internet service almost anywhere.",
+          "evidence_url": "https://www.starlink.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Laser links across deep space",
+          "status": "prototype",
+          "note": "A 2023 flight test sent laser data from about 31 million kilometres away.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Deep_Space_Optical_Communications",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Quantum networks",
+          "status": "research",
+          "note": "Labs link nodes with entangled photons. This helps security, not speed.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Quantum_network",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Faster-than-light messaging",
+          "status": "fiction",
+          "note": "Physics rules out sending information faster than light with entanglement.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Satellites give global coverage, and lasers send data from deep space. Everything is limited by the speed of light.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Global internet access by satellite",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.starlink.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Laser links across deep space",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Deep_Space_Optical_Communications"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Quantum networks",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Quantum_network"
+        }
+      ]
+    },
+    {
+      "id": "impulse-engines",
+      "name": "Impulse engines",
+      "trek_description": "The ship's everyday sub-light drive. It moves the ship around planets and between nearby points without warp.",
+      "capabilities": [
+        {
+          "name": "Efficient electric propulsion in space",
+          "status": "prototype",
+          "note": "Ion thrusters power probes and satellites, with very low thrust.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Ion_thruster",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Fusion-powered propulsion",
+          "status": "research",
+          "note": "Designs exist on paper. No fusion rocket has flown.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Fusion_rocket",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Sub-light travel at a large fraction of light speed",
+          "status": "fiction",
+          "note": "No engine could reach those speeds with the fuel we can carry.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Ion thrusters are efficient but weak. Fast, high-thrust propulsion would need a new energy source.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Efficient electric propulsion in space",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Ion_thruster"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Fusion-powered propulsion",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Fusion_rocket"
+        }
+      ]
+    },
+    {
+      "id": "inertial-dampeners",
+      "name": "Inertial dampeners",
+      "trek_description": "A field that cancels the crushing force of acceleration, so the crew survives manoeuvres that would otherwise kill them.",
+      "capabilities": [
+        {
+          "name": "Cushioning occupants in a crash",
+          "status": "shipping",
+          "note": "Airbags and crumple zones are standard in cars.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Airbag",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Raising a pilot's tolerance to high acceleration",
+          "status": "prototype",
+          "note": "Anti-g suits help fighter pilots, and are professional equipment.",
+          "evidence_url": "https://en.wikipedia.org/wiki/G-suit",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Cancelling acceleration for everyone aboard",
+          "status": "fiction",
+          "note": "Inertia cannot be switched off.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Seat belts, airbags and crumple zones spread out crash forces. Nothing cancels inertia itself.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Cushioning occupants in a crash",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Airbag"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Raising a pilot's tolerance to high acceleration",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/G-suit"
+        }
+      ]
+    },
+    {
+      "id": "food-synthesis",
+      "name": "Food synthesis",
+      "trek_description": "A system that makes any meal from stored patterns, with the taste and texture of the real thing.",
+      "capabilities": [
+        {
+          "name": "Plant-based meat and dairy analogues",
+          "status": "shipping",
+          "note": "Sold in supermarkets and restaurants.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Impossible_Foods",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Cultivated (lab-grown) meat",
+          "status": "prototype",
+          "note": "Regulators in a few countries have approved sales. Availability is still limited to some restaurants.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Cultured_meat",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Any dish assembled from basic molecules",
+          "status": "fiction",
+          "note": "Real food is too complex to assemble molecule by molecule.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Plant-based and fermentation-made foods are on shelves. Making a full meal from scratch molecules is not.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Plant-based meat and dairy analogues",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Impossible_Foods"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Cultivated (lab-grown) meat",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Cultured_meat"
+        }
+      ]
+    },
+    {
+      "id": "androids",
+      "name": "Androids",
+      "trek_description": "A human-shaped machine with a flexible mind that can serve, learn and work alongside people.",
+      "capabilities": [
+        {
+          "name": "Walking and balancing humanoid body",
+          "status": "shipping",
+          "note": "A compact humanoid is listed for sale from about $13,500. Buyers are mostly researchers and developers.",
+          "evidence_url": "https://www.unitree.com/g1",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "General-purpose household work",
+          "status": "prototype",
+          "note": "Several companies demonstrate chores with a human remotely helping. None is proven in homes.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Humanoid_robot",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Realistic expressive faces",
+          "status": "prototype",
+          "note": "Expressive robots are sold to businesses for exhibits and research.",
+          "evidence_url": "https://www.engineeredarts.co.uk/robot/ameca/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "A self-aware artificial mind",
+          "status": "fiction",
+          "note": "No evidence anyone knows how to build one.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Humanoid robots walk and carry things. They do not yet perform general household work reliably.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Walking and balancing humanoid body",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.unitree.com/g1"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "General-purpose household work",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Humanoid_robot"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Realistic expressive faces",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.engineeredarts.co.uk/robot/ameca/"
+        }
+      ]
+    },
+    {
+      "id": "bio-beds",
+      "name": "Bio-beds",
+      "trek_description": "A medical bed with built-in sensors that tracks a patient's vital signs and condition, with readouts overhead.",
+      "capabilities": [
+        {
+          "name": "Continuous vital-sign monitoring from the bed",
+          "status": "shipping",
+          "note": "Consumer sleep sensors track heart rate and breathing under the mattress.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Withings",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Full-body scanning",
+          "status": "shipping",
+          "note": "Private clinics offer whole-body MRI to consumers. It takes about an hour and its health value is debated.",
+          "evidence_url": "https://www.prenuvo.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Automated reading of scans",
+          "status": "prototype",
+          "note": "Regulators have cleared many AI tools that help clinicians read scans. They are professional products.",
+          "evidence_url": "https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-enabled-medical-devices",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Instant whole-body diagnosis",
+          "status": "fiction",
+          "note": "No scan reveals every condition in seconds.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Sleep trackers record heart and breathing, and hospitals monitor patients at the bedside. Whole-body scans take an hour.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Continuous vital-sign monitoring from the bed",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Withings"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Full-body scanning",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.prenuvo.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Automated reading of scans",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-enabled-medical-devices"
+        }
+      ]
+    },
+    {
+      "id": "visor",
+      "name": "VISOR",
+      "trek_description": "A visor worn over the eyes that gives a blind person sight, including views beyond what normal eyes can see.",
+      "capabilities": [
+        {
+          "name": "Restoring some sight with an implant",
+          "status": "prototype",
+          "note": "Visual prostheses exist in limited use, giving low-resolution vision.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Visual_prosthesis",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Seeing heat",
+          "status": "shipping",
+          "note": "Thermal imagers are sold to consumers, including as phone attachments.",
+          "evidence_url": "https://www.thermal.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Natural-quality vision from an implant",
+          "status": "research",
+          "note": "Research continues on higher-resolution prostheses. None yet matches natural vision.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Visual_prosthesis",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Streaming any sensor straight into the brain",
+          "status": "fiction",
+          "note": "Brain interfaces cannot yet carry rich sensory data.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Retinal implants return crude shapes to some blind patients. Thermal cameras extend sight for anyone, as a separate gadget.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Restoring some sight with an implant",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Visual_prosthesis"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Seeing heat",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://www.thermal.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Natural-quality vision from an implant",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Visual_prosthesis"
+        }
+      ]
+    },
+    {
+      "id": "holographic-doctor",
+      "name": "Holographic doctor",
+      "trek_description": "A projected, lifelike medical assistant who can examine patients, advise on treatment and operate on them.",
+      "capabilities": [
+        {
+          "name": "Symptom checking and medical Q&A",
+          "status": "shipping",
+          "note": "Symptom-checker apps are available to consumers. They are not a substitute for a doctor.",
+          "evidence_url": "https://ada.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Diagnostic conversations at expert level",
+          "status": "research",
+          "note": "A research system performed at least as well as primary-care physicians in simulated text consultations. It is not a product.",
+          "evidence_url": "https://research.google/blog/amie-a-research-ai-system-for-diagnostic-medical-reasoning-and-conversations/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "3D-looking figures that appear to float",
+          "status": "shipping",
+          "note": "Consumer light-field displays show 3D scenes without glasses.",
+          "evidence_url": "https://lookingglassfactory.com/",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Operating on a patient autonomously",
+          "status": "research",
+          "note": "Surgical robots are common in hospitals, but a surgeon controls them. Autonomous steps have appeared only in early studies and trials.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Robot-assisted_surgery",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "A solid, projected body that can touch a patient",
+          "status": "fiction",
+          "note": "Light cannot exert force on a person.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Symptom-checking apps and chatbots give advice. Light-field displays make 3D-looking figures. Neither performs surgery.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Symptom checking and medical Q&A",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://ada.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Diagnostic conversations at expert level",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://research.google/blog/amie-a-research-ai-system-for-diagnostic-medical-reasoning-and-conversations/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "3D-looking figures that appear to float",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://lookingglassfactory.com/"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Operating on a patient autonomously",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Robot-assisted_surgery"
+        }
+      ]
+    },
+    {
+      "id": "warp-core",
+      "name": "Antimatter warp core",
+      "trek_description": "The ship's power plant, in which matter and antimatter react in a controlled way to release enormous energy.",
+      "capabilities": [
+        {
+          "name": "Making antimatter",
+          "status": "prototype",
+          "note": "A few facilities produce antiprotons in nanogram-scale yearly quantities.",
+          "evidence_url": "https://home.cern/science/physics/antimatter",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Storing antimatter for long periods",
+          "status": "research",
+          "note": "Traps hold small numbers of particles for minutes to hours in labs.",
+          "evidence_url": "https://home.cern/science/physics/antimatter",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Antimatter rockets",
+          "status": "research",
+          "note": "Concept studies exist. No engine has been built.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Antimatter_rocket",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Net-positive power from antimatter",
+          "status": "fiction",
+          "note": "Making antimatter takes billions of times more energy than it releases.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Particle accelerators make tiny amounts of antimatter at huge cost. There is no way to make it in useful quantities.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Making antimatter",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://home.cern/science/physics/antimatter"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Storing antimatter for long periods",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://home.cern/science/physics/antimatter"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Antimatter rockets",
+          "from": null,
+          "to": "research",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Antimatter_rocket"
+        }
+      ]
+    },
+    {
+      "id": "cortical-stimulator",
+      "name": "Cortical stimulator",
+      "trek_description": "A device that stimulates parts of the brain to restore lost function or control movement.",
+      "capabilities": [
+        {
+          "name": "Restoring movement after spinal injury",
+          "status": "prototype",
+          "note": "Spinal stimulation has helped people regain movement in trials and early clinical use.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Spinal_cord_stimulator",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Brain–computer interfaces for speech and movement",
+          "status": "prototype",
+          "note": "Implants have helped people with paralysis control computers and generate speech in studies.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Brain%E2%80%93computer_interface",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Non-invasive brain stimulation devices",
+          "status": "shipping",
+          "note": "Consumer headsets apply mild current to the scalp. Evidence of benefit is mixed.",
+          "evidence_url": "https://en.wikipedia.org/wiki/Transcranial_direct-current_stimulation",
+          "updated": "2026-11-08"
+        },
+        {
+          "name": "Reading and writing complex thoughts",
+          "status": "fiction",
+          "note": "Current interfaces decode narrow signals only.",
+          "evidence_url": null,
+          "updated": "2026-11-08"
+        }
+      ],
+      "closest_today": "Brain and spinal stimulation treat movement disorders and paralysis in clinics. Reading or writing complex thoughts remains out of reach.",
+      "history": [
+        {
+          "date": "2026-11-08",
+          "capability": "Restoring movement after spinal injury",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Spinal_cord_stimulator"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Brain–computer interfaces for speech and movement",
+          "from": null,
+          "to": "prototype",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Brain%E2%80%93computer_interface"
+        },
+        {
+          "date": "2026-11-08",
+          "capability": "Non-invasive brain stimulation devices",
+          "from": null,
+          "to": "shipping",
+          "reason": "Baseline assessment when the tracker launched.",
+          "source_url": "https://en.wikipedia.org/wiki/Transcranial_direct-current_stimulation"
+        }
+      ]
+    }
+  ]
+}

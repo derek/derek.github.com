@@ -1,0 +1,76 @@
+{
+  "proposals": [
+    {
+      "story_url": "https://example.com/news/pocket-ultrasound-consumer-launch",
+      "tech_id": "tricorder",
+      "capability": "Handheld medical imaging",
+      "proposed_status": "shipping",
+      "new_note": "A pocket ultrasound probe is now sold directly to consumers in the US. Reading the images still takes training.",
+      "reason": "Example Health says its handheld ultrasound probe can be bought online by anyone, with units shipping this week.",
+      "evidence_type": "product_on_sale",
+      "confidence": "high",
+      "consumer_can_buy_today": true,
+      "working_demonstration": true
+    },
+    {
+      "story_url": "https://example.com/news/home-robot-shipping",
+      "tech_id": "androids",
+      "capability": "General-purpose household work",
+      "proposed_status": "shipping",
+      "new_note": "A household robot that folds laundry and loads a dishwasher is on sale online, with first consumer deliveries made.",
+      "reason": "Sample Robotics confirmed first consumer deliveries of a robot that does laundry and dishwasher chores.",
+      "evidence_type": "product_on_sale",
+      "confidence": "medium",
+      "consumer_can_buy_today": true,
+      "working_demonstration": true
+    },
+    {
+      "story_url": "https://example.com/news/invisibility-fabric-hope",
+      "tech_id": "cloaking-device",
+      "capability": "Hiding a small object from one band of light",
+      "proposed_status": "prototype",
+      "new_note": "A team is working on an invisibility fabric.",
+      "reason": "A university team says it aims to build a cloaking fabric for visible light within a decade.",
+      "evidence_type": "working_demonstration",
+      "confidence": "medium",
+      "consumer_can_buy_today": false,
+      "working_demonstration": false
+    },
+    {
+      "story_url": "https://example.com/news/warp-prototype-claim",
+      "tech_id": "warp-drive",
+      "capability": "Lab demonstration of any warp effect",
+      "proposed_status": "prototype",
+      "new_note": "A startup says it has built a warp drive prototype.",
+      "reason": "A startup press release claims a warp drive prototype exists, with no data attached.",
+      "evidence_type": "working_demonstration",
+      "confidence": "high",
+      "consumer_can_buy_today": false,
+      "working_demonstration": true
+    },
+    {
+      "story_url": "https://example.com/news/translation-unknown-language",
+      "tech_id": "universal-translator",
+      "capability": "Translating a language with no prior examples",
+      "proposed_status": "prototype",
+      "new_note": "An app maker plans to decode unknown languages.",
+      "reason": "An app maker says a future update may translate unseen languages, though it shared no results.",
+      "evidence_type": "working_demonstration",
+      "confidence": "low",
+      "consumer_can_buy_today": false,
+      "working_demonstration": false
+    },
+    {
+      "story_url": "https://example.com/news/made-up-story",
+      "tech_id": "transporter",
+      "capability": "Moving a person",
+      "proposed_status": "research",
+      "new_note": "Researchers have teleported a person.",
+      "reason": "A story that was never in the batch claims a person was teleported.",
+      "evidence_type": "experimental_results",
+      "confidence": "high",
+      "consumer_can_buy_today": false,
+      "working_demonstration": true
+    }
+  ]
+}
