@@ -1,0 +1,47 @@
+{
+  "note": "Synthetic stories for offline dry runs. Companies and URLs are invented. Do not treat any of this as real news.",
+  "stories": [
+    {
+      "title": "Example Health begins selling a pocket ultrasound scanner directly to consumers",
+      "url": "https://example.com/news/pocket-ultrasound-consumer-launch",
+      "published": "2026-11-04",
+      "source": "Example Wire",
+      "summary": "Example Health said its handheld ultrasound probe is now available to buy online by anyone in the US, with no clinician account needed. Units ship this week."
+    },
+    {
+      "title": "Researchers hope to build an invisibility fabric within a decade",
+      "url": "https://example.com/news/invisibility-fabric-hope",
+      "published": "2026-11-03",
+      "source": "Example Wire",
+      "summary": "A university team says it aims to develop a cloaking fabric for visible light and is seeking funding. No device has been shown."
+    },
+    {
+      "title": "Startup claims its warp drive prototype will change travel forever",
+      "url": "https://example.com/news/warp-prototype-claim",
+      "published": "2026-11-05",
+      "source": "Example Wire",
+      "summary": "In a press release, a startup said it has built a warp drive prototype. It offered no data, no demonstration and no independent review."
+    },
+    {
+      "title": "Sample Robotics starts shipping its home helper robot to customers",
+      "url": "https://example.com/news/home-robot-shipping",
+      "published": "2026-11-06",
+      "source": "Example Wire",
+      "summary": "Sample Robotics confirmed the first consumer orders of its household robot were delivered. The robot folds laundry and loads a dishwasher, and is sold online."
+    },
+    {
+      "title": "Translation app to try decoding unknown languages",
+      "url": "https://example.com/news/translation-unknown-language",
+      "published": "2026-11-02",
+      "source": "Example Wire",
+      "summary": "An app maker says a future update may translate languages it has never seen. No results were shared."
+    },
+    {
+      "title": "Local team wins regional football final",
+      "url": "https://example.com/news/football-final",
+      "published": "2026-11-07",
+      "source": "Example Wire",
+      "summary": "A late goal decided the match on Saturday."
+    }
+  ]
+}

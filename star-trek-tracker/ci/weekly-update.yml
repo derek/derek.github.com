@@ -1,0 +1,74 @@
+# Weekly Trek Readiness update.
+#
+# GitHub only runs workflows from the repository root. This copy lives inside star-trek-tracker/
+# so the whole project stays in one folder. To enable it, copy it once:
+#
+#   mkdir -p .github/workflows
+#   cp star-trek-tracker/ci/weekly-update.yml .github/workflows/trek-readiness-weekly.yml
+#
+# Also needed (one time):
+#   - Repo secret ANTHROPIC_API_KEY
+#   - Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests"
+#
+# This workflow never pushes to the default branch. It pushes a new branch and opens a PR.
+
+name: Trek Readiness weekly update
+
+on:
+  schedule:
+    - cron: '17 14 * * 0' # Sundays, 14:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: trek-readiness-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: star-trek-tracker
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Tests
+        run: node --test "scripts/*.test.ts"
+
+      - name: Look for changes
+        id: update
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/update.ts
+
+      - name: Rebuild the site and re-check the data
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          git show HEAD:star-trek-tracker/data/tech.json > "$RUNNER_TEMP/base.json"
+          node scripts/validate.mjs --base "$RUNNER_TEMP/base.json"
+          node scripts/build.mjs
+
+      - name: Open a pull request (never commits to the default branch)
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ steps.update.outputs.title }}
+          BRANCH_BASE: ${{ steps.update.outputs.branch }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          BRANCH="${BRANCH_BASE}-${GITHUB_RUN_NUMBER}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add data/tech.json index.html tech
+          git commit -m "$TITLE"
+          git push origin "$BRANCH"
+          gh pr create --base "$DEFAULT_BRANCH" --head "$BRANCH" --title "$TITLE" --body-file pr-body.md

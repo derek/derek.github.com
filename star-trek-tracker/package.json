@@ -1,0 +1,16 @@
+{
+  "name": "trek-readiness",
+  "private": true,
+  "type": "module",
+  "description": "Static site tracking how close real-world technology is to Star Trek tech. No dependencies.",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test \"scripts/*.test.ts\"",
+    "serve": "python3 -m http.server 8000",
+    "update": "node scripts/update.ts",
+    "update:dry": "node scripts/update.ts --dry-run",
+    "update:sample": "node scripts/update.ts --dry-run --sample"
+  }
+}
