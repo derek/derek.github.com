@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Strange Shapes · Infinite Explorer</title>
+<meta name="description" content="The Cantor set, the Hilbert space-filling curve and Gabriel's horn: three infinite shapes that break geometric intuition.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  #cantorCv { width: 100%; height: 170px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+  #hilbertCv { width: min(100%, 360px); aspect-ratio: 1; margin: 0 auto; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+  .path { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
+  .path button { min-width: 2.4em; padding: 8px 0; font-variant-numeric: tabular-nums; }
+  #horn { width: 100%; height: auto; display: block; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+  .big { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Infinite Explorer">
+    <a class="brand" href="../">∞ Infinite Explorer</a>
+    <a href="../hilbert-hotel/">Hotel</a>
+    <a href="../diagonal/">Diagonal</a>
+    <a href="../banach-tarski/">Banach–Tarski</a>
+    <a href="../infinite-sums/">Sums</a>
+    <a href="./" aria-current="page">Shapes</a>
+  </nav>
+
+  <main>
+    <p class="kicker">5 · Infinite geometry</p>
+    <h1>Strange Shapes</h1>
+    <p class="lede">Three shapes built by repeating a simple step forever. Each ends up with a property that sounds impossible.</p>
+
+    <h2>The Cantor set: all gone, yet uncountably many left</h2>
+    <p>Start with the line from 0 to 1. Remove the open middle third. You have two pieces. Remove the middle third of each. Now four pieces. Keep going forever.</p>
+    <p>Each step keeps only 2/3 of the length, so after <span class="math">n</span> steps the total length left is <span class="math">(2/3)<sup>n</sup></span>, which shrinks toward zero. The finished set has <b>zero length</b>, so it's all gaps. And yet what's left isn't empty. The endpoints 0, 1/3, 2/3, 1, 1/9, … survive forever. More than that, there are <em>uncountably many</em> points left, as many as in the entire original line.</p>
+
+    <div class="demo" id="cantor">
+      <h3>Remove the middle thirds</h3>
+      <canvas id="cantorCv" role="img" aria-label="The Cantor set construction, one row per step, each row removing the middle third of every remaining piece"></canvas>
+      <div class="controls">
+        <label for="cLevel">Steps: <b id="cLevelLab">5</b></label>
+        <input type="range" id="cLevel" min="0" max="7" value="5">
+      </div>
+      <p class="readout" id="cRead" aria-live="polite"></p>
+
+      <h3 style="margin-top:1.2rem">Pick a surviving point</h3>
+      <p class="small">At each step, choose the left (L) or right (R) piece. Your sequence of choices is the point's address. Tap to flip a choice.</p>
+      <div class="path" id="cPath" role="group" aria-label="Left or right choices"></div>
+      <p class="readout" id="cPoint" aria-live="polite"></p>
+    </div>
+
+    <p>Why uncountably many? Each point is pinned down by an infinite string of left/right choices, and that's exactly an infinite binary sequence from the diagonal page. Different strings give different points, and we know those can't be listed. Written in base 3, the points of the Cantor set are precisely the numbers between 0 and 1 whose digits are all 0s and 2s: left is 0, right is 2.</p>
+
+    <h2>The Hilbert curve: a line that fills a square</h2>
+    <p>Draw a path that visits every cell of a 2 × 2 grid. Then a 4 × 4 grid, in a way that refines the previous path. Then 8 × 8, and so on. The recipe is simple and recursive. The <em>limit</em> of these paths is a single continuous curve that passes through <b>every point</b> of the square.</p>
+    <p>A one-dimensional line covering a two-dimensional area breaks the idea that curves are "thin". Peano discovered such a curve in 1890, and Hilbert gave a simpler one in 1891.</p>
+
+    <div class="demo" id="hilbert">
+      <h3>Hilbert curve, step by step</h3>
+      <canvas id="hilbertCv" role="img" aria-label="The Hilbert curve at the chosen order, colored from the start of the path to the end"></canvas>
+      <div class="controls">
+        <label for="hOrder">Order: <b id="hOrderLab">3</b></label>
+        <input type="range" id="hOrder" min="1" max="7" value="3">
+      </div>
+      <p class="readout" id="hRead" aria-live="polite"></p>
+    </div>
+
+    <p>Watch the length. At order <span class="math">n</span> the curve is about <span class="math">2<sup>n</sup></span> long (for a square with side 1), so the paths get longer and longer, while the limit fills a square whose side is 1. The color runs from the start of the path to the end, so you can see that each part of the path stays within its own part of the square, which is why the limit is well-defined.</p>
+    <p>One caveat: the curve is not one-to-one. It has to pass through some points more than once. A continuous, non-overlapping curve onto the whole square would be a perfect match between a segment and a square. Remove one interior point from a segment and it falls into two pieces; remove one point from a square and it stays in one piece. So that match can't exist.</p>
+
+    <h2>Gabriel's horn: fill it, but you can't paint it</h2>
+    <p>Take the curve <span class="math">y = 1/x</span> for <span class="math">x ≥ 1</span> and spin it around the <span class="math">x</span>-axis. You get an infinitely long horn that gets thinner and thinner.</p>
+    <p>Its <b>volume is finite</b>, exactly π. Its <b>surface area is infinite</b>. The surface needs more and more material for each stretch you add, in the same way the harmonic series did on the last page. So you could fill the horn with π cubic units of paint, but would need infinitely much paint to cover the outside.</p>
+
+    <div class="demo" id="hornDemo">
+      <h3>Cut the horn off at x = t</h3>
+      <svg id="horn" viewBox="0 0 400 170" role="img" aria-label="Side view of Gabriel's horn, a shape that narrows forever as x increases"></svg>
+      <div class="controls">
+        <label for="hT">Length t: <b id="hTLab">10</b></label>
+        <input type="range" id="hT" min="0" max="600" value="100">
+      </div>
+      <p class="readout" id="hRead2" aria-live="polite"></p>
+    </div>
+
+    <p>The standard way out of the "paradox" is that the surface area counts a layer of paint with zero thickness. Real paint has some thickness, and the horn eventually gets narrower than that thickness. Out where the horn is thinner than a molecule, the "paint the outside" job is physically meaningless, while the mathematical area is still infinite.</p>
+
+    <details class="deeper">
+      <summary>Go deeper: the integrals</summary>
+      <p>Spinning <span class="math">y = 1/x</span> about the <span class="math">x</span>-axis from <span class="math">1</span> to <span class="math">t</span>:</p>
+      <p style="text-align:center"><span class="math">V(t) = π ∫<sub>1</sub><sup>t</sup> x<sup>−2</sup> dx = π(1 − 1/t) → π</span></p>
+      <p style="text-align:center"><span class="math">A(t) = 2π ∫<sub>1</sub><sup>t</sup> (1/x)√(1 + x<sup>−4</sup>) dx ≥ 2π ∫<sub>1</sub><sup>t</sup> dx/x = 2π ln t → ∞</span></p>
+      <p>The Cantor set: write <span class="math">x = Σ c<sub>i</sub>/3<sup>i</sup></span> with each <span class="math">c<sub>i</sub> ∈ {0, 2}</span>. The map from binary sequences <span class="math">(d<sub>i</sub>)</span> to <span class="math">Σ 2d<sub>i</sub>/3<sup>i</sup></span> is a bijection onto the set, so it has cardinality <span class="math">2<sup>ℵ₀</sup></span>, the same as the real line. Its length (Lebesgue measure) is <span class="math">lim (2/3)<sup>n</sup> = 0</span>.</p>
+      <p>The Hilbert curve is the uniform limit of continuous maps <span class="math">h<sub>n</sub> : [0,1] → [0,1]²</span>, so the limit is a continuous map from <span class="math">[0,1]</span> <em>onto</em> <span class="math">[0,1]²</span>.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Cantor_set">Cantor set</a> · <a href="https://en.wikipedia.org/wiki/Hilbert_curve">Hilbert curve</a> · <a href="https://en.wikipedia.org/wiki/Gabriel%27s_horn">Gabriel's horn</a></p>
+
+    <div class="pager">
+      <a href="../infinite-sums/"><small>← Previous</small>Infinite Sums</a>
+      <a class="next" href="../"><small>Back to →</small>Overview</a>
+    </div>
+  </main>
+</div>
+
+<script>
+var DPR = Math.min(window.devicePixelRatio || 1, 3);
+function fitCanvas(cv) {
+  var r = cv.getBoundingClientRect();
+  var w = Math.max(1, Math.round(r.width * DPR)), h = Math.max(1, Math.round(r.height * DPR));
+  if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+  return [w, h];
+}
+
+/* ---- Cantor set ---- */
+(function () {
+  var cv = document.getElementById('cantorCv'), lvl = document.getElementById('cLevel');
+  var read = document.getElementById('cRead'), pt = document.getElementById('cPoint'), pathEl = document.getElementById('cPath');
+  var DIG = 10, digits = [1, 0, 0, 1, 1, 0, 1, 0, 0, 1];
+  var MAXL = 7;
+
+  digits.forEach(function (_, i) {
+    var b = document.createElement('button'); b.type = 'button'; b.dataset.i = i; pathEl.appendChild(b);
+  });
+  function paintButtons() {
+    [].forEach.call(pathEl.children, function (b, i) {
+      b.textContent = digits[i] ? 'R' : 'L';
+      b.setAttribute('aria-label', 'Step ' + (i + 1) + ': ' + (digits[i] ? 'right' : 'left') + '. Press to flip.');
+    });
+  }
+  pathEl.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    digits[+b.dataset.i] ^= 1; paintButtons(); draw();
+  });
+
+  function value() { var x = 0, f = 1 / 3; digits.forEach(function (d) { x += 2 * d * f; f /= 3; }); return x; }
+
+  function draw() {
+    var L = +lvl.value;
+    document.getElementById('cLevelLab').textContent = L;
+    var wh = fitCanvas(cv), W = wh[0], H = wh[1], ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, W, H);
+    var rows = MAXL + 1, rh = H / rows, pad = 4 * DPR;
+    for (var n = 0; n <= L; n++) {
+      var segs = [[0, 1]];
+      for (var k = 0; k < n; k++) {
+        var nx = [];
+        segs.forEach(function (s) { var t = (s[1] - s[0]) / 3; nx.push([s[0], s[0] + t], [s[1] - t, s[1]]); });
+        segs = nx;
+      }
+      ctx.fillStyle = n === L ? '#ffcf70' : '#8a7a4f';
+      segs.forEach(function (s) {
+        ctx.fillRect(pad + s[0] * (W - 2 * pad), n * rh + rh * 0.2, Math.max(1, (s[1] - s[0]) * (W - 2 * pad)), rh * 0.6);
+      });
+    }
+    // marker for the chosen point
+    var x = pad + value() * (W - 2 * pad);
+    ctx.strokeStyle = '#6ee7b7'; ctx.lineWidth = 1.5 * DPR;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, (L + 1) * rh); ctx.stroke();
+
+    read.innerHTML = 'After <b>' + L + '</b> step' + (L === 1 ? '' : 's') + ': <b>' + Math.pow(2, L) + '</b> piece' + (L === 0 ? '' : 's') +
+      ', total length <b>' + Math.pow(2 / 3, L).toFixed(4) + '</b>. In the limit: length 0, but still uncountably many points.';
+    var tern = digits.map(function (d) { return d ? '2' : '0'; }).join('');
+    pt.innerHTML = 'Your point: <span class="mono">0.' + tern + '…</span> in base 3, which is about <b>' + value().toFixed(6) + '</b>. It is in the Cantor set because no digit is a 1.';
+  }
+  lvl.addEventListener('input', draw);
+  window.addEventListener('resize', draw);
+  paintButtons(); draw();
+})();
+
+/* ---- Hilbert curve ---- */
+(function () {
+  var cv = document.getElementById('hilbertCv'), sl = document.getElementById('hOrder'), read = document.getElementById('hRead');
+  function rot(n, x, y, rx, ry) {
+    if (ry === 0) { if (rx === 1) { x = n - 1 - x; y = n - 1 - y; } return [y, x]; }
+    return [x, y];
+  }
+  function d2xy(n, d) {
+    var t = d, x = 0, y = 0;
+    for (var s = 1; s < n; s *= 2) {
+      var rx = 1 & (t >> 1), ry = 1 & (t ^ rx);
+      var r = rot(s, x, y, rx, ry); x = r[0]; y = r[1];
+      x += s * rx; y += s * ry; t >>= 2;
+    }
+    return [x, y];
+  }
+  function draw() {
+    var o = +sl.value, n = 1 << o, total = n * n;
+    document.getElementById('hOrderLab').textContent = o;
+    var S = fitCanvas(cv)[0], ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, S, S);
+    var pad = S * 0.04, cell = (S - 2 * pad) / n;
+    ctx.lineWidth = Math.max(1, Math.min(3 * DPR, cell * 0.35)); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    var prev = d2xy(n, 0);
+    for (var d = 1; d < total; d++) {
+      var p = d2xy(n, d);
+      ctx.strokeStyle = 'hsl(' + Math.round(300 * d / total) + ',85%,62%)';
+      ctx.beginPath();
+      ctx.moveTo(pad + (prev[0] + 0.5) * cell, pad + (prev[1] + 0.5) * cell);
+      ctx.lineTo(pad + (p[0] + 0.5) * cell, pad + (p[1] + 0.5) * cell);
+      ctx.stroke();
+      prev = p;
+    }
+    read.innerHTML = 'Order <b>' + o + '</b>: a path through <b>' + total.toLocaleString() + '</b> cells (' + n + ' × ' + n + '), with length <b>' +
+      (n - 1 / n).toFixed(o < 4 ? 3 : 2) + '</b> when the square has side 1.';
+  }
+  sl.addEventListener('input', draw);
+  window.addEventListener('resize', draw);
+  draw();
+})();
+
+/* ---- Gabriel's horn ---- */
+(function () {
+  var svg = document.getElementById('horn'), sl = document.getElementById('hT'), read = document.getElementById('hRead2');
+  var X0 = 16, XS = 44, CY = 85, YS = 62, XMAX = 8.5;   // drawing scale: x in [1, XMAX]
+  var top = [], bot = [];
+  for (var x = 1; x <= XMAX + 0.001; x += 0.05) {
+    var px = X0 + (x - 1) * XS, h = YS / x;
+    top.push(px.toFixed(1) + ',' + (CY - h).toFixed(1)); bot.unshift(px.toFixed(1) + ',' + (CY + h).toFixed(1));
+  }
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  svg.appendChild(el('polygon', { points: top.concat(bot).join(' '), fill: 'rgba(122,162,255,0.18)', stroke: '#7aa2ff', 'stroke-width': 1.5 }));
+  svg.appendChild(el('line', { x1: 8, y1: CY, x2: 392, y2: CY, stroke: '#98a1c4', 'stroke-dasharray': '4 4', 'stroke-width': 1 }));
+  var fill = el('polygon', { fill: 'rgba(255,207,112,0.30)' });
+  var cut = el('line', { y1: 10, y2: 160, stroke: '#ffcf70', 'stroke-width': 2 });
+  svg.appendChild(fill); svg.appendChild(cut);
+  var tx = el('text', { x: 392, y: 164, fill: '#98a1c4', 'font-size': 10, 'text-anchor': 'end' }); tx.textContent = 'continues forever →'; svg.appendChild(tx);
+
+  // surface area: 2π ∫_1^t (1/x) sqrt(1 + x^-4) dx, with u = ln x → 2π ∫_0^{ln t} sqrt(1 + e^{-4u}) du (Simpson)
+  function area(t) {
+    var L = Math.log(t); if (L === 0) return 0;
+    var n = 2000, h = L / n, s = 0;
+    for (var i = 0; i <= n; i++) {
+      var f = Math.sqrt(1 + Math.exp(-4 * i * h));
+      s += f * (i === 0 || i === n ? 1 : (i % 2 ? 4 : 2));
+    }
+    return 2 * Math.PI * s * h / 3;
+  }
+  function fmt(v) { return v >= 1e6 ? v.toExponential(3) : v.toFixed(3); }
+  function upd() {
+    var t = Math.pow(10, sl.value / 100);      // 1 … 1,000,000
+    document.getElementById('hTLab').textContent = t >= 100 ? Math.round(t).toLocaleString() : t.toFixed(1);
+    var xr = Math.min(t, XMAX), X = X0 + (xr - 1) * XS;
+    var ft = [], fb = [];
+    for (var u = 1; u < xr; u += 0.05) { var q = X0 + (u - 1) * XS, hh = YS / u; ft.push(q.toFixed(1) + ',' + (CY - hh).toFixed(1)); fb.unshift(q.toFixed(1) + ',' + (CY + hh).toFixed(1)); }
+    var hE = YS / xr; ft.push(X.toFixed(1) + ',' + (CY - hE).toFixed(1)); fb.unshift(X.toFixed(1) + ',' + (CY + hE).toFixed(1));
+    fill.setAttribute('points', ft.concat(fb).join(' '));
+    cut.setAttribute('x1', X); cut.setAttribute('x2', X);
+    var V = Math.PI * (1 - 1 / t), A = area(t);
+    read.innerHTML = 'Volume so far: <b>' + fmt(V) + '</b> (the limit is π ≈ 3.142). Surface area so far: <b>' + fmt(A) +
+      '</b>, and it exceeds 2π ln t ≈ ' + fmt(2 * Math.PI * Math.log(t)) + ', which has no upper limit.';
+  }
+  sl.addEventListener('input', upd); upd();
+})();
+</script>
+</body>
+</html>

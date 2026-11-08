@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Banach–Tarski · Infinite Explorer</title>
+<meta name="description" content="The Banach–Tarski paradox explained with an interactive tree: how one ball can be cut up and reassembled into two.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .tree-main { width: min(340px, 100%); aspect-ratio: 1; margin: 0 auto; }
+  .tree-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .tree-pair figure, .tree-main-fig { margin: 0; text-align: center; }
+  .tree-pair canvas { width: 100%; aspect-ratio: 1; background: var(--bg); border-radius: 8px; border: 1px solid var(--line); }
+  .tree-main { background: var(--bg); border-radius: 8px; border: 1px solid var(--line); }
+  figcaption { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+  .key { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 13px; color: var(--muted); justify-content: center; margin: 8px 0; }
+  .key i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+  .slider-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 12px; }
+  .slider-row input[type=range] { flex: 1 1 12rem; }
+  ol.steps { padding-left: 1.3em; }
+  ol.steps li { margin: 0.6em 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Infinite Explorer">
+    <a class="brand" href="../">∞ Infinite Explorer</a>
+    <a href="../hilbert-hotel/">Hotel</a>
+    <a href="../diagonal/">Diagonal</a>
+    <a href="./" aria-current="page">Banach–Tarski</a>
+    <a href="../infinite-sums/">Sums</a>
+    <a href="../infinite-shapes/">Shapes</a>
+  </nav>
+
+  <main>
+    <p class="kicker">3 · The paradox</p>
+    <h1>Banach–Tarski</h1>
+    <p class="lede">Cut a solid ball into a handful of pieces, slide and rotate the pieces without stretching or bending them, and put them back together as <em>two</em> balls, each exactly the size of the original.</p>
+
+    <div class="callout">
+      <p><b>The theorem (Banach and Tarski, 1924).</b> A solid ball in three-dimensional space can be split into finitely many pieces that can be moved by rotations and translations only, to form two solid balls, each congruent to the first. Five pieces are enough.</p>
+    </div>
+
+    <p>This is a real theorem, not a trick of wording. It also doesn't mean you can duplicate gold, and the reasons why are the most interesting part. We'll get there in three steps: what the "pieces" actually are, the infinite tree that makes the trick possible, and why physics isn't threatened.</p>
+
+    <h2>What kind of "pieces"?</h2>
+    <p>Forget knives. The pieces are not blobs you could ever carve out. Each one is an infinitely scattered cloud of points, arranged so intricately that it has no meaningful <b>volume</b> at all. (Mathematicians call such sets <em>non-measurable</em>.)</p>
+    <p>That's the escape hatch for the "volume doubled" worry: volume is only defined for well-behaved sets, and these pieces aren't. You can't add up volumes you don't have.</p>
+    <p>The pieces can only be proved to exist using the <b>axiom of choice</b>, the principle from the last page that lets you pick one item from each of infinitely many sets. Nobody can write down a rule that produces them.</p>
+
+    <h2>The trick: a tree that is secretly two trees</h2>
+    <p>The whole paradox comes from one fact about a simple infinite structure. Picture a city where, at every intersection, you can walk one of four ways: <b>a</b> (right), <b>a⁻¹</b> (left, undoing <b>a</b>), <b>b</b> (up) and <b>b⁻¹</b> (down, undoing <b>b</b>). Consider every route that never directly backtracks. Each route is a different point of an infinite branching tree, drawn below. (Only the first five levels fit on screen. The real tree never stops.)</p>
+
+    <p>Sort the routes by their <em>first</em> step, and the tree falls into four arms plus the starting point.</p>
+
+    <div class="demo" id="treeDemo">
+      <h3>One tree. Four arms.</h3>
+      <div class="tree-main-fig">
+        <canvas id="cvAll" class="tree-main" role="img" aria-label="A branching tree with four arms, coloured amber for routes starting with a, pink for a inverse, green for b, and blue for b inverse"></canvas>
+        <div class="key" aria-hidden="true">
+          <span><i style="background:var(--c1)"></i>starts with a</span>
+          <span><i style="background:var(--c2)"></i>starts with a⁻¹</span>
+          <span><i style="background:var(--c3)"></i>starts with b</span>
+          <span><i style="background:var(--c4)"></i>starts with b⁻¹</span>
+          <span><i style="background:#fff"></i>start</span>
+        </div>
+      </div>
+
+      <p>Now the key move. Take every route in the <span style="color:var(--c2)">pink a⁻¹ arm</span> and put an extra <b>a</b> step in front of it. The first step of each route was a⁻¹, so the new <b>a</b> cancels it, and the route just loses its first step. What does that make? Every route that <em>doesn't</em> start with <b>a</b>. So the pink arm, after one step, grows to fill the whole tree except the amber arm.</p>
+      <p>Slide the control and watch it.</p>
+
+      <div class="slider-row">
+        <label for="tSlide">Apply the extra step</label>
+        <input type="range" id="tSlide" min="0" max="100" value="0" aria-describedby="tReadout">
+        <button type="button" class="primary" id="tPlay">Play</button>
+      </div>
+
+      <div class="tree-pair">
+        <figure>
+          <canvas id="cv1" role="img" aria-label="Copy one: the amber and pink arms. As the slider moves, the pink arm spreads out until together they form a complete tree"></canvas>
+          <figcaption>Copy 1: amber arm + pink arm, extra <b>a</b> applied to the pink arm</figcaption>
+        </figure>
+        <figure>
+          <canvas id="cv2" role="img" aria-label="Copy two: the green and blue arms. As the slider moves, the blue arm spreads out until together they form a complete tree"></canvas>
+          <figcaption>Copy 2: green arm + blue arm, extra <b>b</b> applied to the blue arm</figcaption>
+        </figure>
+      </div>
+      <p class="readout" id="tReadout" aria-live="polite">At the start, each picture shows only two arms of the tree.</p>
+    </div>
+
+    <p>At the end of the slider, each of the two small pictures is a <b>complete tree</b>. The same is true of the green and blue arms with an extra <b>b</b>. We started with one tree. We cut it into four arms (plus one lonely point). Then we moved only two arms to make one full tree, and moved the other two to make another full tree. One tree became two, with nothing stretched and nothing added.</p>
+
+    <p>(The drawing only goes five levels deep, so the outermost ring of the real tree is missing from the copies. In the infinite tree there is no outermost ring, which is exactly why this works. In a finite tree the arms could never cover everything.)</p>
+
+    <h2>From a tree to a ball</h2>
+    <p>The remaining job is to find that tree <em>inside a sphere</em>. Here is the sketch:</p>
+    <ol class="steps">
+      <li><b>Find two rotations that act like a and b.</b> There are rotations of 3D space (for example turning by the angle arccos(1/3) about two perpendicular axes) such that no sequence of them ever cancels out except in the obvious way. Their possible sequences form exactly the tree above.</li>
+      <li><b>Chop the sphere's surface into orbits.</b> Take a point and apply every possible sequence of those rotations. The points you reach are its <em>orbit</em>. Every point of the sphere lies in exactly one orbit, and almost every orbit looks like a copy of the tree.</li>
+      <li><b>Choose a starting point in each orbit.</b> There are uncountably many orbits, so there's no rule for it. This is the step that uses the axiom of choice.</li>
+      <li><b>Cut and rearrange.</b> The four arms of the tree become pieces of the sphere. Applying <b>a</b> to the "pink" piece and <b>b</b> to the "blue" piece does to the sphere what the slider did to the tree: the moved pieces now cover the sphere twice over.</li>
+      <li><b>Tidy up the leftovers.</b> A countable set of points (where the rotation axes pierce the sphere) misbehaves, and a clever extra rotation patches that. Then extend radially inward from the surface, and treat the exact centre separately, and you have a solid ball.</li>
+    </ol>
+
+    <h2>Why your orange is safe</h2>
+    <ul>
+      <li><b>Real matter isn't a continuum of points.</b> A gold bar is a finite number of atoms. The construction cuts at scales far below any atom, into pieces with no volume.</li>
+      <li><b>You can't actually perform the cut.</b> The pieces need the axiom of choice. They cannot be described, drawn or computed.</li>
+      <li><b>It's dimension-specific.</b> In a line or on a flat plane, this kind of doubling is impossible: Banach showed there is a well-behaved "size" that every subset has, so volumes can't mysteriously double. The difference in 3D is that its rotations are tangled enough to contain the tree above.</li>
+    </ul>
+
+    <p>The upshot is not "mathematics is broken". It's that "every set of points has a volume" cannot be true if you also accept the axiom of choice. Most mathematicians keep choice and give up that intuition. Others work in set theories with weaker choice principles, where every set of points does have a volume and Banach–Tarski fails.</p>
+
+    <details class="deeper">
+      <summary>Go deeper: the exact statements</summary>
+      <p>Let <span class="math">F</span> be the free group on generators <span class="math">a, b</span> (the tree above). Write <span class="math">W(x)</span> for the set of reduced words that begin with the letter <span class="math">x</span>. Then</p>
+      <p style="text-align:center"><span class="math">F = {e} ⊔ W(a) ⊔ W(a⁻¹) ⊔ W(b) ⊔ W(b⁻¹)</span></p>
+      <p>and the identity that does all the work is, for left-multiplication,</p>
+      <p style="text-align:center"><span class="math">a · W(a⁻¹) = F ∖ W(a)</span>, hence <span class="math">F = W(a) ⊔ a·W(a⁻¹)</span>, and likewise <span class="math">F = W(b) ⊔ b·W(b⁻¹)</span>.</p>
+      <p>A group (or a set acted on by a group) with a decomposition like this is called <b>paradoxical</b>. Hausdorff (1914) showed that <span class="math">SO(3)</span>, the rotation group of 3-space, contains a copy of <span class="math">F</span>, and used it to prove a paradox for the sphere minus a countable set. Banach and Tarski (1924) extended this to the solid ball. Raphael Robinson (1947) showed five pieces suffice for turning one ball into two, and that fewer won't do.</p>
+      <p>A stronger form: any two bounded subsets of <span class="math">ℝ³</span> with non-empty interior are <em>equidecomposable</em>, so a pea can be cut up and reassembled into the Sun.</p>
+      <p>The paradox needs only a weak form of choice. In dimensions 1 and 2 the isometry groups are <em>amenable</em>, which gives a finitely additive, isometry-invariant measure defined on <em>all</em> subsets, and that rules out any paradox. In dimension 3 and above, <span class="math">SO(n)</span> contains free subgroups, so amenability fails and the paradox goes through.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Banach%E2%80%93Tarski_paradox">Banach–Tarski paradox</a> · <a href="https://en.wikipedia.org/wiki/Free_group">Free group</a> · <a href="https://en.wikipedia.org/wiki/Non-measurable_set">Non-measurable set</a> · Stan Wagon, <em>The Banach–Tarski Paradox</em> (Cambridge University Press, 1985)</p>
+
+    <div class="pager">
+      <a href="../diagonal/"><small>← Previous</small>Cantor's Diagonal</a>
+      <a class="next" href="../infinite-sums/"><small>Next →</small>Infinite Sums</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var DIR = { a: [1, 0], A: [-1, 0], b: [0, -1], B: [0, 1] };
+  var INV = { a: 'A', A: 'a', b: 'B', B: 'b' };
+  var COL = { e: '#ffffff', a: '#ffcf70', A: '#ff7a90', b: '#6ee7b7', B: '#7aa2ff' };
+  var DEPTH = 5, EXTENT = 2 - Math.pow(2, -(DEPTH - 1));   // farthest a node can be from the centre
+
+  function pos(w) {
+    var x = 0, y = 0, l = 1;
+    for (var i = 0; i < w.length; i++) { x += DIR[w[i]][0] * l; y += DIR[w[i]][1] * l; l /= 2; }
+    return [x, y];
+  }
+  // left-multiply the word w by the single letter g, then reduce
+  function mul(g, w) { return (w.length && w[0] === INV[g]) ? w.slice(1) : g + w; }
+
+  var nodes = [], edges = [];
+  (function gen(w) {
+    var p = pos(w);
+    var n = { w: w, cls: w.length ? w[0] : 'e', depth: w.length, p: p, pa: p, pb: p };
+    if (n.cls === 'A') n.pa = pos(mul('a', w));
+    if (n.cls === 'B') n.pb = pos(mul('b', w));
+    nodes.push(n);
+    if (w.length) { var q = pos(w.slice(0, -1)); edges.push([q[0], q[1], p[0], p[1]]); }
+    if (w.length === DEPTH) return;
+    'aAbB'.split('').forEach(function (g) {
+      if (w.length && g === INV[w[w.length - 1]]) return;   // no backtracking
+      gen(w + g);
+    });
+  })('');
+  nodes.sort(function (m, n) { return n.depth - m.depth; });  // draw deep nodes first, shallow on top
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 3);
+  function size(cv) {
+    var r = cv.getBoundingClientRect();
+    var s = Math.max(1, Math.round(r.width * dpr));
+    if (cv.width !== s) { cv.width = s; cv.height = s; }
+    return s;
+  }
+
+  function draw(cv, which, t) {
+    var S = size(cv), ctx = cv.getContext('2d');
+    ctx.clearRect(0, 0, S, S);
+    var sc = (S / 2 - S * 0.03) / EXTENT, cx = S / 2, cy = S / 2;
+    ctx.strokeStyle = 'rgba(152,161,196,0.28)';
+    ctx.lineWidth = Math.max(1, S / 340);
+    ctx.beginPath();
+    edges.forEach(function (e) { ctx.moveTo(cx + e[0] * sc, cy + e[1] * sc); ctx.lineTo(cx + e[2] * sc, cy + e[3] * sc); });
+    ctx.stroke();
+    var rb = S / 90;
+    nodes.forEach(function (n) {
+      if (which === '1' && n.cls !== 'a' && n.cls !== 'A') return;
+      if (which === '2' && n.cls !== 'b' && n.cls !== 'B') return;
+      var p = n.p;
+      if (which === '1' && n.cls === 'A') p = [n.p[0] + (n.pa[0] - n.p[0]) * t, n.p[1] + (n.pa[1] - n.p[1]) * t];
+      if (which === '2' && n.cls === 'B') p = [n.p[0] + (n.pb[0] - n.p[0]) * t, n.p[1] + (n.pb[1] - n.p[1]) * t];
+      ctx.fillStyle = COL[n.cls];
+      ctx.beginPath();
+      ctx.arc(cx + p[0] * sc, cy + p[1] * sc, rb * (1.5 - n.depth * 0.17), 0, 6.2832);
+      ctx.fill();
+    });
+  }
+
+  var cvAll = document.getElementById('cvAll'), cv1 = document.getElementById('cv1'), cv2 = document.getElementById('cv2');
+  var slide = document.getElementById('tSlide'), read = document.getElementById('tReadout'), play = document.getElementById('tPlay');
+  var t = 0, raf = null;
+
+  function render() {
+    draw(cvAll, 'all', 0); draw(cv1, '1', t); draw(cv2, '2', t);
+    read.textContent = t === 0
+      ? 'At the start, each picture shows only two arms of the tree.'
+      : t === 1
+        ? 'Done: each small picture is now a complete tree (to the depth drawn). One tree has become two.'
+        : 'The pink and blue arms are spreading out to fill the space the other arms leave empty.';
+  }
+  function setT(v) { t = v; slide.value = Math.round(v * 100); render(); }
+  slide.addEventListener('input', function () { stopAnim(); setT(slide.value / 100); });
+
+  function stopAnim() { if (raf) cancelAnimationFrame(raf); raf = null; play.textContent = 'Play'; }
+  play.addEventListener('click', function () {
+    if (raf) { stopAnim(); return; }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setT(t < 1 ? 1 : 0); return; }
+    if (t >= 1) t = 0;
+    play.textContent = 'Pause';
+    var start = performance.now(), from = t;
+    raf = requestAnimationFrame(function frame(now) {
+      var k = Math.min(1, from + (now - start) / 3000);
+      setT(k);
+      if (k < 1) raf = requestAnimationFrame(frame); else stopAnim();
+    });
+  });
+
+  window.addEventListener('resize', render);
+  render();
+})();
+</script>
+</body>
+</html>

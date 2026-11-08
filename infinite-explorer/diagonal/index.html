@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cantor's Diagonal · Infinite Explorer</title>
+<meta name="description" content="Cantor's diagonal argument, interactively: why some infinities are bigger than others.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .dgrid { display: grid; grid-template-columns: 2.6em repeat(10, 1fr); gap: 3px; margin: 10px 0; align-items: stretch; }
+  .dgrid .lab { font-size: 11px; color: var(--muted); display: flex; align-items: center; justify-content: flex-end; padding-right: 4px; white-space: nowrap; }
+  .dgrid .bit { aspect-ratio: 1; padding: 0; min-width: 0; font-size: 14px; font-variant-numeric: tabular-nums;
+                border-radius: 6px; background: var(--bg); border: 1px solid var(--line); }
+  .dgrid .bit.diag { background: #3a3350; border-color: var(--c2); color: #ffd3da; font-weight: 700; }
+  .dgrid .out { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;
+                border-radius: 6px; background: var(--accent); color: var(--accent-ink); }
+  .dgrid .sep { grid-column: 1 / -1; height: 1px; background: var(--line); margin: 4px 0; }
+  .dgrid .dots { grid-column: 1 / -1; text-align: center; color: var(--muted); line-height: 1; letter-spacing: 0.4em; }
+  table.t { border-collapse: collapse; margin: 1em 0; font-size: 15px; width: 100%; }
+  table.t th, table.t td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; }
+  table.t th { color: var(--muted); font-weight: 600; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Infinite Explorer">
+    <a class="brand" href="../">∞ Infinite Explorer</a>
+    <a href="../hilbert-hotel/">Hotel</a>
+    <a href="./" aria-current="page">Diagonal</a>
+    <a href="../banach-tarski/">Banach–Tarski</a>
+    <a href="../infinite-sums/">Sums</a>
+    <a href="../infinite-shapes/">Shapes</a>
+  </nav>
+
+  <main>
+    <p class="kicker">2 · Bigger infinities</p>
+    <h1>Cantor's Diagonal</h1>
+    <p class="lede">The whole numbers, the evens and the fractions are all the same size. Is <em>every</em> infinite set that size? In 1891 Cantor showed it isn't, with an argument short enough to fit on a napkin.</p>
+
+    <h2>Can you list every infinite sequence of 0s and 1s?</h2>
+    <p>Take all the endless strings of binary digits: 0110100…, 1111111…, 0000101…, and so on. Suppose someone claims to have a complete list of them, sequence 1, sequence 2, sequence 3, and so on, with none missing.</p>
+    <p>Here is how to prove them wrong without even looking at the whole list. Build a new sequence by going down the diagonal: take the first digit of sequence 1 and <b>flip</b> it, then the second digit of sequence 2 and flip it, and so on.</p>
+    <p>The new sequence can't be on the list. It differs from sequence 1 in the first digit, from sequence 2 in the second digit, from sequence <span class="math">n</span> in digit <span class="math">n</span>. No matter which row you point to, the new sequence disagrees with it somewhere.</p>
+
+    <div class="demo" id="diag">
+      <h3>Beat the list</h3>
+      <p class="small">Tap any digit to flip it. The outlined diagonal is flipped to build the yellow sequence at the bottom.</p>
+      <div class="dgrid" id="dgrid"></div>
+      <div class="controls">
+        <button type="button" id="dRand">Shuffle the list</button>
+        <button type="button" id="dZero">All zeros</button>
+        <button type="button" class="primary" id="dAdd">"Just add the new one to the list!"</button>
+      </div>
+      <p class="readout" id="dText" aria-live="polite"></p>
+    </div>
+
+    <p>The natural reaction is "fine, I'll add your new sequence to my list." Try it with the button. The list is now one entry longer, but it has a new diagonal, and flipping that gives yet another sequence that's missing. You can never catch up: <b>no list of sequences is ever complete</b>.</p>
+
+    <p>That tells us the set of infinite binary sequences is <b>uncountable</b>. It's an infinity that can't be matched up with 1, 2, 3, …. It is strictly bigger than the infinity of the whole numbers.</p>
+
+    <h2>What does this have to do with real numbers?</h2>
+    <p>Each real number between 0 and 1 has a decimal expansion, 0.314159…, which is just an infinite string of digits. The same diagonal trick works, so the real numbers can't be listed either. The reals are an uncountable infinity, and the fractions, which we could list, are a vanishing sliver of them. "Almost all" real numbers are not fractions.</p>
+
+    <details class="deeper">
+      <summary>Go deeper: the proof, carefully</summary>
+      <p><b>Claim.</b> There is no surjection <span class="math">f : ℕ → {0,1}<sup>ℕ</sup></span>.</p>
+      <p><b>Proof.</b> Given any <span class="math">f</span>, define <span class="math">s(n) = 1 − f(n)(n)</span>. Then <span class="math">s ∈ {0,1}<sup>ℕ</sup></span>, but for every <span class="math">n</span>, <span class="math">s(n) ≠ f(n)(n)</span>, so <span class="math">s ≠ f(n)</span>. So <span class="math">s</span> is not in the range of <span class="math">f</span>. ∎</p>
+      <p><b>For real numbers</b> you have to be a little careful, because some numbers have two decimal expansions (0.5000… = 0.4999…). The fix is to build the diagonal number using only the digits 4 and 5, say "use 5 unless the diagonal digit is 5, in which case use 4". Such expansions are never ambiguous, so the new number differs from each listed number in an honest way.</p>
+      <p><b>Cantor's theorem</b> generalises this: for any set <span class="math">S</span>, the set of all subsets <span class="math">𝒫(S)</span> is strictly larger than <span class="math">S</span>. The proof is the same diagonal trick, applied to the set <span class="math">{x ∈ S : x ∉ f(x)}</span>. A subset of <span class="math">ℕ</span> is exactly an infinite binary sequence (digit <span class="math">n</span> says whether <span class="math">n</span> is in), so <span class="math">|𝒫(ℕ)| = |{0,1}<sup>ℕ</sup>| = 2<sup>ℵ₀</sup></span>, which equals the cardinality of the real numbers, called <b>the continuum</b>.</p>
+    </details>
+
+    <h2>A ladder with no top</h2>
+    <p>Cantor's theorem says that taking "all subsets" always jumps to a bigger infinity. Do it again and again, and you get a ladder that never ends:</p>
+
+    <table class="t">
+      <thead><tr><th>Set</th><th>Size</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><span class="math">ℕ</span></td><td><span class="math">ℵ₀</span></td><td>whole numbers, fractions, algebraic numbers</td></tr>
+        <tr><td><span class="math">𝒫(ℕ)</span></td><td><span class="math">2<sup>ℵ₀</sup></span></td><td>real numbers, points on a line</td></tr>
+        <tr><td><span class="math">𝒫(𝒫(ℕ))</span></td><td><span class="math">2<sup>2<sup>ℵ₀</sup></sup></span></td><td>all sets of real numbers; all functions ℝ → ℝ</td></tr>
+        <tr><td>…</td><td>…</td><td>no largest infinity</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Two famous surprises</h2>
+    <ul>
+      <li><b>A line has as many points as a plane.</b> Cantor proved that the segment [0, 1] can be matched with the whole square [0, 1] × [0, 1]. He wrote to Dedekind: "I see it, but I don't believe it." (Interleave the digits of two numbers to make one.)</li>
+      <li><b>The continuum hypothesis.</b> Is there a size strictly between <span class="math">ℵ₀</span> and the size of the reals? Cantor believed not, but could not prove it. Gödel (1940) and Cohen (1963) showed that the standard axioms of set theory can neither prove nor refute it. It's a question the usual rules of mathematics leave open.</li>
+    </ul>
+
+    <p>This matters for the next page. Banach–Tarski rests on the axiom of choice, which lets you pick one element from each of infinitely many sets, even when there is no rule for picking. That's exactly the kind of move that produces objects you can prove exist but can never actually draw.</p>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument">Cantor's diagonal argument</a> · <a href="https://en.wikipedia.org/wiki/Cantor%27s_theorem">Cantor's theorem</a> · <a href="https://en.wikipedia.org/wiki/Continuum_hypothesis">Continuum hypothesis</a></p>
+
+    <div class="pager">
+      <a href="../hilbert-hotel/"><small>← Previous</small>Hilbert's Hotel</a>
+      <a class="next" href="../banach-tarski/"><small>Next →</small>Banach–Tarski</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var R = 10;
+  var rows = [], attempts = 0;
+  var grid = document.getElementById('dgrid');
+  var text = document.getElementById('dText');
+  var btn = [];          // btn[r][c]
+  var outCells = [];
+
+  function randRow() { var a = []; for (var i = 0; i < R; i++) a.push(Math.random() < 0.5 ? 1 : 0); return a; }
+  function shuffle() { rows = []; for (var r = 0; r < R; r++) rows.push(randRow()); attempts = 0; }
+
+  function build() {
+    grid.innerHTML = ''; btn = []; outCells = [];
+    var corner = document.createElement('div'); corner.className = 'lab'; grid.appendChild(corner);
+    for (var c = 0; c < R; c++) { var h = document.createElement('div'); h.className = 'lab'; h.style.justifyContent = 'center'; h.style.padding = 0; h.textContent = c + 1; grid.appendChild(h); }
+    for (var r = 0; r < R; r++) {
+      var lab = document.createElement('div'); lab.className = 'lab'; lab.textContent = 'seq ' + (r + 1); grid.appendChild(lab);
+      btn[r] = [];
+      for (var k = 0; k < R; k++) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'bit' + (r === k ? ' diag' : '');
+        b.dataset.r = r; b.dataset.c = k;
+        grid.appendChild(b);
+        btn[r][k] = b;
+      }
+    }
+    var dots = document.createElement('div'); dots.className = 'dots'; dots.setAttribute('aria-hidden', 'true'); dots.textContent = '⋮'; grid.appendChild(dots);
+    var sep = document.createElement('div'); sep.className = 'sep'; grid.appendChild(sep);
+    var l2 = document.createElement('div'); l2.className = 'lab'; l2.textContent = 'new'; l2.style.color = 'var(--accent)'; grid.appendChild(l2);
+    for (var j = 0; j < R; j++) { var o = document.createElement('div'); o.className = 'out'; grid.appendChild(o); outCells.push(o); }
+  }
+
+  function update() {
+    for (var r = 0; r < R; r++) for (var c = 0; c < R; c++) {
+      var b = btn[r][c];
+      b.textContent = rows[r][c];
+      b.setAttribute('aria-label', 'Sequence ' + (r + 1) + ', digit ' + (c + 1) + ' is ' + rows[r][c] + (r === c ? ' (on the diagonal)' : '') + '. Press to flip.');
+    }
+    for (var j = 0; j < R; j++) outCells[j].textContent = 1 - rows[j][j];
+    text.innerHTML = 'The yellow sequence disagrees with sequence <span class="math">k</span> at digit <span class="math">k</span>, for every <span class="math">k</span> from 1 to ' + R +
+      ' (and, in the full infinite list, for every <span class="math">k</span> at all). So it is <b>not</b> on the list.' +
+      (attempts ? ' Times you have added it to the list and tried again: <b>' + attempts + '</b>.' : '');
+  }
+
+  grid.addEventListener('click', function (e) {
+    var b = e.target.closest('button.bit'); if (!b) return;
+    var r = +b.dataset.r, c = +b.dataset.c;
+    rows[r][c] = 1 - rows[r][c];
+    update();
+  });
+  document.getElementById('dRand').addEventListener('click', function () { shuffle(); update(); });
+  document.getElementById('dZero').addEventListener('click', function () {
+    rows = []; for (var r = 0; r < R; r++) rows.push(new Array(R).fill(0)); attempts = 0; update();
+  });
+  document.getElementById('dAdd').addEventListener('click', function () {
+    var nu = []; for (var j = 0; j < R; j++) nu.push(1 - rows[j][j]);
+    rows.unshift(nu); rows.pop(); attempts++; update();
+    text.innerHTML += ' <br>The new sequence is now at the top (the bottom one fell off the visible page), but the diagonal has changed, so there is a different missing sequence.';
+  });
+
+  shuffle(); build(); update();
+})();
+</script>
+</body>
+</html>

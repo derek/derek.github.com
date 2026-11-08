@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hilbert's Hotel · Infinite Explorer</title>
+<meta name="description" content="A hotel with infinitely many rooms, all full, that can still take more guests. An interactive tour of countable infinity.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .stage { position: relative; height: 150px; overflow: hidden; margin: 10px 0 4px; }
+  .rooms { display: grid; grid-template-columns: repeat(12, 1fr); position: absolute; inset: 0 0 auto 0; }
+  .room { height: 58px; border: 1px solid var(--line); border-radius: 4px; margin: 0 1px; position: relative; }
+  .room i { position: absolute; bottom: 1px; left: 0; right: 0; text-align: center; font-style: normal; font-size: 10px; color: var(--muted); }
+  .lobby { position: absolute; left: 0; top: 78px; font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .chips { position: absolute; inset: 0; }
+  .chip { position: absolute; width: calc(100% / 12); height: 40px; padding: 3px 3px; transition: left 0.9s ease, top 0.9s ease, opacity 0.6s ease; }
+  .chips.instant .chip { transition: none; }
+  .chip span { display: flex; align-items: center; justify-content: center; height: 100%; border-radius: 6px; font-size: 12px; font-weight: 600; color: #0b0d1a; }
+  .chip.old span { background: var(--c4); }
+  .chip.new span { background: var(--c1); }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--muted); }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+  .pgrid { display: grid; grid-template-columns: 1.6em repeat(7, 1fr); gap: 3px; margin: 10px 0; }
+  .pgrid .hd { font-size: 11px; color: var(--muted); display: flex; align-items: center; justify-content: center; }
+  .pc { aspect-ratio: 1; border: 1px solid var(--line); border-radius: 6px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; line-height: 1.1; background: var(--bg); min-width: 0; }
+  .pc small { font-size: 9px; color: var(--muted); }
+  .pc b { font-size: 14px; font-weight: 600; }
+  .pc.seen { background: #2a2f5c; }
+  .pc.now { background: var(--accent); border-color: var(--accent); }
+  .pc.now small, .pc.now b { color: var(--accent-ink); }
+  .pc.skip { opacity: 0.35; }
+  .pc.skip small { text-decoration: line-through; }
+  .pc.skip b { visibility: hidden; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Infinite Explorer">
+    <a class="brand" href="../">∞ Infinite Explorer</a>
+    <a href="./" aria-current="page">Hotel</a>
+    <a href="../diagonal/">Diagonal</a>
+    <a href="../banach-tarski/">Banach–Tarski</a>
+    <a href="../infinite-sums/">Sums</a>
+    <a href="../infinite-shapes/">Shapes</a>
+  </nav>
+
+  <main>
+    <p class="kicker">1 · Counting</p>
+    <h1>Hilbert's Hotel</h1>
+    <p class="lede">A hotel with infinitely many rooms. Every room is occupied. A new guest arrives and, somehow, there's still a bed for them.</p>
+
+    <h2>One more guest</h2>
+    <p>The rooms are numbered 1, 2, 3, … with no last room. Tonight every room has a guest in it. A traveller walks in and asks for a room.</p>
+    <p>A finite hotel would have to turn them away. This one doesn't: ask every guest to move from room <span class="math">n</span> to room <span class="math">n + 1</span>. Everyone still has a room, and room 1 is now free. Press the button to watch it happen.</p>
+
+    <div class="demo" id="hotel">
+      <h3>The hotel (first 12 rooms shown)</h3>
+      <div class="controls">
+        <button type="button" class="primary" data-act="one">One new guest</button>
+        <button type="button" data-act="bus">An infinite bus arrives</button>
+        <button type="button" data-act="reset">Reset</button>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="rooms" id="rooms"></div>
+        <div class="lobby">Lobby</div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><i class="sw" style="background:var(--c4)"></i>Original guests</span>
+        <span><i class="sw" style="background:var(--c1)"></i>Newcomers</span>
+        <span>Guests sliding off the right edge are in rooms past 12, still in the hotel.</span>
+      </div>
+      <p class="readout" id="hotelText" aria-live="polite">The hotel is full: guest <span class="math">n</span> is in room <span class="math">n</span>, forever.</p>
+    </div>
+
+    <h2>An infinite bus</h2>
+    <p>Fine, one guest is easy. But now an infinitely long bus pulls up, with passengers <b>B1, B2, B3, …</b>, and they all want rooms.</p>
+    <p>Shifting everyone by one won't work, since there are infinitely many newcomers. Instead, move the guest in room <span class="math">n</span> to room <span class="math">2n</span>. Everyone is housed again, and now all the <em>odd</em> rooms are empty. Passenger B<span class="math">j</span> takes room <span class="math">2j − 1</span>. Try the second button above.</p>
+
+    <div class="callout">
+      <p><b>What's really going on.</b> We keep saying "infinity plus one" and "infinity plus infinity", but there's no number being added. The honest statement is about <em>matching things up</em>. Two collections are the same size if you can pair every item in one with exactly one item in the other. The hotel tricks are just pairings: <span class="math">n ↔ n + 1</span> and <span class="math">n ↔ 2n</span>.</p>
+    </div>
+
+    <h2>Infinitely many buses</h2>
+    <p>Now the hotel is full and <em>infinitely many</em> buses arrive, each carrying infinitely many passengers. Surely that's too much?</p>
+    <p>It isn't. Lay the passengers out in a grid: bus 1's seats along the first row, bus 2's along the second, and so on. Then walk through the grid diagonal by diagonal, handing out room numbers in the order you meet people. Every passenger is reached after finitely many steps, so every passenger gets a room.</p>
+
+    <div class="demo" id="pairs">
+      <h3>Hand out rooms along the diagonals</h3>
+      <div class="controls" role="group" aria-label="What to number">
+        <button type="button" id="modeBus" class="on" aria-pressed="true">Bus passengers</button>
+        <button type="button" id="modeFrac" aria-pressed="false">Fractions</button>
+      </div>
+      <div class="pgrid" id="pgrid" role="img" aria-label="A seven by seven grid numbered along its diagonals, as described below"></div>
+      <div class="controls">
+        <button type="button" class="primary" id="gStep">Step</button>
+        <button type="button" id="gPlay">Play</button>
+        <button type="button" id="gReset">Reset</button>
+      </div>
+      <p class="readout" id="gText" aria-live="polite"></p>
+      <p class="small" id="gNote"></p>
+    </div>
+
+    <p>Switch to <b>Fractions</b> to see the same idea applied to the rational numbers. Row <span class="math">p</span>, column <span class="math">q</span> is the fraction <span class="math">p/q</span>. Fractions like 2/2 or 2/4 repeat a value already seen (as 1/1 and 1/2), so we skip them. Every positive fraction ends up with a number. Interleave positive, negative and zero, and every rational number can be put in one list.</p>
+
+    <p>That is surprising, because the fractions are <em>dense</em>: between any two of them there are infinitely many more. Yet there are exactly as many fractions as whole numbers. Sets that can be listed like this are called <b>countable</b>, and the size of the whole numbers is written <span class="math">ℵ₀</span> ("aleph-null").</p>
+
+    <details class="deeper">
+      <summary>Go deeper: the definitions</summary>
+      <p>Two sets <span class="math">A</span> and <span class="math">B</span> have the same <b>cardinality</b> if there is a bijection <span class="math">f : A → B</span>, that is, a function that is one-to-one (no two inputs share an output) and onto (every element of <span class="math">B</span> is hit). A set is <b>countably infinite</b> if it has the same cardinality as <span class="math">ℕ = {1, 2, 3, …}</span>.</p>
+      <p>Facts you can prove with explicit bijections:</p>
+      <ul>
+        <li><span class="math">ℕ ↔ ℕ \ {1}</span> via <span class="math">n ↦ n + 1</span>. More generally, an infinite set can match a proper piece of itself. (Dedekind took this as the <em>definition</em> of an infinite set.)</li>
+        <li><span class="math">ℕ ↔ 2ℕ</span> via <span class="math">n ↦ 2n</span>.</li>
+        <li><span class="math">ℕ ↔ ℤ</span> by listing 0, 1, −1, 2, −2, ….</li>
+        <li><span class="math">ℕ × ℕ ↔ ℕ</span> via the Cantor pairing function <span class="math">π(i, j) = (i + j − 2)(i + j − 1)/2 + i</span>. The grid demo above does the same thing, except it zig-zags along alternate diagonals instead of always walking the same direction.</li>
+        <li><span class="math">ℚ</span> is countable: map <span class="math">p/q</span> in lowest terms to the pair <span class="math">(p, q)</span>, which gives an injection into <span class="math">ℕ × ℕ</span>, and any subset of a countable set is countable.</li>
+      </ul>
+      <p>Arithmetic of the cardinal: <span class="math">ℵ₀ + 1 = ℵ₀</span>, <span class="math">ℵ₀ + ℵ₀ = ℵ₀</span>, <span class="math">ℵ₀ · ℵ₀ = ℵ₀</span>. Every "paradox" on this page is one of these equalities.</p>
+    </details>
+
+    <h2>So is every infinity the same?</h2>
+    <p>If all of these infinite sets are the same size, maybe "infinity" is just one thing after all. It isn't, and the next page shows the argument that proved it.</p>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Hilbert%27s_paradox_of_the_Grand_Hotel">Hilbert's paradox of the Grand Hotel</a> · <a href="https://en.wikipedia.org/wiki/Countable_set">Countable set</a></p>
+
+    <div class="pager">
+      <a href="../"><small>← Back</small>Overview</a>
+      <a class="next" href="../diagonal/"><small>Next →</small>Cantor's Diagonal</a>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ---- Hotel animation ---- */
+(function () {
+  var ROOMS = 12, ROW_ROOM = 16, ROW_LOBBY = 96;
+  var roomsEl = document.getElementById('rooms');
+  var chipsEl = document.getElementById('chips');
+  var text = document.getElementById('hotelText');
+  var timers = [];
+
+  for (var i = 1; i <= ROOMS; i++) {
+    var d = document.createElement('div');
+    d.className = 'room';
+    d.innerHTML = '<i>' + i + '</i>';
+    roomsEl.appendChild(d);
+  }
+
+  function place(el, col, top, opacity) {
+    el.style.left = ((col - 1) * 100 / ROOMS) + '%';
+    el.style.top = top + 'px';
+    el.style.opacity = opacity;
+  }
+  function make(label, kind, col, top, opacity) {
+    var c = document.createElement('div');
+    c.className = 'chip ' + kind;
+    c.innerHTML = '<span>' + label + '</span>';
+    chipsEl.appendChild(c);
+    place(c, col, top, opacity);
+    return c;
+  }
+  function moveTo(el, room, top) {
+    if (room > ROOMS) place(el, ROOMS + 1, top, 0);
+    else place(el, room, top, 1);
+  }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  var old = [];
+  function setup() {
+    clearTimers();
+    chipsEl.classList.add('instant');
+    chipsEl.innerHTML = '';
+    old = [];
+    for (var k = 1; k <= ROOMS; k++) old.push(make(k, 'old', k, ROW_ROOM, 1));
+    void chipsEl.offsetWidth;            // flush so the reset is not animated
+    chipsEl.classList.remove('instant');
+  }
+
+  function run(act) {
+    setup();
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        if (act === 'one') {
+          old.forEach(function (c, i) { moveTo(c, (i + 1) + 1, ROW_ROOM); });
+          var n = make('N', 'new', 1, ROW_LOBBY, 1);
+          timers.push(setTimeout(function () { moveTo(n, 1, ROW_ROOM); }, 1000));
+          text.innerHTML = 'Everyone in room <span class="math">n</span> moves to room <span class="math">n + 1</span>. Room 1 is free for the newcomer. The hotel is full again.';
+        } else {
+          old.forEach(function (c, i) { moveTo(c, 2 * (i + 1), ROW_ROOM); });
+          var bus = [];
+          for (var j = 1; j <= ROOMS; j++) bus.push(make('B' + j, 'new', j, ROW_LOBBY, 1));
+          timers.push(setTimeout(function () {
+            bus.forEach(function (c, i) { moveTo(c, 2 * (i + 1) - 1, ROW_ROOM); });
+          }, 1000));
+          text.innerHTML = 'Guest in room <span class="math">n</span> moves to room <span class="math">2n</span>, which frees every odd room. Passenger B<span class="math">j</span> takes room <span class="math">2j − 1</span>. (Only the first 12 passengers are drawn; the bus is infinitely long.)';
+        }
+      });
+    });
+  }
+
+  document.getElementById('hotel').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-act]');
+    if (!b) return;
+    if (b.dataset.act === 'reset') {
+      setup();
+      text.innerHTML = 'The hotel is full: guest <span class="math">n</span> is in room <span class="math">n</span>, forever.';
+    } else run(b.dataset.act);
+  });
+  setup();
+})();
+
+/* ---- Diagonal numbering of a grid ---- */
+(function () {
+  var N = 7;
+  var grid = document.getElementById('pgrid');
+  var text = document.getElementById('gText');
+  var note = document.getElementById('gNote');
+  var bBus = document.getElementById('modeBus');
+  var bFrac = document.getElementById('modeFrac');
+  var mode = 'bus', order = [], pos = 0, timer = null, cells = {};
+
+  function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+
+  function build() {
+    order = []; pos = 0;
+    var rank = {}, c = 0;
+    for (var d = 2; d <= 2 * N + 2; d++) {          // go a bit past the grid so numbers on the edge are right
+      var list = [];
+      for (var i = 1; i <= d - 1; i++) list.push([i, d - i]);
+      if (d % 2 === 0) list.reverse();              // zig-zag
+      for (var k = 0; k < list.length; k++) {
+        var r = list[k][0], q = list[k][1];
+        if (mode === 'frac' && gcd(r, q) !== 1) continue;
+        c++;
+        if (r <= N && q <= N) { rank[r + ',' + q] = c; order.push({ r: r, q: q, n: c }); }
+      }
+    }
+    grid.innerHTML = '';
+    cells = {};
+    grid.appendChild(hd(''));
+    for (var j = 1; j <= N; j++) grid.appendChild(hd(mode === 'bus' ? 'seat ' + j : '/' + j));
+    for (var a = 1; a <= N; a++) {
+      grid.appendChild(hd(mode === 'bus' ? 'bus ' + a : a));
+      for (var b = 1; b <= N; b++) {
+        var cell = document.createElement('div');
+        var key = a + ',' + b;
+        var skipped = mode === 'frac' && gcd(a, b) !== 1;
+        cell.className = 'pc' + (skipped ? ' skip' : '');
+        cell.innerHTML = '<small>' + (mode === 'bus' ? 'b' + a + ' s' + b : a + '/' + b) + '</small><b>' + (skipped ? '' : rank[key]) + '</b>';
+        grid.appendChild(cell);
+        cells[key] = cell;
+      }
+    }
+    grid.setAttribute('aria-label', mode === 'bus'
+      ? 'A grid with buses down the side and seats across the top. Each passenger is numbered in the order the diagonal walk meets them.'
+      : 'A grid of fractions, numerator down the side and denominator across. Each fraction in lowest terms is numbered in diagonal order; repeats are crossed out.');
+    note.textContent = mode === 'bus'
+      ? 'Passenger (bus i, seat j) gets a room number after finitely many steps, so nobody is left out.'
+      : 'Crossed-out cells are repeats of fractions already counted, like 2/2 = 1/1.';
+    text.textContent = 'Press Step or Play to walk the diagonals.';
+  }
+  function hd(t) { var e = document.createElement('div'); e.className = 'hd'; e.textContent = t; return e; }
+
+  function step() {
+    if (pos >= order.length) { stop(); text.textContent = 'Done with this corner of the grid. The real grid goes on forever, and every cell still gets a finite number.'; return; }
+    var prev = order[pos - 1];
+    if (prev) { cells[prev.r + ',' + prev.q].classList.remove('now'); cells[prev.r + ',' + prev.q].classList.add('seen'); }
+    var cur = order[pos++];
+    cells[cur.r + ',' + cur.q].classList.add('now');
+    text.innerHTML = mode === 'bus'
+      ? 'Room <b>' + cur.n + '</b> goes to bus ' + cur.r + ', seat ' + cur.q + '.'
+      : 'Number <b>' + cur.n + '</b> is the fraction <b>' + cur.r + '/' + cur.q + '</b>.';
+  }
+  function stop() { clearInterval(timer); timer = null; document.getElementById('gPlay').textContent = 'Play'; }
+
+  document.getElementById('gStep').addEventListener('click', function () { stop(); step(); });
+  document.getElementById('gPlay').addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    this.textContent = 'Pause';
+    timer = setInterval(step, 220);
+  });
+  document.getElementById('gReset').addEventListener('click', function () { stop(); build(); });
+  function setMode(m) {
+    stop(); mode = m; build();
+    bBus.classList.toggle('on', m === 'bus'); bBus.setAttribute('aria-pressed', m === 'bus');
+    bFrac.classList.toggle('on', m === 'frac'); bFrac.setAttribute('aria-pressed', m === 'frac');
+  }
+  bBus.addEventListener('click', function () { setMode('bus'); });
+  bFrac.addEventListener('click', function () { setMode('frac'); });
+  build();
+})();
+</script>
+</body>
+</html>

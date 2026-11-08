@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Infinite Explorer</title>
+<meta name="description" content="Interactive explainers on mathematical infinity: Hilbert's Hotel, Cantor's diagonal, the Banach–Tarski paradox, infinite sums and strange infinite shapes.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Infinite Explorer">
+    <a class="brand" href="./" aria-current="page">∞ Infinite Explorer</a>
+    <a href="hilbert-hotel/">Hotel</a>
+    <a href="diagonal/">Diagonal</a>
+    <a href="banach-tarski/">Banach–Tarski</a>
+    <a href="infinite-sums/">Sums</a>
+    <a href="infinite-shapes/">Shapes</a>
+  </nav>
+
+  <main>
+    <p class="kicker">Interactive notes on mathematical infinity</p>
+    <h1>Infinite Explorer</h1>
+    <p class="lede">Infinity is not a very big number. It is a different kind of thing, and it breaks your intuition in ways you can poke at. These pages are a hands-on tour.</p>
+
+    <p>Each page has a plain-language story and a few small interactive demos. Where there is real mathematics underneath, you'll find a collapsed <em>Go deeper</em> box with the more rigorous version. You can skip those and still follow along.</p>
+
+    <p>The series was started while watching Vsauce's video on the Banach–Tarski paradox, the claim that a ball can be cut into pieces and reassembled into two balls. That result sits at the end of a road paved with other infinities, so the pages are ordered to walk you down it.</p>
+
+    <div class="cards">
+      <a class="card" href="hilbert-hotel/">
+        <span class="num">1 · Counting</span>
+        <h3>Hilbert's Hotel</h3>
+        <p>A full hotel that always has room. Why ∞ + 1 = ∞, and how whole numbers, evens and fractions turn out to be the same size.</p>
+      </a>
+      <a class="card" href="diagonal/">
+        <span class="num">2 · Bigger infinities</span>
+        <h3>Cantor's Diagonal</h3>
+        <p>Build a number that is missing from any list you hand me. Some infinities are strictly bigger than others.</p>
+      </a>
+      <a class="card" href="banach-tarski/">
+        <span class="num">3 · The paradox</span>
+        <h3>Banach–Tarski</h3>
+        <p>One ball becomes two. Watch the trick at its core, a tree that is secretly two trees, and learn why it can't happen to a real orange.</p>
+      </a>
+      <a class="card" href="infinite-sums/">
+        <span class="num">4 · Adding forever</span>
+        <h3>Infinite Sums</h3>
+        <p>0.999… = 1, a series that creeps to infinity, and one whose total you can rearrange to be anything you like.</p>
+      </a>
+      <a class="card" href="infinite-shapes/">
+        <span class="num">5 · Infinite geometry</span>
+        <h3>Strange Shapes</h3>
+        <p>The Cantor set, a curve that fills a square, and a horn you can fill with paint but never finish painting.</p>
+      </a>
+    </div>
+
+    <h2>Suggested path</h2>
+    <p>Go in order if you're new: pages 1 and 2 give you the vocabulary (countable vs. uncountable) that the Banach–Tarski page leans on. Pages 4 and 5 are independent playgrounds and can be read any time.</p>
+
+    <h2>A few honest caveats</h2>
+    <ul>
+      <li>The demos are teaching toys. Screens are finite, so every picture shows the first few steps of a process that never ends.</li>
+      <li>Banach–Tarski can only be <em>sketched</em> here. The real proof needs the axiom of choice and some group theory; the demo shows the one idea that makes it all work.</li>
+      <li>If you want the full treatment, Stan Wagon's book <em>The Banach–Tarski Paradox</em> is the standard reference, and Wikipedia's articles are a decent next stop (linked at the bottom of each page).</li>
+    </ul>
+
+    <footer class="site">Hand-written static pages. No tracking, no libraries.</footer>
+  </main>
+</div>
+</body>
+</html>

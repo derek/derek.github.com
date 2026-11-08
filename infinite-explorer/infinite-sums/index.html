@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Infinite Sums · Infinite Explorer</title>
+<meta name="description" content="0.999… = 1, series that creep to infinity, and a sum you can rearrange to equal anything. Interactive infinite series.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .big { font-size: 1.35rem; word-break: break-all; font-variant-numeric: tabular-nums; }
+  .bar { height: 10px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin: 8px 0; }
+  .bar > i { display: block; height: 100%; background: var(--accent); }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; }
+  .terms { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; color: var(--muted); word-break: break-word; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Infinite Explorer">
+    <a class="brand" href="../">∞ Infinite Explorer</a>
+    <a href="../hilbert-hotel/">Hotel</a>
+    <a href="../diagonal/">Diagonal</a>
+    <a href="../banach-tarski/">Banach–Tarski</a>
+    <a href="./" aria-current="page">Sums</a>
+    <a href="../infinite-shapes/">Shapes</a>
+  </nav>
+
+  <main>
+    <p class="kicker">4 · Adding forever</p>
+    <h1>Infinite Sums</h1>
+    <p class="lede">What happens when you add up infinitely many numbers? Sometimes you get an ordinary answer, sometimes you get infinity, and sometimes the answer depends on the order you add in.</p>
+
+    <h2>0.999… equals 1</h2>
+    <p>It looks like it should be a tiny bit less than 1. It isn't. The infinite decimal 0.999… <em>means</em> the limit of 0.9, 0.99, 0.999, …. That list gets as close to 1 as you like, so the limit is 1. Drag the slider and watch the gap shrink.</p>
+
+    <div class="demo" id="nine">
+      <h3>The gap to 1</h3>
+      <div class="controls">
+        <label for="nineN">Nines: <b id="nineLabel">3</b></label>
+        <input type="range" id="nineN" min="1" max="40" value="3">
+      </div>
+      <p class="big mono" id="nineVal" aria-live="polite"></p>
+      <p class="readout">Gap from 1: <b class="mono" id="nineGap"></b></p>
+      <p class="small">Whatever positive number you name, some number of nines gets the gap below it. A gap that is smaller than every positive number must be zero.</p>
+    </div>
+
+    <p>Another way to see it: if <span class="math">x = 0.999…</span> then <span class="math">10x = 9.999…</span>, so <span class="math">10x − x = 9</span>, which means <span class="math">x = 1</span>. That argument already assumes infinite decimals behave like numbers. The limit definition is what makes that legitimate.</p>
+
+    <h2>Sums that settle, and sums that don't</h2>
+    <p>Add 1/2 + 1/4 + 1/8 + …. Each step covers half the remaining distance to 1, so the total creeps up to exactly 1. We say the series <b>converges</b> to 1.</p>
+    <p>But adding smaller and smaller terms doesn't guarantee a finite answer. The harmonic series 1 + 1/2 + 1/3 + 1/4 + … has terms that shrink to zero, and it still grows without bound, just very slowly. Try the playground: pick a series, then slide the number of terms.</p>
+
+    <div class="demo" id="series">
+      <h3>Series playground</h3>
+      <div class="presets" role="group" aria-label="Choose a series" id="presets"></div>
+      <p class="mono" id="sTerms" style="margin-top:12px"></p>
+      <div class="controls">
+        <label for="sN">Terms added: <b id="sNLabel">10</b></label>
+        <input type="range" id="sN" min="0" max="600" value="100">
+      </div>
+      <p class="readout" id="sOut" aria-live="polite"></p>
+    </div>
+
+    <p>The harmonic series is the shocking one. To get its partial sum past 100 you'd need about <b>1.5 × 10<sup>43</sup></b> terms, which is more than any computer could ever add, and yet in the long run it <em>does</em> pass 100, and 1000, and everything else. By contrast the sum of 1/n² also has shrinking terms, but it settles down to π²/6 ≈ 1.6449. Whether a series converges depends on how fast the terms shrink.</p>
+
+    <details class="deeper">
+      <summary>Go deeper: definitions and the harmonic proof</summary>
+      <p>The infinite sum <span class="math">Σ a<sub>n</sub></span> is defined as the limit of its partial sums <span class="math">S<sub>N</sub> = a<sub>1</sub> + … + a<sub>N</sub></span> as <span class="math">N → ∞</span>, if that limit exists. If it doesn't, the series <em>diverges</em>.</p>
+      <p><b>The harmonic series diverges.</b> Group the terms: <span class="math">1 + 1/2 + (1/3 + 1/4) + (1/5 + … + 1/8) + …</span>. Each bracket is at least 1/2 (the 2<sup>k</sup> terms in the <span class="math">k</span>th bracket are each at least 1/2<sup>k+1</sup>), so the partial sums grow at least like <span class="math">1 + k/2</span> and are unbounded. In fact <span class="math">S<sub>N</sub> ≈ ln N + 0.5772…</span>.</p>
+      <p><b>Geometric series:</b> for <span class="math">|r| &lt; 1</span>, <span class="math">Σ<sub>n≥0</sub> r<sup>n</sup> = 1/(1 − r)</span>. With <span class="math">r = 1/10</span> and a factor 9/10 you get <span class="math">0.999… = 9/10 · 1/(1 − 1/10) = 1</span>.</p>
+    </details>
+
+    <h2>The sum you can rearrange to be anything</h2>
+    <p>The alternating harmonic series 1 − 1/2 + 1/3 − 1/4 + … converges, to ln 2 ≈ 0.693. Now do something that is harmless for finite sums: <b>change the order</b>.</p>
+    <p>Take two positive terms, then one negative: 1 + 1/3 − 1/2 + 1/5 + 1/7 − 1/4 + …. Same numbers, every one used exactly once, and the total is now 1.5 × ln 2 ≈ 1.04. Rearranging an infinite sum changed its value.</p>
+    <p>It gets worse. <b>Riemann's rearrangement theorem</b> says you can reorder the terms to make the sum hit <em>any</em> number you like. The recipe: if you're below the target, add the next unused positive term. If you're above, add the next unused negative term. Pick a target:</p>
+
+    <div class="demo" id="rearr">
+      <h3>Make 1 − 1/2 + 1/3 − 1/4 + … add up to…</h3>
+      <div class="controls">
+        <label for="rTarget">Target</label>
+        <input type="number" id="rTarget" value="3" min="-6" max="6" step="any" inputmode="decimal">
+        <button type="button" class="primary" id="rGo">Rearrange</button>
+        <button type="button" id="rLn2">Original order</button>
+      </div>
+      <p class="readout" id="rOut" aria-live="polite">Try a target between −6 and 6.</p>
+      <p class="terms" id="rTermsList"></p>
+    </div>
+
+    <p>Every term of the original series appears exactly once, in a different order, and the totals are all different. This only happens for series like this one, whose positive terms alone add to infinity and whose negative terms alone add to minus infinity. Series where you could add the absolute values and still get a finite answer are immune: reorder them as you please.</p>
+
+    <div class="callout">
+      <p><b>What about 1 + 2 + 3 + 4 + … = −1/12?</b> Under the definition above, that series simply diverges, as you can see in the playground. The −1/12 comes from a different procedure (analytically continuing the Riemann zeta function, where ζ(−1) = −1/12), which is meaningful and shows up in physics, but it isn't "adding the numbers" in the sense used on this page.</p>
+    </div>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/0.999...">0.999…</a> · <a href="https://en.wikipedia.org/wiki/Harmonic_series_(mathematics)">Harmonic series</a> · <a href="https://en.wikipedia.org/wiki/Riemann_series_theorem">Riemann series theorem</a></p>
+
+    <div class="pager">
+      <a href="../banach-tarski/"><small>← Previous</small>Banach–Tarski</a>
+      <a class="next" href="../infinite-shapes/"><small>Next →</small>Strange Shapes</a>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ---- 0.999... ---- */
+(function () {
+  var s = document.getElementById('nineN');
+  function upd() {
+    var n = +s.value;
+    document.getElementById('nineLabel').textContent = n;
+    document.getElementById('nineVal').textContent = '0.' + new Array(n + 1).join('9');
+    document.getElementById('nineGap').textContent = '0.' + new Array(n).join('0') + '1  (= 10^−' + n + ')';
+  }
+  s.addEventListener('input', upd); upd();
+})();
+
+/* ---- Series playground ---- */
+(function () {
+  var LN2 = Math.LN2, GAMMA = 0.5772156649015329;
+  var defs = [
+    { id: 'geo',  name: '1/2 + 1/4 + 1/8 + …', term: function (n) { return Math.pow(0.5, n); }, limit: 1,
+      show: ['1/2', '1/4', '1/8', '1/16', '1/32'] },
+    { id: 'bas',  name: '1 + 1/4 + 1/9 + 1/16 + …', term: function (n) { return 1 / (n * n); }, limit: Math.PI * Math.PI / 6,
+      show: ['1', '1/4', '1/9', '1/16', '1/25'], limitName: 'π²/6' },
+    { id: 'har',  name: '1 + 1/2 + 1/3 + 1/4 + …', term: function (n) { return 1 / n; }, limit: null,
+      show: ['1', '1/2', '1/3', '1/4', '1/5'] },
+    { id: 'alt',  name: '1 − 1/2 + 1/3 − 1/4 + …', term: function (n) { return (n % 2 ? 1 : -1) / n; }, limit: LN2,
+      show: ['1', '−1/2', '1/3', '−1/4', '1/5'], limitName: 'ln 2' },
+    { id: 'lei',  name: '1 − 1/3 + 1/5 − 1/7 + …', term: function (n) { return (n % 2 ? 1 : -1) / (2 * n - 1); }, limit: Math.PI / 4,
+      show: ['1', '−1/3', '1/5', '−1/7', '1/9'], limitName: 'π/4' },
+    { id: 'nat',  name: '1 + 2 + 3 + 4 + …', term: function (n) { return n; }, limit: null,
+      show: ['1', '2', '3', '4', '5'] }
+  ];
+  var cur = defs[2];
+  var pre = document.getElementById('presets'), slider = document.getElementById('sN');
+  var out = document.getElementById('sOut'), lab = document.getElementById('sNLabel'), tm = document.getElementById('sTerms');
+
+  defs.forEach(function (d) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = d.name; b.dataset.id = d.id;
+    b.setAttribute('aria-pressed', d === cur);
+    if (d === cur) b.classList.add('on');
+    pre.appendChild(b);
+  });
+  pre.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    cur = defs.filter(function (d) { return d.id === b.dataset.id; })[0];
+    [].forEach.call(pre.children, function (c) { var on = c === b; c.classList.toggle('on', on); c.setAttribute('aria-pressed', on); });
+    upd();
+  });
+
+  function fmt(x) { return Math.abs(x) >= 1e7 ? x.toExponential(4) : x.toFixed(8); }
+  function upd() {
+    var N = Math.round(Math.pow(10, slider.value / 100));     // 1 … 1,000,000
+    lab.textContent = N.toLocaleString();
+    var S = 0;
+    for (var n = 1; n <= N; n++) S += cur.term(n);
+    tm.textContent = cur.show.join('  +  ').replace(/\+\s+−/g, '−  ') + '  + …';
+    var html = 'After <b>' + N.toLocaleString() + '</b> term' + (N === 1 ? '' : 's') + ', the total is <b>' + fmt(S) + '</b>.<br>';
+    if (cur.limit !== null) {
+      html += 'The series converges to <b>' + cur.limit.toFixed(8) + '</b>' + (cur.limitName ? ' (' + cur.limitName + ')' : '') +
+              '. Distance left: <b>' + Math.abs(cur.limit - S).toExponential(2) + '</b>.';
+    } else if (cur.id === 'har') {
+      html += 'No limit: it keeps growing, roughly like ln N + 0.5772 (here ≈ ' + (Math.log(N) + GAMMA).toFixed(4) + '). It gets there extremely slowly.';
+    } else {
+      html += 'No limit: the partial sums are N(N+1)/2 and grow without bound.';
+    }
+    out.innerHTML = html;
+  }
+  slider.addEventListener('input', upd); upd();
+})();
+
+/* ---- Riemann rearrangement ---- */
+(function () {
+  var inp = document.getElementById('rTarget'), out = document.getElementById('rOut'), tl = document.getElementById('rTermsList');
+  var STEPS = 300000;
+  function go() {
+    var target = parseFloat(inp.value);
+    if (!isFinite(target)) { out.textContent = 'Enter a number.'; tl.textContent = ''; return; }
+    if (Math.abs(target) > 6) { out.textContent = 'That target needs astronomically many terms (the positive terms only reach it extremely slowly). Try something between −6 and 6.'; tl.textContent = ''; return; }
+    var s = 0, p = 1, q = 2, np = 0, nq = 0, first = [];
+    for (var i = 0; i < STEPS; i++) {
+      if (s <= target) { s += 1 / p; if (first.length < 14) first.push('+1/' + p); p += 2; np++; }
+      else { s -= 1 / q; if (first.length < 14) first.push('−1/' + q); q += 2; nq++; }
+    }
+    out.innerHTML = 'After <b>' + STEPS.toLocaleString() + '</b> terms (using <b>' + np.toLocaleString() + '</b> positive and <b>' + nq.toLocaleString() + '</b> negative ones), the total is <b>' + s.toFixed(5) + '</b>. Target: ' + target + '.';
+    tl.textContent = 'Order used: ' + first.join('  ') + '  …';
+  }
+  document.getElementById('rGo').addEventListener('click', go);
+  inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+  document.getElementById('rLn2').addEventListener('click', function () {
+    var s = 0, N = STEPS;
+    for (var n = 1; n <= N; n++) s += (n % 2 ? 1 : -1) / n;
+    out.innerHTML = 'In the original order, after <b>' + N.toLocaleString() + '</b> terms the total is <b>' + s.toFixed(5) + '</b> (ln 2 = ' + Math.LN2.toFixed(5) + ').';
+    tl.textContent = '+1/1  −1/2  +1/3  −1/4  +1/5  −1/6  +1/7  −1/8  …';
+  });
+})();
+</script>
+</body>
+</html>
