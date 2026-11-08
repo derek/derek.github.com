@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Faster Than Light, Sort Of · Cosmic Paradoxes</title>
+<meta name="description" content="Galaxies recede faster than light, yet nothing breaks the speed limit. Drag a galaxy past the Hubble sphere and the horizons of the universe.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Cosmic Paradoxes">
+    <a class="brand" href="../">✦ Cosmic Paradoxes</a>
+    <a href="../twin/">Twins</a>
+    <a href="../olbers/">Dark sky</a>
+    <a href="../fermi/">Fermi</a>
+    <a href="../barn/">Barn &amp; pole</a>
+    <a href="./" aria-current="page">Horizon</a>
+  </nav>
+  <main>
+    <p class="kicker">5 · Expansion</p>
+    <h1>Faster Than Light, Sort Of</h1>
+    <p class="lede">Nothing can outrun light. Yet beyond a certain distance, galaxies are receding from us faster than light. And we can still see some of them. Both statements are true.</p>
+
+    <p>The trick is that those galaxies aren't <em>moving through</em> space faster than light. <b>Space itself is stretching</b> between us and them. The speed limit applies to motion through space, not to the growth of space. The farther away a galaxy is, the more space lies between us and it, so the more is added per second. That is Hubble's law:</p>
+
+    <p style="text-align:center"><span class="math">v = H₀ · d</span></p>
+
+    <div class="demo">
+      <h3>Drag a galaxy outward</h3>
+      <div class="row">
+        <label><span>Distance today: <b id="dOut"></b> billion light-years</span><input type="range" id="d" min="0" max="50" step="0.1" value="8"></label>
+        <label><span>Hubble constant: <b id="hOut"></b> km/s per megaparsec</span><input type="range" id="h" min="60" max="80" step="1" value="70"></label>
+      </div>
+      <canvas id="cv" width="640" height="150" role="img" aria-label="A line from Earth outward with markers for the Hubble sphere and horizons"></canvas>
+      <p class="readout" id="out" aria-live="polite"></p>
+    </div>
+
+    <h2>Three boundaries, easy to mix up</h2>
+    <table class="t">
+      <thead><tr><th>Boundary</th><th>Roughly</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><b>Hubble sphere</b></td><td>14 billion ly</td><td>Galaxies beyond it recede faster than light <i>right now</i>.</td></tr>
+        <tr><td><b>Event horizon</b></td><td>16–17 billion ly</td><td>Light sent from beyond it today will never reach us.</td></tr>
+        <tr><td><b>Particle horizon</b></td><td>46 billion ly</td><td>The edge of the observable universe: the farthest matter whose old light could have reached us.</td></tr>
+      </tbody>
+    </table>
+    <p>Why can we see galaxies that are receding faster than light? Because the Hubble sphere itself grows. Light that set out toward us in a region receding faster than light is initially carried away, but the Hubble sphere eventually expands past it and the light starts to make headway. We see the galaxy as it was long ago, when it was much closer.</p>
+    <p>The most distant galaxies we can see today are now roughly 30+ billion light-years away, even though the universe is only 13.8 billion years old. No contradiction: the distance is "how far now", not "how far the light travelled".</p>
+
+    <div class="callout">
+      <p><b>Misreading to avoid:</b> relativity says nothing can pass <em>another object</em> locally faster than light. It places no limit on how fast the distance between two far-apart things can grow.</p>
+    </div>
+
+    <details class="deeper">
+      <summary>Go deeper: the arithmetic</summary>
+      <p>The Hubble distance is <span class="math">d<sub>H</sub> = c/H₀</span>. With <span class="math">H₀ = 70</span> km/s/Mpc, <span class="math">d<sub>H</sub> = 299,792 / 70 ≈ 4,283</span> Mpc, about <span class="math">13.97</span> billion light-years (1 Mpc ≈ 3.262 million ly). The recession speed in the demo is <span class="math">v/c = d/d<sub>H</sub></span>.</p>
+      <p>The horizon values in the table depend on the full model (dark energy, matter, radiation), so the demo only uses them as fixed markers for a standard ΛCDM universe, with the rounded numbers above. They would shift slightly with different parameters.</p>
+      <p>Cosmological redshift is not an ordinary Doppler shift, and a naive Doppler reading of "<span class="math">v &gt; c</span>" breaks down for the same reason that the Hubble-law speed does. Distances here are "proper distance now" in the cosmologists' sense.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Hubble%27s_law">Hubble's law</a> · <a href="https://en.wikipedia.org/wiki/Observable_universe">Observable universe</a> · <a href="https://en.wikipedia.org/wiki/Cosmological_horizon">Cosmological horizon</a></p>
+
+    <div class="pager">
+      <a href="../barn/"><small>← Previous</small>The Barn and the Pole</a>
+      <a class="next" href="../"><small>Back to →</small>Overview</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var cv = $('cv'), g = cv.getContext('2d');
+  var C = 299792.458;              // km/s
+  var GLY_PER_MPC = 3.2616e-3;     // billion light-years per megaparsec
+  var EVENT_H = 16.5, PARTICLE_H = 46.5;   // billion light-years, rounded ΛCDM values
+  var MAXD = 50;
+
+  function draw() {
+    var d = +$('d').value, H = +$('h').value;
+    var dH = C / H * GLY_PER_MPC;            // Hubble distance, in billion ly
+    var beta = d / dH;                        // recession speed in units of c
+    $('dOut').textContent = d.toFixed(1);
+    $('hOut').textContent = H;
+
+    var W = cv.width, Hh = cv.height, mx = 24, y = 70;
+    var X = function (gly) { return mx + gly / MAXD * (W - 2 * mx); };
+    g.clearRect(0, 0, W, Hh);
+    g.font = '12px system-ui';
+    // zones
+    g.fillStyle = 'rgba(127,224,255,0.14)'; g.fillRect(X(0), y - 16, X(Math.min(dH, MAXD)) - X(0), 32);
+    g.fillStyle = 'rgba(255,122,144,0.12)'; g.fillRect(X(Math.min(dH, MAXD)), y - 16, X(MAXD) - X(Math.min(dH, MAXD)), 32);
+    g.strokeStyle = '#475089'; g.lineWidth = 1; g.beginPath(); g.moveTo(X(0), y); g.lineTo(X(MAXD), y); g.stroke();
+    function mark(gly, label, row, col) {
+      if (gly > MAXD) return;
+      g.strokeStyle = col; g.lineWidth = 2; g.beginPath(); g.moveTo(X(gly), y - 22); g.lineTo(X(gly), y + 22); g.stroke();
+      g.fillStyle = col; g.textAlign = 'center';
+      g.fillText(label, Math.min(Math.max(X(gly), 60), W - 60), y + 38 + row * 14);
+    }
+    mark(dH, 'Hubble sphere ' + dH.toFixed(1), 0, '#7fe0ff');
+    mark(EVENT_H, 'event horizon ~16.5', 1, '#b69cff');
+    mark(PARTICLE_H, 'observable edge ~46.5', 0, '#ffcf70');
+    // earth
+    g.fillStyle = '#7fe0ff'; g.beginPath(); g.arc(X(0), y, 7, 0, 7); g.fill();
+    g.fillStyle = '#98a1c4'; g.textAlign = 'left'; g.fillText('Earth', X(0) - 4, y - 28);
+    // galaxy
+    g.fillStyle = beta > 1 ? '#ff7a90' : '#6ee7b7';
+    g.beginPath(); g.arc(X(d), y, 8, 0, 7); g.fill();
+    g.fillStyle = '#dfe3f6'; g.textAlign = 'center';
+    g.fillText('galaxy', Math.min(Math.max(X(d), 30), W - 30), y - 28);
+    g.textAlign = 'left';
+
+    var parts = ['Recession speed: <b>' + beta.toFixed(2) + ' c</b> (' + Math.round(beta * C).toLocaleString() + ' km/s).'];
+    if (beta <= 1) parts.push('Inside the Hubble sphere: receding slower than light.');
+    else if (d <= EVENT_H) parts.push('Past the Hubble sphere, receding faster than light, <b>but inside the event horizon</b>: a signal sent today would still reach it, and its old light still reaches us.');
+    else if (d <= PARTICLE_H) parts.push('Past the event horizon: we can still see its <b>old</b> light, but anything we send now will never get there.');
+    else parts.push('Beyond the observable universe: no light from it has reached us yet.');
+    $('out').innerHTML = parts.join(' ');
+  }
+  ['d', 'h'].forEach(function (id) { $(id).addEventListener('input', draw); });
+  draw();
+})();
+</script>
+</body>
+</html>

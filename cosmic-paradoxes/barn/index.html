@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Barn and the Pole · Cosmic Paradoxes</title>
+<meta name="description" content="The barn-pole (ladder) paradox, interactively: a fast pole is too long for a barn from its own point of view and fits from the barn's. See both frames.">
+<link rel="stylesheet" href="../style.css">
+<style>.controls label { flex: 1 1 100%; } .controls input { flex: 1; }</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Cosmic Paradoxes">
+    <a class="brand" href="../">✦ Cosmic Paradoxes</a>
+    <a href="../twin/">Twins</a>
+    <a href="../olbers/">Dark sky</a>
+    <a href="../fermi/">Fermi</a>
+    <a href="./" aria-current="page">Barn &amp; pole</a>
+    <a href="../horizon/">Horizon</a>
+  </nav>
+  <main>
+    <p class="kicker">4 · Relativity</p>
+    <h1>The Barn and the Pole</h1>
+    <p class="lede">A 20 m pole runs at high speed toward a 10 m barn. Moving things get shorter, so to the farmer the pole shrinks until it fits, and both doors can be shut with the pole inside. But to the runner, <em>the barn</em> shrinks, and the pole is even more hopelessly too long. Which is it?</p>
+
+    <p>Both are correct. They disagree on one thing: whether the two doors shut at the <b>same moment</b>. The farmer says yes. The runner says no, and that is enough to make both stories fit.</p>
+
+    <div class="demo">
+      <h3>Two views of the same event</h3>
+      <div class="row">
+        <label><span>Pole speed: <b id="vOut"></b></span><input type="range" id="v" min="0.5" max="0.99" step="0.01" value="0.95"></label>
+      </div>
+      <p class="small" id="fit"></p>
+
+      <p class="small" style="margin-bottom:2px"><b>Farmer's view</b>: the barn is still, the pole is moving and short.</p>
+      <canvas id="cvA" width="640" height="110" role="img" aria-label="Barn frame view"></canvas>
+      <div class="controls"><label>Farmer's clock <input type="range" id="tA" min="0" max="1" step="0.001" value="0.5" aria-label="Farmer's clock"></label></div>
+
+      <p class="small" style="margin:12px 0 2px"><b>Runner's view</b>: the pole is still and long, the barn is moving and short.</p>
+      <canvas id="cvB" width="640" height="110" role="img" aria-label="Pole frame view"></canvas>
+      <div class="controls"><label>Runner's clock <input type="range" id="tB" min="0" max="1" step="0.001" value="0.5" aria-label="Runner's clock"></label></div>
+
+      <p class="readout" id="out" aria-live="polite"></p>
+    </div>
+
+    <p>Set a speed that makes the pole fit (the demo tells you the minimum) and scrub the farmer's clock. Both doors flash shut at once while the pole is wholly inside. Now scrub the runner's clock. The <b>far door shuts and reopens first</b>, before the pole's front reaches it, and only later does the near door shut, after the pole's tail has gone through. The runner never sees the pole inside the barn with both doors shut.</p>
+
+    <div class="callout">
+      <p><b>Moral:</b> "at the same time, in two different places" is not a fact about the world. It is a fact about a frame. Length contraction and the relativity of simultaneity are the same thing viewed two ways, and the paradox lives where you assumed they weren't.</p>
+    </div>
+
+    <details class="deeper">
+      <summary>Go deeper: the Lorentz transformation</summary>
+      <p>With <span class="math">c = 1</span>, <span class="math">γ = 1/√(1−v²)</span>, the pole of rest length <span class="math">L₀ = 20</span> m has length <span class="math">L₀/γ</span> in the barn frame, which is less than the barn length <span class="math">B = 10</span> m when <span class="math">γ &gt; 2</span>, i.e. <span class="math">v &gt; 0.866c</span>.</p>
+      <p>Events: both doors close at barn time <span class="math">t<sub>c</sub></span>: <span class="math">(x, t) = (0, t<sub>c</sub>)</span> and <span class="math">(B, t<sub>c</sub>)</span>. In the pole frame <span class="math">t' = γ(t − vx)</span>, so the near door closes at <span class="math">γt<sub>c</sub></span> and the far door at <span class="math">γ(t<sub>c</sub> − vB)</span>, earlier by <span class="math">γvB</span>.</p>
+      <p>With the doors kept shut only while the pole is fully inside (a window of <span class="math">γ(B − L₀/γ)/v</span> in the pole frame), the offset <span class="math">γvB</span> is always bigger than the window, so the two closed periods never overlap there. Nothing hits the pole in either description.</p>
+      <p>A warning for the real world: a pole can't actually be "stopped" with both doors shut. Whatever stops the front can't tell the tail for a while, because information travels at most at light speed through the pole. This is a pure kinematics puzzle.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Ladder_paradox">Ladder paradox</a> · <a href="https://en.wikipedia.org/wiki/Length_contraction">Length contraction</a> · <a href="https://en.wikipedia.org/wiki/Relativity_of_simultaneity">Relativity of simultaneity</a></p>
+
+    <div class="pager">
+      <a href="../fermi/"><small>← Previous</small>The Fermi Paradox</a>
+      <a class="next" href="../horizon/"><small>Next →</small>Faster Than Light, Sort Of</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var L0 = 20, B = 10;              // rest lengths in metres; c = 1 (times in metre-light-travel units)
+  var cvA = $('cvA'), gA = cvA.getContext('2d');
+  var cvB = $('cvB'), gB = cvB.getContext('2d');
+  var v, gam, fits, tc, h;
+
+  function params() {
+    v = +$('v').value; gam = 1 / Math.sqrt(1 - v * v);
+    fits = L0 / gam < B;
+    // pole is wholly inside the barn when v*t is in [L0/gam, B]
+    tc = fits ? ((L0 / gam + B) / 2) / v : 0;
+    h = fits ? (B - L0 / gam) / (2 * v) : 0;      // half-width of the door-shut window, barn frame
+    $('vOut').textContent = v.toFixed(2) + ' c (γ = ' + gam.toFixed(2) + ')';
+    $('fit').innerHTML = fits
+      ? 'In the farmer’s frame the pole is <b>' + (L0 / gam).toFixed(1) + ' m</b> long; the barn is 10 m. It fits.'
+      : 'Pole is <b>' + (L0 / gam).toFixed(1) + ' m</b> long to the farmer, which is not shorter than 10 m. Go faster than 0.87 c to make it fit.';
+  }
+
+  // Draw a barn (door positions) and a pole on a canvas. All lengths in metres.
+  function scene(g, cv, view, xMin, xMax, barnL, barnR, poleL, poleR, nearClosed, farClosed) {
+    var W = cv.width, H = cv.height;
+    var X = function (x) { return (x - xMin) / (xMax - xMin) * W; };
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = '#0f1329'; g.fillRect(0, 70, W, 1);
+    // barn
+    g.strokeStyle = '#98a1c4'; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(X(barnL), 90); g.lineTo(X(barnL), 20); g.lineTo(X(barnR), 20); g.lineTo(X(barnR), 90); g.stroke();
+    g.fillStyle = 'rgba(152,161,196,0.10)'; g.fillRect(X(barnL), 20, X(barnR) - X(barnL), 70);
+    // doors
+    function door(x, closed) {
+      g.fillStyle = closed ? '#ff7a90' : 'rgba(255,255,255,0.06)';
+      g.fillRect(X(x) - 3, closed ? 20 : 20, 6, closed ? 70 : 8);
+    }
+    door(barnL, nearClosed); door(barnR, farClosed);
+    // pole
+    g.fillStyle = '#ffcf70';
+    g.fillRect(X(poleL), 52, X(poleR) - X(poleL), 12);
+    g.fillStyle = '#98a1c4'; g.font = '12px system-ui';
+    g.fillText('barn ' + (barnR - barnL).toFixed(1) + ' m', X(barnL) + 4, 14);
+    g.fillText('pole ' + (poleR - poleL).toFixed(1) + ' m', Math.max(X(poleL), 2), 100);
+  }
+
+  function draw() {
+    params();
+    // --- Farmer's frame: barn fixed at [0,B]; pole front at x=vt, rear at vt - L0/gam
+    var xMin = -34, xMax = 34;
+    var fA = -12 + (+$('tA').value) * (B + 30);     // pole front position
+    var t = fA / v;
+    var nearA = fits && Math.abs(t - tc) <= h, farA = nearA;
+    scene(gA, cvA, 'A', xMin, xMax, 0, B, fA - L0 / gam, fA, nearA, farA);
+
+    // --- Runner's frame: pole fixed at [-L0, 0]; barn moves left, door x_d at x' = x_d/gam - v t'
+    var e = 14 - (+$('tB').value) * (14 + L0 + B / gam + 8);   // near door position
+    var tp = -e / v;
+    var near = fits && tp >= gam * (tc - h) && tp <= gam * (tc + h);
+    var far = fits && tp >= gam * (tc - h - v * B) && tp <= gam * (tc + h - v * B);
+    scene(gB, cvB, 'B', -32, 18, e, e + B / gam, -L0, 0, near, far);
+
+    var msg;
+    if (!fits) msg = 'At this speed the pole does not fit in either frame, so there is no paradox to resolve.';
+    else {
+      msg = 'Farmer: both doors are shut together for a stretch of <b>' + (2 * h).toFixed(2) + '</b> time units, with the pole fully inside.<br>' +
+        'Runner: the far door is shut during <b>' + (gam * (tc - h - v * B)).toFixed(2) + ' to ' + (gam * (tc + h - v * B)).toFixed(2) + '</b>; ' +
+        'the near door during <b>' + (gam * (tc - h)).toFixed(2) + ' to ' + (gam * (tc + h)).toFixed(2) + '</b>. These do not overlap.';
+    }
+    $('out').innerHTML = msg;
+  }
+  ['v', 'tA', 'tB'].forEach(function (id) { $(id).addEventListener('input', draw); });
+  draw();
+})();
+</script>
+</body>
+</html>

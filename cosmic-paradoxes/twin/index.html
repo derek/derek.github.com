@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Twin Paradox · Cosmic Paradoxes</title>
+<meta name="description" content="The twin paradox, interactively: a spacetime diagram showing why the travelling twin comes back younger.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Cosmic Paradoxes">
+    <a class="brand" href="../">✦ Cosmic Paradoxes</a>
+    <a href="./" aria-current="page">Twins</a>
+    <a href="../olbers/">Dark sky</a>
+    <a href="../fermi/">Fermi</a>
+    <a href="../barn/">Barn &amp; pole</a>
+    <a href="../horizon/">Horizon</a>
+  </nav>
+  <main>
+    <p class="kicker">1 · Relativity</p>
+    <h1>The Twin Paradox</h1>
+    <p class="lede">One twin stays on Earth. The other flies to a distant star and back at nearly the speed of light. When they meet again, the traveller is younger. But motion is relative, so why can't the traveller say the same about Earth?</p>
+
+    <p>The setup is symmetric only until you notice that one twin <b>turns around</b>. To reverse course, the traveller has to accelerate, and that breaks the symmetry. The Earth twin stays in a single inertial frame the whole time. The traveller uses two: one on the way out, a different one on the way back.</p>
+
+    <div class="demo">
+      <h3>Scrub through the trip</h3>
+      <div class="row">
+        <label><span>Speed: <b id="vOut"></b></span><input type="range" id="v" min="0.1" max="0.99" step="0.01" value="0.8"></label>
+        <label><span>Distance to the star: <b id="dOut"></b> light-years</span><input type="range" id="d" min="1" max="10" step="0.5" value="4"></label>
+        <label><span>Traveller's clock: <b id="tauOut"></b> years</span><input type="range" id="tau" min="0" max="1" step="0.001" value="0.3"></label>
+      </div>
+      <canvas id="cv" width="640" height="400" role="img" aria-label="Spacetime diagram of the twin trip"></canvas>
+      <p class="small">Horizontal: distance from Earth. Vertical: time on Earth's clock. Blue: Earth. Gold: traveller. The pink dashed line is what the traveller counts as <i>"now"</i> at that moment, and where it hits the blue line is how old the traveller thinks Earth is.</p>
+      <p class="readout" id="out" aria-live="polite"></p>
+    </div>
+
+    <p>Drag the traveller's clock through the turnaround and watch the dashed line. On the way out it tilts one way; on the way back it tilts the other. The point where it meets Earth's line <b>jumps forward</b>. Nothing strange happens to the Earth twin. The traveller just switched which events they call simultaneous, and that switch accounts for all the missing years.</p>
+
+    <div class="callout">
+      <p><b>So who's right?</b> Both, about different things. They agree on what they see when they reunite: the traveller is younger. They disagree only about <em>when</em> things on the other side happened mid-trip, and relativity says that was never a fixed fact.</p>
+    </div>
+
+    <details class="deeper">
+      <summary>Go deeper: the numbers</summary>
+      <p>With <span class="math">c = 1</span>, speed <span class="math">v</span> and distance <span class="math">d</span> to the turnaround, the Lorentz factor is <span class="math">γ = 1/√(1−v²)</span>.</p>
+      <p>Earth's twin ages <span class="math">T = 2d/v</span>. The traveller's proper time is the length of the bent worldline: <span class="math">τ = T/γ</span>. Proper time along a path is largest for the straight one, so the stay-at-home twin ages the most.</p>
+      <p>On the way out, the traveller's "now" line meets Earth at <span class="math">τ/γ</span>. On the way back it meets Earth at <span class="math">d/v + vd + s/γ</span>, where <span class="math">s</span> is the traveller's time since the turn. At the turn the jump is <span class="math">2vd</span> years. Add the slowed Earth clock on each leg to that jump and you recover exactly <span class="math">T</span>.</p>
+      <p>The effect is real: atomic clocks flown on airliners (Hafele–Keating, 1971) and cosmic-ray muons that survive longer when moving fast both show it.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Twin_paradox">Twin paradox</a> · <a href="https://en.wikipedia.org/wiki/Hafele%E2%80%93Keating_experiment">Hafele–Keating experiment</a> · <a href="https://en.wikipedia.org/wiki/Relativity_of_simultaneity">Relativity of simultaneity</a></p>
+
+    <div class="pager">
+      <a href="../"><small>← Back</small>Overview</a>
+      <a class="next" href="../olbers/"><small>Next →</small>Why Is the Night Dark?</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var cv = $('cv'), g = cv.getContext('2d');
+
+  function draw() {
+    var v = +$('v').value, d = +$('d').value;
+    var gam = 1 / Math.sqrt(1 - v * v);
+    var T = 2 * d / v, tauTot = T / gam, tauH = tauTot / 2;
+    $('vOut').textContent = v.toFixed(2) + ' c';
+    $('dOut').textContent = d;
+    var tau = +$('tau').value * tauTot;
+    $('tauOut').textContent = tau.toFixed(2);
+
+    var W = cv.width, H = cv.height, mx = 50, my = 30;
+    var xs = (W - 2 * mx) / (d * 1.25), ts = (H - 2 * my) / (T * 1.05);
+    var X = function (x) { return mx + x * xs; }, Y = function (t) { return H - my - t * ts; };
+    g.clearRect(0, 0, W, H);
+    g.lineWidth = 1; g.strokeStyle = '#272e56'; g.fillStyle = '#98a1c4'; g.font = '12px system-ui';
+    var step = Math.max(1, Math.round(T / 6));
+    for (var t = 0; t <= T; t += step) {
+      g.beginPath(); g.moveTo(X(0), Y(t)); g.lineTo(W - mx, Y(t)); g.stroke();
+      g.fillText(t + ' yr', 4, Y(t) + 4);
+    }
+    g.fillText('distance (light-years) →', W - 160, H - 8);
+    // a light ray from the start, for scale
+    g.setLineDash([2, 4]); g.strokeStyle = '#475089';
+    g.beginPath(); g.moveTo(X(0), Y(0)); g.lineTo(X(d * 1.25), Y(d * 1.25)); g.stroke(); g.setLineDash([]);
+    g.fillText('light', X(d) + 4, Y(d) - 6);
+    // Earth
+    g.strokeStyle = '#7fe0ff'; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(X(0), Y(0)); g.lineTo(X(0), Y(T)); g.stroke();
+    // traveller path
+    g.strokeStyle = '#ffcf70';
+    g.beginPath(); g.moveTo(X(0), Y(0)); g.lineTo(X(d), Y(T / 2)); g.lineTo(X(0), Y(T)); g.stroke();
+    // traveller event, and where its "now" line meets Earth
+    var te, xe, u, now;
+    if (tau <= tauH) { te = gam * tau; xe = v * te; u = v; now = tau / gam; }
+    else { var s = tau - tauH; te = T / 2 + gam * s; xe = d - v * gam * s; u = -v; now = d / v + v * d + s / gam; }
+    g.lineWidth = 2; g.strokeStyle = '#ff7a90'; g.setLineDash([6, 5]);
+    g.beginPath(); g.moveTo(X(0), Y(now));
+    var xr = d * 1.2; g.lineTo(X(xr), Y(te + u * (xr - xe))); g.stroke(); g.setLineDash([]);
+    g.fillStyle = '#ffcf70'; g.beginPath(); g.arc(X(xe), Y(te), 6, 0, 7); g.fill();
+    g.fillStyle = '#ff7a90'; g.beginPath(); g.arc(X(0), Y(now), 6, 0, 7); g.fill();
+    g.fillStyle = '#7fe0ff'; g.beginPath(); g.arc(X(0), Y(te), 5, 0, 7); g.fill();
+
+    $('out').innerHTML = 'Earth clock: <b>' + te.toFixed(2) + ' yr</b> · traveller has aged <b>' + tau.toFixed(2) + ' yr</b>. ' +
+      'The traveller currently reckons Earth’s clock reads <b>' + now.toFixed(2) + ' yr</b>.<br>' +
+      'Whole trip: Earth twin ages <b>' + T.toFixed(2) + ' yr</b>, traveller <b>' + tauTot.toFixed(2) + ' yr</b> (γ = ' + gam.toFixed(2) + '). ' +
+      'The "now" line jumps <b>' + (2 * v * d).toFixed(2) + ' yr</b> at the turnaround.';
+  }
+  ['v', 'd', 'tau'].forEach(function (id) { $(id).addEventListener('input', draw); });
+  draw();
+})();
+</script>
+</body>
+</html>

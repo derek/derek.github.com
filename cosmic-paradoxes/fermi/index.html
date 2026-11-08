@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Fermi Paradox · Cosmic Paradoxes</title>
+<meta name="description" content="The Fermi paradox, interactively: the Drake equation with sliders, and how a few uncertain guesses decide whether we are alone.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .bar { height: 14px; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); overflow: hidden; margin: 6px 0 2px; }
+  .bar > i { display: block; height: 100%; background: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Cosmic Paradoxes">
+    <a class="brand" href="../">✦ Cosmic Paradoxes</a>
+    <a href="../twin/">Twins</a>
+    <a href="../olbers/">Dark sky</a>
+    <a href="./" aria-current="page">Fermi</a>
+    <a href="../barn/">Barn &amp; pole</a>
+    <a href="../horizon/">Horizon</a>
+  </nav>
+  <main>
+    <p class="kicker">3 · Life</p>
+    <h1>The Fermi Paradox</h1>
+    <p class="lede">The Milky Way has a few hundred billion stars and is over ten billion years old. Many of those stars have planets. Given that much time and room, someone should have turned up by now. So where is everybody?</p>
+
+    <p>Over lunch in 1950 the physicist Enrico Fermi reportedly asked just that. The question has no accepted answer, which makes this the one <em>open</em> paradox in this collection. The best tool for arguing about it is the <b>Drake equation</b>, which multiplies a chain of factors to estimate how many civilizations we could talk to right now.</p>
+
+    <div class="demo">
+      <h3>The Drake equation</h3>
+      <div class="controls">
+        <button type="button" data-p="pess">Pessimist</button>
+        <button type="button" data-p="mid">Middle road</button>
+        <button type="button" data-p="opt">Optimist</button>
+      </div>
+      <div class="row">
+        <label><span>Stars formed per year in the galaxy: <b id="o_rs"></b></span><input type="range" id="rs" min="0.5" max="10" step="0.5"></label>
+        <label><span>Fraction of stars with planets: <b id="o_fp"></b></span><input type="range" id="fp" min="0" max="1" step="0.01"></label>
+        <label><span>Habitable planets per such star: <b id="o_ne"></b></span><input type="range" id="ne" min="0" max="2" step="0.01"></label>
+        <label><span>Fraction where life starts: <b id="o_fl"></b></span><input type="range" id="fl" min="-8" max="0" step="0.1"></label>
+        <label><span>Fraction of those that evolve intelligence: <b id="o_fi"></b></span><input type="range" id="fi" min="-8" max="0" step="0.1"></label>
+        <label><span>Fraction that make detectable signals: <b id="o_fc"></b></span><input type="range" id="fc" min="-4" max="0" step="0.1"></label>
+        <label><span>Years a civilization keeps signalling: <b id="o_L"></b></span><input type="range" id="L" min="2" max="9" step="0.1"></label>
+      </div>
+      <p class="readout" id="out" aria-live="polite"></p>
+      <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
+      <p class="small" id="barNote"></p>
+    </div>
+
+    <p>Notice how little the first three factors matter next to the last four. We now know that planets are common, so those have shrunk the uncertainty. The rest, <i>how often does life start, how often does it become intelligent, how long do civilizations last</i>, are guesses where one data point (us) is all we have. Their plausible ranges span many orders of magnitude, and the answer swings from "we are alone" to "the galaxy is crowded" depending on what you pick.</p>
+
+    <h2>Some ways out</h2>
+    <table class="t">
+      <thead><tr><th>Idea</th><th>In a sentence</th></tr></thead>
+      <tbody>
+        <tr><td>Rare Earth</td><td>Life, or complex life, needs a rare mix of conditions.</td></tr>
+        <tr><td>The Great Filter</td><td>Some step is extremely hard. It is either behind us (lucky us) or ahead of us (bad news).</td></tr>
+        <tr><td>Short lifetimes</td><td>Civilizations destroy themselves or fade out before they spread.</td></tr>
+        <tr><td>Too far, too quiet</td><td>Interstellar travel and signals are harder than we imagine; we may not recognise the ones that exist.</td></tr>
+        <tr><td>We're early</td><td>The universe is young; we may be among the first.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><b>A sobering check:</b> the demo's "chance of being alone" uses the expected count <span class="math">N</span>. If <span class="math">N</span> is small, say 0.001, the most likely situation is that we are the only ones in the galaxy, and no paradox is left. The paradox only bites if you insist <span class="math">N</span> is large.</p>
+    </div>
+
+    <details class="deeper">
+      <summary>Go deeper: the equation and its uses</summary>
+      <p><span class="math">N = R★ · f<sub>p</sub> · n<sub>e</sub> · f<sub>l</sub> · f<sub>i</sub> · f<sub>c</sub> · L</span></p>
+      <p>Frank Drake wrote it in 1961 as an agenda for a meeting, not as a prediction. It counts civilizations whose signals are reaching us right now, which is why <span class="math">L</span> (how long they signal) matters so much: a civilization that signals for 100 years in a 10-billion-year galaxy is easy to miss.</p>
+      <p>A 2018 paper by Sandberg, Drexler and Ord propagated realistic uncertainty ranges through the equation instead of using single numbers. Their conclusion was that a substantial chance of being alone in the galaxy is perfectly consistent with what we know. The "paradox" mostly comes from multiplying point guesses.</p>
+      <p>The sliders for the last four factors are on a log scale: the readout shows the exponent as a power of ten.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Fermi_paradox">Fermi paradox</a> · <a href="https://en.wikipedia.org/wiki/Drake_equation">Drake equation</a> · <a href="https://en.wikipedia.org/wiki/Great_Filter">Great Filter</a></p>
+
+    <div class="pager">
+      <a href="../olbers/"><small>← Previous</small>Why Is the Night Dark?</a>
+      <a class="next" href="../barn/"><small>Next →</small>The Barn and the Pole</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  // fl, fi, fc, L are stored as exponents of 10; the rest are plain numbers.
+  var P = {
+    pess: { rs: 1,   fp: 0.2, ne: 0.1, fl: -6, fi: -6, fc: -2, L: 2.5 },
+    mid:  { rs: 2,   fp: 1,   ne: 0.2, fl: -1, fi: -2, fc: -1, L: 4 },
+    opt:  { rs: 3,   fp: 1,   ne: 0.5, fl: 0,  fi: -0.5, fc: -0.5, L: 6 }
+  };
+  var ids = ['rs', 'fp', 'ne', 'fl', 'fi', 'fc', 'L'];
+  function load(name) { ids.forEach(function (k) { $(k).value = P[name][k]; }); draw(); }
+  function pow10(e) { return Math.pow(10, e); }
+  function fmt(x) {
+    if (x === 0) return '0';
+    if (x >= 1000) return x.toExponential(1).replace('e+', ' × 10^');
+    if (x >= 1) return x.toFixed(x >= 100 ? 0 : 1);
+    if (x >= 0.01) return x.toFixed(2);
+    return x.toExponential(1).replace('e-', ' × 10^−');
+  }
+  function draw() {
+    var v = {}; ids.forEach(function (k) { v[k] = +$(k).value; });
+    var logN = Math.log10(v.rs) + Math.log10(Math.max(v.fp, 1e-9)) + Math.log10(Math.max(v.ne, 1e-9)) + v.fl + v.fi + v.fc + v.L;
+    var N = pow10(logN);
+    $('o_rs').textContent = v.rs;
+    $('o_fp').textContent = v.fp.toFixed(2);
+    $('o_ne').textContent = v.ne.toFixed(2);
+    $('o_fl').textContent = '10^' + v.fl.toFixed(1) + ' (' + fmt(pow10(v.fl)) + ')';
+    $('o_fi').textContent = '10^' + v.fi.toFixed(1);
+    $('o_fc').textContent = '10^' + v.fc.toFixed(1);
+    $('o_L').textContent = fmt(pow10(v.L)) + ' yr';
+    var alone = Math.exp(-N);
+    $('out').innerHTML = 'Expected civilizations signalling right now, <span class="math">N</span> = <b>' + fmt(N) + '</b><br>' +
+      'Chance nobody else is out there (if <span class="math">N</span> is the average): <b>' + (alone * 100 < 0.01 ? '< 0.01' : (alone * 100).toFixed(alone < 0.1 ? 1 : 0)) + '%</b>';
+    var pct = Math.max(0, Math.min(100, (logN + 6) / 12 * 100));
+    $('barFill').style.width = pct + '%';
+    $('barNote').textContent = 'Bar: N on a log scale from 10^−6 (far left) to 10^6 (far right). One civilization, us, sits at 10^0, the midpoint.';
+  }
+  ids.forEach(function (k) { $(k).addEventListener('input', draw); });
+  document.querySelectorAll('button[data-p]').forEach(function (b) {
+    b.addEventListener('click', function () { load(b.dataset.p); });
+  });
+  load('mid');
+})();
+</script>
+</body>
+</html>

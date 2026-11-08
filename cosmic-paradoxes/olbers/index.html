@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Why Is the Night Dark? · Cosmic Paradoxes</title>
+<meta name="description" content="Olbers' paradox, interactively: fill the night sky with stars shell by shell and see why a dark sky says the universe has a beginning.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Cosmic Paradoxes">
+    <a class="brand" href="../">✦ Cosmic Paradoxes</a>
+    <a href="../twin/">Twins</a>
+    <a href="./" aria-current="page">Dark sky</a>
+    <a href="../fermi/">Fermi</a>
+    <a href="../barn/">Barn &amp; pole</a>
+    <a href="../horizon/">Horizon</a>
+  </nav>
+  <main>
+    <p class="kicker">2 · Cosmology</p>
+    <h1>Why Is the Night Dark?</h1>
+    <p class="lede">If the universe is infinite, eternal and full of stars, then every line of sight ends on a star's surface, and the whole sky should be as bright as the Sun. It isn't. That simple observation says something deep about the universe.</p>
+
+    <p>Here is the argument, due to Olbers in 1823 (and noticed by Kepler two centuries earlier). Take a thin shell of stars at distance <span class="math">r</span>. The number of stars in it grows like <span class="math">r²</span>. Each looks fainter, like <span class="math">1/r²</span>. The two cancel, so <b>every shell adds the same amount of light</b>. Infinitely many shells means infinite light.</p>
+
+    <div class="demo">
+      <h3>Fill the sky</h3>
+      <p class="small">Each dot is a star (this toy draws them all the same size). Farther out there are more stars to hide the gaps. Slide out the distance your telescope can see and watch the gaps close.</p>
+      <div class="row">
+        <label><span>How far light can have travelled: <b id="rOut"></b></span><input type="range" id="r" min="0" max="100" step="1" value="12"></label>
+      </div>
+      <canvas id="cv" width="640" height="300" role="img" aria-label="A patch of sky filling up with stars as the visible distance grows"></canvas>
+      <p class="readout" id="out" aria-live="polite"></p>
+      <div class="controls"><button type="button" id="young">Real universe: only 13.8 billion years of light</button></div>
+    </div>
+
+    <p>In this toy the sky goes from dark to nearly solid white as the slider moves right. The dark night sky means something in the argument's assumptions is false. Three suspects:</p>
+    <ul>
+      <li><b>Dust absorbs the light.</b> It doesn't work: the dust would heat up and glow until it was as bright as the stars.</li>
+      <li><b>The stars run out.</b> A finite number of stars would do it, but telescopes keep finding more galaxies, and the universe seems to extend far beyond what we see.</li>
+      <li><b>The universe has a beginning.</b> Light has had only about 13.8 billion years to reach us. Stars farther than that, in light-travel terms, are invisible because their light hasn't arrived yet. This is the main answer.</li>
+    </ul>
+
+    <div class="callout">
+      <p><b>The surprise:</b> a dark night sky is evidence for the Big Bang. Edgar Allan Poe guessed the answer in 1848, and it holds up. (Expansion helps a little too, by stretching the light to redder wavelengths, but the finite age does most of the work.)</p>
+    </div>
+
+    <details class="deeper">
+      <summary>Go deeper: how big is the effect?</summary>
+      <p>Stars with number density <span class="math">n</span> and radius <span class="math">R★</span> block a fraction of the sky given by the optical depth <span class="math">τ = nπR★² · r</span>. The sky is covered when <span class="math">τ ≈ 1</span>, which needs <span class="math">r ≈ 1/(nπR★²)</span>, the "mean free path".</p>
+      <p>For the real universe that distance comes out many orders of magnitude larger than the observable universe, which is only a few tens of billions of light-years across in radius. So the sky is dark by an enormous factor, not a close call: only a tiny sliver of it is "covered" by star disks within what we can see.</p>
+      <p>The slider in the demo uses a mean free path of about 30 units so you can see the effect. The shape of the curve, <span class="math">1 − e^(−r/r₀)</span>, is the real one.</p>
+    </details>
+
+    <p class="small">Further reading: <a href="https://en.wikipedia.org/wiki/Olbers%27s_paradox">Olbers' paradox</a> · <a href="https://en.wikipedia.org/wiki/Observable_universe">Observable universe</a> · <a href="https://en.wikipedia.org/wiki/Cosmic_microwave_background">Cosmic microwave background</a></p>
+
+    <div class="pager">
+      <a href="../twin/"><small>← Previous</small>The Twin Paradox</a>
+      <a class="next" href="../fermi/"><small>Next →</small>The Fermi Paradox</a>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var cv = $('cv'), g = cv.getContext('2d');
+  var R0 = 30;          // mean free path of the toy universe, in "units"
+  var MAXR = 100;
+  var seed = 7;
+  function rnd() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+
+  // Fixed random stars: distance by inverse transform of coverage CDF 1-exp(-r/R0),
+  // so the covered sky area at slider r matches the formula.
+  var stars = [];
+  var N = 2600;
+  for (var i = 0; i < N; i++) {
+    var u = rnd();
+    var r = -R0 * Math.log(1 - u * (1 - Math.exp(-MAXR / R0)));
+    stars.push({ x: rnd() * cv.width, y: rnd() * cv.height, r: r, rad: 0 });
+  }
+  // Each star's apparent size: area share so that total area scales to the formula.
+  var skyArea = cv.width * cv.height;
+  var totalCover = 3.2;                       // total area (in sky units) if all stars were drawn
+  stars.forEach(function (s) { s.rad = Math.sqrt(totalCover * skyArea / N / Math.PI); });
+  stars.sort(function (a, b) { return b.r - a.r; });  // far first, near stars on top
+
+  function draw() {
+    var rr = +$('r').value;
+    $('rOut').textContent = rr + ' units';
+    g.fillStyle = '#050710'; g.fillRect(0, 0, cv.width, cv.height);
+    var shown = 0;
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      if (s.r > rr) continue;
+      shown++;
+      var shade = Math.max(0.55, 1 - s.r / 160);
+      g.fillStyle = 'rgb(' + Math.round(255 * shade) + ',' + Math.round(245 * shade) + ',' + Math.round(210 * shade) + ')';
+      g.beginPath(); g.arc(s.x, s.y, s.rad, 0, 7); g.fill();
+    }
+    var cover = 1 - Math.exp(-rr / R0);
+    $('out').innerHTML = 'Stars in range: <b>' + shown.toLocaleString() + '</b> · sky covered (formula): <b>' + (cover * 100).toFixed(0) + '%</b>' +
+      (cover > 0.95 ? ' · <b>practically a wall of starlight</b>' : '');
+  }
+  $('r').addEventListener('input', draw);
+  $('young').addEventListener('click', function () { $('r').value = 6; draw(); });
+  draw();
+})();
+</script>
+</body>
+</html>
