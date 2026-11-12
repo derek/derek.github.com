@@ -107,6 +107,12 @@ blockquote {
 .posts h3 a:hover { color: var(--link); text-decoration: underline; }
 .posts p { margin: 0.3em 0; color: var(--muted); }
 
+/* ---------- sources ---------- */
+.sources { margin-top: 2.5rem; padding-top: 0.5rem; border-top: 1px solid var(--line); font-size: 1rem; }
+.sources h2 { font-size: 1.1rem; margin: 1em 0 0.4em; }
+.sources ul { margin: 0; padding-left: 1.2em; }
+.sources li { margin: 0.35em 0; }
+
 /* ---------- pager and footer ---------- */
 .pager {
   display: flex; justify-content: space-between; gap: 1rem;

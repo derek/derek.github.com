@@ -30,7 +30,10 @@ Target 2,200 to 3,000 words of prose (about 10 to 13 minutes, plus code). Reader
 4. **Why**: the forces behind it (market, standards, engines, tooling, money). Give each force its own paragraph. This is the part readers will argue with, so be fair.
 5. **How people coped**: the workarounds, tools and culture around the problem.
 6. **What it left behind**: reflection with at least three non-obvious takeaways, each tied to something in today's code or industry. Every post needs at least one connection the reader probably hasn't made (an old idea that survived under a new name, a standard that ratified a proprietary feature, a fix that caused the next problem). End on a sharp observation or a question, not a slogan.
-7. **Byline and AI note** as in rule 4.
+7. **The takeaway**: a final section under its own heading (use "The takeaway") of one or two paragraphs that states the post's conclusion outright. A reader who skips to the end should get the point. Never end on a code block or a list.
+8. **Reader question** in a blockquote, then **Sources and further reading**, then the **byline and AI note** as in rule 4.
+
+**Link your sources.** When a post mentions an essay, blog post, spec, book or project site, link it inline at the mention and list it again under "Sources and further reading" with author and year. Only link URLs you have opened and confirmed load and say what you claim. If you cannot open a source, name it without a link.
 
 Code in `<pre><code>` with HTML-escaped angle brackets. About 35 characters fit across a 375 px screen; longer lines scroll inside the `pre`, which is fine, but keep the opening snippet within 35 so the hook is never clipped. Do not bend era code out of shape to fit.
 
