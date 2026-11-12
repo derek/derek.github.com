@@ -55,6 +55,7 @@ Section headings should describe the content of this essay. The list above is th
 | `og/*.png` | Link-preview cards, drawn by `scripts/og.mjs`. |
 | `style.css` | The one stylesheet. |
 | `berry.gif`, `berry.png` | The animated mascot shown in the header, and its still frame. |
+| `buttons/*.png` | The three 88x31 footer buttons and the orange XML feed button, drawn by `scripts/buttons.py` (needs Python with Pillow; run only to change them). |
 | `scripts/build.mjs` | Generates every page, the landing page and the feed. |
 | `TOPICS.md` | Essay ideas, with Derek's "Up next" queue at the top. |
 | `<slug>/index.html`, `index.html`, `about/index.html`, `feed.xml` | Generated. Do not edit. |
@@ -122,8 +123,8 @@ Readers report mistakes through the "Spot a mistake?" link, which opens a GitHub
 
 ## Site conventions
 
-- The look is a tidy late-1990s homepage: navy title bar with a gold rule, pale yellow link strip, navy section bars, Verdana body text, Georgia headings and yellow code boxes, in web-safe colours. Simple and old, never busy: no backgrounds, counters, marquees or extra badges. It is light only, with no dark mode.
-- The animated berry in the top-right corner (`berry.gif`, with `berry.png` as the still shown to readers who ask for reduced motion) is the site's mascot. It is the only animation on the site.
+- The look is a tidy late-1990s homepage: navy title bar with a gold rule, pale yellow link strip, navy section bars, Verdana body text, Georgia headings and yellow code boxes, in web-safe colours. Simple and old, never busy: no backgrounds, counters or marquees, and no badges beyond the three 88x31 buttons in the footer and the orange XML button that links to the feed. It is light only, with no dark mode.
+- The animated berry in the top-right corner (`berry.gif`, with `berry.png` as the still shown to readers who ask for reduced motion) is the site's mascot. It is the only animation on the site. Its hover text is "'member when...? Yeah, I remember!".
 - Colours are tokens in `:root`. Body text is 17px Verdana with at least 4.5:1 contrast. The audience reads with their glasses on, so do not make it small.
 - Semantic HTML, a visible focus style, `lang="en"`.
 - Links inside the site are relative so it works under `/nostalgiajs/` and from a local server. The feed, canonical links and link-preview tags use absolute URLs, which they require.

@@ -46,6 +46,9 @@ body {
 .strip { background: var(--cream); border-bottom: 1px solid var(--cream-line); font-size: 0.9rem; }
 .strip .in { padding-top: 6px; padding-bottom: 6px; }
 .strip a { color: var(--navy); font-weight: bold; margin-right: 16px; }
+.strip .in { display: flex; align-items: center; }
+.strip .xml { margin: 0 0 0 auto; line-height: 0; }
+.strip .xml img, .buttons img { image-rendering: pixelated; }
 
 /* ---------- text ---------- */
 a { color: var(--link); text-underline-offset: 0.12em; }
@@ -100,4 +103,6 @@ article li { margin: 0.5em 0; }
 .related li a { font: bold 1.1rem/1.3 Georgia, "Times New Roman", serif; }
 .related li span { display: block; font-size: 0.85em; color: var(--muted); }
 
+.buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 0.7rem; line-height: 0; }
+footer p { margin: 0; }
 footer { border-top: 3px double var(--navy); margin-top: 2.5rem; padding-top: 0.7rem; font-size: 0.82rem; color: var(--muted); text-align: center; }

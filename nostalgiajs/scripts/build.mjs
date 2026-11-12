@@ -10,6 +10,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://derek.io/nostalgiajs/';
 const NAME = 'Nostalgia.js';
 const TAGLINE = 'AI Essays on Web History';
+const BERRY = "'member when...? Yeah, I remember!"; // plain text, safe inside an attribute
 const ISSUES = 'https://github.com/derek/derek.github.com/issues/new';
 
 // Topic groups, in the order the landing page shows them.
@@ -115,7 +116,7 @@ function page({ path, title, description, up, ogImage, ogType = 'website', main 
     <a class="brand" href="${up || './'}">${NAME}<span>${TAGLINE}</span></a>
     <picture>
       <source srcset="${up}berry.png" media="(prefers-reduced-motion: reduce)">
-      <img src="${up}berry.gif" width="48" height="48" alt="">
+      <img src="${up}berry.gif" width="48" height="48" alt="${BERRY}" title="${BERRY}">
     </picture>
   </div>
 </header>
@@ -123,7 +124,7 @@ function page({ path, title, description, up, ogImage, ogType = 'website', main 
   <div class="in">
     <a href="${up || './'}">Essays</a>
     <a href="${up}about/">About</a>
-    <a href="${up}feed.xml">RSS</a>
+    <a class="xml" href="${up}feed.xml"><img src="${up}buttons/xml.png" width="36" height="14" alt="RSS feed" title="RSS feed"></a>
   </div>
 </nav>
 <div class="wrap">
@@ -131,7 +132,14 @@ function page({ path, title, description, up, ogImage, ogType = 'website', main 
 ${main}
   </main>
 
-  <footer>${NAME} · ${TAGLINE} · <a href="${up}about/">How these essays are made</a></footer>
+  <footer>
+    <p class="buttons">
+      <a href="${up || './'}"><img src="${up}buttons/nostalgiajs.png" width="88" height="31" alt="${NAME}"></a>
+      <img src="${up}buttons/any-browser.png" width="88" height="31" alt="Best viewed with any browser">
+      <img src="${up}buttons/notepad.png" width="88" height="31" alt="Made with Notepad">
+    </p>
+    <p>${NAME} · ${TAGLINE} · <a href="${up}about/">How these essays are made</a></p>
+  </footer>
 </div>
 </body>
 </html>
