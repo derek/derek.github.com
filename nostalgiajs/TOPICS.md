@@ -8,9 +8,8 @@ Pick the next essay from the first item under "Up next" if there is one, otherwi
 
 Derek's picks, in order. Always take the first item here. Only choose from the lists below when this list is empty.
 
-1. The first JSConf (2009) and the start of a JavaScript conference culture
-2. IE6: the box model, `hasLayout` and conditional comments
-3. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
+1. IE6: the box model, `hasLayout` and conditional comments
+2. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
 ## Ideas
 
@@ -68,6 +67,9 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - From webmaster to "front-end developer": how the job titles split
 - FizzBuzz, the whiteboard and the rituals of the developer interview
 - "Wat" (2012) and the tradition of laughing at JavaScript
+- ServerJS becomes CommonJS (2009): the mailing list that gave JavaScript `require()` before it had a server to run on
+- "Hug a Conference Organizer" (2010) and the economics of the community tech conference, from hotel room blocks to ticket lotteries
+- The conference code of conduct: how one page of boilerplate spread from event to event in the early 2010s
 - "How it feels to learn JavaScript in 2016" and JavaScript fatigue
 - The "no right click" script, image theft and the early web's copyright anxieties
 - "Hi Webmaster!": the 405 emails W3C's webmaster mailbox received in three weeks of 1995, and what newcomers thought the web was
