@@ -1,6 +1,6 @@
 # Topics
 
-Pick the next post from the Backlog. Move it to Posted with its date. Add new ideas as you think of them. Every topic should have a concrete artifact (a line of code, a tag, a product) and a well-documented story. Check facts before writing; see `AGENTS.md`.
+Pick the next post from the Backlog: the first item under "Up next" if there is one, otherwise your choice from the lists. Move it to Posted with its date. Add new ideas as you think of them. Every topic should have a concrete artifact (a line of code, a tag, a product) and a well-documented story. Check facts before writing; see `AGENTS.md`.
 
 ## Posted
 
@@ -12,6 +12,18 @@ Pick the next post from the Backlog. Move it to Posted with its date. Add new id
 
 ## Backlog
 
+### Up next
+
+Derek's picks, in order. Always take the first item here. Only choose from the lists below when this list is empty.
+
+1. jQuery 1.0 and "write less, do more": what `$` really replaced
+2. View Source as the school: learning the trade by reading other people's pages
+3. Firebug, and the first time you could see inside the page
+4. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
+5. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
+6. The IE6 funeral (2010) and the campaigns to kill a browser
+7. IE6: the box model, `hasLayout` and conditional comments
+
 Aim for about one people-and-culture post in every three, so the blog is not all code.
 
 ### Technology
@@ -21,11 +33,7 @@ Aim for about one people-and-culture post in every three, so the blog is not all
 - The `window.status` scroller and other things we thought were cool
 - Pop-ups, pop-unders and the rise of the pop-up blocker
 - Frames, framesets and frame-busting
-- `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
 - Prototype.js, Scriptaculous and the day we all extended `Object.prototype`
-- jQuery 1.0 and "write less, do more": what `$` really replaced
-- IE6: the box model, `hasLayout` and conditional comments
-- Firebug, and the first time you could see inside the page
 - Flash, ActionScript and "Thoughts on Flash" (2010)
 - Douglas Crockford, JSLint and "JavaScript: The Good Parts"
 - Node.js is announced at JSConf EU (2009)
@@ -40,8 +48,6 @@ Aim for about one people-and-culture post in every three, so the blog is not all
 
 ### People and culture
 
-- The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
-- View Source as the school: learning the trade by reading other people's pages
 - "Under construction" GIFs, 88x31 buttons and "Best viewed in" badges: the folk art of the early web
 - GeoCities neighborhoods, webrings and guestbooks: how people found each other before search and social
 - Copy-and-paste script archives (Dynamic Drive, The JavaScript Source) and the credit comment you were told not to remove
@@ -57,7 +63,6 @@ Aim for about one people-and-culture post in every three, so the blog is not all
 - Stack Overflow launches (2008), and what asking a programming question was like before it
 - The first JSConf (2009) and the start of a JavaScript conference culture
 - From webmaster to "front-end developer": how the job titles split
-- The IE6 funeral (2010) and the campaigns to kill a browser
 - FizzBuzz, the whiteboard and the rituals of the developer interview
 - "Wat" (2012) and the tradition of laughing at JavaScript
 - "How it feels to learn JavaScript in 2016" and JavaScript fatigue

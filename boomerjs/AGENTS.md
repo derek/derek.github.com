@@ -39,7 +39,7 @@ Code in `<pre><code>` with HTML-escaped angle brackets. About 35 characters fit 
 
 ## Files and workflow for a new post
 
-1. Pick the next topic from `TOPICS.md`. Move it from Backlog to Posted with the date. Add new ideas to the Backlog as you think of them.
+1. Pick the next topic from `TOPICS.md`: the first item under "Up next" if that list has any, otherwise your choice from the Backlog lists. Move it from Backlog to Posted with the date. Add new ideas to the Backlog as you think of them.
 2. Create `posts/YYYY-MM-DD-short-slug/index.html`. Copy the newest post as a template.
 3. Add the post to the top of the list in `index.html` (post titles there are `h3`).
 4. Update the pager (older/newer links) on the previous newest post and on the new one.
