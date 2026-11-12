@@ -1,0 +1,119 @@
+/* Boomer.js: shared styles. Plain CSS, no build step, no web fonts. */
+:root {
+  --bg: #fbf8f1;
+  --panel: #f1ece0;
+  --line: #d9d1bd;
+  --text: #22201c;
+  --muted: #5e594e;
+  --accent: #9a3412;
+  --link: #1d4ed8;
+  --code-bg: #1f2430;
+  --code-text: #e8e6df;
+  --code-dim: #8f97aa;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171c;
+    --panel: #1e2128;
+    --line: #333845;
+    --text: #e9e6de;
+    --muted: #a8a49a;
+    --accent: #fb923c;
+    --link: #8ab4ff;
+    --code-bg: #0d0f13;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 1.125rem/1.7 Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+.wrap {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 max(16px, env(safe-area-inset-right)) 4rem max(16px, env(safe-area-inset-left));
+}
+
+/* ---------- header ---------- */
+.topnav {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px;
+  padding: 16px 0 12px;
+  border-bottom: 1px solid var(--line);
+  font: 0.95rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.topnav .brand { font-weight: 700; color: var(--accent); text-decoration: none; margin-right: auto; }
+.topnav a { color: var(--muted); }
+
+/* ---------- typography ---------- */
+h1 { font-size: clamp(2rem, 7vw, 2.9rem); line-height: 1.12; letter-spacing: -0.02em; margin: 0.4em 0 0.3em; }
+h2 { font-size: 1.5rem; line-height: 1.25; margin: 2.2em 0 0.4em; letter-spacing: -0.01em; }
+p { margin: 1em 0; }
+a { color: var(--link); text-underline-offset: 0.15em; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+.kicker, .meta {
+  font: 0.85rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--muted);
+}
+.kicker { text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); margin: 2rem 0 0; }
+.meta { margin: 0 0 1.5rem; }
+.lede { font-size: 1.25rem; color: var(--muted); margin-top: 0; }
+
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+code { font-size: 0.88em; background: var(--panel); padding: 0.1em 0.35em; border-radius: 4px; overflow-wrap: anywhere; }
+pre {
+  margin: 1.4em 0; padding: 1rem 1.1rem;
+  background: var(--code-bg); color: var(--code-text);
+  border-radius: 8px;
+  font-size: 0.9rem; line-height: 1.55;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; font-size: inherit; overflow-wrap: normal; }
+pre .c { color: var(--code-dim); }
+pre:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+blockquote {
+  margin: 1.4em 0; padding: 0.1em 1.1em;
+  border-left: 4px solid var(--accent);
+  color: var(--muted);
+}
+
+/* ---------- boxes ---------- */
+.box {
+  margin: 2rem 0; padding: 1rem 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.box > :first-child { margin-top: 0; }
+.box > :last-child { margin-bottom: 0; }
+.box h2 { margin: 0 0 0.4em; font-size: 1.1rem; }
+
+/* ---------- post list ---------- */
+.posts { list-style: none; margin: 0; padding: 0; }
+.posts li { padding: 1.4rem 0; border-top: 1px solid var(--line); }
+.posts li:first-child { border-top: 0; }
+.posts h2 { margin: 0.1em 0 0.2em; font-size: 1.4rem; }
+.posts h2 a { color: var(--text); text-decoration: none; }
+.posts h2 a:hover { color: var(--link); text-decoration: underline; }
+.posts p { margin: 0.3em 0; color: var(--muted); }
+
+/* ---------- pager and footer ---------- */
+.pager {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin: 3rem 0 0; padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+}
+.pager .next { margin-left: auto; text-align: right; }
+.ainote { font-size: 1rem; color: var(--muted); }
+footer { margin-top: 3rem; font-size: 0.95rem; color: var(--muted); }
