@@ -8,14 +8,13 @@ Pick the next essay from the first item under "Up next" if there is one, otherwi
 
 Derek's picks, in order. Always take the first item here. Only choose from the lists below when this list is empty.
 
-1. Firebug, and the first time you could see inside the page
-2. The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
-3. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
-4. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
-5. The IE6 funeral (2010) and the campaigns to kill a browser
-6. The first JSConf (2009) and the start of a JavaScript conference culture
-7. IE6: the box model, `hasLayout` and conditional comments
-8. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
+1. The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
+2. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
+3. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
+4. The IE6 funeral (2010) and the campaigns to kill a browser
+5. The first JSConf (2009) and the start of a JavaScript conference culture
+6. IE6: the box model, `hasLayout` and conditional comments
+7. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
 ## Ideas
 
@@ -43,6 +42,9 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - Moment.js, its 2020 "done" notice, and the long wait for Temporal
 - Minification and the compiled web: JSMin (2001), YUI Compressor, Closure Compiler (2009) and the day the source stopped being readable
 - The table layout hack and `spacer.gif`: how a data tag became the page grid, as the 1996 Space Jam source still shows
+- Venkman and the DOM Inspector: the debugger and the tree view Mozilla shipped years before anyone used them
+- YSlow (2007) and the invention of front-end performance as a discipline
+- `console.log` shipped to production: `firebugx.js`, "console is not defined" and the stub at the top of every script
 
 ### People and culture
 
