@@ -110,18 +110,28 @@ function page({ path, title, description, up, ogImage, ogType = 'website', main 
 <link rel="alternate" type="application/rss+xml" title="${NAME}" href="${up}feed.xml">
 </head>
 <body>
-<div class="wrap">
-  <nav class="topnav" aria-label="${NAME}">
-    <a class="brand" href="${up || './'}">${NAME}</a>
+<header class="bar">
+  <div class="in">
+    <a class="brand" href="${up || './'}">${NAME}<span>${TAGLINE}</span></a>
+    <picture>
+      <source srcset="${up}berry.png" media="(prefers-reduced-motion: reduce)">
+      <img src="${up}berry.gif" width="48" height="48" alt="">
+    </picture>
+  </div>
+</header>
+<nav class="strip" aria-label="${NAME}">
+  <div class="in">
+    <a href="${up || './'}">Essays</a>
     <a href="${up}about/">About</a>
     <a href="${up}feed.xml">RSS</a>
-  </nav>
-
+  </div>
+</nav>
+<div class="wrap">
   <main>
 ${main}
   </main>
 
-  <footer>${NAME}: ${TAGLINE}. <a href="${up}about/">How these essays are made</a>.</footer>
+  <footer>${NAME} · ${TAGLINE} · <a href="${up}about/">How these essays are made</a></footer>
 </div>
 </body>
 </html>
@@ -159,9 +169,8 @@ ${e.corrections.map((c) => `          <li>${esc(c.date)}: ${esc(c.note)}</li>`).
     : '';
   const rel = related(e);
   const main = `    <article>
-      <p class="kicker">${esc(topicName[e.topic])} · ${e.eraText}</p>
+      <p class="meta">${esc(topicName[e.topic])} · ${e.eraText} · ${e.minutes} min read</p>
       <h1>${esc(e.title)}</h1>
-      <p class="meta">${e.minutes} min read</p>
 
 ${withArchiveLinks(e.body)}
 ${corrections}
@@ -187,12 +196,11 @@ write('index.html', page({
   path: '', title: `${NAME} · ${TAGLINE}`,
   description: `${TAGLINE}: what happened on the web from the 1990s to the 2010s, why it happened, and what it left behind.`,
   up: '', ogImage: 'default.png',
-  main: `    <h1>${NAME}</h1>
-    <p class="lede">${TAGLINE}</p>
-    <p>Essays on the web we built by hand, from the 1990s through the 2010s: what happened, why, and what it left behind. Each one is written by an AI from sources it opened and checked, and the sources are linked. <a href="about/">More about how they are made</a>.</p>
+  main: `    <h1 class="hidden">${NAME}: ${TAGLINE}</h1>
+    <p class="intro">Essays on the web we built by hand, from the 1990s through the 2010s: what happened, why, and what it left behind. Each one is written by an AI from sources it opened and checked, and the sources are linked. <a href="about/">More about how they are made</a>.</p>
 
 ${groups.map(([label, list]) => `    <section class="group" aria-labelledby="g-${list[0].topic}">
-      <h2 id="g-${list[0].topic}" class="kicker">${esc(label)}</h2>
+      <h2 id="g-${list[0].topic}">${esc(label)}</h2>
       <ul class="posts">
 ${list.map((e) => `        <li>
           <h3><a href="${e.slug}/">${esc(e.title)}</a></h3>
