@@ -9,11 +9,9 @@ Pick the next essay from the first item under "Up next" if there is one, otherwi
 Derek's picks, in order. Always take the first item here. Only choose from the lists below when this list is empty.
 
 1. The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
-2. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
-3. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
-4. The first JSConf (2009) and the start of a JavaScript conference culture
-5. IE6: the box model, `hasLayout` and conditional comments
-6. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
+2. The first JSConf (2009) and the start of a JavaScript conference culture
+3. IE6: the box model, `hasLayout` and conditional comments
+4. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
 ## Ideas
 
@@ -36,6 +34,8 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - Annex B: `escape()`, `substr`, `"text".blink()` and the features the spec keeps only because pages still call them
 - `<script language="JavaScript1.2">`: when the version attribute changed what `==` meant
 - `document.lastModified` and the "last updated" footer
+- Email address munging: `document.write`, "name at example dot com" and the arms race with the harvesters
+- FormMail and Matt's Script Archive: the Perl script behind every contact form, and the day it became a spam relay
 - The `window.onload` problem: `DOMContentLoaded`, the IE `defer` script hack and the race to run code before the images arrived
 - `querySelectorAll` and the Selectors API: the library authors' 2008 objections, and why `:scope` exists
 - Moment.js, its 2020 "done" notice, and the long wait for Temporal
@@ -46,6 +46,9 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - `X-UA-Compatible`, document modes and the IE8 "version targeting" row of 2008
 - YSlow (2007) and the invention of front-end performance as a discipline
 - `console.log` shipped to production: `firebugx.js`, "console is not defined" and the stub at the top of every script
+- JSON: Crockford's "fat-free alternative to XML", `eval()` as a parser and the script-tag trick that became JSONP
+- The back button and the `#` fragment: how Ajax applications broke history and `pushState` repaired it
+- Hidden frames, Java applets and cookies: remote scripting before `XMLHttpRequest` (MSRS, JSRS, RSLite)
 
 ### People and culture
 
@@ -68,4 +71,5 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - "Wat" (2012) and the tradition of laughing at JavaScript
 - "How it feels to learn JavaScript in 2016" and JavaScript fatigue
 - The "no right click" script, image theft and the early web's copyright anxieties
+- "Hi Webmaster!": the 405 emails W3C's webmaster mailbox received in three weeks of 1995, and what newcomers thought the web was
 - Tim Berners-Lee's browser was an editor: the read-write web that shipped read-only

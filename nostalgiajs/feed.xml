@@ -6,7 +6,179 @@
   <atom:link href="https://derek.io/nostalgiajs/feed.xml" rel="self" type="application/rss+xml"/>
   <description>AI Essays on Web History</description>
   <language>en</language>
-  <lastBuildDate>Thu, 12 Nov 2026 20:05:01 GMT</lastBuildDate>
+  <lastBuildDate>Thu, 12 Nov 2026 20:05:05 GMT</lastBuildDate>
+  <item>
+    <title>The webmaster: a mailbox that became a job</title>
+    <link>https://derek.io/nostalgiajs/the-webmaster-and-the-mailto-link/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/the-webmaster-and-the-mailto-link/</guid>
+    <pubDate>Thu, 12 Nov 2026 20:05:05 GMT</pubDate>
+    <description>&quot;Webmaster&quot; was coined as a mail alias on a style page, grew into the title for whoever ran the whole site, and faded, while the address in the footer link outlived the job.</description>
+    <content:encoded><![CDATA[<p class="lede">For about a decade, a website had one person behind it and one address at the bottom of the page where you could reach them. The address has lasted far longer than the job.</p>
+
+<pre tabindex="0"><code>Hi Webmaster!
+  ...
+Can you help?</code></pre>
+
+<p>Those are the greeting and the question from an email sent on March 16, 1995, under the subject "Error 404". The parts I left out are one sentence of explanation, a sign-off and a pasted error: "WWW Alert:  Fatal Error 404 No Match Found for", followed by an address on CERN's server. The World Wide Web Consortium still keeps <a href="https://www.w3.org/History/1995/WWW/MailArchive/webmaster/0016.html">the message</a> in a folder of its history archive called <code>MailArchive/webmaster</code>.</p>
+
+<p>The folder is worth a visit. <a href="https://www.w3.org/History/1995/WWW/MailArchive/webmaster/">Its index</a> covers three weeks, from March 14 to April 4, 1995, and lists 405 messages. That is about nineteen a day, arriving in a mailbox that existed because a style guide had suggested it. The subject lines include "help", "Need help!", "test", "Weather", "healing", "Search Frustrations" and a great many "(no subject)".</p>
+
+<p>The word in that greeting became a job title, a magazine survey category, a line in an RFC, the name of a Google product and, eventually, something people stopped calling themselves. This essay follows the word and the address together, because they started as the same thing. "Webmaster" was a mailbox first and an occupation second.</p>
+
+<h2>Before: sign your initials</h2>
+
+<p>Email had worked out its own version of the problem years earlier. A mail system needs a human who can be told that the mail system is broken, and the address for that human cannot depend on knowing their name. So the name was fixed in advance. As a later RFC put it, the mail standards require "the presence of a <code>&lt;POSTMASTER@domain&gt;</code> mailbox name on all hosts that have an SMTP server."</p>
+
+<p>The early web had no equivalent, and at first it did not think it needed one. W3C keeps a snapshot of CERN's web pages from November 3, 1992, and in it is <a href="https://www.w3.org/History/19921103-hypertext/hypertext/WWW/Provider/Etiquette.html">a page of etiquette</a> for people publishing on the new system. Its first rule is headed "Sign it!":</p>
+
+<blockquote>
+  <p>Make a page for yourself with your mail address and phone number. At the bottom of files for which you are responsible, put a small note -- say just your initials -- and link it to that page.</p>
+</blockquote>
+
+<p>The page follows its own advice. Here is its last line, exactly as served:</p>
+
+<pre tabindex="0"><code>&lt;ADDRESS&gt;&lt;A NAME=0 HREF=http://info.cern.ch./hypertext/TBL_Disclaimer.html&gt;Tim BL&lt;/A&gt;</code></pre>
+
+<p>That is the original footer contact link, and it points at a person. In 1992 responsibility on the web was per document. Each page had an author, the author had a phone book entry, and if something was wrong you wrote to whoever's initials were at the bottom. The same page tells you to give your server a root page for outsiders and a stable alias like <code>www.dom.edu</code>. It has no word for the person who runs the server, and no address for them either.</p>
+
+<h2>A word coined on a style page</h2>
+
+<p>The <a href="https://www.w3.org/Provider/Style/Etiquette.html">later version of that page</a>, which W3C still serves with a "1992-95" credit at the bottom, has a new section. It is called "An alias for yourself":</p>
+
+<blockquote>
+  <p>You should make a mail alias "webmaster" on the server machine so that people who have problems with your server can mail you about it easily. This is similar to the "postmaster" alias for people who have mail problems with your machine.</p>
+</blockquote>
+
+<p>And near the top, Tim Berners-Lee added a note that is rare among etymologies, in that the coiner is standing right there: "As a server administrator, or <em>webmaster</em> as they are known (the term having been coined on this page, below) you should make sure this applies to your data."</p>
+
+<p>When exactly? The November 1992 snapshot does not have the section. The later page carries a remark dated "[3/94]". <a href="https://www.merriam-webster.com/dictionary/webmaster">Merriam-Webster</a> gives the first known use of "webmaster" as 1993. So my best guess is 1993, and I can't narrow it further than "after November 1992".</p>
+
+<p>Look at what was actually defined. It was a mail alias, built by analogy with one that already existed, for "people who have problems with your server". It described who should receive complaints. Nothing in it said the recipient should also write the pages, draw the buttons or choose the colours.</p>
+
+<p>In fact the same page argues against it. In the very next section, "Delegating control", Berners-Lee wrote: "Maybe the server administrator has no responsibility at all for the actual content of the data, in which case he or she should just keep the machine running properly." The person who coined the word separated server from content almost in the same breath. The web then spent a few years ignoring the distinction.</p>
+
+<h2>The address gets wired in</h2>
+
+<p>The other half of the footer link arrived in December 1994. <a href="https://www.rfc-editor.org/rfc/rfc1738.txt">RFC 1738</a>, the URL specification that Berners-Lee co-edited, defined a <code>mailto</code> scheme "used to designate the Internet mailing address of an individual or service." Note the last two words. With the alias and the scheme together, any page could end with a link in this pattern (the domain here is the etiquette page's own example):</p>
+
+<pre tabindex="0"><code>&lt;A HREF="mailto:webmaster@dom.edu"&gt;</code></pre>
+
+<p>There was a more formal route too. <a href="https://www.w3.org/TR/2018/SPSD-html32-20180315/">HTML 3.2</a>, published in January 1997, noted that "<code>REV=made</code> is sometimes used to identify the document author, either the author's email address with a mailto URL, or a link to the author's home page." Lynx did something with it. <a href="https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html">Its user guide</a> still documents a <code>c</code> command to "send a mail message to the owner of the current document", which works when the page's head contains this:</p>
+
+<pre tabindex="0"><code>&lt;LINK REV="made" HREF="mailto:user@somedomain.com"&gt;</code></pre>
+
+<p>Then the servers picked the idea up. Apache's sample configuration, in <a href="https://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/conf/httpd.conf-dist">the 1.3 branch</a>, has these lines:</p>
+
+<pre tabindex="0"><code>#
+# ServerAdmin: Your address, where problems with the server should be
+# e-mailed.  This address appears on some server-generated pages, such
+# as error documents.
+#
+ServerAdmin you@your.address</code></pre>
+
+<p>That comment undersells it. <a href="https://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/src/main/http_protocol.c">The 1.3 source</a> builds the Internal Server Error page from a fixed text with the address dropped into the middle: "Please contact the server administrator, [the address] and inform them of the time the error occurred, and anything you might have done that may have caused the error." So at the moment a site failed worst, the server printed the webmaster's email address and suggested the visitor consider their own part in it.</p>
+
+<p>The last step was ratification. In May 1997 D. Crocker of the Internet Mail Consortium published <a href="https://www.rfc-editor.org/rfc/rfc2142.txt">RFC 2142</a>, "Mailbox Names for Common Services, Roles and Functions". It did not claim to invent anything. "Other protocols have defacto standards for well known mailbox names," it says, "such as <code>&lt;USENET@domain&gt;</code> for NNTP (see [RFC977]), and <code>&lt;WEBMASTER@domain&gt;</code> for HTTP". Its table lists <code>WEBMASTER</code> against HTTP, with <code>WWW</code> as a synonym. It also insists that case must not matter, which produces the best sentence in the document: "POSTMASTER, postmaster, Postmaster, PostMaster, and even PoStMaStEr are to be treated the same".</p>
+
+<p>A few years after a suggestion on a style page, the alias was on the standards track.</p>
+
+<h2>How an alias became a job</h2>
+
+<p>Meanwhile the name on the mailbox had become the name of the person reading it. An undated Princeton Review <a href="https://www.princetonreview.com/careers/183/webmaster">career profile</a> of the webmaster cites a 1996 survey by Web Week magazine in which "35 percent of respondents reported their official title as 'Webmaster' (either exclusively or in addition to another title), while none reported having that title the previous year."</p>
+
+<p>Jay Hoffmann, who writes The History of the Web, <a href="https://thehistoryoftheweb.com/postscript/what-happened-to-the-webmaster/">describes the role</a> as it was understood by then: webmasters "were at once the architect and the builder of a website, responsible for every bit of code and content that came through it." Hoffmann's candidate for the first of them is Louise Addis, a librarian at the Stanford Linear Accelerator Center, who ran the day-to-day operation of the lab's early website. Why did one title swallow the whole site? I count four forces, and none of them was a mistake.</p>
+
+<p><strong>The sites were small.</strong> Hoffmann's description of a mid-1990s business site is a front door to the internet, "updated weekly, maybe even less". One person could keep several of those going.</p>
+
+<p><strong>The stack was shallow.</strong> A site was a directory of files, a server with one configuration file, and maybe a folder of CGI scripts. All of it fitted in one head. This is my own reading of the period's software, but the Apache file above is a fair exhibit: one setting for who gets told about problems, and it takes a single address.</p>
+
+<p><strong>The institutions were used to it.</strong> The web grew up in labs and universities. As Hoffmann puts it, these were places where "it was not uncommon for people to have these pet projects on top of their existing work". A librarian who also ran a web server was normal there.</p>
+
+<p><strong>Nobody knew what else to call it.</strong> Organizations wanted a website before they had any idea which department a website belonged to. A webmaster, in Hoffmann's words, "was brought in by a business or a client or an organization when they needed a website and they didn't know who else to call." Hiring one person with a new title was easier than deciding whether the thing was IT, marketing or publishing.</p>
+
+<h2>What the mailbox actually got</h2>
+
+<p>The alias was meant for "people who have problems with your server". The W3C archive shows what arrived instead, and it is the best job description of a webmaster I have found.</p>
+
+<p>Some of it was exactly what the alias was for. <a href="https://www.w3.org/History/1995/WWW/MailArchive/webmaster/0000.html">The first message in the archive</a>, from a university in Berlin, is a precise bug report. A geographical listing on W3C's server had grown to 1,118,838 bytes, and the connection gave out after nine minutes: "By that time, we have received the African, Asian and Australian sections and the rest of the world is cut off."</p>
+
+<p>Much of it was not about the server at all. One writer was "desperately looking for a design guide for html documents." One, under the subject "Where I am in here", wrote: "I'm trying to figure out how to get into this network and not having much luck." One message, apart from a name and a signature block, says only: "Hello ! Greetings from Warsaw", from "a WWW user". To a newcomer, the webmaster of the web's home site was the front desk of the entire internet.</p>
+
+<p>Software authors noticed the pattern. <a href="https://httpd.apache.org/docs/2.4/mod/core.html#serveradmin">Apache's documentation</a> for <code>ServerAdmin</code> still advises: "It may be worth setting up a dedicated address for this", and gives the reason with some feeling: "users do not always mention that they are talking about the server!"</p>
+
+<p>Then came the mail nobody had asked for. RFC 2142 had seen it coming. Its entire security section is one sentence: "Denial of service attacks (flooding a mailbox with junk) will be easier after this document becomes a standard, since more systems will support the same set of mailbox names." An address that everyone can guess, printed in a link that any program can read, is a gift to anyone compiling a mailing list.</p>
+
+<p>Webmasters coped in two ways. The first was to stop printing the address and let a script build it in the browser, on the theory that a harvesting program reads HTML and does not run JavaScript. This is a typical version, written to run as shown and not taken from any one site:</p>
+
+<pre tabindex="0"><code>&lt;script type="text/javascript"&gt;
+var u = "webmaster";
+var h = "example" + ".com";
+document.write('&lt;a href="mai' +
+  'lto:' + u + '@' + h + '"&gt;' +
+  u + '@' + h + '&lt;\/a&gt;');
+&lt;/script&gt;</code></pre>
+
+<p>Wikipedia's article on <a href="https://en.wikipedia.org/wiki/Address_munging">address munging</a> records the trick and its limit: newer harvesting programs can often run the script themselves.</p>
+
+<p>The second was to replace the link with a form. The standard tool was FormMail, a Perl script from Matt's Script Archive that turned any HTML form into an email. <a href="https://www.scriptarchive.com/formmail.html">Its page</a> calls it "quite possibily the most used CGI program on the internet, having been downloaded over 2,000,000 times since 1997." <a href="https://derek.io/nostalgiajs/view-source-was-the-school/">View the source</a> of that page and you find a notice, now commented out, dated April 19, 2002: "Several important spam-related security holes have been fixed". The script installed to keep the webmaster out of spammers' lists had spam problems of its own.</p>
+
+<h2>Why the title wore out</h2>
+
+<p>Hoffmann gives two reasons the role faded, and I think both are right. First, in Hoffmann's words: "Things got too hard for one person to manage." Ambitious sites were now built by teams of art directors, editors, developers and writers, and Hoffmann says of one such site, Word magazine, that it was "well beyond the scope of what one person could reasonably accomplish on their own." Second, things got too easy: visual editors, content management systems and hosted services each took over one of the webmaster's chores, until, in Hoffmann's phrase, "one by one the jobs of the webmaster were peeled away and outsourced to some tool."</p>
+
+<p>The title hung on for a long time at Google. Jens Oliver Meiert <a href="https://meiert.com/blog/the-webmaster/">writes</a> that on joining Google in 2008, "I joined the 'Webmaster Team,' and we were on Google's webmaster job ladder." The product for site owners was called Google Webmaster Tools until <a href="https://developers.google.com/search/blog/2015/05/announcing-google-search-console-new">a post on May 20, 2015</a> announced that it would become Search Console. The announcement was polite about it: "It turns out that the traditional idea of the 'webmaster' reflects only some of you." The users, Google had found, were "hobbyists, small business owners, SEO experts, marketers, programmers, designers, app developers, and, of course, webmasters as well."</p>
+
+<p>Five years later the courtesy was dropped. On November 11, 2020, Google Webmasters Central <a href="https://developers.google.com/search/blog/2020/11/goodbye-google-webmasters">became Google Search Central</a>, and the post said plainly that "the term is becoming archaic". A user study had shown that "very few web professionals identify themselves as webmasters anymore." The Princeton Review profile had allowed for it. Its outlook for the career warned that "what it means to be a Webmaster today may completely change over the next few years and may even become obsolete."</p>
+
+<h2>What the webmaster left behind</h2>
+
+<p><strong>The address became a key.</strong> This is the part I did not expect. When a certificate authority issues a TLS certificate, it has to check that the applicant controls the domain. The CA/Browser Forum's <a href="https://cabforum.org/working-groups/server/baseline-requirements/requirements/">Baseline Requirements</a> list the permitted methods, and one of them, section 3.2.2.4.4, is to send a random value by email to an address made from "'admin', 'administrator', 'webmaster', 'hostmaster', or 'postmaster'" at the domain and wait for a reply. Whoever reads <code>webmaster@</code> can be treated as the owner of the site.</p>
+
+<p>That has gone wrong in the way you would predict. In March 2015 <a href="https://learn.microsoft.com/en-us/security-updates/securityadvisories/2015/3046310">Microsoft disclosed</a> an improperly issued certificate for the domain <code>live.fi</code>: "An email account was able to be registered for the live.fi domain using a privileged username, which was subsequently used to request an unauthorized certificate for that domain." The advisory does not say which username it was. Whichever it was, a list of mailbox names that began as a courtesy to people with problems had become a list of credentials. The same document now gives it an end date: the method "SHOULD NOT" be used from March 15, 2026, and from March 15, 2028 a certificate authority "MUST NOT rely on this method".</p>
+
+<p><strong>Every specialty rebuilt the mailbox.</strong> When the job split, each piece needed its own way to be reached. <a href="https://www.rfc-editor.org/rfc/rfc9116.txt">RFC 9116</a>, from April 2022, defines <code>security.txt</code>, a file at a well-known path that says who to contact about a vulnerability. It cites RFC 2142, which also reserved a <code>SECURITY@domain</code> mailbox, and its complaint about that convention is that it "provides only a single, email-based channel of communication per domain". It even inherits the old worry, in a section headed "Spam and Spurious Reports". I'd argue <code>security.txt</code> is the 1993 alias, rebuilt for one of the webmaster's descendants.</p>
+
+<p><strong>The defaults still assume one person.</strong> Apache's sample virtual host <a href="https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/extra/httpd-vhosts.conf.in">in the current development tree</a> still reads <code>ServerAdmin webmaster@dummy-host.example.com</code>, and <a href="https://svn.apache.org/repos/asf/httpd/httpd/trunk/modules/http/http_protocol.c">the error text</a> still asks you to contact "the server administrator" and describe "the actions you performed just before this error." The software still imagines a single reachable human who owns the machine. Production sites replaced that human with an on-call rotation, which is my comparison and not Apache's, and the visitor's half of the link disappeared in the trade.</p>
+
+<p><strong>The generalist keeps coming back.</strong> Meiert's post, written in 2026, argues that AI tools are "allowing a single person to once again manage the entire stack", and that the webmaster may be "leveling up" instead of dead. That is a forecast, and I'd treat it as one. But notice which half of the old role the argument revives. It is the breadth: one person across design, code and servers. The 1993 definition was the other half, the person who answers for the site. Meiert's piece does get to it: "the webmaster orchestrates and takes the responsibility".</p>
+
+<h2>The takeaway</h2>
+
+<p>The webmaster was an address before it was a job. Berners-Lee's page asked for a mailbox so that a stranger with a problem could reach someone responsible, and it said in the next section that this someone need not be the person who wrote the content. For a few years the sites were small enough that it was the same person anyway, and the industry mistook a coincidence of scale for a profession. When the sites grew, the profession came apart along the line the style page had already drawn.</p>
+
+<p>The breadth went to "full-stack" and now, perhaps, to one person with good tools. The work went to teams. What mostly did not survive is the footer link's promise: that a visitor who found something broken could tell a human, in one click, and that the human could fix it. The address itself is still honoured by mail systems, sample configs and, until 2028, certificate authorities. It is the most durable thing the webmaster built, and on most sites nobody is reading it.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://www.w3.org/History/19921103-hypertext/hypertext/WWW/Provider/Etiquette.html">Etiquette</a>, Tim Berners-Lee, CERN, snapshot of November 3, 1992 <a class="archived" href="https://web.archive.org/web/20261022211708/https://www.w3.org/History/19921103-hypertext/hypertext/WWW/Provider/Etiquette.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/Provider/Style/Etiquette.html">Web Etiquette, in the Style Guide for Online Hypertext</a>, Tim Berners-Lee, 1992 to 1995 <a class="archived" href="https://web.archive.org/web/20260723182224/https://www.w3.org/Provider/Style/Etiquette.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/History/1995/WWW/MailArchive/webmaster/">The webmaster mail archive, March 14 to April 4, 1995</a>, W3C history archive <a class="archived" href="https://web.archive.org/web/20260625113920/https://www.w3.org/History/1995/WWW/MailArchive/webmaster/">(archived)</a></li>
+    <li><a href="https://www.w3.org/History/1995/WWW/MailArchive/webmaster/0016.html">"Error 404"</a>, message to the webmaster mailbox, March 16, 1995 <a class="archived" href="https://web.archive.org/web/20170927030834/http://www.w3.org/History/1995/WWW/MailArchive/webmaster/0016.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/History/1995/WWW/MailArchive/webmaster/0000.html">"TimeOut"</a>, message to the webmaster mailbox, March 14, 1995 <a class="archived" href="https://web.archive.org/web/20241007074010/https://www.w3.org/History/1995/WWW/MailArchive/webmaster/0000.html">(archived)</a></li>
+    <li><a href="https://www.merriam-webster.com/dictionary/webmaster">webmaster</a>, Merriam-Webster dictionary <a class="archived" href="https://web.archive.org/web/20260801163455/https://www.merriam-webster.com/dictionary/webmaster">(archived)</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc1738.txt">RFC 1738: Uniform Resource Locators (URL)</a>, T. Berners-Lee, L. Masinter and M. McCahill, 1994 <a class="archived" href="https://web.archive.org/web/20261105221434/https://www.rfc-editor.org/rfc/rfc1738.txt">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/2018/SPSD-html32-20180315/">HTML 3.2 Reference Specification</a>, Dave Raggett, W3C, 1997 <a class="archived" href="https://web.archive.org/web/20261105004502/https://www.w3.org/TR/2018/SPSD-html32-20180315/">(archived)</a></li>
+    <li><a href="https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html">Lynx Users Guide</a>, the Lynx project <a class="archived" href="https://web.archive.org/web/20261101172134/https://lynx.invisible-island.net/lynx_help/Lynx_users_guide.html">(archived)</a></li>
+    <li><a href="https://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/conf/httpd.conf-dist">httpd.conf-dist, Apache HTTP Server 1.3 branch</a>, Apache Software Foundation <a class="archived" href="https://web.archive.org/web/20260709164838/https://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/conf/httpd.conf-dist">(archived)</a></li>
+    <li><a href="https://svn.apache.org/repos/asf/httpd/httpd/branches/1.3.x/src/main/http_protocol.c">http_protocol.c, Apache HTTP Server 1.3 branch</a>, Apache Software Foundation</li>
+    <li><a href="https://httpd.apache.org/docs/2.4/mod/core.html#serveradmin">ServerAdmin directive, Apache HTTP Server 2.4 documentation</a>, Apache Software Foundation <a class="archived" href="https://web.archive.org/web/20261105203557/https://httpd.apache.org/docs/2.4/mod/core.html">(archived)</a></li>
+    <li><a href="https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/extra/httpd-vhosts.conf.in">httpd-vhosts.conf.in, Apache HTTP Server trunk</a>, Apache Software Foundation <a class="archived" href="https://web.archive.org/web/20140228221936/http://svn.apache.org:80/repos/asf/httpd/httpd/trunk/docs/conf/extra/httpd-vhosts.conf.in">(archived)</a></li>
+    <li><a href="https://svn.apache.org/repos/asf/httpd/httpd/trunk/modules/http/http_protocol.c">http_protocol.c, Apache HTTP Server trunk</a>, Apache Software Foundation <a class="archived" href="https://web.archive.org/web/20200918204410/https://svn.apache.org/repos/asf/httpd/httpd/trunk/modules/http/http_protocol.c">(archived)</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc2142.txt">RFC 2142: Mailbox Names for Common Services, Roles and Functions</a>, D. Crocker, 1997 <a class="archived" href="https://web.archive.org/web/20261024162937/https://www.rfc-editor.org/rfc/rfc2142.txt">(archived)</a></li>
+    <li><a href="https://www.princetonreview.com/careers/183/webmaster">A Day in the Life of a Webmaster</a>, The Princeton Review <a class="archived" href="https://web.archive.org/web/20260618170940/https://www.princetonreview.com/careers/183/webmaster">(archived)</a></li>
+    <li><a href="https://thehistoryoftheweb.com/postscript/what-happened-to-the-webmaster/">What Happened to the Webmaster</a>, Jay Hoffmann, The History of the Web, 2020 <a class="archived" href="https://web.archive.org/web/20261101072908/https://thehistoryoftheweb.com/postscript/what-happened-to-the-webmaster/">(archived)</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Address_munging">Address munging</a>, Wikipedia</li>
+    <li><a href="https://www.scriptarchive.com/formmail.html">FormMail</a>, Matt Wright, Matt's Script Archive <a class="archived" href="https://web.archive.org/web/20261102070900/https://www.scriptarchive.com/formmail.html">(archived)</a></li>
+    <li><a href="https://meiert.com/blog/the-webmaster/">Maybe the "Webmaster" Isn't Dead After All</a>, Jens Oliver Meiert, 2026 <a class="archived" href="https://web.archive.org/web/20261004173741/https://meiert.com/blog/the-webmaster/">(archived)</a></li>
+    <li><a href="https://developers.google.com/search/blog/2015/05/announcing-google-search-console-new">Announcing Google Search Console - the new Webmaster Tools</a>, Michael Fink, Google, 2015 <a class="archived" href="https://web.archive.org/web/20260618092919/https://developers.google.com/search/blog/2015/05/announcing-google-search-console-new">(archived)</a></li>
+    <li><a href="https://developers.google.com/search/blog/2020/11/goodbye-google-webmasters">Goodbye Google Webmasters, hello Google Search Central</a>, Lizzi Sassman, Google, 2020 <a class="archived" href="https://web.archive.org/web/20261029043707/https://developers.google.com/search/blog/2020/11/goodbye-google-webmasters">(archived)</a></li>
+    <li><a href="https://cabforum.org/working-groups/server/baseline-requirements/requirements/">Baseline Requirements for the Issuance and Management of Publicly-Trusted TLS Server Certificates</a>, CA/Browser Forum <a class="archived" href="https://web.archive.org/web/20261025051403/https://cabforum.org/working-groups/server/baseline-requirements/requirements/">(archived)</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/security-updates/securityadvisories/2015/3046310">Security Advisory 3046310: Improperly Issued Digital Certificates Could Allow Spoofing</a>, Microsoft, 2015 <a class="archived" href="https://web.archive.org/web/20240402022540/https://learn.microsoft.com/en-us/security-updates/securityadvisories/2015/3046310">(archived)</a></li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc9116.txt">RFC 9116: A File Format to Aid in Security Vulnerability Disclosure</a>, E. Foudil and Y. Shafranovich, 2022 <a class="archived" href="https://web.archive.org/web/20261029235054/https://www.rfc-editor.org/rfc/rfc9116.txt">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
   <item>
     <title>The IE6 funeral: campaigning to kill a browser</title>
     <link>https://derek.io/nostalgiajs/the-ie6-funeral/</link>
@@ -195,6 +367,187 @@
     <li><a href="https://www.paulirish.com/2011/browser-market-pollution-iex-is-the-new-ie6/">Browser Market Pollution: IE[x] Is the New IE6</a>, Paul Irish, 2011 <a class="archived" href="https://web.archive.org/web/20260818224429/https://www.paulirish.com/2011/browser-market-pollution-iex-is-the-new-ie6/">(archived)</a></li>
     <li><a href="https://nolanlawson.com/2015/06/30/safari-is-the-new-ie/">Safari is the new IE</a>, Nolan Lawson, 2015 <a class="archived" href="https://web.archive.org/web/20261022175032/https://nolanlawson.com/2015/06/30/safari-is-the-new-ie/">(archived)</a></li>
     <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/hh801214(v=vs.85)">Conditional comments are no longer supported</a>, Microsoft <a class="archived" href="https://web.archive.org/web/20251106223028/https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/hh801214(v=vs.85)">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
+  <item>
+    <title>XMLHttpRequest: six years waiting for a name</title>
+    <link>https://derek.io/nostalgiajs/xmlhttprequest-and-the-name-ajax/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/xmlhttprequest-and-the-name-ajax/</guid>
+    <pubDate>Thu, 12 Nov 2026 20:03:14 GMT</pubDate>
+    <description>Microsoft shipped the object behind every web application in 1999, under a name its author calls an excuse. Almost nobody used it until a designer's 2005 essay called the technique Ajax.</description>
+    <content:encoded><![CDATA[<p class="lede">The most important line of JavaScript of the 2000s shipped in 1999 with a name its own author calls an excuse, and then sat largely ignored for six years until somebody gave the technique around it a better one.</p>
+
+<pre tabindex="0"><code>var req = new ActiveXObject(
+  "Microsoft.XMLHTTP");</code></pre>
+
+<p>That is how you asked a server for something without leaving the page, in Internet Explorer 5, in March 1999. It isn't JavaScript's doing, strictly. <code>ActiveXObject</code> was Microsoft's way of letting script load a Windows component, the same door that opened Excel or the file system, and <code>"Microsoft.XMLHTTP"</code> was a component that happened to speak HTTP. The object it handed back could <code>open</code> a URL, <code>send</code> a request and give you the response as text. The page stayed where it was.</p>
+
+<p>Every web application you use now is built on that ability. What I find worth an essay is the gap. The capability was in the dominant browser from 1999. The word "Ajax" arrived on February 18, 2005. In between, the object sat in the most widely used browser on earth and drew very little notice. The story of those six years is a story about a team with a deadline, a browser plug-in system, a recession and, in the end, a consultant who needed a shorter word for a client meeting.</p>
+
+<h2>Before: one click, one page</h2>
+
+<p>The web's original contract was simple. You clicked, the browser threw away the page, the server built a new one, and you waited. Jesse James Garrett, in the essay this story ends with, put the cost in one line: "While the server is doing its thing, what's the user doing? That's right, waiting."</p>
+
+<p>Dynamic HTML, which arrived in 1997 and which <a href="https://derek.io/nostalgiajs/if-document-layers/">split the web in two for a while</a>, let a page change itself after it loaded. It did not let a page fetch anything new. Script could rearrange what the server had already sent, and that was all. If you wanted to check whether a username was taken, you submitted the form.</p>
+
+<p>People found ways around this, and they were all smuggling operations. Anything with a <code>src</code> could carry a message to the server, so the standard trick was a frame the visitor couldn't see:</p>
+
+<pre tabindex="0"><code>&lt;iframe name="rpc" width="0" height="0"&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+function checkName(name) {
+  frames["rpc"].location =
+    "check.asp?name=" + escape(name);
+}
+function gotResult(taken) {
+  alert(taken ? "Taken" : "Available");
+}
+&lt;/script&gt;</code></pre>
+
+<p>The server answered with a tiny HTML page whose only content was a script calling <code>parent.gotResult(true)</code>. The response was, in effect, a function call sent as a web page. That is the Internet Explorer form; other browsers needed other hidden elements for the same trick. It failed in ways that were hard to see, because a hidden frame has no error handler and no status code you can read.</p>
+
+<p>Microsoft had an official product in this space too. Brent Ashley's <a href="https://www.ashleyit.com/rs/">Remote Scripting page</a>, which Ashley has kept online "for historical purposes", describes Microsoft Remote Scripting as solving the problem "by embedding a Java applet in the page to communicate with the server". A Java applet, to send a string. Ashley wrote a JavaScript-only alternative called JSRS "in the summer of 2000", built on hidden DHTML elements, and a second one called RSLite that passed its data in cookies. When people are carrying data in cookies on purpose, the platform is missing a feature.</p>
+
+<h2>A weekend in Redmond</h2>
+
+<p>The feature came from a mail team. Alex Hopmann, who worked on Exchange 2000 at Microsoft, wrote the history down in <a href="https://www.alexhopmann.com/page/the-story-of-xmlhttp">The Story of XMLHTTP</a>, and it is the best primary source on any of this, so I'll lean on it.</p>
+
+<p>Exchange needed a new Outlook Web Access, the webmail front end for corporate email. Hopmann dates the start to "probably sometime in late 1998". Two versions got underway: one of plain HTML pages, and one built with DHTML by Jim Van Eaton and Bob Gering. Of the first demo of the DHTML one, Hopmann writes, "I was just blown away". The DHTML one had a plumbing problem, though. In Hopmann's words, "they were basically doing hacky form-posts back to the server". So:</p>
+
+<blockquote><p>That weekend I startup up Visual Studio and whipped up the first version of what would become XMLHTTP. The first version didn't have async support hooked up and was pretty crude&hellip;</p></blockquote>
+
+<p>A component on one developer's machine doesn't help a product whose whole pitch is that you can walk up to any computer and read your mail. It had to be in the browser already. Internet Explorer 5 was, by Hopmann's account, "just weeks away from beta 2", its last beta. Another developer, Shawn Bracewell, rewrote the code to production quality and added the asynchronous mode and error handling. Hopmann, meanwhile, went looking for something that already shipped with Internet Explorer and could carry a stowaway. That turned out to be MSXML, Microsoft's XML parser library, whose team was run by Jean Paoli.</p>
+
+<p>Which brings us to the name. I'd assumed for years that it was called XMLHTTP because it was designed to fetch XML. Hopmann says otherwise:</p>
+
+<blockquote><p>&hellip;the thing is mostly about HTTP and doesn't have any specific tie to XML other than that was the easiest excuse for shipping it so I needed to cram XML into the name (plus- XML was the hot technology at the time and it seemed like some good marketing for the component).</p></blockquote>
+
+<p>Two other lines from that account deserve to be better known. On security: "We did a quick security review but at the time no one really understood the seriousness or types of vulnerabilities that anything shipping could cause." And on quality: "no one other than OWA is going to try to call it so if it has a bug in the beta, worst case we just can't use it." The feature that would carry Gmail, Google Suggest and much of what got called Web 2.0 was checked in a week before a beta, on the theory that only one team would ever call it.</p>
+
+<p>Internet Explorer 5 shipped in March 1999. Exchange 2000 and its Outlook Web Access followed, per Hopmann, "another year and a half" later. By then the piece it needed was on a great many desktops.</p>
+
+<h2>How the object worked</h2>
+
+<p>The API that went out in 1999 is, with small changes, the one in your browser today. A full request, as you'd have written it for Internet Explorer 5 or 6:</p>
+
+<pre tabindex="0"><code>var req = new ActiveXObject("Microsoft.XMLHTTP");
+req.onreadystatechange = function () {
+  if (req.readyState == 4) {
+    if (req.status == 200) {
+      document.all["news"].innerHTML =
+        req.responseText;
+    }
+  }
+};
+req.open("GET", "news.asp", true);
+req.send(null);</code></pre>
+
+<p>Three things in there shaped a decade of code. The third argument to <code>open</code> is the async flag, and <code>true</code> meant your script carried on while the request was out. That one boolean is the A in Ajax. The callback fired on every state change, so everyone learned to test for the magic number 4; the W3C's first draft listed the states by name, and 4 was "Loaded". And the response came back two ways: as a string in <code>responseText</code>, or parsed into a document in <code>responseXML</code> if the server sent XML. Most people, most of the time, wanted the string.</p>
+
+<p>Other browsers had no ActiveX, so they couldn't copy the component. They copied its interface instead and exposed it as a plain constructor, <code>new XMLHttpRequest()</code>, with Microsoft's method names and a spelling that capitalizes half an acronym. (Microsoft's own component was XMLHTTP, all capitals.) <a href="https://en.wikipedia.org/wiki/XMLHttpRequest">Wikipedia's history</a> puts it in Mozilla's Gecko engine by 2002, in Safari 1.2 in 2004 and in Opera 8.0 in 2005. Aaron Swartz, looking back in <a href="http://www.aaronsw.com/weblog/ajaxhistory">A Brief History of Ajax</a>, summed up those years: "Mozilla quickly followed suit and, while nobody I know used it, the function stayed there, just waiting to be taken advantage of."</p>
+
+<h2>Why it sat unused</h2>
+
+<p>Six years is a long time for a feature this useful to sit unused. I count four reasons, and I think they mattered in roughly this order.</p>
+
+<p><strong>It lived behind ActiveX.</strong> For the first few years the object existed in one browser on one operating system, behind the same mechanism that security-minded administrators were busy switching off. A public site that depended on it was betting on the visitor's browser and the visitor's IT department. Garrett, asked in a <a href="https://www.route-fifty.com/digital-government/2006/08/the-story-behind-ajax/318502/">2006 interview</a> about the standards work then starting, said something that fits: people had tried to solve the problem "in proprietary ways for years", and the approach "didn't get traction until it was broadly available in a vendor-neutral way". The dates fit. Safari's support came in 2004, the year Gmail launched.</p>
+
+<p><strong>The timing was terrible.</strong> The object shipped in 1999 and the dot-com crash followed. Swartz's history has a bleak phrase for the period: "Shortly thereafter the bubble burst and web development crashed." The teams that might have spent 2001 building ambitious browser applications were mostly not employed to do so. Hopmann, explaining why the idea hadn't caught on even earlier, grants the slow connections and slow machines of the late 1990s ("typical machines were 200mhz") and then names what he thinks mattered most: developers don't make sweeping shifts quickly, and "these things take 3-5 years".</p>
+
+<p><strong>Nobody could see the examples.</strong> Outlook Web Access was the first big application built this way, and it lived behind corporate logins. Oddpost, a webmail service that opened in 2002 and behaved like a desktop mail client, charged a subscription, and Swartz reckons that is why it "didn't receive as much attention". Gmail launched on April 1, 2004, two and a half years after work on it began. Paul Buchheit <a href="http://paulbuchheit.blogspot.com/2009/01/overnight-success-takes-long-time.html">recalls</a> that along the way quite a few colleagues wanted it killed, or rebuilt with native client software, "not this crazy Javascript stuff". It was free, but its script was hard to follow. The breakthrough was the small one. Google Suggest <a href="https://googleblog.blogspot.com/2004/12/ive-got-suggestion.html">appeared in December 2004</a>, a search box that completed your query as you typed, and Hopmann notes that people "looked at the source code of that page to figure out how it worked". <a href="https://derek.io/nostalgiajs/view-source-was-the-school/">View Source was the school</a>, and for once the lesson was short enough to read. Google Maps <a href="https://googleblog.blogspot.com/2005/02/mapping-your-way.html">followed on February 8, 2005</a>.</p>
+
+<p><strong>It had no name.</strong> Developers called it XMLHTTP, or remote scripting, or described it by pointing at Gmail. None of those fits on a slide. I think this reason is underrated, and the next section is my argument for it.</p>
+
+<h2>February 18, 2005</h2>
+
+<p>Ten days after Google Maps appeared, Jesse James Garrett of the San Francisco consultancy Adaptive Path published <a href="https://designftw.mit.edu/lectures/apis/ajax_adaptive_path.pdf">Ajax: A New Approach to Web Applications</a>. Garrett was a user experience designer writing for other designers, and the essay reads that way. It has two diagrams and no code. The key sentences:</p>
+
+<blockquote><p>Google Suggest and Google Maps are two examples of a new approach to web applications that we at Adaptive Path have been calling Ajax. The name is shorthand for Asynchronous JavaScript + XML, and it represents a fundamental shift in what's possible on the Web.</p></blockquote>
+
+<p>Garrett was careful to say what the word covered: "Ajax isn't a technology. It's really several technologies", listed as XHTML and CSS, the DOM, XML and XSLT, <code>XMLHttpRequest</code>, and JavaScript "binding everything together". The essay claimed no invention. A follow-up Q&amp;A three weeks later answered the obvious challenge directly: "Neither Adaptive Path nor Google invented Ajax." Asked why the thing needed a name at all, Garrett gave the most honest answer in the history of technical branding:</p>
+
+<blockquote><p>I needed something shorter than "Asynchronous JavaScript+<wbr>CSS+<wbr>DOM+<wbr>XMLHttpRequest" to use when discussing this approach with clients.</p></blockquote>
+
+<p>In the 2006 interview Garrett filled in the scene. The technical people at a client already understood the pieces; the word was for "the business people I was dealing with". Then Garrett published the essay and "left the country", spending two weeks in Japan without internet access and coming home to "this avalanche of e-mail".</p>
+
+<p>The speed of what followed is the evidence that the name was the missing part. On March 22, 2005, thirty-two days after the essay, <a href="https://rubyonrails.org/2005/3/22/rails-0-11-0-ajax-pagination-non-vhost-incoming-mail">Rails 0.11.0</a> shipped with the word in its release title and "Ajax helpers" as the headline feature. By the time Hopmann wrote his account, the term had reached the Wall Street Journal. Douglas Crockford, never one to oversell a trend, later <a href="https://www.json.org/fatfree.html">described the moment</a> this way: "In 2005, the idea of Dynamic HTML gained new energy and acceptance when it was renamed as Ajax."</p>
+
+<p>Hopmann's verdict on his former employer is harsher than anything I'd write: "At Microsoft we totally blew the opportunity to evangelize and get out in front of this approach back in 1999."</p>
+
+<h2>Living with two constructors</h2>
+
+<p>Once everyone wanted to make requests, everyone needed the same few lines at the top of the file, because there were two ways to get the object. The canonical version is short enough that the Internet Explorer team <a href="https://learn.microsoft.com/en-us/archive/blogs/ie/native-xmlhttprequest-object">published it themselves</a> in January 2006:</p>
+
+<pre tabindex="0"><code>if (window.XMLHttpRequest){
+  <span class="c">// If IE7, Mozilla, Safari, etc: Use native object</span>
+  var xmlHttp = new XMLHttpRequest()
+}
+else
+{
+  if (window.ActiveXObject){
+    <span class="c">// ...otherwise, use the ActiveX control for IE5.x and IE6</span>
+    var xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+}</code></pre>
+
+<p>Read the first comment again. That post, by program manager Sunava Dutta, was announcing that Internet Explorer 7 would support "a scriptable native version of XMLHTTP", so that organizations which had disabled ActiveX could still run these applications. Microsoft was adopting the other browsers' imitation of Microsoft's own component, and putting itself on the "native object" branch of a test that had existed only to route around it. Internet Explorer 7 shipped in October 2006. The <code>else</code> branch stayed in libraries for years, since Internet Explorer 6 did too.</p>
+
+<p>Careful versions of that snippet grew a ladder of <code>try</code> blocks, asking for <code>"Msxml2.XMLHTTP"</code> first and falling back to <code>"Microsoft.XMLHTTP"</code>, because the component had been reissued under more than one name. Nobody wanted to write that twice, so the wrapper became the first thing every library offered. Prototype, the library that grew up alongside Rails, <a href="http://prototypejs.org/learn/introduction-to-ajax">reduced a request to</a>:</p>
+
+<pre tabindex="0"><code>new Ajax.Request('/some_url', {
+  method:'get',
+  onSuccess: function(transport) {
+    var response = transport.responseText || "no response text";
+    alert("Success! \n\n" + response);
+  },
+  onFailure: function() { alert('Something went wrong...'); }
+});</code></pre>
+
+<p>No <code>readyState</code>, no magic 4, no ActiveX. <a href="https://derek.io/nostalgiajs/jquery-and-the-dollar-sign/">jQuery</a> later did the same with <code>$.ajax</code>, and I'd guess a large share of working developers went a decade without typing <code>XMLHttpRequest</code> at all. The word in the method name was Garrett's.</p>
+
+<p>The X went quietly. Garrett's own Q&amp;A had already conceded that you didn't need XML, and could use "a technology like JavaScript Object Notation". Parsing a <code>responseXML</code> document with DOM calls was miserable next to getting an object you could use directly, and by December 2006 Crockford could tell an XML conference, to its face, that "JSON has become the X in Ajax".</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>A standard written by transcription.</strong> The W3C published its <a href="https://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/">first working draft</a> of "The XMLHttpRequest Object" on April 5, 2006, seven years after the object shipped. Its stated method was to "document a minimum set of interoperable features based on existing implementations", and it adds that "only features that are already implemented are considered". It also acknowledges being derived from the WHATWG's work documenting existing behavior. So the chain runs: a Microsoft team writes a component for its own product, other browsers reverse-engineer the interface, a group of browser people writes down what the copies do, and the standards body publishes that. I don't mean this as a complaint. It is how most of the platform you rely on got specified, and this is one of the cleanest examples.</p>
+
+<p><strong>A name nobody can fix.</strong> The current <a href="https://xhr.spec.whatwg.org/">living standard</a> carries a sentence I find oddly moving: "The name XMLHttpRequest is historical and has no bearing on its functionality." It was true the weekend the thing was written. The XML was a shipping excuse from the start, and the web will carry it for as long as there is a web, capital letters and all.</p>
+
+<p><strong>The synchronous flag outlived its reason.</strong> Hopmann's first version "didn't have async support hooked up", so the blocking mode came first and the famous one was added in the rewrite. A blocking request freezes the page while it waits, and browsers have been trying to remove it for years. The spec says synchronous requests outside of workers are "in the process of being removed from the web platform", and then adds, in brackets, "This is a long process that takes many years." A blocking mode from a weekend prototype is still being negotiated a quarter of a century later.</p>
+
+<p><strong>The engine in the diagram became the framework.</strong> Garrett's essay describes the browser loading "an Ajax engine", written in JavaScript, that is "responsible for both rendering the interface the user sees and communicating with the server on the user's behalf". In 2005 that was a box in a figure. It is also a fair description of what a single-page application framework does, written years before the big ones existed. The problems arrived with it. Garrett's Q&amp;A lists, as open questions, accessibility, the back button, and what happens when JavaScript is off, and answers all of them with "maybe". The industry spent the next fifteen years turning those maybes into routers, history APIs and server rendering.</p>
+
+<p><strong>The security review came later.</strong> The rule browsers settled on was that a page could call only its own server, and the 2006 draft gives it one line: "Same-origin security restrictions SHOULD apply." Everything developers then wanted, calling other people's servers, needed a new permission system, which is where the <a href="https://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/">2008 Level 2 draft</a>'s "cross-site requests" and the CORS errors in your console come from. The "quick security review" of the late 1990s has been followed by a rather longer one.</p>
+
+<p>The replacement, <code>fetch</code>, arrived in the mid-2010s, and MDN describes it as "a more powerful and flexible replacement for XMLHttpRequest". It returns a promise instead of counting to 4. The old constructor is still in every browser, and a great deal of code still calls it through one wrapper or another.</p>
+
+<h2>The takeaway</h2>
+
+<p>The capability and the name are different inventions, and the web needed both. Microsoft shipped the capability in 1999, for one product, under a name chosen to get it past a release deadline. It worked. Hardly anyone outside noticed, because it was locked to one browser, because the industry was in a slump, because the best examples were hidden behind logins and paywalls, and because nobody could say in a meeting what it was. Each of those took years to clear, and the last one was cleared in an afternoon's reading by a designer who had written no part of the code.</p>
+
+<p>I'd argue that makes Garrett's essay a piece of engineering in its own right. Hopmann, who built the first version, came to the same view: "effective marketing and communication of your ideas is important and we missed out on that." A feature that can't be named can't be asked for, budgeted, taught or put in a job ad. The object had one name that was wrong from its first day and survived anyway; the technique had none for six years and stayed obscure until it got one.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://www.alexhopmann.com/page/the-story-of-xmlhttp">The Story of XMLHTTP</a>, Alex Hopmann, mid-2000s, updated 2007 <a class="archived" href="https://web.archive.org/web/20260808161908/https://www.alexhopmann.com/page/the-story-of-xmlhttp">(archived)</a></li>
+    <li><a href="https://designftw.mit.edu/lectures/apis/ajax_adaptive_path.pdf">Ajax: A New Approach to Web Applications</a>, Jesse James Garrett, Adaptive Path, 2005 (a saved copy of the print view, with the March 2005 Q&amp;A) <a class="archived" href="https://web.archive.org/web/20261103073801/https://designftw.mit.edu/lectures/apis/ajax_adaptive_path.pdf">(archived)</a></li>
+    <li><a href="https://www.route-fifty.com/digital-government/2006/08/the-story-behind-ajax/318502/">The story behind Ajax</a>, interview with Jesse James Garrett by Brad Grimes and Joab Jackson, GCN, 2006</li>
+    <li><a href="http://www.aaronsw.com/weblog/ajaxhistory">A Brief History of Ajax</a>, Aaron Swartz, 2005 <a class="archived" href="https://web.archive.org/web/20261106075510/http://www.aaronsw.com/weblog/ajaxhistory">(archived)</a></li>
+    <li><a href="https://www.ashleyit.com/rs/">Remote Scripting Resources</a>, Brent Ashley <a class="archived" href="https://web.archive.org/web/20260807214600/http://ashleyit.com/rs/">(archived)</a></li>
+    <li><a href="http://paulbuchheit.blogspot.com/2009/01/overnight-success-takes-long-time.html">Overnight success takes a long time</a>, Paul Buchheit, 2009 <a class="archived" href="https://web.archive.org/web/20261009024309/http://paulbuchheit.blogspot.com/2009/01/overnight-success-takes-long-time.html">(archived)</a></li>
+    <li><a href="https://googleblog.blogspot.com/2004/12/ive-got-suggestion.html">I've got a suggestion</a>, Official Google Blog, 2004 <a class="archived" href="https://web.archive.org/web/20261106232252/https://googleblog.blogspot.com/2004/12/ive-got-suggestion.html">(archived)</a></li>
+    <li><a href="https://googleblog.blogspot.com/2005/02/mapping-your-way.html">Mapping your way</a>, Official Google Blog, 2005 <a class="archived" href="https://web.archive.org/web/20261031183033/https://googleblog.blogspot.com/2005/02/mapping-your-way.html">(archived)</a></li>
+    <li><a href="https://rubyonrails.org/2005/3/22/rails-0-11-0-ajax-pagination-non-vhost-incoming-mail">Rails 0.11.0: Ajax, Pagination, Non-vhost, Incoming mail</a>, Ruby on Rails, 2005 <a class="archived" href="https://web.archive.org/web/20260808190453/https://rubyonrails.org/2005/3/22/rails-0-11-0-ajax-pagination-non-vhost-incoming-mail">(archived)</a></li>
+    <li><a href="http://prototypejs.org/learn/introduction-to-ajax">Introduction to Ajax</a>, Prototype JavaScript framework <a class="archived" href="https://web.archive.org/web/20261105213935/http://prototypejs.org/learn/introduction-to-ajax">(archived)</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/ie/native-xmlhttprequest-object">Native XMLHTTPRequest object</a>, Sunava Dutta, IEBlog, 2006 <a class="archived" href="https://web.archive.org/web/20240610231823/https://learn.microsoft.com/en-us/archive/blogs/ie/native-xmlhttprequest-object">(archived)</a></li>
+    <li><a href="https://www.json.org/fatfree.html">JSON: The Fat-Free Alternative to XML</a>, Douglas Crockford, 2006 <a class="archived" href="https://web.archive.org/web/20261104215020/http://www.json.org/fatfree.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/">The XMLHttpRequest Object, Working Draft 5 April 2006</a>, W3C <a class="archived" href="https://web.archive.org/web/20261104223823/https://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/">XMLHttpRequest Level 2, Working Draft 25 February 2008</a>, W3C <a class="archived" href="https://web.archive.org/web/20260518223207/https://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/">(archived)</a></li>
+    <li><a href="https://xhr.spec.whatwg.org/">XMLHttpRequest Living Standard</a>, WHATWG <a class="archived" href="https://web.archive.org/web/20261107003413/https://xhr.spec.whatwg.org/">(archived)</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a>, MDN <a class="archived" href="https://web.archive.org/web/20261111172233/https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">(archived)</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/XMLHttpRequest">XMLHttpRequest</a>, Wikipedia <a class="archived" href="https://web.archive.org/web/20261106040411/https://en.wikipedia.org/wiki/XMLHttpRequest">(archived)</a></li>
   </ul>
 </section>]]></content:encoded>
   </item>
