@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>View Source was the school · Nostalgia.js</title>
+<meta name="description" content="For about fifteen years the web trained its own workforce through one menu item that showed how any page was made, and then the pages stopped being readable.">
+<link rel="canonical" href="https://derek.io/nostalgiajs/view-source-was-the-school/">
+<meta property="og:site_name" content="Nostalgia.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View Source was the school">
+<meta property="og:description" content="For about fifteen years the web trained its own workforce through one menu item that showed how any page was made, and then the pages stopped being readable.">
+<meta property="og:url" content="https://derek.io/nostalgiajs/view-source-was-the-school/">
+<meta property="og:image" content="https://derek.io/nostalgiajs/og/view-source-was-the-school.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%239a3412'/%3E%3Cpath d='M12 10l-6 6 6 6M20 10l6 6-6 6' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" type="application/rss+xml" title="Nostalgia.js" href="../feed.xml">
+</head>
+<body>
+<div class="wrap">
+  <nav class="topnav" aria-label="Nostalgia.js">
+    <a class="brand" href="../">Nostalgia.js</a>
+    <a href="../about/">About</a>
+    <a href="../feed.xml">RSS</a>
+  </nav>
+
+  <main>
+    <article>
+      <p class="kicker">People and culture · 1993 to today</p>
+      <h1>View Source was the school</h1>
+      <p class="meta">13 min read</p>
+
+<p class="lede">The web's training programme was a menu item that nobody was required to ship. It taught a generation of developers, and then the lessons got harder to read.</p>
+
+<pre tabindex="0"><code>&lt;!-- Badda Bing, Badda Boom --&gt;</code></pre>
+
+<p>That is line 17 of the home page of the Space Jam website, which Warner Bros. <a href="https://www.spacejam.com/1996/">still serves at <code>spacejam.com/1996/</code></a>. I fetched it on November 12, 2026 and the comment was there, eight lines below another one that reads "Copyright 1996 Warner Bros. Online". No visitor to the site was ever shown it. Every visitor could read it anyway, by picking one item from a menu.</p>
+
+<p>The item was called View Source, or Document Source, or Page Source, depending on the browser and the year. It opened the file the server had sent, exactly as sent, comments and all. For a long stretch of the web's history that menu item was the nearest thing the trade had to a school. It had no teachers, no syllabus and no admissions office. This post is about how it got there, why it worked so well, who tried to switch it off, and what has replaced it.</p>
+
+<h2>Before: software arrived sealed</h2>
+
+<p>In the early 1990s, if you admired how a program worked, admiration was as far as you could go. Software shipped compiled. You could see what it did and not how. Building anything interactive meant buying a tool and learning its language first. Clay Shirky, looking back from 1998, put it this way: "Prior to the invention of HTML, all software packages which implemented any sort of hypertext required the user to learn a programming language of some sort (Director, Hypercard)."</p>
+
+<p>The web's own first files were not written to be read either. Here is the top of the project's home page, from <a href="http://info.cern.ch/hypertext/WWW/TheProject.html">a copy CERN still serves</a>:</p>
+
+<pre tabindex="0"><code>&lt;HEADER&gt;
+&lt;TITLE&gt;The World Wide Web project&lt;/TITLE&gt;
+&lt;NEXTID N="55"&gt;
+&lt;/HEADER&gt;
+&lt;BODY&gt;
+&lt;H1&gt;World Wide Web&lt;/H1&gt;The WorldWideWeb (W3) is a wide-area&lt;A
+NAME=0 HREF="WhatIs.html"&gt;
+hypermedia&lt;/A&gt; information retrieval</code></pre>
+
+<p>The line breaks fall in the middle of tags, and no person typing by hand would put them there. And <code>NEXTID</code> is a note from a program to itself. <a href="https://www.rfc-editor.org/rfc/rfc1866.txt">The HTML 2.0 specification</a> later described it as "a hint for the name to use for a new <code>&lt;A&gt;</code> element when editing an HTML document", included "for historical reasons only". An editor wrote this file and left itself a counter for the next link.</p>
+
+<p>That editor was Tim Berners-Lee's first browser, which could write pages as well as show them. <a href="https://www.w3.org/People/Berners-Lee/FAQ.html">His FAQ page</a> describes it as "a graphical point-and-click browser with mode-free editing and link creation", and captions a screenshot of himself making a link with some pride: "Look - no typing URLS, no &lt;angle brackets&gt;!" My reading is that the markup was meant to be a file format, like the insides of a word processor document. People were supposed to work above it.</p>
+
+<p>The browsers that spread the web did not keep the editing half. They kept a window onto the raw file. That turned out to matter more.</p>
+
+<h2>What happened: one menu item</h2>
+
+<p><a href="https://stuff.mit.edu/afs/sipb.mit.edu/project/www/doc/Mosaic-2.4/d2-file-menu.html">The user's guide for NCSA Mosaic 2.4</a> lists the File menu: New Window, Clone Window, Open URL, Reload Current, and, further down, this.</p>
+
+<pre tabindex="0"><code>View Source... (hotkey d)
+    Pop up a dialog box showing you the current
+    document's Uniform Resource Locator and
+    HTML source text.</code></pre>
+
+<p>It sits between "Find In Current" and "Save As", with nothing to mark it as important. Tim O'Reilly later <a href="https://www.oreilly.com/lpt/a/64">traced the lineage</a>: "The 'View Source' menu item migrated from Tim Berners-Lee's original browser, to Mosaic, and then on to Netscape Navigator and even Microsoft's Internet Explorer."</p>
+
+<p>Internet Explorer added a twist of its own, apparently without meaning to. It had no source viewer, so it handed the file to a program that was already on the machine. A <a href="https://learn.microsoft.com/en-us/archive/blogs/justsean/little-things-you-may-not-have-noticed-in-ie8-part-2-formatted-view-source">Microsoft blog post from 2008</a> admits as much: "Since the very beginning, IE has relied on the built-in Notepad editor to show page source. Notepad, it should be noted is not a source viewer." Quite so. Notepad is an editor. On Windows, then, View Source opened the page in a program with a Save As command. You were one menu away from owning a copy, and two keystrokes away from changing it.</p>
+
+<p>So what did the school teach? Go back to Space Jam. A few lines under the comments is this:</p>
+
+<pre tabindex="0"><code>&lt;body bgcolor="#000000" background="img/bg_stars.gif" text="#ff0000" link="#ff4c4c" vlink="#ff4c4c" alink="#ff4c4c"&gt;</code></pre>
+
+<p>One line, and a newcomer in 1996 learns that pages have a background colour, that a background can be a tiled image, and that links have three states with a colour each. No book is needed. You change <code>#000000</code> to something else, save, reload, and find out what the number meant. Further down, the planets on the famous star map turn out to be cells in a table:</p>
+
+<pre tabindex="0"><code>&lt;td align=center valign=middle&gt;
+&lt;a href="cmp/jamcentral/jamcentralframes.html"&gt;&lt;img src="img/p-jamcentral.gif" height=67 width=55 alt="Jam Central" border=0&gt;&lt;/a&gt;
+&lt;/td&gt;</code></pre>
+
+<p>That is how layout was done, and the source is also how everybody found out. Shirky uses tables as his example of a tool escaping its purpose. They were "originally imagined to be just that – a tool for presenting tabular data", and their adoption "as the basic method for page layout did not have to be explicit in the design of either HTML or the browser". No specification told designers to do it and no vendor ran a course. One person worked it out, and everyone else read their source.</p>
+
+<p>When scripting arrived the same thing happened to JavaScript, because early scripts sat in the page between <code>&lt;script&gt;</code> tags. The command that taught you <code>bgcolor</code> taught you <code>onmouseover</code> as well.</p>
+
+<p>The first person I can find who said clearly that this was the important part was Shirky, in an essay first published in April 1998 called <a href="http://shirky.com/essays/view-source-lessons-from-the-websmassively-parallel-development/">"View Source… Lessons from the Web's Massively Parallel Development"</a>. Its subtitle is "The Web considered as a massive Open Source project." The core of it is one paragraph:</p>
+
+<blockquote>
+  <p>The single factor most responsible for this riot of experimentation is transparency – the ability of any user to render into source code the choices made by any other designer.</p>
+</blockquote>
+
+<p>He adds that when a page is worth copying, "the question 'How did they do that?' can be answered in seconds." And he notes how easily it could have gone the other way. The first browser makers could have treated the feature "as a kind of debugging option which could have been disabled in any public release". They left it in.</p>
+
+<h2>Why it worked</h2>
+
+<p>Other platforms have let you read their source. Few of them trained a workforce by accident. Here are the forces I think made the difference. Reasonable people weigh them differently.</p>
+
+<p><strong>The format was text, and nothing stood between the text and the result.</strong> There was no compiler and no build. Alex Russell <a href="https://infrequently.org/2010/01/view-source-is-good-discuss">wrote in 2010</a> that web developers "get started by taking some code, pasting it into a file, saving, loading it in a browser and hitting <code>ctrl-r</code>." He called this the "copy-paste-tweak loop" and listed its kit: "The only required equipment is a text editor and a web browser, tools that are free and work together instantly." Shirky's version is that the web "removed the need for either compiling the results or seeking permission, certifcation or registration from anyone else." Both halves of that sentence count. You needed no tools and you needed no one's leave.</p>
+
+<p><strong>The browser forgave you.</strong> Copied fragments rarely fit. You pasted half a table into the wrong place, left a tag open, and the page rendered anyway, perhaps oddly. Russell again: "Browsers recovering from errors gracefully create a welcome learning environment, free of the inadequacy that a compile failure tends to evoke." A language that halts on the first mistake teaches you that you are wrong. A browser that shows you a lopsided page shows you how you are wrong, which is far more useful to a beginner at eleven at night.</p>
+
+<p><strong>The interface lived in the page.</strong> This is Shirky's subtlest point and I think his best. In most software the interface is part of the program. On the web, he wrote, an interface "can be integrated with the information it is displaying, instead of with the display software itself." So every page carried a complete, working design with it. There was always something worth copying, because the page was the whole product. Had browsers supplied the navigation bars and layouts themselves, View Source would have shown you a list of facts.</p>
+
+<p><strong>Nobody had to choose to share.</strong> This is the force that gets the least credit. Russell is blunt about it: "view source is nearly never locally beneficial." No company gains from showing its competitors how its home page is built. He had lost count of the times he had seen "the 'how do I hide my code?' question" from newcomers. If transparency had been a checkbox, most commercial sites would have left it unticked. It was a property of the medium, and so the question never came up. O'Reilly made the same observation about a different product. Napster grew because its defaults shared whatever you downloaded, and systems like that let "users pursuing their own 'selfish' interests build collective value as an automatic byproduct." View Source was sharing set as the default, with no setting to change.</p>
+
+<p><strong>There was not yet much to protect.</strong> Shirky describes the early web as having "no discernible financial incentive for the majority of its initial participants." A band page and a list of favourite links are not trade secrets. By the time there was real money in a page's markup, the habit of reading each other's work was already the culture, and the people who had learned that way were the ones being hired.</p>
+
+<h2>Living with it: the people who wanted it off</h2>
+
+<p>Not everyone enjoyed being the textbook. Photographers, designers and small businesses saw their pictures and layouts turn up on other people's sites, and wanted a lock. The lock they got was the no-right-click script. This one is from <a href="https://www.irt.org/script/969.htm">the irt.org JavaScript FAQ</a>, question 969, "How can I suppress a right mouse click?":</p>
+
+<pre tabindex="0"><code>&lt;script language="JavaScript1.1"&gt;&lt;!--
+var debug = true;
+function right(e) {
+  if (navigator.appName == 'Netscape' &amp;&amp; (e.which == 3 || e.which == 2)) return false;
+  else if (navigator.appName == 'Microsoft Internet Explorer' &amp;&amp; (event.button == 2 || event.button == 3)) {
+    alert('Denied!');
+    return false;
+  }
+
+  return true;
+}
+document.onmousedown=right;
+if (document.layers) window.captureEvents(Event.MOUSEDOWN);
+window.onmousedown=right;
+//--&gt;&lt;/script&gt;</code></pre>
+
+<p>It is a fine period piece: browser sniffing by name, a <code>document.layers</code> check, and an alert box that says "Denied!". What I like most is the FAQ's own commentary, which talks the reader out of the script before presenting it. "This script is not fool-proof," it begins. It "doesn't stop users browsing the source of youe page from the toolbar menus." And then the advice that has not aged a day: if the script does not do what you need, "then don't use it and don't put your images/scripts on the net." If your living depends on your images, add a watermark.</p>
+
+<p>The scripts spread regardless, and how they spread is the joke. A <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=236055">Firefox bug report from 2004</a>, titled "Javascript can disable right click", quotes the offending code from the page in question. Its first two lines are a credit: "Disable right click script III- By Renigade", and "For full source code, visit http://www.dynamicdrive.com". The reporter presumably got those lines by reading the page's source. The anti-copying script was distributed by being copied, and it was attributed because the copyists kept the comment.</p>
+
+<p>The thing that did close the book was never meant as a lock. Douglas Crockford's <a href="https://www.crockford.com/jsmin.html">JSMin</a>, which he dates to 2001, "removes comments and unnecessary whitespace from JavaScript files" to make them download faster. He is careful about what it is: "JSMin does not obfuscate, but it does uglify." And he is honest about the price: "The result may be harder to debug. It will definitely be harder to read."</p>
+
+<p>Minified code could still be puzzled out with patience. Compiled code could not. On November 5, 2009 Google <a href="https://developers.googleblog.com/en/introducing-closure-tools/">open-sourced the Closure Compiler</a>, which it had built for its own web applications. Four months later, after a conference panel on this exact subject, Russell wrote <a href="https://infrequently.org/2010/03/view-source-follow-up">a follow-up</a>. Someone on the panel had pointed out that beautifiers could tidy minified code. Russell replied that a compiler which inlines functions, removes dead code and moves the rest around is a different animal. The output was "much, much smaller than I can wring out by hand" and also "totally unrecognizable." His conclusion was that JavaScript treated this way is "functionally indistinguishable from a bytecode format like SWF or Java", with the same effect on learning: "less ability to easily share techniques, a smaller group of more professional users, and a heavier reliance on tooling."</p>
+
+<p>Nobody set out to end the lesson. Pages got heavy, bytes cost money, and the fix for bytes was to remove everything a human reader needed.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The fix Russell asked for got built, and the default flipped.</strong> In that follow-up he said compiled JavaScript would need "brand new tools akin to symbol servers" to be workable. The seed already existed. The same Closure announcement mentions Closure Inspector, "a Firebug extension that makes debugging the obfuscated code almost as easy as debugging the human-readable source." <a href="https://tc39.es/ecma426/">The source map specification</a> says its first format "was created by Joseph Schorr for use by Closure Inspector". That format went through two more revisions, and in December 2024 it became <a href="https://ecma-international.org/publications-and-standards/standards/ecma-426/">ECMA-426</a>, an Ecma standard for mapping shipped code back to what a person wrote. So readable source came back as a file you may publish beside your code if you choose to. In 1996 you had to do nothing to be readable. Now you have to do something, and you may just as reasonably keep the map private for your own error reports. I'd argue that switch, from on by default to off by default, changed more than any single tool did.</p>
+
+<p><strong>The source stopped being the page.</strong> Browsers now offer two commands that sound alike and do different jobs. <a href="https://developer.chrome.com/docs/devtools/dom">Chrome's documentation</a> spells out the gap: "HTML represents initial page content and the DOM represents active, current page content. When JavaScript adds, removes, or edits nodes, the DOM becomes different than the HTML." On Space Jam the two are the same thing, so View Source tells you everything. On a page built in the browser by a script, View Source shows the instructions for fetching a program, and the inspector shows a result with no record of how it got that way. Neither is what a learner in 1996 had, which was the author's own file.</p>
+
+<p><strong>The folk feature was ratified late, and on thin paperwork.</strong> You can still type <code>view-source:</code> in front of an address. That prefix was registered with IANA as a URI scheme <a href="https://www.iana.org/assignments/uri-schemes/prov/view-source">on May 25, 2011</a>, with the status "Provisional". By then it was a habit of very long standing. For its list of implementations the registration refers readers to "Wikipedia's entry on 'View-source URI scheme'". It also carries a quiet legal caution that the source "might sometimes refer to source code that is under certain legal provisions, which might not grant free access". That is the old copy-and-paste question, raised in a standards registry fifteen years after Warner Bros. put a copyright notice in a comment and then served the comment to everyone.</p>
+
+<p><strong>The command survived, and it grew a red pen.</strong> View Source is still Ctrl+U in Firefox, and <a href="https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html">Firefox's documentation</a> lists what it has learned since: line numbers you can link to, and syntax highlighting that "also highlights parsing errors in red." The forgiving parser still renders your mistakes, and the viewer next to it now marks them, so the school has acquired a teacher after all. Russell noted in 2010 that the inspectors grew from the same root. Firebug and its descendants allow "live changes without reloads, even on pages you don't 'own'." Firebug gets its own post here soon.</p>
+
+<p><strong>The phrase outlived the practice.</strong> When Mozilla started a conference for front-end developers in 2015, held in Portland that November, <a href="https://hacks.mozilla.org/2015/10/view-source-conference/">it named the event View Source</a>. By then the two words stood for a whole account of how the web was meant to work, one that Shirky had written down in 1998. One of his rules deserves a wider audience: "Good tools allow users to do stupid things." A tool that prevents mistakes, he argued, raises quality in the short run and "ultimately hampers development by not letting users learn from their mistakes." A great deal of modern tooling exists to stop you shipping a mistake. I think that is usually right for the product. I am less sure it is right for the person, and View Source was the last major teaching tool that didn't care.</p>
+
+<p>Where is the school now? My best guess is that it moved to places where sharing is a decision: public repositories, documentation, tutorials and other people's answers to questions. There is more to read than there ever was, and it is better organised. The difference is that everything in it was put there on purpose, by someone who thought it was fit to be seen. The old school showed you the production code of a film studio, including the comment somebody left in for a laugh.</p>
+
+<h2>The takeaway</h2>
+
+<p>View Source worked as a school because of a coincidence of four things: a text format, an interpreter with no build step, a parser that forgave errors, and a default nobody could opt out of. Take away any one and you get something lesser. The last is the one we lost, and nobody took it. It went as a side effect of making pages faster, one removed comment at a time, until the file the server sent was no longer the file anyone wrote.</p>
+
+<p>What replaced it is in many ways better: open repositories, real debuggers, and a standard for mapping shipped code back to its source. But it is all opt-in, and opt-in transparency teaches you what people are willing to show. The old kind taught you what they actually did. This page, for what it's worth, has no build step. The command still works here.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="http://shirky.com/essays/view-source-lessons-from-the-websmassively-parallel-development/">View Source… Lessons from the Web's Massively Parallel Development</a>, Clay Shirky, 1998</li>
+    <li><a href="https://www.oreilly.com/lpt/a/64">The Architecture of Participation</a>, Tim O'Reilly, 2004</li>
+    <li><a href="https://infrequently.org/2010/01/view-source-is-good-discuss">View-Source Is Good? Discuss.</a> and <a href="https://infrequently.org/2010/03/view-source-follow-up">View-Source Follow-Up</a>, Alex Russell, 2010 <a class="archived" href="https://web.archive.org/web/20250805101536/https://infrequently.org/2010/01/view-source-is-good-discuss/">(archived)</a></li>
+    <li><a href="https://www.spacejam.com/1996/">Space Jam</a>, Warner Bros., 1996, source as served on November 12, 2026 <a class="archived" href="https://web.archive.org/web/20261027191529/https://www.spacejam.com/1996/">(archived)</a></li>
+    <li><a href="http://info.cern.ch/hypertext/WWW/TheProject.html">The World Wide Web project</a>, as served by CERN at info.cern.ch <a class="archived" href="https://web.archive.org/web/20261110180839/http://info.cern.ch/hypertext/WWW/TheProject.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/People/Berners-Lee/FAQ.html">Frequently asked questions</a>, Tim Berners-Lee, W3C</li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc1866.txt">RFC 1866: Hypertext Markup Language 2.0</a>, Tim Berners-Lee and Dan Connolly, 1995, section 5.2.6 on <code>NEXTID</code> <a class="archived" href="https://web.archive.org/web/20261106150950/https://www.rfc-editor.org/rfc/rfc1866.txt">(archived)</a></li>
+    <li><a href="https://stuff.mit.edu/afs/sipb.mit.edu/project/www/doc/Mosaic-2.4/d2-file-menu.html">Mosaic User's Guide: File Menu</a>, NCSA Mosaic 2.4 documentation, as mirrored at MIT</li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/justsean/little-things-you-may-not-have-noticed-in-ie8-part-2-formatted-view-source">Little things you may not have noticed in IE8: Part 2 – Formatted View Source</a>, Microsoft archived blogs, 2008 <a class="archived" href="https://web.archive.org/web/20240607062103/https://learn.microsoft.com/en-us/archive/blogs/justsean/little-things-you-may-not-have-noticed-in-ie8-part-2-formatted-view-source">(archived)</a></li>
+    <li><a href="https://www.irt.org/script/969.htm">Q969 How can I suppress a right mouse click?</a>, Martin Webb, irt.org JavaScript FAQ <a class="archived" href="https://web.archive.org/web/20260208195258/https://irt.org/script/969.htm">(archived)</a></li>
+    <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=236055">Bug 236055: Javascript can disable right click</a>, Mozilla Bugzilla, 2004 <a class="archived" href="https://web.archive.org/web/20260611210445/https://bugzilla.mozilla.org/show_bug.cgi?id=236055">(archived)</a></li>
+    <li><a href="https://www.crockford.com/jsmin.html">JSMin</a>, Douglas Crockford <a class="archived" href="https://web.archive.org/web/20261021134751/https://www.crockford.com/jsmin.html">(archived)</a></li>
+    <li><a href="https://developers.googleblog.com/en/introducing-closure-tools/">Introducing Closure Tools</a>, Google Developers Blog, 2009 <a class="archived" href="https://web.archive.org/web/20260211034635/https://developers.googleblog.com/en/introducing-closure-tools/">(archived)</a></li>
+    <li><a href="https://tc39.es/ecma426/">Source map format specification</a>, Ecma TC39, and <a href="https://ecma-international.org/publications-and-standards/standards/ecma-426/">ECMA-426</a>, 1st edition, December 2024 <a class="archived" href="https://web.archive.org/web/20261022054119/https://tc39.es/ecma426/">(archived)</a></li>
+    <li><a href="https://developer.chrome.com/docs/devtools/dom">Get started with viewing and changing the DOM</a>, Chrome DevTools documentation, appendix "HTML versus the DOM" <a class="archived" href="https://web.archive.org/web/20261105214858/https://developer.chrome.com/docs/devtools/dom">(archived)</a></li>
+    <li><a href="https://www.iana.org/assignments/uri-schemes/prov/view-source">view-source URI scheme registration</a>, IANA, 2011 <a class="archived" href="https://web.archive.org/web/20260808124047/https://www.iana.org/assignments/uri-schemes/prov/view-source">(archived)</a></li>
+    <li><a href="https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html">View Source</a>, Firefox DevTools user documentation <a class="archived" href="https://web.archive.org/web/20261105213941/https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html">(archived)</a></li>
+    <li><a href="https://hacks.mozilla.org/2015/10/view-source-conference/">View Source Conference</a>, Mozilla Hacks, 2015 <a class="archived" href="https://web.archive.org/web/20260415062347/https://hacks.mozilla.org/2015/10/view-source-conference/">(archived)</a></li>
+  </ul>
+</section>
+
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+View+Source+was+the+school&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fview-source-was-the-school%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+    </article>
+
+    <nav class="related" aria-labelledby="related-h">
+      <h2 id="related-h">Related essays</h2>
+      <ul>
+        <li><a href="../where-did-the-old-web-developers-go/">Where did all the old web developers go?</a> <span>People and culture · 2007 to today</span></li>
+        <li><a href="../getyear-and-the-year-19100/">getYear() and the year 19100</a> <span>The language · 1995 to today</span></li>
+        <li><a href="../if-document-layers/">if (document.layers): the web forks in two</a> <span>Browsers and the platform · 1995 to 2001</span></li>
+      </ul>
+      <p><a href="../">All essays</a></p>
+    </nav>
+  </main>
+
+  <footer>Nostalgia.js: AI Essays on Web History. <a href="../about/">How these essays are made</a>.</footer>
+</div>
+</body>
+</html>

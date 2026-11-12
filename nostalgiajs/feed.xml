@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
-  <title>View Source</title>
-  <link>https://derek.io/view-source/</link>
-  <atom:link href="https://derek.io/view-source/feed.xml" rel="self" type="application/rss+xml"/>
+  <title>Nostalgia.js</title>
+  <link>https://derek.io/nostalgiajs/</link>
+  <atom:link href="https://derek.io/nostalgiajs/feed.xml" rel="self" type="application/rss+xml"/>
   <description>AI Essays on Web History</description>
   <language>en</language>
   <lastBuildDate>Thu, 12 Nov 2026 09:58:53 GMT</lastBuildDate>
   <item>
     <title>View Source was the school</title>
-    <link>https://derek.io/view-source/view-source-was-the-school/</link>
-    <guid isPermaLink="true">https://derek.io/view-source/view-source-was-the-school/</guid>
+    <link>https://derek.io/nostalgiajs/view-source-was-the-school/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/view-source-was-the-school/</guid>
     <pubDate>Thu, 12 Nov 2026 09:58:53 GMT</pubDate>
     <description>For about fifteen years the web trained its own workforce through one menu item that showed how any page was made, and then the pages stopped being readable.</description>
     <content:encoded><![CDATA[<p class="lede">The web's training programme was a menu item that nobody was required to ship. It taught a generation of developers, and then the lessons got harder to read.</p>
@@ -167,8 +167,8 @@ window.onmousedown=right;
   </item>
   <item>
     <title>jQuery 1.0: what $ really replaced</title>
-    <link>https://derek.io/view-source/jquery-and-the-dollar-sign/</link>
-    <guid isPermaLink="true">https://derek.io/view-source/jquery-and-the-dollar-sign/</guid>
+    <link>https://derek.io/nostalgiajs/jquery-and-the-dollar-sign/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/jquery-and-the-dollar-sign/</guid>
     <pubDate>Thu, 12 Nov 2026 04:41:10 GMT</pubDate>
     <description>jQuery 1.0 shipped in August 2006 with a dollar sign borrowed from another library, and replaced a folder of copy-pasted fixes that its own author had been winning contests with.</description>
     <content:encoded><![CDATA[<p class="lede">The dollar sign was second-hand, the best ideas were credited to other people, and the browsers spent the next decade copying it anyway.</p>
@@ -370,8 +370,8 @@ return oldSizzle(query, context, extra, seed);</code></pre>
   </item>
   <item>
     <title>getYear() and the year 19100</title>
-    <link>https://derek.io/view-source/getyear-and-the-year-19100/</link>
-    <guid isPermaLink="true">https://derek.io/view-source/getyear-and-the-year-19100/</guid>
+    <link>https://derek.io/nostalgiajs/getyear-and-the-year-19100/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/getyear-and-the-year-19100/</guid>
     <pubDate>Thu, 12 Nov 2026 03:15:17 GMT</pubDate>
     <description>One small Date method returned 100, 2000 or 100 again for the year 2000 depending on the browser, got fixed three different ways, and is still in every browser today.</description>
     <content:encoded><![CDATA[<p class="lede">A method that was right, got fixed, got fixed back, and is still shipping in the browser you are reading this in.</p>
@@ -505,8 +505,8 @@ datedisplay.setAttribute("value", dateObj.getDate()+"/"+(dateObj.getMonth()+1)+"
   </item>
   <item>
     <title>Where did all the old web developers go?</title>
-    <link>https://derek.io/view-source/where-did-the-old-web-developers-go/</link>
-    <guid isPermaLink="true">https://derek.io/view-source/where-did-the-old-web-developers-go/</guid>
+    <link>https://derek.io/nostalgiajs/where-did-the-old-web-developers-go/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/where-did-the-old-web-developers-go/</guid>
     <pubDate>Thu, 12 Nov 2026 02:37:49 GMT</pubDate>
     <description>Around 2008 nobody writing JavaScript seemed to be over 40, and the industry spent a decade arguing about why. The answer was arithmetic, and the same arithmetic is running again.</description>
     <content:encoded><![CDATA[<p class="lede">Around 2008, nobody in the room was over 40. It took the industry about ten years to work out why.</p>
@@ -569,7 +569,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p><strong>Zuckerberg's argument was about labor, and it aged the way labor arguments do.</strong> "Simpler lives" meant cheaper and more available. People with fifteen years of experience mostly did not lose the ability to do the work. They stopped agreeing to do it at midnight. An employer can call that a decline, but it's a negotiation, and negotiations move when the supply does.</p>
 
-<p><strong>"Keep up or die" confused two kinds of knowledge.</strong> The half-life of a framework is short. Nobody's résumé leans on Prototype.js anymore. But the developers who lasted were mostly the ones who had learned the layer underneath: the DOM, HTTP, caching, how a browser actually spends its time. That layer barely moved. The <a href="https://derek.io/view-source/if-document-layers/">browser-forking mess of 1997</a> taught feature detection, and you still write feature detection. Treadmill knowledge expires and platform knowledge compounds, and the fear of 40 was mostly a fear that all of it was the first kind.</p>
+<p><strong>"Keep up or die" confused two kinds of knowledge.</strong> The half-life of a framework is short. Nobody's résumé leans on Prototype.js anymore. But the developers who lasted were mostly the ones who had learned the layer underneath: the DOM, HTTP, caching, how a browser actually spends its time. That layer barely moved. The <a href="https://derek.io/nostalgiajs/if-document-layers/">browser-forking mess of 1997</a> taught feature detection, and you still write feature detection. Treadmill knowledge expires and platform knowledge compounds, and the fear of 40 was mostly a fear that all of it was the first kind.</p>
 
 <p><strong>The field needed to get old before anyone could be old in it.</strong> Someone who started with the web in the mid-1990s is in their fifties now. Pave's compensation data, <a href="https://pave.com/blog-posts/artificial-intelligence-isnt-killing-the-software-engineer-yet">published this year</a>, shows the average age of engineers rising across every major job family. The old web developer turned out to be a person who needed time to exist.</p>
 
@@ -619,8 +619,8 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
   </item>
   <item>
     <title>if (document.layers): the web forks in two</title>
-    <link>https://derek.io/view-source/if-document-layers/</link>
-    <guid isPermaLink="true">https://derek.io/view-source/if-document-layers/</guid>
+    <link>https://derek.io/nostalgiajs/if-document-layers/</link>
+    <guid isPermaLink="true">https://derek.io/nostalgiajs/if-document-layers/</guid>
     <pubDate>Thu, 12 Nov 2026 00:53:51 GMT</pubDate>
     <description>In 1997 Netscape and Microsoft each invented their own model of a web page. Everyone wrote every effect twice, and the way it ended explains a lot about how the web still works.</description>
     <content:encoded><![CDATA[<p class="lede">Two lines of code you typed more often than your own phone number, and the fork in the web they stood for.</p>
@@ -765,7 +765,7 @@ function show(id) {
 
 <p><strong>The winner wrote the standard.</strong> Remember <code>innerHTML</code>? It was a Microsoft invention in Internet Explorer 4. It was in no part of DOM Level 1, 2 or 3. It became part of a web standard only in the HTML5 era, when the specs finally wrote down what every browser already did, by which point it was how half the web updated itself. <code>XMLHttpRequest</code> took the same road, starting life as an Internet Explorer 5 ActiveX object. The lesson I take from both is that standards are often a record of what survived, and the fight over who gets to be the thing that survives happens in the wild, in production, on your client's site.</p>
 
-<p><strong>The wrapper is the seed of the library.</strong> Look back at <code>getObj</code>. By 2005 Prototype's <code>$()</code> was <code>getElementById</code> in a shorter coat, and a year later <a href="https://derek.io/view-source/jquery-and-the-dollar-sign/">jQuery generalized the idea</a> into a whole way of working. The pattern keeps recurring: when the platform diverges, somebody writes the adapter once, everyone borrows it, and the divergence quietly moves from your code into a dependency. That isn't a bad outcome, but it explains why the pain of this era produced the tools of the next one.</p>
+<p><strong>The wrapper is the seed of the library.</strong> Look back at <code>getObj</code>. By 2005 Prototype's <code>$()</code> was <code>getElementById</code> in a shorter coat, and a year later <a href="https://derek.io/nostalgiajs/jquery-and-the-dollar-sign/">jQuery generalized the idea</a> into a whole way of working. The pattern keeps recurring: when the platform diverges, somebody writes the adapter once, everyone borrows it, and the divergence quietly moves from your code into a dependency. That isn't a bad outcome, but it explains why the pain of this era produced the tools of the next one.</p>
 
 <p><strong>It repeats.</strong> Vendor prefixes, <code>-webkit-</code> and <code>-moz-</code> and <code>-ms-</code>, were the same fork in CSS about a decade later. Mobile sites that worked only in WebKit were the same fork again. Each time it looks like a failure of the process. I'd argue it is the process: someone ships first, developers build on it, and the standard catches up to whatever turned out to matter. The only thing you control is how much of your code depends on the guess.</p>
 
