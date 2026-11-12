@@ -1,0 +1,185 @@
+<p class="lede">In March 2010 a web design shop in Denver held a funeral for a browser that about a fifth of the web was still using, and the company that made the browser sent flowers.</p>
+
+<blockquote>
+<p>Thanks for the good times, IE6. See you all @ MIX, where we'll show a little piece of IE heaven.</p>
+<p>The Internet Explorer Team @ Microsoft</p>
+</blockquote>
+
+<p>That is the card that came with the arrangement, as <a href="https://techcrunch.com/2010/03/05/ie6-funeral/">TechCrunch printed it</a> the next day. The funeral was on Thursday, March 4, 2010. The hosts were Aten Design Group, and <a href="https://www.westword.com/news/internet-explorer-6-funeral-microsoft-sent-flowers-5839786">Denver's Westword</a> counted "around a hundred people" in a venue called Forest Room 5. The deceased lay in a pine coffin: stuffed clothes, with a monitor showing a modified IE6 logo where the head should be. Jon Clark of Aten told <a href="https://www.computerworld.com/article/2762965/mourners-eulogize-ie6-at-funeral-for-aged-browser.html">Computerworld</a>, "I spent a lot of time in the garage making the pine coffin." Many guests wore black. Candles were lit, and several people gave eulogies.</p>
+
+<p>The obituary on ie6funeral.com, quoted by <a href="https://www.computerworld.com/article/2761709/web-designers-announce-ie6-s--death---slate-party.html">Computerworld</a> a week earlier, gave the cause:</p>
+
+<blockquote>
+<p>Internet Explorer Six, resident of the interwebs for over 8 years, died the morning of March 1, 2010, in Mountain View, California, as a result of a workplace injury sustained at the headquarters of Google, Inc.</p>
+</blockquote>
+
+<p>It was survived, the notice went on, by "son Internet Explorer Seven, and grand-daughter Internet Explorer Eight." It was also, by the same article's numbers, running on about 20% of the browsers in use. The funeral was a good joke, and it was the high point of a two-year campaign in which web developers tried to talk the public out of a piece of software. What that campaign could and couldn't do is the part worth keeping.</p>
+
+<h2>A browser that outlived its war</h2>
+
+<p>Internet Explorer 6 debuted in August 2001 and went out with Windows XP. By then <a href="../if-document-layers/">the first browser war</a> was over and Microsoft had won it, so there was no hurry about a sequel. Internet Explorer 7 was not released until October 2006. For five years IE6 was the newest version of the browser nearly everybody had, and a great deal got built to fit it, on the public web and behind company firewalls.</p>
+
+<p>By 2008 the picture had changed everywhere except on those machines. Firefox and Safari were real, IE7 was two years old, and the same page now had to work in all of them and in IE6 as well. Justin Toupin, Aten's founder, described the cost to Computerworld in the mildest terms available: "It does involve, toward the end of a project especially, considerable work adjusting things like CSS and JavaScript to make sure they work." Every reader of this collection can supply their own less mild version.</p>
+
+<p>The stubborn part is that in early 2009, eight years in, IE6 still had more users than the newest Firefox. NetApplications figures <a href="https://www.infoworld.com/article/2227868/norway-heads-drive-to-boot-microsoft-s-ie6-browser-off-the-web.html">reported by InfoWorld</a> that February gave it 19.21% of the market against 18.3% for Firefox 3.0. You could not simply stop.</p>
+
+<h2>2008: the first notices</h2>
+
+<p>The first people to stop were the ones whose customers paid them directly. In July 2008, 37signals announced it would phase out IE6 across all its products, Basecamp included, on August 15. Their notice, as <a href="https://www.infoq.com/news/2008/07/ie6_on_its_way_out/">quoted by InfoQ</a>, said: "Supporting IE 6 means slower progress, less progress, and, in some places, no progress." Apple had told .Mac subscribers that June that the new MobileMe web apps needed Safari 3, Internet Explorer 7 or Firefox 2. A site called SaveTheDevelopers.org was already running an upgrade campaign.</p>
+
+<p>Simon Willison's <a href="https://simonwillison.net/2008/Jul/4/signals/">one-line reaction</a> to 37signals caught the nerve of it: "Interesting move considering BaseCamp is used for communicating with (often corporate) clients." Hold on to that word "corporate."</p>
+
+<h2>Norway and the conditional comment</h2>
+
+<p>The campaign proper began in Norway in February 2009. Finn.no, an online marketplace and one of the largest sites in the country, started showing IE6 visitors a notice. <a href="https://www.theregister.com/2009/02/19/norway_ie6/">The Register</a> printed it in English:</p>
+
+<blockquote>
+<p>Heads up: You're using an older version of Internet Explorer. In order to get the most out of our website, you can get a free update of Internet Explorer. If you're using a work computer, you should contact your IT administrator.</p>
+</blockquote>
+
+<p>Finn.no said about 17% of its 4.2 million users were on IE6. By February 19, The Register was reporting that two of Norway's three largest newspapers had posted similar messages, along with local papers, search engines, ISPs and the Yellow Pages. On February 20, Peter-Paul Koch put a warning on QuirksMode and titled his post <a href="https://www.quirksmode.org/blog/archives/2009/02/to_hell_with_ba.html">"To Hell With Bad Browsers — the sequel"</a>, after Jeffrey Zeldman's <a href="https://alistapart.com/article/tohell/">2001 A List Apart article</a> that had told designers to stop coddling Netscape 4. Koch was honest about the limits: "we web developers are mainly preaching to the choir, but some body has to start."</p>
+
+<p>The mechanism is the detail I like best. The notices were delivered by a Microsoft feature. Conditional comments had been in Internet Explorer since version 5: an HTML comment with a condition in it, which IE read and <a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/ms537512(v=vs.85)">every other browser skipped</a> as an ordinary comment. Here is the snippet Scott Hanselman <a href="https://www.hanselman.com/blog/ie6-warning-stop-living-in-the-past-get-off-of-ie6">passed along</a> on February 23, 2009, with its style block and most of its paragraph text cut for length:</p>
+
+<pre tabindex="0"><code>&lt;!--[if lte IE 6]&gt;
+&lt;div id="ie6msg"&gt;
+&lt;h4&gt;Did you know that your browser is out of date?&lt;/h4&gt;
+&lt;p&gt;To get the best possible experience using my website I recommend that you upgrade your browser to a newer version. [...] If you’re using a PC at work you should contact your IT-administrator.&lt;/p&gt;
+&lt;/div&gt;
+&lt;![endif]--&gt;</code></pre>
+
+<p><code>lte IE 6</code> means "less than or equal to IE 6." No script, no server code, no user-agent sniffing. As Hanselman put it, "There's no server-side requirement at all." Microsoft had built conditional comments so developers could feed its browser special instructions. Developers used them to feed its users one.</p>
+
+<p>Both notices send you to the same person: your IT administrator. The people writing the banners already knew who actually had the decision.</p>
+
+<p>By August 2009 an American site, IE6 No More, was handing out a similar snippet. <a href="https://www.itpro.com/613573/tech-startups-look-to-kill-off-ie6">IT Pro</a> described the group as tech start-ups led by Weebly, and <a href="https://www.infoq.com/news/2009/08/IE6-No-More/">InfoQ</a> counted more than 70 companies showing the message. The same InfoQ piece quotes Zeldman's line for the year: "IE6 is the new Netscape 4."</p>
+
+<h2>Digg asks, YouTube bluffs</h2>
+
+<p>That summer two big sites tried opposite approaches. Digg asked. Its IE6 visitors, <a href="https://techcrunch.com/2009/07/10/can-you-digg-it-maybe-not-if-youre-stuck-on-ie6/">TechCrunch reported</a> in July 2009, were around 5% of traffic but only 1% of diggs, buries and comments, so Digg polled them on why they hadn't upgraded. Eric Lawrence of the IE team <a href="https://learn.microsoft.com/en-us/archive/blogs/ieinternals/retiring-ie6">summed up the result</a>: "The dominant answer (32%+37%=69%) was that 'I'm not allowed by my IT department, and I don't have permissions to ignore them.'" Given those answers, TechCrunch reported, Digg was not going to run an upgrade banner any time soon. It would mostly have been nagging people who had no say.</p>
+
+<p>YouTube bluffed, and for ten years nobody outside knew it was a bluff. In 2019 Chris Zacharias, who had been a web developer there, published <a href="https://blog.chriszacharias.com/a-conspiracy-to-kill-ie6">A Conspiracy To Kill IE6</a>. IE6 was about 18% of YouTube's users and the team had been told support was not optional. So, in Zacharias's telling, a few engineers used a permission set called OldTuber, which YouTube's early engineers had created when the company was folded into Google, and which let its holders commit code with "only the most glancing of code reviews," and shipped a banner above the video player for IE6 users only:</p>
+
+<blockquote>
+<p>We will be phasing out support for your browser soon. Please upgrade to one of these more modern browsers.</p>
+</blockquote>
+
+<p>There was no date, because there was no plan. "The text was intentionally vague and the timeline left completely undefined," Zacharias writes. TechCrunch <a href="https://techcrunch.com/2009/07/14/youtube-will-be-next-to-kiss-ie6-support-goodbye/">spotted the banner</a> on July 14, 2009, and took it at face value, as did everyone else. Inside Google, two lawyers arrived wanting to know, in Zacharias's words, "Why did you have to put Chrome first?" The engineers showed them that the order of the browser links was random. Then the Google Docs team, seeing a banner on YouTube, assumed it was sanctioned and added their own, and after that every manager assumed YouTube had copied Docs.</p>
+
+<p>Zacharias gives the result as: "Within one month, our YouTube IE6 user base was cut in half and over 10% of global IE6 traffic had dropped off." Those are one participant's numbers a decade on, and I can't check them. But notice whom the banner reached. Digg's poll had just shown that most IE6 users couldn't upgrade. YouTube is where you go at lunch, and at home. My best guess is that the banner mostly moved home machines, and gave a lot of office workers a reason to bother the IT department, which is exactly what its authors say they daydreamed about.</p>
+
+<h2>Microsoft's answer</h2>
+
+<p>On August 10, 2009, Dean Hachamovitch, who ran the Internet Explorer team, answered the whole movement in a post called <a href="https://learn.microsoft.com/en-us/archive/blogs/ie/engineering-pov-ie6">Engineering POV: IE6</a>. It is worth reading in full, because it is the other side's case made straight:</p>
+
+<blockquote>
+<p>The engineering point of view on IE6 starts as an operating systems supplier. Dropping support for IE6 is not an option because we committed to supporting the IE included with Windows for the lifespan of the product. We keep our commitments.</p>
+</blockquote>
+
+<p>And on the people the banners were aimed at: "The choice to upgrade software on a PC belongs to the person responsible for the PC. Many PCs don't belong to individual enthusiasts, but to organizations." The post ends: "We will also continue to respect their choice, because their browser is their choice."</p>
+
+<p>Developers read that as a defense of IE6. I read it as a description of a trap Microsoft had built for itself and was now, quite sincerely, standing in.</p>
+
+<h2>Why it would not die</h2>
+
+<p><strong>The browser was a part of the operating system.</strong> This is Hachamovitch's point, and it is a matter of contract more than taste. IE6 shipped in Windows XP, so it was owed patches for as long as XP was. Microsoft's <a href="https://learn.microsoft.com/en-us/lifecycle/products/windows-xp">lifecycle page</a> shows XP's extended support running to April 2014. A browser that in 2009 felt eight years stale had five years of guaranteed life left. Lawrence made the security half of the argument: if Microsoft dropped support, people "would still use it anyway, just without the benefit of security and reliability patches."</p>
+
+<p><strong>The person at the keyboard was not the customer.</strong> A banner addresses a user. The decision belonged to an IT department with, in Hachamovitch's words, "tens or hundreds or thousands of PCs" to keep working on budget, and usually with what Lawrence called "one or two legacy webapps that require IE6." Those apps had been written for the browser of 2001 to 2006 when it was the only browser that mattered. Five years of monoculture had been converted into internal software, and internal software does not get rewritten because a classifieds site in Oslo is annoyed.</p>
+
+<p><strong>XP was still being sold.</strong> InfoWorld noted in February 2009 that "many new netbooks and other PCs that ship with XP still come with a copy of IE6." The old browser was still arriving on new hardware.</p>
+
+<p><strong>Much of it was a long way from the banners.</strong> By February 2010, Computerworld reported, IE6 was under 10% in the United States and about 50% of browsers in use in China. An English-language notice on a Denver agency's client sites was never going to touch that.</p>
+
+<p><strong>Upgrading took a decision.</strong> Every other force rests on this one. Getting from IE6 to IE7 or IE8 was something a person, or a department, had to choose to do. Software that needs a decision gets one eventually, on the decider's schedule.</p>
+
+<h2>Coping in the meantime</h2>
+
+<p>While the argument ran, the work went on. Conditional comments were used far more for their intended purpose than for banners: one extra stylesheet, loaded only by IE6, holding the fixes. Agencies started pricing the browser separately. Toupin said Aten "now evaluates IE6 support for its projects on a case-by-case basis," which is a polite way of saying it had become a line item.</p>
+
+<p>Google tried an end run. In September 2009 it released <a href="https://blog.chromium.org/2009/09/introducing-google-chrome-frame.html">Chrome Frame</a>, a plug-in that put Chrome's rendering engine inside Internet Explorer. A site opted in with one line:</p>
+
+<pre tabindex="0"><code>&lt;meta http-equiv="X-UA-Compatible" content="chrome=1"&gt;</code></pre>
+
+<p>That is Microsoft's own compatibility header, borrowed to ask for somebody else's browser. It still needed the plug-in installed, which on a locked-down office PC was the original problem again.</p>
+
+<p>Libraries absorbed the rest, quietly and for years. <a href="../jquery-and-the-dollar-sign/">jQuery</a> carried IE6 in every release until <a href="https://blog.jquery.com/2013/04/18/jquery-2-0-released/">version 2.0</a> in April 2013, and even then kept a 1.x branch "which does run on IE 6/7/8." A lot of developers stopped thinking about IE6 well before they stopped supporting it, because a dependency was doing the thinking.</p>
+
+<h2>The winter it turned</h2>
+
+<p>What actually set a date was security and Google, in that order. In January 2010 Google disclosed that it and other companies had been attacked, and the attack turned out to have used a hole in Internet Explorer. On January 15, Germany's federal information security office, the BSI, <a href="https://grahamcluley.com/german-government-internet-explorer/">recommended</a> that people switch to another browser until a patch arrived. The flaw affected versions 6, 7 and 8, so it was not IE6's fault alone, but a government telling citizens to stop using Internet Explorer changed what an IT department could say out loud.</p>
+
+<p>Two weeks later, on January 29, Google's enterprise blog <a href="https://cloud.googleblog.com/2010/01/modern-browsers-for-modern-applications.html">announced</a> that Google Docs and Google Sites would begin phasing out older browsers: "from March 1 key functionality within these products... won't work properly." In February, YouTube's seven-month-old bluff finally got a real date. <a href="https://www.theregister.com/2010/02/23/google_to_end_you_tube_ie6_support/">The new notice</a> read: "On March 13, we are dropping support for your browser."</p>
+
+<p>That is the "workplace injury" in the obituary, and March 1 is the date of death. Aten posted its invitation, expecting the 30 or 40 people who usually came to its office parties, and got more than 700 RSVPs. "This kind of blew up on us," Toupin said.</p>
+
+<p>Microsoft's part was better judged than it needed to be. The flowers came from the IE team. A company PR representative from Boulder came too and took photographs; "They were really curious about the tone of the event," Clark said. And the card was also an advertisement. MIX was Microsoft's web conference, and on March 16, twelve days after the wake, the IE team used it to <a href="https://learn.microsoft.com/en-us/archive/blogs/ie/html5-hardware-accelerated-first-ie9-platform-preview-available-for-developers">show the first IE9 platform preview</a>. That was the little piece of heaven.</p>
+
+<h2>The maker joins the campaign</h2>
+
+<p>After the funeral, Microsoft stopped defending and started campaigning. In May 2010 its Australian division put up a page with a milk carton on it. <a href="https://www.computerworld.com/article/2757780/ie6-past-its-expiration-date--says-microsoft.html">Computerworld</a> gives the copy: "You wouldn't drink 9-year-old milk. So why use a 9-year-old browser?"</p>
+
+<p>On March 4, 2011, which was a year to the day after the wake (I have no evidence that was deliberate), Microsoft launched IE6 Countdown, a site that tracked IE6's share by country with a target of under 1%. <a href="https://thenextweb.com/news/microsoft-launches-ie6countdown-com-to-track-the-death-of-internet-explorer-6">The Next Web</a> noted the opening figures: about 12% of the world, and 34.5% in China. The site offered banners for webmasters to put on their own pages. The vendor was now distributing the developers' tactic.</p>
+
+<p>On January 3, 2012, Microsoft announced that the United States had gone under 1%. Roger Capriotti, Microsoft's director of IE marketing, wrote, as <a href="https://learn.microsoft.com/en-us/archive/blogs/usisvde/ie6-usage-in-the-us-has-now-officially-dropped-below-1">quoted on a Microsoft developer blog</a>: "IE6 has been the punch line of browser jokes for a while, and we've been as eager as anyone to see it go away." Microsoft celebrated with a cake. <a href="https://www.theregister.com/2012/01/03/microsoft_ie6_death/">The Register</a>, less festive, pointed out that IE6 was still 7.7% of the world and around a quarter of China, and that Norway, where the banners began, had been the first country under 1%, back in May 2010.</p>
+
+<p>Support for Windows XP, and with it the commitment Hachamovitch had described, ended in April 2014. The browser was twelve and a half years old.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The real fix was removing the decision.</strong> In December 2011 Microsoft announced that Internet Explorer would start upgrading itself through Windows Update, "following in the footsteps of rivals Google and Mozilla," as <a href="https://www.itnews.com.au/news/microsoft-switches-on-auto-upgrades-for-internet-explorer-284669">iTnews put it</a>. Then it went further and <a href="https://learn.microsoft.com/en-us/lifecycle/announcements/internet-explorer-dotnet-framework-support">announced</a> that after January 12, 2016, "only the most current version of Internet Explorer available for a supported operating system will receive technical support and security updates." Set that beside "their browser is their choice" from 2009. The industry's answer to IE6 was to take the choice away, and to call the result "evergreen." You very likely don't know what version of your browser you are running, and that ignorance is the campaign's most durable achievement.</p>
+
+<p><strong>The funeral moved into a config file.</strong> If you have a build toolchain, there's a fair chance your project contains the phrase <code>not dead</code>. It is a <a href="https://github.com/browserslist/browserslist">Browserslist</a> query, and the README defines <code>dead</code> as "browsers without official support or updates for 24 months." In 2009, deciding to stop supporting a browser took a blog post, a banner and a certain amount of courage. Now it is a default that most teams have never read. I think that is progress, but it is worth knowing that the argument was not settled so much as automated.</p>
+
+<p><strong>The complaint outlived the browser.</strong> Zeldman's "IE6 is the new Netscape 4" was already the second link in a chain. In 2011 Paul Irish wrote <a href="https://www.paulirish.com/2011/browser-market-pollution-iex-is-the-new-ie6/">IE[x] is the new IE6</a>, and in 2015 Nolan Lawson wrote <a href="https://nolanlawson.com/2015/06/30/safari-is-the-new-ie/">Safari is the new IE</a>. Irish's post has the sharpest diagnosis of the lot: "what's far more important than shipping frequency, is the browser half-life." IE6's bugs were ordinary for 2001. Its crime was duration. Any browser tied to an operating system's release schedule inherits the same problem, which is why that sentence keeps getting rewritten with a new name in it.</p>
+
+<p><strong>The tool went the way of the target.</strong> Conditional comments, which carried the banners and a decade of IE-only stylesheets, <a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/hh801214(v=vs.85)">were removed in Internet Explorer 10</a>. Microsoft's own page on the change advises: "consider using feature detection." That is the same advice the previous browser war ended on.</p>
+
+<p><strong>The lawyers asked the right question.</strong> A banner on one site halved that site's IE6 audience in a month, by its author's account, and gave "permission to every other site on the web to add their own." The site belonged to a company that had launched its own browser the year before. The engineers randomized the list and meant it. Still, I'd argue the funeral's cheerful story, in which developers and one big friendly website free the web from a browser monoculture, reads a little differently now that most browsers run on that company's engine.</p>
+
+<h2>The takeaway</h2>
+
+<p>The IE6 funeral is remembered as the day the web's developers buried the browser they hated. What the record shows is narrower and more interesting. The banners and badges and the coffin did real work: they made the cost of an old browser visible, they gave big sites cover to set dates, and they gave Microsoft's own browser team a public reason to say what it plainly wanted to say. But the deceased had about 20% of the market on the night of its wake, and it fell below 1% in the United States almost two years later, after its maker joined in. It outlived the funeral by four years of security patches.</p>
+
+<p>What killed IE6 was never going to be persuasion, because the people being persuaded mostly weren't the ones deciding. It ended when the decision itself was designed out: browsers that update without asking, and a support policy that covers only the newest one. The lesson I'd take is to look for where an upgrade requires someone's permission, because that is where the next IE6 is already sitting. And if a competitor's joke about your product is fair, send flowers.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://techcrunch.com/2010/03/05/ie6-funeral/">IE6 Laid To Rest. Pictures, Videos, And Flowers From Microsoft.</a>, MG Siegler, TechCrunch, 2010</li>
+    <li><a href="https://www.westword.com/news/internet-explorer-6-funeral-microsoft-sent-flowers-5839786">Internet Explorer 6 funeral: Microsoft sent flowers</a>, Michael Roberts, Westword, 2010</li>
+    <li><a href="https://www.computerworld.com/article/2762965/mourners-eulogize-ie6-at-funeral-for-aged-browser.html">Mourners eulogize IE6 at funeral for aged browser</a>, Gregg Keizer, Computerworld, 2010</li>
+    <li><a href="https://www.computerworld.com/article/2761709/web-designers-announce-ie6-s--death---slate-party.html">Web designers announce IE6's 'death,' slate party</a>, Gregg Keizer, Computerworld, 2010</li>
+    <li><a href="https://www.infoq.com/news/2008/07/ie6_on_its_way_out/">IE6 on its way out</a>, InfoQ, 2008</li>
+    <li><a href="https://simonwillison.net/2008/Jul/4/signals/">Phasing out support for IE 6 across all 37signals products</a>, Simon Willison, 2008</li>
+    <li><a href="https://www.theregister.com/2009/02/19/norway_ie6/">Norway mobilizes against IE 6</a>, Gavin Clarke, The Register, 2009</li>
+    <li><a href="https://www.infoworld.com/article/2227868/norway-heads-drive-to-boot-microsoft-s-ie6-browser-off-the-web.html">Norway heads drive to boot Microsoft's IE6 browser off the Web</a>, InfoWorld, 2009</li>
+    <li><a href="https://www.quirksmode.org/blog/archives/2009/02/to_hell_with_ba.html">To Hell With Bad Browsers — the sequel</a>, Peter-Paul Koch, QuirksMode, 2009</li>
+    <li><a href="https://alistapart.com/article/tohell/">To Hell With Bad Browsers</a>, Jeffrey Zeldman, A List Apart, 2001</li>
+    <li><a href="https://www.hanselman.com/blog/ie6-warning-stop-living-in-the-past-get-off-of-ie6">IE6 Warning - Stop Living In The Past - Get off of IE6</a>, Scott Hanselman, 2009</li>
+    <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/ms537512(v=vs.85)">About conditional comments</a>, Microsoft</li>
+    <li><a href="https://www.itpro.com/613573/tech-startups-look-to-kill-off-ie6">Tech startups look to kill off IE6</a>, IT Pro, 2009</li>
+    <li><a href="https://www.infoq.com/news/2009/08/IE6-No-More/">IE6 No More</a>, Abel Avram, InfoQ, 2009</li>
+    <li><a href="https://techcrunch.com/2009/07/10/can-you-digg-it-maybe-not-if-youre-stuck-on-ie6/">Can You Digg It? Maybe Not, If You're Stuck On IE6</a>, Jason Kincaid, TechCrunch, 2009</li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/ieinternals/retiring-ie6">Retiring IE6...</a>, Eric Lawrence, IEInternals, 2009</li>
+    <li><a href="https://blog.chriszacharias.com/a-conspiracy-to-kill-ie6">A Conspiracy To Kill IE6</a>, Chris Zacharias, 2019</li>
+    <li><a href="https://techcrunch.com/2009/07/14/youtube-will-be-next-to-kiss-ie6-support-goodbye/">YouTube Will Be Next To Kiss IE6 Support Goodbye</a>, TechCrunch, 2009</li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/ie/engineering-pov-ie6">Engineering POV: IE6</a>, Dean Hachamovitch, IEBlog, 2009</li>
+    <li><a href="https://learn.microsoft.com/en-us/lifecycle/products/windows-xp">Windows XP lifecycle</a>, Microsoft</li>
+    <li><a href="https://blog.chromium.org/2009/09/introducing-google-chrome-frame.html">Introducing Google Chrome Frame</a>, Chromium Blog, 2009</li>
+    <li><a href="https://blog.jquery.com/2013/04/18/jquery-2-0-released/">jQuery 2.0 Released</a>, jQuery Blog, 2013</li>
+    <li><a href="https://grahamcluley.com/german-government-internet-explorer/">German Government: Don't use Internet Explorer</a>, Graham Cluley, 2010</li>
+    <li><a href="https://cloud.googleblog.com/2010/01/modern-browsers-for-modern-applications.html">Modern browsers for modern applications</a>, Rajen Sheth, Google, 2010</li>
+    <li><a href="https://www.theregister.com/2010/02/23/google_to_end_you_tube_ie6_support/">YouTube's IE6 support dies on March 13</a>, Cade Metz, The Register, 2010</li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/ie/html5-hardware-accelerated-first-ie9-platform-preview-available-for-developers">HTML5, Hardware Accelerated: First IE9 Platform Preview Available for Developers</a>, IEBlog, 2010</li>
+    <li><a href="https://www.computerworld.com/article/2757780/ie6-past-its-expiration-date--says-microsoft.html">IE6 past its expiration date, says Microsoft</a>, Gregg Keizer, Computerworld, 2010</li>
+    <li><a href="https://thenextweb.com/news/microsoft-launches-ie6countdown-com-to-track-the-death-of-internet-explorer-6">Microsoft launches IE6countdown.com to track the death of Internet Explorer 6</a>, Alex Wilhelm, The Next Web, 2011</li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/usisvde/ie6-usage-in-the-us-has-now-officially-dropped-below-1">IE6 usage in the US has now officially dropped below 1%</a>, Bruce D. Kyle, Microsoft, 2012</li>
+    <li><a href="https://www.theregister.com/2012/01/03/microsoft_ie6_death/">Microsoft celebrates the death of IE6</a>, Iain Thomson, The Register, 2012</li>
+    <li><a href="https://www.itnews.com.au/news/microsoft-switches-on-auto-upgrades-for-internet-explorer-284669">Microsoft switches on auto upgrades for Internet Explorer</a>, iTnews, 2011</li>
+    <li><a href="https://learn.microsoft.com/en-us/lifecycle/announcements/internet-explorer-dotnet-framework-support">Internet Explorer and .NET Framework 4.x support announcements</a>, Microsoft</li>
+    <li><a href="https://github.com/browserslist/browserslist">Browserslist</a>, project README</li>
+    <li><a href="https://www.paulirish.com/2011/browser-market-pollution-iex-is-the-new-ie6/">Browser Market Pollution: IE[x] Is the New IE6</a>, Paul Irish, 2011</li>
+    <li><a href="https://nolanlawson.com/2015/06/30/safari-is-the-new-ie/">Safari is the new IE</a>, Nolan Lawson, 2015</li>
+    <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/hh801214(v=vs.85)">Conditional comments are no longer supported</a>, Microsoft</li>
+  </ul>
+</section>

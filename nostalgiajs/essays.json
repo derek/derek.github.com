@@ -102,6 +102,20 @@
         "That F12 as the developer-tools key began with Firebug 0.2.3 rests on Wikipedia, and is attributed to it.",
         "The Firebug 1.1 source listings come from a third-party mirror, which the essay names."
       ]
+    },
+    {
+      "slug": "the-ie6-funeral",
+      "title": "The IE6 funeral: campaigning to kill a browser",
+      "description": "In March 2010 a Denver web shop buried Internet Explorer 6 in a pine coffin and Microsoft sent flowers. The browser had a fifth of the market that night, and what finally ended it was not persuasion.",
+      "topic": "people",
+      "era": [
+        2008,
+        2016
+      ],
+      "published": "2026-11-12T20:05:01+00:00",
+      "unverified": [
+        "placeholder until the review is in."
+      ]
     }
   ]
 }
