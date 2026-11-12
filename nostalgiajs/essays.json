@@ -177,14 +177,19 @@
         2002,
         2013
       ],
-      "published": "2026-11-12T20:07:09+00:00",
+      "published": "2026-11-12T21:28:30+00:00",
       "related": [
         "jquery-and-the-dollar-sign",
         "view-source-was-the-school",
         "firebug-and-the-inside-of-the-page"
       ],
       "unverified": [
-        "placeholder until review"
+        "Ajaxian itself. The site no longer serves its archive and I could not reach an Internet Archive copy, so its story rests on Dion Almaer's announcement, other people's mentions and an index of its titles. That its founders joined Mozilla in 2008 comes from one of those titles, not from the entry.",
+        "The inside story of Google Reader (the Fusion prototype, the 30 million peak, maintenance mode, the pope) comes from one article in The Verge, and its source for the 2013 announcement had already left Google.",
+        "The early RSS dates, the Bloglines sale, the adoption of the feed icon and GitHub's launch month come from Wikipedia. The RSS 2.0 specification's own history says August 2002 where Wikipedia says September, so I wrote only the year.",
+        "Feedly's 500,000 new users is the company's own figure, as relayed by The Next Web.",
+        "Peter-Paul Koch's 2004 article on inline event handlers is known to me only through Simon Willison's quotation of it, and Apple pointing to QuirksMode for JavaScript documentation is Koch's own account.",
+        "That links moved to Twitter, Reddit and Hacker News, that code moved from blog entries to GitHub, and the comparison of a patched blog entry to a pull request are my own readings."
       ]
     }
   ]
