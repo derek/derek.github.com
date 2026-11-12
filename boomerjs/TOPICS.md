@@ -12,6 +12,10 @@ Pick the next post from the Backlog. Move it to Posted with its date. Add new id
 
 ## Backlog
 
+Aim for about one people-and-culture post in every three, so the blog is not all code.
+
+### Technology
+
 - Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 - Image rollovers and `MM_swapImage`: Dreamweaver writes your JavaScript
 - The `window.status` scroller and other things we thought were cool
@@ -33,3 +37,27 @@ Pick the next post from the Backlog. Move it to Posted with its date. Add new id
 - `<script language="JavaScript1.2">`: when the version attribute changed what `==` meant
 - `document.lastModified` and the "last updated" footer
 - Moment.js, its 2020 "done" notice, and the long wait for Temporal
+
+### People and culture
+
+- The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
+- View Source as the school: learning the trade by reading other people's pages
+- "Under construction" GIFs, 88x31 buttons and "Best viewed in" badges: the folk art of the early web
+- GeoCities neighborhoods, webrings and guestbooks: how people found each other before search and social
+- Copy-and-paste script archives (Dynamic Drive, The JavaScript Source) and the credit comment you were told not to remove
+- The Rhino book and the O'Reilly shelf: when the bookstore was the curriculum
+- comp.lang.javascript, its FAQ, and learning from strangers on Usenet
+- A List Apart, "To Hell with Bad Browsers" and the Web Standards Project: developers lobbying browser makers
+- CSS Zen Garden (2003) and the tables-versus-CSS argument
+- The dot-com crash of 2000 to 2001 as web developers lived it
+- The Firefox 1.0 New York Times ad (2004): users paying to advertise a browser
+- Web 2.0: the 2005 essay, glossy buttons, rounded corners and the permanent "beta" badge
+- The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
+- "JavaScript: The World's Most Misunderstood Programming Language" (2001): how a toy language became respectable
+- Stack Overflow launches (2008), and what asking a programming question was like before it
+- The first JSConf (2009) and the start of a JavaScript conference culture
+- From webmaster to "front-end developer": how the job titles split
+- The IE6 funeral (2010) and the campaigns to kill a browser
+- FizzBuzz, the whiteboard and the rituals of the developer interview
+- "Wat" (2012) and the tradition of laughing at JavaScript
+- "How it feels to learn JavaScript in 2016" and JavaScript fatigue
