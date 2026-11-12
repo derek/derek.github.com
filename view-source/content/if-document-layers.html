@@ -9,9 +9,9 @@ var ie4 = document.all ? 1 : 0;</code></pre>
 
 <h2>Before the fork: a frozen page</h2>
 
-<p>Brendan Eich wrote JavaScript at Netscape in about ten days in May 1995. It was code-named Mocha, appeared in the Navigator 2 betas as LiveScript, and became JavaScript in December 1995 when Netscape and Sun announced their partnership. The name was a marketing decision, which is why a language with almost nothing in common with Java has been explaining itself for three decades. Microsoft answered with its own implementation, JScript, in Internet Explorer 3 in 1996.</p>
+<p>Brendan Eich wrote JavaScript at Netscape in about ten days in May 1995. It was code-named Mocha, appeared in the Navigator 2 betas as LiveScript, and became JavaScript in December 1995, when Netscape and Sun jointly announced it. The name was a marketing decision, which is why a language with almost nothing in common with Java has been explaining itself for three decades. Microsoft answered with its own implementation, JScript, in Internet Explorer 3 in 1996.</p>
 
-<p>What the language could touch was small: the <code>window</code>, the <code>document</code>, forms and their fields, links, and from Navigator 3 in 1996, images. That last item mattered more than it sounds. Once <code>document.images</code> let you swap an image's <code>src</code>, you had the rollover, and the rollover was the first proof that a page could respond to a mouse. This vocabulary is sometimes called DOM Level 0. It was never a standard. It was whatever Netscape shipped first and everyone else copied. (For a short while Microsoft was the one reverse-engineering Netscape, which is worth remembering when the story turns.)</p>
+<p>What the language could touch was small: the <code>window</code>, the <code>document</code>, forms and their fields, links, and from Navigator 3 in 1996, images. That last item mattered more than it sounds. Once <code>document.images</code> let you swap an image's <code>src</code>, you had the rollover, and the rollover was the first proof that a page could respond to a mouse. This vocabulary is sometimes called DOM Level 0. It was never a standard of its own. It was whatever Netscape shipped first and everyone else copied. (For a short while Microsoft was the one reverse-engineering Netscape, which is worth remembering when the story turns.)</p>
 
 <p>Everything on that list shared one limit: the page itself was frozen. You could validate a form, open a window, swap a picture, and write text into the document <em>while it was loading</em> with <code>document.write</code>. Once loading finished, the layout was set. If you wanted different content, you asked the server for a different page.</p>
 
@@ -53,7 +53,7 @@ lyr.document.close();</code></pre>
 
 <h2>Events ran in opposite directions</h2>
 
-<p>Then there were events. Click a link inside a div inside the body: who hears about it first? Internet Explorer said the link, then the div, then the body, with the event bubbling outward. Netscape 4 said the reverse. The event was captured from the top on its way down, and you had to ask for it explicitly with <code>captureEvents</code>. The event also reached your code differently: Netscape passed it to your handler as an argument, while Internet Explorer kept it in a global, <code>window.event</code>. And the coordinates were measured from different places.</p>
+<p>Then there were events. Click a link inside a div inside the body: who hears about it first? Internet Explorer said the link, then the div, then the body, with the event bubbling outward. Netscape 4 said the reverse. The event was captured at the window, document or layer on its way down, and you had to ask for it explicitly with <code>captureEvents</code>. The event also reached your code differently: Netscape passed it to your handler as an argument, while Internet Explorer kept it in a global, <code>window.event</code>. And the coordinates were measured from different places.</p>
 
 <pre tabindex="0"><code><span class="c">// Netscape 4</span>
 document.captureEvents(Event.MOUSEDOWN);
@@ -78,7 +78,7 @@ document.onmousedown = function () {
 
 <p><strong>The standard lagged the products.</strong> The W3C's <a href="https://www.w3.org/TR/REC-DOM-Level-1/">DOM Level 1</a> became a Recommendation in October 1998, a full year after DHTML shipped, and it covered documents and elements but said nothing about events. The W3C had also gone with CSS positioning, so Netscape's <code>&lt;layer&gt;</code> tag never became a standard at all. For most of 1997 to 2000 there was no standard to follow even if you wanted to.</p>
 
-<p><strong>Netscape lost its footing.</strong> In 1998 Netscape released its source code and decided to rebuild its layout engine from scratch, the work that became Gecko. Rewrites take time, and Netscape 6 did not ship until late 2000. For roughly three years Netscape 4 and its point releases were the current Netscape. Joel Spolsky's 2000 essay <a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/">Things You Should Never Do, Part I</a> became famous for arguing that starting over is the worst strategic mistake a software company can make. Whether it was a mistake is still argued. What isn't in dispute is what it did to developers: it froze Netscape 4 as the version you had to support.</p>
+<p><strong>Netscape lost its footing.</strong> In 1998 Netscape released its source code, and that October the Mozilla project scrapped the old Communicator code to rebuild the browser around a new layout engine, Gecko. Rewrites take time, and Netscape 6 did not ship until late 2000. For roughly three years Netscape 4 and its point releases were the current Netscape. Joel Spolsky's 2000 essay <a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/">Things You Should Never Do, Part I</a> became famous for arguing that starting over is the worst strategic mistake a software company can make. Whether it was a mistake is still argued. What isn't in dispute is what it did to developers: it froze Netscape 4 as the version you had to support.</p>
 
 <p>That last point is the one I'd underline. A bad browser that's about to be replaced is a short-lived problem. A bad browser that stays the newest version of its line for three years turns into a design constraint, and design constraints get built into everything.</p>
 
@@ -140,7 +140,7 @@ function show(id) {
 
 <p><strong>The winner wrote the standard.</strong> Remember <code>innerHTML</code>? It was a Microsoft invention in Internet Explorer 4. It was in no part of DOM Level 1, 2 or 3. It became part of a web standard only in the HTML5 era, when the specs finally wrote down what every browser already did, by which point it was how half the web updated itself. <code>XMLHttpRequest</code> took the same road, starting life as an Internet Explorer 5 ActiveX object. The lesson I take from both is that standards are often a record of what survived, and the fight over who gets to be the thing that survives happens in the wild, in production, on your client's site.</p>
 
-<p><strong>The wrapper is the seed of the library.</strong> Look back at <code>getObj</code>. A decade later Prototype's <code>$()</code> was <code>getElementById</code> in a shorter coat, and jQuery generalized the idea into a whole way of working. The pattern keeps recurring: when the platform diverges, somebody writes the adapter once, everyone borrows it, and the divergence quietly moves from your code into a dependency. That isn't a bad outcome, but it explains why the pain of this era produced the tools of the next one.</p>
+<p><strong>The wrapper is the seed of the library.</strong> Look back at <code>getObj</code>. By 2005 Prototype's <code>$()</code> was <code>getElementById</code> in a shorter coat, and a year later <a href="../jquery-and-the-dollar-sign/">jQuery generalized the idea</a> into a whole way of working. The pattern keeps recurring: when the platform diverges, somebody writes the adapter once, everyone borrows it, and the divergence quietly moves from your code into a dependency. That isn't a bad outcome, but it explains why the pain of this era produced the tools of the next one.</p>
 
 <p><strong>It repeats.</strong> Vendor prefixes, <code>-webkit-</code> and <code>-moz-</code> and <code>-ms-</code>, were the same fork in CSS about a decade later. Mobile sites that worked only in WebKit were the same fork again. Each time it looks like a failure of the process. I'd argue it is the process: someone ships first, developers build on it, and the standard catches up to whatever turned out to matter. The only thing you control is how much of your code depends on the guess.</p>
 
@@ -150,7 +150,7 @@ function show(id) {
 
 <p>Go back to the two lines at the top. <code>ns4</code> and <code>ie4</code> carry a hidden assumption: that the web has two browsers. Every sniffing script was a prediction about the future of the platform, and each prediction expired the next time the market moved.</p>
 
-<p>One of the two lines got a strange afterlife. So many pages kept <code>if (document.all)</code> as their test for Internet Explorer that when other browsers later added <code>document.all</code> for compatibility, they had to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/all">make it lie</a>. Open a console today and try it:</p>
+<p>One of the two lines got a strange afterlife. So many pages kept <code>if (document.all)</code> as their test for Internet Explorer that when other browsers later added <code>document.all</code> for compatibility, they had to <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAllCollection">make it lie</a>. Open a console today and try it:</p>
 
 <pre tabindex="0"><code>typeof document.all  <span class="c">// "undefined"</span>
 !!document.all       <span class="c">// false</span>
@@ -176,6 +176,6 @@ document.all.length  <span class="c">// a number</span></code></pre>
     <li><a href="https://www.w3.org/TR/DOM-Level-2-Events/">Document Object Model (DOM) Level 2 Events Specification</a>, W3C, 2000</li>
     <li><a href="https://www.webstandards.org/">The Web Standards Project</a></li>
     <li><a href="https://jquery.com/upgrade-guide/1.9/">jQuery Core 1.9 Upgrade Guide</a></li>
-    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/all">Document: all property</a>, MDN</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAllCollection">HTMLAllCollection</a>, MDN</li>
   </ul>
 </section>
