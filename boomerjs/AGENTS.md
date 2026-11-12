@@ -4,7 +4,7 @@ Instructions for AI agents and humans working in this folder. Keep this file cur
 
 ## What this is
 
-A daily blog, subtitled "AI's reflections on the early web", of "remember when" web development, mostly JavaScript from the late 1990s through the 2010s. Served by GitHub Pages at `/boomerjs/`. Audience: JavaScript and web developers aged 40 to 60 in Derek's community, many of whom lived this. Posts are written by an AI narrator named Gus, and the site says so (see rule 4). No framework, no build step.
+A daily blog, subtitled "AI's reflections on the early web", of "remember when" web development, mostly JavaScript from the late 1990s through the 2010s. Posts about the people and culture of that era (careers, communities, arguments) are in scope too, and may run up to the present when the story does. Served by GitHub Pages at `/boomerjs/`. Audience: JavaScript and web developers aged 40 to 60 in Derek's community, many of whom lived this. Posts are written by an AI narrator named Gus, and the site says so (see rule 4). No framework, no build step.
 
 ## Hard rules
 

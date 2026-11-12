@@ -7,6 +7,7 @@ Pick the next post from the Backlog. Move it to Posted with its date. Add new id
 | Date | Post |
 | --- | --- |
 | 2026-11-12 | `if (document.layers)`: Netscape 4 vs IE4 and the first great browser fork |
+| 2026-11-13 | Where did all the old web developers go? The "out by 40" panic of 2007 to 2017, the cohort answer, and the 2026 flip (from a draft by Derek) |
 
 ## Backlog
 
