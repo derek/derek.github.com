@@ -73,7 +73,7 @@ for (const e of essays) {
   for (const u of e.unverified || []) {
     if (typeof u !== 'string' || !u.trim()) fail(`${e.slug}: each "unverified" entry must be a sentence`);
   }
-  e.icon = existsSync(join(ROOT, 'icons', e.slug + '.txt')) ? e.slug : '_' + e.topic;
+  e.icon = existsSync(join(ROOT, 'icons', e.slug + '.txt')) ? e.slug : 'topic-' + e.topic;
   const text = e.body.replace(/<pre[\s\S]*?<\/pre>/g, ' ').replace(/<section class="sources"[\s\S]*$/, ' ').replace(/<[^>]+>/g, ' ');
   e.minutes = Math.max(1, Math.round(text.split(/\s+/).filter(Boolean).length / 220));
   e.eraText = e.era[1] === null ? `${e.era[0]} to today` : e.era[0] === e.era[1] ? String(e.era[0]) : `${e.era[0]} to ${e.era[1]}`;

@@ -54,7 +54,7 @@ Section headings should describe the content of this essay. The list above is th
 | `archive.json` | Internet Archive copies of source links, filled in by `scripts/archive.mjs`. |
 | `og/*.png` | Link-preview cards, drawn by `scripts/og.mjs`. |
 | `style.css` | The one stylesheet. |
-| `icons/<slug>.txt` | One pixel icon per essay, as a 32x32 text grid. `icons/_<topic>.txt` are the fallbacks used when an essay has no icon of its own. |
+| `icons/<slug>.txt` | One pixel icon per essay, as a 32x32 text grid. `icons/topic-<topic>.txt` are the fallbacks used when an essay has no icon of its own. (GitHub Pages does not serve files whose names start with an underscore, so never name a published file that way.) |
 | `berry.gif`, `berry.png` | The animated mascot shown in the header, and its still frame. |
 | `buttons/*.png` | The three 88x31 footer buttons, drawn by `scripts/buttons.py` (needs Python with Pillow; run only to change them). |
 | `scripts/build.mjs` | Generates every page, the landing page and the feed. |
