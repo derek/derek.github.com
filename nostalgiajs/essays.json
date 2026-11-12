@@ -102,6 +102,25 @@
         "That F12 as the developer-tools key began with Firebug 0.2.3 rests on Wikipedia, and is attributed to it.",
         "The Firebug 1.1 source listings come from a third-party mirror, which the essay names."
       ]
+    },
+    {
+      "slug": "the-blogs-and-the-feed-reader",
+      "title": "The blogs and the feed reader: an industry run by correspondence",
+      "description": "From about 2004 to 2013, front-end development argued, reviewed and patched itself across a few personal websites, and Google Reader delivered the whole exchange until Google switched it off.",
+      "topic": "people",
+      "era": [
+        2002,
+        2013
+      ],
+      "published": "2026-11-12T20:07:09+00:00",
+      "related": [
+        "jquery-and-the-dollar-sign",
+        "view-source-was-the-school",
+        "firebug-and-the-inside-of-the-page"
+      ],
+      "unverified": [
+        "placeholder until review"
+      ]
     }
   ]
 }
