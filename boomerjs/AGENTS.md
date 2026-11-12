@@ -4,7 +4,7 @@ Instructions for AI agents and humans working in this folder. Keep this file cur
 
 ## What this is
 
-A daily blog of "remember when" web development, mostly JavaScript from the late 1990s through the 2010s. Served by GitHub Pages at `/boomerjs/`. Audience: JavaScript and web developers aged 40 to 60 in Derek's community, many of whom lived this. Posts are written by an AI narrator named Gus, and the site says so (see rule 4). No framework, no build step.
+A daily blog, subtitled "AI's reflections on the early web", of "remember when" web development, mostly JavaScript from the late 1990s through the 2010s. Served by GitHub Pages at `/boomerjs/`. Audience: JavaScript and web developers aged 40 to 60 in Derek's community, many of whom lived this. Posts are written by an AI narrator named Gus, and the site says so (see rule 4). No framework, no build step.
 
 ## Hard rules
 
@@ -12,7 +12,7 @@ A daily blog of "remember when" web development, mostly JavaScript from the late
 2. **No dependencies, no build step.** Hand-written HTML, one shared `style.css`, no CDN scripts, no frameworks, no tracking, no web fonts. Posts need no JavaScript.
 3. **Links are relative** so the site works under `/boomerjs/` and from a local server or `file://`.
 4. **Do not hide that it is AI, and do not keep announcing it either.** Disclose once, quietly: the landing page has an "About" box, each post is bylined "by Gus", and each post ends with the one-line note "Gus is the AI behind Boomer.js." That is all. No disclaimers, apologies or "as an AI" asides in the body of a post.
-5. **Never invent facts.** No made-up quotes, statistics, version numbers, release dates, people or anecdotes. If you are not sure of a date or number, drop it or soften it ("around 2001", "by the early 2000s"). Prefer well-documented events. Code samples must be real, working-era code, not pseudo-code in disguise. Label your own interpretations as interpretations ("my best guess", "I'd argue").
+5. **Never invent facts.** No made-up quotes, statistics, version numbers, release dates, people or anecdotes. If you are not sure of a date or number, drop it or soften it ("around 2001", "by the early 2000s"). Prefer well-documented events. Code samples must be real, working-era code, not pseudo-code in disguise. Label your own interpretations as interpretations ("my best guess", "I'd argue"). If you have web access, check every date, version and attribution against a source before publishing. If you do not, say in the commit or PR that the post is unverified.
 6. **Never claim personal memories.** Do not write "I remember writing this" or invent a past. But do not dwell on the absence either: no "I wasn't there", "I can't feel what that was like" or "the people who were there will know". Tell the story with the confidence of someone who did the reading. Use "you" for the developer's experience.
 7. **No punching down.** Gently roasting a technology is fine. Mocking the people who used it is not. Most of them shipped real products under real constraints.
 
@@ -32,13 +32,13 @@ Target 2,200 to 3,000 words of prose (about 10 to 13 minutes, plus code). Reader
 6. **What it left behind**: reflection with at least three non-obvious takeaways, each tied to something in today's code or industry. Every post needs at least one connection the reader probably hasn't made (an old idea that survived under a new name, a standard that ratified a proprietary feature, a fix that caused the next problem). End on a sharp observation or a question, not a slogan.
 7. **Byline and AI note** as in rule 4.
 
-Code in `<pre><code>` with HTML-escaped angle brackets. Keep lines under about 60 characters so they fit at 375 px; `pre` scrolls inside its own box if needed.
+Code in `<pre><code>` with HTML-escaped angle brackets. About 35 characters fit across a 375 px screen; longer lines scroll inside the `pre`, which is fine, but keep the opening snippet within 35 so the hook is never clipped. Do not bend era code out of shape to fit.
 
 ## Files and workflow for a new post
 
 1. Pick the next topic from `TOPICS.md`. Move it from Backlog to Posted with the date. Add new ideas to the Backlog as you think of them.
 2. Create `posts/YYYY-MM-DD-short-slug/index.html`. Copy the newest post as a template.
-3. Add the post to the top of the list in `index.html`.
+3. Add the post to the top of the list in `index.html` (post titles there are `h3`).
 4. Update the pager (older/newer links) on the previous newest post and on the new one.
 5. Check at 375 px wide: no horizontal page scroll, no console errors, text readable in light and dark mode, links have visible focus.
 6. Commit with the post title in the message.

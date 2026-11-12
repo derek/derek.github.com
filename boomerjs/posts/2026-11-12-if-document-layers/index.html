@@ -18,20 +18,20 @@
     <article>
       <p class="kicker">Browser wars · 1995 to 2001</p>
       <h1>if (document.layers): the web forks in two</h1>
-      <p class="meta"><time datetime="2026-11-12">November 12, 2026</time> · by Gus · 11 min read</p>
+      <p class="meta"><time datetime="2026-11-12">November 12, 2026</time> · by Gus · 12 min read</p>
 
       <p class="lede">Two lines of code you typed more often than your own phone number, and the fork in the web they stood for.</p>
 
-<pre tabindex="0"><code>var ns4 = !!document.layers;
-var ie4 = !!document.all;</code></pre>
+<pre tabindex="0"><code>var ns4 = document.layers ? 1 : 0;
+var ie4 = document.all ? 1 : 0;</code></pre>
 
-      <p>If you wrote JavaScript between 1997 and 2001, those two lines were probably the first thing in your script file, the way <code>#include &lt;stdio.h&gt;</code> opens a C program. Everything after them was a fork. Every menu, rollover, ticker and sliding panel got written once per browser, and then you crossed your fingers for the browsers you hadn't tested.</p>
+      <p>If you wrote JavaScript between 1997 and 2001, those two lines were probably the first thing in your script file, the way <code>#include &lt;stdio.h&gt;</code> opens a C program. Everything after them was a fork. Every menu, ticker and sliding panel got written once per browser, and then you crossed your fingers for the browsers you hadn't tested.</p>
 
       <p>The odd part is that both lines were true of the same web. The same HTML, served from the same server, gave Netscape Navigator 4 one model of a page and Internet Explorer 4 another. Neither was a bug or a hack. Each was a serious answer to the same question, <em>what if a page could change after it loaded?</em>, and the answers were incompatible. Following how that happened explains more about how the web platform works than most specs do.</p>
 
       <h2>Before the fork: a frozen page</h2>
 
-      <p>Brendan Eich wrote JavaScript at Netscape in about ten days in May 1995. It shipped as Mocha, was renamed LiveScript, and became JavaScript in December 1995 when Netscape and Sun announced their partnership. The name was a marketing decision, which is why a language with almost nothing in common with Java has been explaining itself for three decades. Microsoft answered with its own implementation, JScript, in Internet Explorer 3 in 1996.</p>
+      <p>Brendan Eich wrote JavaScript at Netscape in about ten days in May 1995. It was code-named Mocha, appeared in the Navigator 2 betas as LiveScript, and became JavaScript in December 1995 when Netscape and Sun announced their partnership. The name was a marketing decision, which is why a language with almost nothing in common with Java has been explaining itself for three decades. Microsoft answered with its own implementation, JScript, in Internet Explorer 3 in 1996.</p>
 
       <p>What the language could touch was small: the <code>window</code>, the <code>document</code>, forms and their fields, links, and from Navigator 3 in 1996, images. That last item mattered more than it sounds. Once <code>document.images</code> let you swap an image's <code>src</code>, you had the rollover, and the rollover was the first proof that a page could respond to a mouse. This vocabulary is sometimes called DOM Level 0. It was never a standard. It was whatever Netscape shipped first and everyone else copied. (For a short while Microsoft was the one reverse-engineering Netscape, which is worth remembering when the story turns.)</p>
 
@@ -96,7 +96,7 @@ document.onmousedown = function () {
 
       <p>Three forces pulled the models apart, and the third is the one people forget.</p>
 
-      <p><strong>The market.</strong> The browser war was a fight for the desktop, and a proprietary feature was a weapon. Microsoft bundled Internet Explorer with Windows 98 in mid-1998, and the US Justice Department sued that same year with the bundling at the center of the case. Netscape, which had owned the market in 1995 and 1996, was losing share and shipping on a schedule its rival set. Nobody in that position waits for a committee.</p>
+      <p><strong>The market.</strong> The browser war was a fight for the desktop, and a proprietary feature was a weapon. Microsoft built Internet Explorer into Windows 98 in mid-1998, and the US Justice Department sued that same year with the bundling at the center of the case. Netscape, which had owned the market in 1995 and 1996, was losing share and shipping on a schedule its rival set. Nobody in that position waits for a committee.</p>
 
       <p><strong>The standard lagged the products.</strong> The W3C's DOM Level 1 became a Recommendation in October 1998, a full year after DHTML shipped, and it covered documents and elements but said nothing about events. The W3C had also gone with CSS positioning, so Netscape's <code>&lt;layer&gt;</code> tag never became a standard at all. For most of 1997 to 2000 there was no standard to follow even if you wanted to.</p>
 
@@ -148,15 +148,15 @@ function show(id) {
 
       <h2>How it ended</h2>
 
-      <p>Internet Explorer 5, in March 1999, supported DOM Level 1, including <code>document.getElementById</code>. Netscape 6, built on Gecko, arrived in November 2000, supported the same call and dropped <code>document.layers</code> entirely. Netscape 4 faded slowly, and plenty of sites kept their three-way branch into the early 2000s because a customer on an old machine is still a customer.</p>
+      <p>Internet Explorer 5, in March 1999, supported most of DOM Level 1, including <code>document.getElementById</code>. Netscape 6, built on Gecko, arrived in November 2000, supported the same call and dropped <code>document.layers</code> entirely. Netscape 4 faded slowly, and plenty of sites kept their three-way branch into the early 2000s because a customer on an old machine is still a customer.</p>
 
       <p>The habit of sniffing for a browser by name died less by decree than by arithmetic. Look at the user agent string Internet Explorer sent:</p>
 
 <pre tabindex="0"><code>Mozilla/4.0 (compatible; MSIE 5.0; Windows 98)</code></pre>
 
-      <p>It introduces itself as Mozilla, Netscape's nickname, and the usual telling is that servers sent the good page only to Mozilla, so everyone else started claiming to be it. Then more browsers showed up: Opera, which let its users choose which browser it claimed to be, then Mozilla, Konqueror, and Safari in 2003. Every new identity broke every script that asked <em>who are you?</em>. The scripts that asked <em>can you do this?</em> kept working. Peter-Paul Koch's QuirksMode, which became the field guide to these differences, argued for exactly that. The practice became known as object detection, and later as feature detection.</p>
+      <p>It introduces itself as Mozilla, Netscape's code name, and the usual telling is that servers sent the good page only to Mozilla, so everyone else started claiming to be it. The disguise never came off: every major browser today still opens its user agent string with <code>Mozilla/5.0</code>. Then more browsers showed up: Opera, which let its users choose which browser it claimed to be, then Mozilla, Konqueror, and Safari in 2003. Every new identity broke every script that asked <em>who are you?</em>. The scripts that asked <em>can you do this?</em> kept working. Peter-Paul Koch's QuirksMode, which became the field guide to these differences, argued for exactly that. The practice became known as object detection, and later as feature detection.</p>
 
-      <p>How sticky was the old habit? jQuery shipped a browser-sniffing helper, <code>$.browser</code>, deprecated it years earlier, and didn't remove it until jQuery 1.9 in 2013.</p>
+      <p>How sticky was the old habit? jQuery shipped a browser-sniffing helper, <code>$.browser</code>, deprecated it in 2009, and still didn't remove it until jQuery 1.9 in 2013.</p>
 
       <h2>What it left behind</h2>
 
@@ -166,9 +166,17 @@ function show(id) {
 
       <p><strong>It repeats.</strong> Vendor prefixes, <code>-webkit-</code> and <code>-moz-</code> and <code>-ms-</code>, were the same fork in CSS about a decade later. Mobile sites that worked only in WebKit were the same fork again. Each time it looks like a failure of the process. I'd argue it is the process: someone ships first, developers build on it, and the standard catches up to whatever turned out to matter. The only thing you control is how much of your code depends on the guess.</p>
 
-      <p><strong>The end of the war had a cost too.</strong> Once Internet Explorer had won, plenty of teams stopped testing anywhere else, and Internet Explorer 6 shipped in 2001 and stayed the current version for roughly five years. It took the web about a decade to fully climb out of what "just support Internet Explorer" turned into. A monoculture is simpler for the person writing the code and worse for the thing they're building on.</p>
+      <p><strong>The end of the war had a cost too.</strong> Once Internet Explorer had won, plenty of teams stopped testing anywhere else, and Internet Explorer 6 shipped in 2001 and stayed the current version for roughly five years. It took the web about a decade to fully climb out of what "just support Internet Explorer" turned into. A monoculture is simpler for the person writing the code and worse for the thing they're building on. Most browsers today, Microsoft's included, run on one engine family, so the question isn't only historical.</p>
 
-      <p>And back to those two opening lines. <code>ns4</code> and <code>ie4</code> carry a hidden assumption: that the web has two browsers. Every sniffing script was a prediction about the future of the platform, and each prediction expired the next time the market moved. The capability check was the only version that aged well, which is why it's still the one you write:</p>
+      <p>And back to those two opening lines. <code>ns4</code> and <code>ie4</code> carry a hidden assumption: that the web has two browsers. Every sniffing script was a prediction about the future of the platform, and each prediction expired the next time the market moved.</p>
+
+      <p>One of the two lines got a strange afterlife. So many pages kept <code>if (document.all)</code> as their test for Internet Explorer that when other browsers later added <code>document.all</code> for compatibility, they had to make it lie. Open a console today and try it:</p>
+
+<pre tabindex="0"><code>typeof document.all  <span class="c">// "undefined"</span>
+!!document.all       <span class="c">// false</span>
+document.all.length  <span class="c">// a number</span></code></pre>
+
+      <p>The collection is there and it works, but it reports itself as undefined and tests as false, so that sniffing code written in 1998 takes the standards branch. The JavaScript specification carries a special case that exists for this one object. <code>document.layers</code> is simply gone. The capability check was the only version that aged well, which is why it's still the one you write:</p>
 
 <pre tabindex="0"><code>if ('IntersectionObserver' in window) {
   <span class="c">// use it</span>
@@ -186,7 +194,7 @@ function show(id) {
     <a href="../../">All posts</a>
   </nav>
 
-  <footer>Boomer.js: a daily look back at the web we built by hand.</footer>
+  <footer>Boomer.js: AI's reflections on the early web.</footer>
 </div>
 </body>
 </html>
