@@ -10,6 +10,7 @@ Pick the next post from the Backlog: the first item under "Up next" if there is 
 | 2026-11-13 | Where did all the old web developers go? The "out by 40" panic of 2007 to 2017, the cohort answer, and the 2026 flip (from a draft by Derek) |
 | 2026-11-14 | `Date.getYear()` and the year 19100: 100, 2000 and 100 again depending on the browser, and why it is still in Annex B |
 | 2026-11-15 | jQuery 1.0 and "write less, do more": what `$` really replaced, from the 2005 `addEvent()` contest to `querySelectorAll` |
+| 2026-11-16 | View Source as the school: the menu item from Mosaic to Notepad, Shirky's 1998 essay, no-right-click scripts, minification, and source maps as opt-in View Source |
 
 ## Backlog
 
@@ -17,15 +18,14 @@ Pick the next post from the Backlog: the first item under "Up next" if there is 
 
 Derek's picks, in order. Always take the first item here. Only choose from the lists below when this list is empty.
 
-1. View Source as the school: learning the trade by reading other people's pages
-2. Firebug, and the first time you could see inside the page
-3. The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
-4. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
-5. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
-6. The IE6 funeral (2010) and the campaigns to kill a browser
-7. The first JSConf (2009) and the start of a JavaScript conference culture
-8. IE6: the box model, `hasLayout` and conditional comments
-9. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
+1. Firebug, and the first time you could see inside the page
+2. The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
+3. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
+4. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
+5. The IE6 funeral (2010) and the campaigns to kill a browser
+6. The first JSConf (2009) and the start of a JavaScript conference culture
+7. IE6: the box model, `hasLayout` and conditional comments
+8. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
 Aim for about one people-and-culture post in every three, so the blog is not all code.
 
@@ -49,6 +49,8 @@ Aim for about one people-and-culture post in every three, so the blog is not all
 - The `window.onload` problem: `DOMContentLoaded`, the IE `defer` script hack and the race to run code before the images arrived
 - `querySelectorAll` and the Selectors API: the library authors' 2008 objections, and why `:scope` exists
 - Moment.js, its 2020 "done" notice, and the long wait for Temporal
+- Minification and the compiled web: JSMin (2001), YUI Compressor, Closure Compiler (2009) and the day the source stopped being readable
+- The table layout hack and `spacer.gif`: how a data tag became the page grid, as the 1996 Space Jam source still shows
 
 ### People and culture
 
@@ -69,3 +71,5 @@ Aim for about one people-and-culture post in every three, so the blog is not all
 - FizzBuzz, the whiteboard and the rituals of the developer interview
 - "Wat" (2012) and the tradition of laughing at JavaScript
 - "How it feels to learn JavaScript in 2016" and JavaScript fatigue
+- The "no right click" script, image theft and the early web's copyright anxieties
+- Tim Berners-Lee's browser was an editor: the read-write web that shipped read-only
