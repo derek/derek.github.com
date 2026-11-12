@@ -54,6 +54,17 @@
         null
       ],
       "published": "2026-11-12T09:58:53+00:00"
+    },
+    {
+      "slug": "firebug-and-the-inside-of-the-page",
+      "title": "Firebug: the first look inside the page",
+      "description": "In January 2006 one developer uploaded a few days of code as a Firefox add-on, and within a few years every browser had copied its panels, its F12 key and its console.log.",
+      "topic": "libraries",
+      "era": [
+        2006,
+        2017
+      ],
+      "published": "2026-11-12T19:15:40+00:00"
     }
   ]
 }
