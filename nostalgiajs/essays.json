@@ -102,6 +102,18 @@
         "That F12 as the developer-tools key began with Firebug 0.2.3 rests on Wikipedia, and is attributed to it.",
         "The Firebug 1.1 source listings come from a third-party mirror, which the essay names."
       ]
+    },
+    {
+      "slug": "the-webmaster-and-the-mailto-link",
+      "title": "The webmaster: a mailbox that became a job",
+      "description": "\"Webmaster\" was coined as a mail alias on a style page, grew into the title for whoever ran the whole site, and faded, while the address in the footer link outlived the job.",
+      "topic": "people",
+      "era": [
+        1993,
+        null
+      ],
+      "published": "2026-11-12T20:05:05+00:00",
+      "unverified": []
     }
   ]
 }
