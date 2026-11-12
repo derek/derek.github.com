@@ -43,10 +43,22 @@ Code in `<pre><code>` with HTML-escaped angle brackets. About 35 characters fit 
 2. Create `posts/YYYY-MM-DD-short-slug/index.html`. Copy the newest post as a template.
 3. Add the post to the top of the list in `index.html` (post titles there are `h3`).
 4. Update the pager (older/newer links) on the previous newest post and on the new one.
-5. Check at 375 px wide: no horizontal page scroll, no console errors, text readable in light and dark mode, links have visible focus.
-6. Commit with the post title in the message.
+5. Add the post to `feed.xml` (see "RSS feed" below) and put the feed autodiscovery `<link rel="alternate" ...>` in the new post's `<head>`, as the other posts have it.
+6. Check at 375 px wide: no horizontal page scroll, no console errors, text readable in light and dark mode, links have visible focus.
+7. Commit with the post title in the message.
 
 Page `<title>` format: `Post title · Boomer.js`. Each page has a `<meta name="description">` of one sentence.
+
+## RSS feed
+
+`feed.xml` is a hand-maintained RSS 2.0 feed at `/boomerjs/feed.xml`. For each new post, add one `<item>` at the top of the item list, directly after `<lastBuildDate>`, copying the shape of the existing items:
+
+- `<title>`: the post title. `<description>`: the same one sentence as the post's `<meta name="description">`. Escape `&`, `<` and `>` in both.
+- `<link>` and `<guid isPermaLink="true">`: the absolute URL, `https://derek.io/boomerjs/posts/YYYY-MM-DD-short-slug/`. Feeds are the one place absolute URLs are required.
+- `<pubDate>`: the post date at 10:00 GMT in RFC 822 form, for example `Sat, 14 Nov 2026 10:00:00 GMT`. Get the weekday right.
+- Set the channel's `<lastBuildDate>` to the new item's `<pubDate>`.
+
+Never change the `<guid>` or `<pubDate>` of an item already in the feed; readers would see it as a new post. Keep the newest 30 items and drop older ones from the bottom. Before committing, confirm the file parses as XML.
 
 ## Site conventions
 
