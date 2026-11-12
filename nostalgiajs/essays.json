@@ -104,6 +104,31 @@
       ]
     },
     {
+      "slug": "xmlhttprequest-and-the-name-ajax",
+      "title": "XMLHttpRequest: six years waiting for a name",
+      "description": "Microsoft shipped the object behind every web application in 1999, under a name its author calls an excuse. Almost nobody used it until a designer's 2005 essay called the technique Ajax.",
+      "topic": "browsers",
+      "era": [
+        1998,
+        2006
+      ],
+      "published": "2026-11-12T20:03:14+00:00",
+      "related": [
+        "if-document-layers",
+        "jquery-and-the-dollar-sign",
+        "view-source-was-the-school"
+      ],
+      "unverified": [
+        "Almost everything about how XMLHTTP was written and shipped rests on one account, Alex Hopmann's. He gives no date for the weekend, the naming or the security review beyond starting the webmail work \"probably sometime in late 1998\", and his page shows no original publication date.",
+        "Jesse James Garrett's essay is linked as a saved copy of its print view, because Adaptive Path's own site would not load.",
+        "The dates for Mozilla, Safari 1.2 and Opera 8.0 support come from Wikipedia, as do Oddpost's 2002 opening and the release months of Internet Explorer 5 and 7. Wikipedia's XMLHttpRequest article also dates the idea to 2000, which contradicts Hopmann; I followed Hopmann.",
+        "Jay Hoffmann's history of the web says XMLHTTP was added to replace Java components that Outlook Web Access had relied on. Hopmann does not mention this, so I left it out.",
+        "How little the object was used before 2004 is hard to measure. Aaron Swartz wrote that nobody he knew used it, but Hopmann says the approach was already doing well by 2000 to 2002, and it was common on corporate intranets.",
+        "Google's two blog posts are linked for their dates only. Whether Google Maps used XMLHttpRequest or hidden frames at launch is disputed in the comments on Swartz's post, so the essay does not say.",
+        "That XMLHTTP sitting behind ActiveX held back public sites, that Prototype's wrapper kept most developers from typing the constructor, and that the missing name mattered as much as I say, are my own readings."
+      ]
+    },
+    {
       "slug": "the-webmaster-and-the-mailto-link",
       "title": "The webmaster: a mailbox that became a job",
       "description": "\"Webmaster\" was coined as a mail alias on a style page, grew into the title for whoever ran the whole site, and faded, while the address in the footer link outlived the job.",
