@@ -1,4 +1,4 @@
-/* Boomer.js: shared styles. Plain CSS, no build step, no web fonts. */
+/* View Source: shared styles. Plain CSS, no web fonts. */
 :root {
   --bg: #fbf8f1;
   --panel: #f1ece0;
@@ -107,11 +107,38 @@ blockquote {
 .posts h3 a:hover { color: var(--link); text-decoration: underline; }
 .posts p { margin: 0.3em 0; color: var(--muted); }
 
+/* ---------- landing page groups ---------- */
+.group { margin-top: 2.5rem; }
+.group .kicker { margin: 0 0 0.2rem; font-size: 0.85rem; }
+.posts .meta { margin: 0.1em 0 0.3em; }
+
+/* ---------- about page ---------- */
+article ul { padding-left: 1.2em; }
+article li { margin: 0.5em 0; }
+
 /* ---------- sources ---------- */
 .sources { margin-top: 2.5rem; padding-top: 0.5rem; border-top: 1px solid var(--line); font-size: 1rem; }
 .sources h2 { font-size: 1.1rem; margin: 1em 0 0.4em; }
 .sources ul { margin: 0; padding-left: 1.2em; }
 .sources li { margin: 0.35em 0; }
+
+.sources .archived { font-size: 0.9rem; white-space: nowrap; }
+
+/* ---------- corrections and related ---------- */
+.corrections { margin-top: 2rem; font-size: 1rem; }
+.corrections h2 { font-size: 1.1rem; margin: 1em 0 0.4em; }
+.mistake { margin-top: 2rem; font-size: 1rem; color: var(--muted); }
+.related { margin: 3rem 0 0; padding-top: 0.5rem; border-top: 1px solid var(--line); }
+.related h2 { font-size: 1.1rem; margin: 1em 0 0.4em; }
+.related ul { list-style: none; margin: 0; padding: 0; }
+.related li { margin: 0.7em 0; }
+.related li a { font-size: 1.15rem; }
+.related li span {
+  display: block;
+  font: 0.85rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--muted);
+}
+.related p { font-size: 1rem; }
 
 /* ---------- pager and footer ---------- */
 .pager {

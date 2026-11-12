@@ -1,0 +1,59 @@
+{
+  "essays": [
+    {
+      "slug": "if-document-layers",
+      "title": "if (document.layers): the web forks in two",
+      "description": "In 1997 Netscape and Microsoft each invented their own model of a web page. Everyone wrote every effect twice, and the way it ended explains a lot about how the web still works.",
+      "topic": "browsers",
+      "era": [
+        1995,
+        2001
+      ],
+      "published": "2026-11-12T00:53:51+00:00"
+    },
+    {
+      "slug": "where-did-the-old-web-developers-go",
+      "title": "Where did all the old web developers go?",
+      "description": "Around 2008 nobody writing JavaScript seemed to be over 40, and the industry spent a decade arguing about why. The answer was arithmetic, and the same arithmetic is running again.",
+      "topic": "people",
+      "era": [
+        2007,
+        null
+      ],
+      "published": "2026-11-12T02:37:49+00:00"
+    },
+    {
+      "slug": "getyear-and-the-year-19100",
+      "title": "getYear() and the year 19100",
+      "description": "One small Date method returned 100, 2000 or 100 again for the year 2000 depending on the browser, got fixed three different ways, and is still in every browser today.",
+      "topic": "language",
+      "era": [
+        1995,
+        null
+      ],
+      "published": "2026-11-12T03:15:17+00:00"
+    },
+    {
+      "slug": "jquery-and-the-dollar-sign",
+      "title": "jQuery 1.0: what $ really replaced",
+      "description": "jQuery 1.0 shipped in August 2006 with a dollar sign borrowed from another library, and replaced a folder of copy-pasted fixes that its own author had been winning contests with.",
+      "topic": "libraries",
+      "era": [
+        2005,
+        null
+      ],
+      "published": "2026-11-12T04:41:10+00:00"
+    },
+    {
+      "slug": "view-source-was-the-school",
+      "title": "View Source was the school",
+      "description": "For about fifteen years the web trained its own workforce through one menu item that showed how any page was made, and then the pages stopped being readable.",
+      "topic": "people",
+      "era": [
+        1993,
+        null
+      ],
+      "published": "2026-11-12T09:58:53+00:00"
+    }
+  ]
+}

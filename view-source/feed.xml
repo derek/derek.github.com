@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+  <title>View Source</title>
+  <link>https://derek.io/view-source/</link>
+  <atom:link href="https://derek.io/view-source/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>AI Essays on Web History</description>
+  <language>en</language>
+  <lastBuildDate>Thu, 12 Nov 2026 09:58:53 GMT</lastBuildDate>
+  <item>
+    <title>View Source was the school</title>
+    <link>https://derek.io/view-source/view-source-was-the-school/</link>
+    <guid isPermaLink="true">https://derek.io/view-source/view-source-was-the-school/</guid>
+    <pubDate>Thu, 12 Nov 2026 09:58:53 GMT</pubDate>
+    <description>For about fifteen years the web trained its own workforce through one menu item that showed how any page was made, and then the pages stopped being readable.</description>
+    <content:encoded><![CDATA[<p class="lede">The web's training programme was a menu item that nobody was required to ship. It taught a generation of developers, and then the lessons got harder to read.</p>
+
+<pre tabindex="0"><code>&lt;!-- Badda Bing, Badda Boom --&gt;</code></pre>
+
+<p>That is line 17 of the home page of the Space Jam website, which Warner Bros. <a href="https://www.spacejam.com/1996/">still serves at <code>spacejam.com/1996/</code></a>. I fetched it on November 12, 2026 and the comment was there, eight lines below another one that reads "Copyright 1996 Warner Bros. Online". No visitor to the site was ever shown it. Every visitor could read it anyway, by picking one item from a menu.</p>
+
+<p>The item was called View Source, or Document Source, or Page Source, depending on the browser and the year. It opened the file the server had sent, exactly as sent, comments and all. For a long stretch of the web's history that menu item was the nearest thing the trade had to a school. It had no teachers, no syllabus and no admissions office. This post is about how it got there, why it worked so well, who tried to switch it off, and what has replaced it.</p>
+
+<h2>Before: software arrived sealed</h2>
+
+<p>In the early 1990s, if you admired how a program worked, admiration was as far as you could go. Software shipped compiled. You could see what it did and not how. Building anything interactive meant buying a tool and learning its language first. Clay Shirky, looking back from 1998, put it this way: "Prior to the invention of HTML, all software packages which implemented any sort of hypertext required the user to learn a programming language of some sort (Director, Hypercard)."</p>
+
+<p>The web's own first files were not written to be read either. Here is the top of the project's home page, from <a href="http://info.cern.ch/hypertext/WWW/TheProject.html">a copy CERN still serves</a>:</p>
+
+<pre tabindex="0"><code>&lt;HEADER&gt;
+&lt;TITLE&gt;The World Wide Web project&lt;/TITLE&gt;
+&lt;NEXTID N="55"&gt;
+&lt;/HEADER&gt;
+&lt;BODY&gt;
+&lt;H1&gt;World Wide Web&lt;/H1&gt;The WorldWideWeb (W3) is a wide-area&lt;A
+NAME=0 HREF="WhatIs.html"&gt;
+hypermedia&lt;/A&gt; information retrieval</code></pre>
+
+<p>The line breaks fall in the middle of tags, and no person typing by hand would put them there. And <code>NEXTID</code> is a note from a program to itself. <a href="https://www.rfc-editor.org/rfc/rfc1866.txt">The HTML 2.0 specification</a> later described it as "a hint for the name to use for a new <code>&lt;A&gt;</code> element when editing an HTML document", included "for historical reasons only". An editor wrote this file and left itself a counter for the next link.</p>
+
+<p>That editor was Tim Berners-Lee's first browser, which could write pages as well as show them. <a href="https://www.w3.org/People/Berners-Lee/FAQ.html">His FAQ page</a> describes it as "a graphical point-and-click browser with mode-free editing and link creation", and captions a screenshot of himself making a link with some pride: "Look - no typing URLS, no &lt;angle brackets&gt;!" My reading is that the markup was meant to be a file format, like the insides of a word processor document. People were supposed to work above it.</p>
+
+<p>The browsers that spread the web did not keep the editing half. They kept a window onto the raw file. That turned out to matter more.</p>
+
+<h2>What happened: one menu item</h2>
+
+<p><a href="https://stuff.mit.edu/afs/sipb.mit.edu/project/www/doc/Mosaic-2.4/d2-file-menu.html">The user's guide for NCSA Mosaic 2.4</a> lists the File menu: New Window, Clone Window, Open URL, Reload Current, and, further down, this.</p>
+
+<pre tabindex="0"><code>View Source... (hotkey d)
+    Pop up a dialog box showing you the current
+    document's Uniform Resource Locator and
+    HTML source text.</code></pre>
+
+<p>It sits between "Find In Current" and "Save As", with nothing to mark it as important. Tim O'Reilly later <a href="https://www.oreilly.com/lpt/a/64">traced the lineage</a>: "The 'View Source' menu item migrated from Tim Berners-Lee's original browser, to Mosaic, and then on to Netscape Navigator and even Microsoft's Internet Explorer."</p>
+
+<p>Internet Explorer added a twist of its own, apparently without meaning to. It had no source viewer, so it handed the file to a program that was already on the machine. A <a href="https://learn.microsoft.com/en-us/archive/blogs/justsean/little-things-you-may-not-have-noticed-in-ie8-part-2-formatted-view-source">Microsoft blog post from 2008</a> admits as much: "Since the very beginning, IE has relied on the built-in Notepad editor to show page source. Notepad, it should be noted is not a source viewer." Quite so. Notepad is an editor. On Windows, then, View Source opened the page in a program with a Save As command. You were one menu away from owning a copy, and two keystrokes away from changing it.</p>
+
+<p>So what did the school teach? Go back to Space Jam. A few lines under the comments is this:</p>
+
+<pre tabindex="0"><code>&lt;body bgcolor="#000000" background="img/bg_stars.gif" text="#ff0000" link="#ff4c4c" vlink="#ff4c4c" alink="#ff4c4c"&gt;</code></pre>
+
+<p>One line, and a newcomer in 1996 learns that pages have a background colour, that a background can be a tiled image, and that links have three states with a colour each. No book is needed. You change <code>#000000</code> to something else, save, reload, and find out what the number meant. Further down, the planets on the famous star map turn out to be cells in a table:</p>
+
+<pre tabindex="0"><code>&lt;td align=center valign=middle&gt;
+&lt;a href="cmp/jamcentral/jamcentralframes.html"&gt;&lt;img src="img/p-jamcentral.gif" height=67 width=55 alt="Jam Central" border=0&gt;&lt;/a&gt;
+&lt;/td&gt;</code></pre>
+
+<p>That is how layout was done, and the source is also how everybody found out. Shirky uses tables as his example of a tool escaping its purpose. They were "originally imagined to be just that – a tool for presenting tabular data", and their adoption "as the basic method for page layout did not have to be explicit in the design of either HTML or the browser". No specification told designers to do it and no vendor ran a course. One person worked it out, and everyone else read their source.</p>
+
+<p>When scripting arrived the same thing happened to JavaScript, because early scripts sat in the page between <code>&lt;script&gt;</code> tags. The command that taught you <code>bgcolor</code> taught you <code>onmouseover</code> as well.</p>
+
+<p>The first person I can find who said clearly that this was the important part was Shirky, in an essay first published in April 1998 called <a href="http://shirky.com/essays/view-source-lessons-from-the-websmassively-parallel-development/">"View Source… Lessons from the Web's Massively Parallel Development"</a>. Its subtitle is "The Web considered as a massive Open Source project." The core of it is one paragraph:</p>
+
+<blockquote>
+  <p>The single factor most responsible for this riot of experimentation is transparency – the ability of any user to render into source code the choices made by any other designer.</p>
+</blockquote>
+
+<p>He adds that when a page is worth copying, "the question 'How did they do that?' can be answered in seconds." And he notes how easily it could have gone the other way. The first browser makers could have treated the feature "as a kind of debugging option which could have been disabled in any public release". They left it in.</p>
+
+<h2>Why it worked</h2>
+
+<p>Other platforms have let you read their source. Few of them trained a workforce by accident. Here are the forces I think made the difference. Reasonable people weigh them differently.</p>
+
+<p><strong>The format was text, and nothing stood between the text and the result.</strong> There was no compiler and no build. Alex Russell <a href="https://infrequently.org/2010/01/view-source-is-good-discuss">wrote in 2010</a> that web developers "get started by taking some code, pasting it into a file, saving, loading it in a browser and hitting <code>ctrl-r</code>." He called this the "copy-paste-tweak loop" and listed its kit: "The only required equipment is a text editor and a web browser, tools that are free and work together instantly." Shirky's version is that the web "removed the need for either compiling the results or seeking permission, certifcation or registration from anyone else." Both halves of that sentence count. You needed no tools and you needed no one's leave.</p>
+
+<p><strong>The browser forgave you.</strong> Copied fragments rarely fit. You pasted half a table into the wrong place, left a tag open, and the page rendered anyway, perhaps oddly. Russell again: "Browsers recovering from errors gracefully create a welcome learning environment, free of the inadequacy that a compile failure tends to evoke." A language that halts on the first mistake teaches you that you are wrong. A browser that shows you a lopsided page shows you how you are wrong, which is far more useful to a beginner at eleven at night.</p>
+
+<p><strong>The interface lived in the page.</strong> This is Shirky's subtlest point and I think his best. In most software the interface is part of the program. On the web, he wrote, an interface "can be integrated with the information it is displaying, instead of with the display software itself." So every page carried a complete, working design with it. There was always something worth copying, because the page was the whole product. Had browsers supplied the navigation bars and layouts themselves, View Source would have shown you a list of facts.</p>
+
+<p><strong>Nobody had to choose to share.</strong> This is the force that gets the least credit. Russell is blunt about it: "view source is nearly never locally beneficial." No company gains from showing its competitors how its home page is built. He had lost count of the times he had seen "the 'how do I hide my code?' question" from newcomers. If transparency had been a checkbox, most commercial sites would have left it unticked. It was a property of the medium, and so the question never came up. O'Reilly made the same observation about a different product. Napster grew because its defaults shared whatever you downloaded, and systems like that let "users pursuing their own 'selfish' interests build collective value as an automatic byproduct." View Source was sharing set as the default, with no setting to change.</p>
+
+<p><strong>There was not yet much to protect.</strong> Shirky describes the early web as having "no discernible financial incentive for the majority of its initial participants." A band page and a list of favourite links are not trade secrets. By the time there was real money in a page's markup, the habit of reading each other's work was already the culture, and the people who had learned that way were the ones being hired.</p>
+
+<h2>Living with it: the people who wanted it off</h2>
+
+<p>Not everyone enjoyed being the textbook. Photographers, designers and small businesses saw their pictures and layouts turn up on other people's sites, and wanted a lock. The lock they got was the no-right-click script. This one is from <a href="https://www.irt.org/script/969.htm">the irt.org JavaScript FAQ</a>, question 969, "How can I suppress a right mouse click?":</p>
+
+<pre tabindex="0"><code>&lt;script language="JavaScript1.1"&gt;&lt;!--
+var debug = true;
+function right(e) {
+  if (navigator.appName == 'Netscape' &amp;&amp; (e.which == 3 || e.which == 2)) return false;
+  else if (navigator.appName == 'Microsoft Internet Explorer' &amp;&amp; (event.button == 2 || event.button == 3)) {
+    alert('Denied!');
+    return false;
+  }
+
+  return true;
+}
+document.onmousedown=right;
+if (document.layers) window.captureEvents(Event.MOUSEDOWN);
+window.onmousedown=right;
+//--&gt;&lt;/script&gt;</code></pre>
+
+<p>It is a fine period piece: browser sniffing by name, a <code>document.layers</code> check, and an alert box that says "Denied!". What I like most is the FAQ's own commentary, which talks the reader out of the script before presenting it. "This script is not fool-proof," it begins. It "doesn't stop users browsing the source of youe page from the toolbar menus." And then the advice that has not aged a day: if the script does not do what you need, "then don't use it and don't put your images/scripts on the net." If your living depends on your images, add a watermark.</p>
+
+<p>The scripts spread regardless, and how they spread is the joke. A <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=236055">Firefox bug report from 2004</a>, titled "Javascript can disable right click", quotes the offending code from the page in question. Its first two lines are a credit: "Disable right click script III- By Renigade", and "For full source code, visit http://www.dynamicdrive.com". The reporter presumably got those lines by reading the page's source. The anti-copying script was distributed by being copied, and it was attributed because the copyists kept the comment.</p>
+
+<p>The thing that did close the book was never meant as a lock. Douglas Crockford's <a href="https://www.crockford.com/jsmin.html">JSMin</a>, which he dates to 2001, "removes comments and unnecessary whitespace from JavaScript files" to make them download faster. He is careful about what it is: "JSMin does not obfuscate, but it does uglify." And he is honest about the price: "The result may be harder to debug. It will definitely be harder to read."</p>
+
+<p>Minified code could still be puzzled out with patience. Compiled code could not. On November 5, 2009 Google <a href="https://developers.googleblog.com/en/introducing-closure-tools/">open-sourced the Closure Compiler</a>, which it had built for its own web applications. Four months later, after a conference panel on this exact subject, Russell wrote <a href="https://infrequently.org/2010/03/view-source-follow-up">a follow-up</a>. Someone on the panel had pointed out that beautifiers could tidy minified code. Russell replied that a compiler which inlines functions, removes dead code and moves the rest around is a different animal. The output was "much, much smaller than I can wring out by hand" and also "totally unrecognizable." His conclusion was that JavaScript treated this way is "functionally indistinguishable from a bytecode format like SWF or Java", with the same effect on learning: "less ability to easily share techniques, a smaller group of more professional users, and a heavier reliance on tooling."</p>
+
+<p>Nobody set out to end the lesson. Pages got heavy, bytes cost money, and the fix for bytes was to remove everything a human reader needed.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The fix Russell asked for got built, and the default flipped.</strong> In that follow-up he said compiled JavaScript would need "brand new tools akin to symbol servers" to be workable. The seed already existed. The same Closure announcement mentions Closure Inspector, "a Firebug extension that makes debugging the obfuscated code almost as easy as debugging the human-readable source." <a href="https://tc39.es/ecma426/">The source map specification</a> says its first format "was created by Joseph Schorr for use by Closure Inspector". That format went through two more revisions, and in December 2024 it became <a href="https://ecma-international.org/publications-and-standards/standards/ecma-426/">ECMA-426</a>, an Ecma standard for mapping shipped code back to what a person wrote. So readable source came back as a file you may publish beside your code if you choose to. In 1996 you had to do nothing to be readable. Now you have to do something, and you may just as reasonably keep the map private for your own error reports. I'd argue that switch, from on by default to off by default, changed more than any single tool did.</p>
+
+<p><strong>The source stopped being the page.</strong> Browsers now offer two commands that sound alike and do different jobs. <a href="https://developer.chrome.com/docs/devtools/dom">Chrome's documentation</a> spells out the gap: "HTML represents initial page content and the DOM represents active, current page content. When JavaScript adds, removes, or edits nodes, the DOM becomes different than the HTML." On Space Jam the two are the same thing, so View Source tells you everything. On a page built in the browser by a script, View Source shows the instructions for fetching a program, and the inspector shows a result with no record of how it got that way. Neither is what a learner in 1996 had, which was the author's own file.</p>
+
+<p><strong>The folk feature was ratified late, and on thin paperwork.</strong> You can still type <code>view-source:</code> in front of an address. That prefix was registered with IANA as a URI scheme <a href="https://www.iana.org/assignments/uri-schemes/prov/view-source">on May 25, 2011</a>, with the status "Provisional". By then it was a habit of very long standing. For its list of implementations the registration refers readers to "Wikipedia's entry on 'View-source URI scheme'". It also carries a quiet legal caution that the source "might sometimes refer to source code that is under certain legal provisions, which might not grant free access". That is the old copy-and-paste question, raised in a standards registry fifteen years after Warner Bros. put a copyright notice in a comment and then served the comment to everyone.</p>
+
+<p><strong>The command survived, and it grew a red pen.</strong> View Source is still Ctrl+U in Firefox, and <a href="https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html">Firefox's documentation</a> lists what it has learned since: line numbers you can link to, and syntax highlighting that "also highlights parsing errors in red." The forgiving parser still renders your mistakes, and the viewer next to it now marks them, so the school has acquired a teacher after all. Russell noted in 2010 that the inspectors grew from the same root. Firebug and its descendants allow "live changes without reloads, even on pages you don't 'own'." Firebug gets its own post here soon.</p>
+
+<p><strong>The phrase outlived the practice.</strong> When Mozilla started a conference for front-end developers in 2015, held in Portland that November, <a href="https://hacks.mozilla.org/2015/10/view-source-conference/">it named the event View Source</a>. By then the two words stood for a whole account of how the web was meant to work, one that Shirky had written down in 1998. One of his rules deserves a wider audience: "Good tools allow users to do stupid things." A tool that prevents mistakes, he argued, raises quality in the short run and "ultimately hampers development by not letting users learn from their mistakes." A great deal of modern tooling exists to stop you shipping a mistake. I think that is usually right for the product. I am less sure it is right for the person, and View Source was the last major teaching tool that didn't care.</p>
+
+<p>Where is the school now? My best guess is that it moved to places where sharing is a decision: public repositories, documentation, tutorials and other people's answers to questions. There is more to read than there ever was, and it is better organised. The difference is that everything in it was put there on purpose, by someone who thought it was fit to be seen. The old school showed you the production code of a film studio, including the comment somebody left in for a laugh.</p>
+
+<h2>The takeaway</h2>
+
+<p>View Source worked as a school because of a coincidence of four things: a text format, an interpreter with no build step, a parser that forgave errors, and a default nobody could opt out of. Take away any one and you get something lesser. The last is the one we lost, and nobody took it. It went as a side effect of making pages faster, one removed comment at a time, until the file the server sent was no longer the file anyone wrote.</p>
+
+<p>What replaced it is in many ways better: open repositories, real debuggers, and a standard for mapping shipped code back to its source. But it is all opt-in, and opt-in transparency teaches you what people are willing to show. The old kind taught you what they actually did. This page, for what it's worth, has no build step. The command still works here.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="http://shirky.com/essays/view-source-lessons-from-the-websmassively-parallel-development/">View Source… Lessons from the Web's Massively Parallel Development</a>, Clay Shirky, 1998</li>
+    <li><a href="https://www.oreilly.com/lpt/a/64">The Architecture of Participation</a>, Tim O'Reilly, 2004</li>
+    <li><a href="https://infrequently.org/2010/01/view-source-is-good-discuss">View-Source Is Good? Discuss.</a> and <a href="https://infrequently.org/2010/03/view-source-follow-up">View-Source Follow-Up</a>, Alex Russell, 2010 <a class="archived" href="https://web.archive.org/web/20250805101536/https://infrequently.org/2010/01/view-source-is-good-discuss/">(archived)</a></li>
+    <li><a href="https://www.spacejam.com/1996/">Space Jam</a>, Warner Bros., 1996, source as served on November 12, 2026 <a class="archived" href="https://web.archive.org/web/20261027191529/https://www.spacejam.com/1996/">(archived)</a></li>
+    <li><a href="http://info.cern.ch/hypertext/WWW/TheProject.html">The World Wide Web project</a>, as served by CERN at info.cern.ch <a class="archived" href="https://web.archive.org/web/20261110180839/http://info.cern.ch/hypertext/WWW/TheProject.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/People/Berners-Lee/FAQ.html">Frequently asked questions</a>, Tim Berners-Lee, W3C</li>
+    <li><a href="https://www.rfc-editor.org/rfc/rfc1866.txt">RFC 1866: Hypertext Markup Language 2.0</a>, Tim Berners-Lee and Dan Connolly, 1995, section 5.2.6 on <code>NEXTID</code> <a class="archived" href="https://web.archive.org/web/20261106150950/https://www.rfc-editor.org/rfc/rfc1866.txt">(archived)</a></li>
+    <li><a href="https://stuff.mit.edu/afs/sipb.mit.edu/project/www/doc/Mosaic-2.4/d2-file-menu.html">Mosaic User's Guide: File Menu</a>, NCSA Mosaic 2.4 documentation, as mirrored at MIT</li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/justsean/little-things-you-may-not-have-noticed-in-ie8-part-2-formatted-view-source">Little things you may not have noticed in IE8: Part 2 – Formatted View Source</a>, Microsoft archived blogs, 2008 <a class="archived" href="https://web.archive.org/web/20240607062103/https://learn.microsoft.com/en-us/archive/blogs/justsean/little-things-you-may-not-have-noticed-in-ie8-part-2-formatted-view-source">(archived)</a></li>
+    <li><a href="https://www.irt.org/script/969.htm">Q969 How can I suppress a right mouse click?</a>, Martin Webb, irt.org JavaScript FAQ <a class="archived" href="https://web.archive.org/web/20260208195258/https://irt.org/script/969.htm">(archived)</a></li>
+    <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=236055">Bug 236055: Javascript can disable right click</a>, Mozilla Bugzilla, 2004 <a class="archived" href="https://web.archive.org/web/20260611210445/https://bugzilla.mozilla.org/show_bug.cgi?id=236055">(archived)</a></li>
+    <li><a href="https://www.crockford.com/jsmin.html">JSMin</a>, Douglas Crockford <a class="archived" href="https://web.archive.org/web/20261021134751/https://www.crockford.com/jsmin.html">(archived)</a></li>
+    <li><a href="https://developers.googleblog.com/en/introducing-closure-tools/">Introducing Closure Tools</a>, Google Developers Blog, 2009 <a class="archived" href="https://web.archive.org/web/20260211034635/https://developers.googleblog.com/en/introducing-closure-tools/">(archived)</a></li>
+    <li><a href="https://tc39.es/ecma426/">Source map format specification</a>, Ecma TC39, and <a href="https://ecma-international.org/publications-and-standards/standards/ecma-426/">ECMA-426</a>, 1st edition, December 2024 <a class="archived" href="https://web.archive.org/web/20261022054119/https://tc39.es/ecma426/">(archived)</a></li>
+    <li><a href="https://developer.chrome.com/docs/devtools/dom">Get started with viewing and changing the DOM</a>, Chrome DevTools documentation, appendix "HTML versus the DOM" <a class="archived" href="https://web.archive.org/web/20261105214858/https://developer.chrome.com/docs/devtools/dom">(archived)</a></li>
+    <li><a href="https://www.iana.org/assignments/uri-schemes/prov/view-source">view-source URI scheme registration</a>, IANA, 2011 <a class="archived" href="https://web.archive.org/web/20260808124047/https://www.iana.org/assignments/uri-schemes/prov/view-source">(archived)</a></li>
+    <li><a href="https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html">View Source</a>, Firefox DevTools user documentation <a class="archived" href="https://web.archive.org/web/20261105213941/https://firefox-source-docs.mozilla.org/devtools-user/view_source/index.html">(archived)</a></li>
+    <li><a href="https://hacks.mozilla.org/2015/10/view-source-conference/">View Source Conference</a>, Mozilla Hacks, 2015 <a class="archived" href="https://web.archive.org/web/20260415062347/https://hacks.mozilla.org/2015/10/view-source-conference/">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
+  <item>
+    <title>jQuery 1.0: what $ really replaced</title>
+    <link>https://derek.io/view-source/jquery-and-the-dollar-sign/</link>
+    <guid isPermaLink="true">https://derek.io/view-source/jquery-and-the-dollar-sign/</guid>
+    <pubDate>Thu, 12 Nov 2026 04:41:10 GMT</pubDate>
+    <description>jQuery 1.0 shipped in August 2006 with a dollar sign borrowed from another library, and replaced a folder of copy-pasted fixes that its own author had been winning contests with.</description>
+    <content:encoded><![CDATA[<p class="lede">The dollar sign was second-hand, the best ideas were credited to other people, and the browsers spent the next decade copying it anyway.</p>
+
+<pre tabindex="0"><code>if ( $ )
+  jQuery._$ = $;
+
+var $ = jQuery;</code></pre>
+
+<p>Those lines sit about sixty lines into <a href="https://code.jquery.com/jquery-1.0.js">the file jQuery's CDN still serves as <code>jquery-1.0.js</code></a>. The last one is the famous one. The first two are more interesting, and the comment above them in the source says what they are for: "Map over the $ in case of overwrite." Before jQuery takes the dollar sign, it checks whether somebody else is already using it, and puts theirs somewhere safe.</p>
+
+<p>Somebody else was. By 2006 <code>$</code> already meant something on a lot of pages, and it meant something different. So the question in the title has two answers. The dollar sign replaced another library's dollar sign. And jQuery, the thing behind it, replaced a folder of small functions that every working developer carried from job to job, a few of which the author of jQuery had personally written.</p>
+
+<p><a href="https://blog.jquery.com/2006/08/26/jquery-10/">jQuery 1.0 was announced</a> on August 26, 2006. To see what it changed, start a year earlier.</p>
+
+<h2>Before: the utility belt</h2>
+
+<p>In 2005 the DOM worked, more or less, in every browser that mattered. The trouble was that it worked differently in each, and the standard way of doing things was long-winded even where it worked. You fetched one element with <code>document.getElementById</code>, or a list with <code>getElementsByTagName</code>, and then you looped. Attaching a click handler meant <code>addEventListener</code> in Mozilla, Opera and Safari, and <code>attachEvent</code> in Internet Explorer, which also forgot which element the handler belonged to.</p>
+
+<p>Nobody wrote this out fresh each time. You had a file, often called something like <code>common.js</code>, with an <code>addEvent()</code>, a function to find elements by class name, something to run code when the page loaded, and a wrapper to create an <code>XMLHttpRequest</code>. Each function had an author and a URL in a comment, and each had known bugs.</p>
+
+<p>The state of the art is nicely preserved on QuirksMode. On September 8, 2005, Peter-Paul Koch <a href="https://www.quirksmode.org/blog/archives/2005/09/addevent_recodi.html">launched a contest</a> to rewrite <code>addEvent()</code>, because the version everyone had been pasting "doesn't quite cut the cake any more." The judges were Koch, Scott Andrew LePera and Dean Edwards. The prize was "eternal and undying fame," plus a promise to "spread the winning entry as the new standard." Entries had to work in "Explorer 5+ Windows, Mozilla, Opera, and Safari."</p>
+
+<p>That contest shows how the web platform got patched in 2005. There was no package manager and no committee. A respected blogger held a competition, and the winning snippet was distributed by copy and paste. <a href="https://www.quirksmode.org/blog/archives/2005/10/_and_the_winner_1.html">The winner was announced</a> on October 18, and here it is, as edited by the judges:</p>
+
+<pre tabindex="0"><code>function addEvent( obj, type, fn )
+{
+  if (obj.addEventListener)
+    obj.addEventListener( type, fn, false );
+  else if (obj.attachEvent)
+  {
+    obj["e"+type+fn] = fn;
+    obj[type+fn] = function() { obj["e"+type+fn]( window.event ); }
+    obj.attachEvent( "on"+type, obj[type+fn] );
+  }
+}</code></pre>
+
+<p>The three lines in the <code>attachEvent</code> branch exist to make <code>this</code> work. As <a href="https://johnresig.com/blog/flexible-javascript-events/">the author's own write-up</a> put it, in Internet Explorer "the 'this' reference refers to the worthless 'window', when, in fact, it should refer to the parent object." The trick is to store the handler as a property of the element, keyed by the event type plus the function's entire source text, and call it from there. Koch wrote that "by far the most important reason" for the choice was "its brevity."</p>
+
+<p>The winner was John Resig, born in 1984 and so 21 at the time. His entry is still linked from his site, at a path under <code>/apps/jselect/</code>. Remember that folder name.</p>
+
+<p>Two other pieces of the belt matter here. In March 2003 Simon Willison had published <a href="https://simonwillison.net/2003/Mar/25/getElementsBySelector/"><code>document.getElementsBySelector</code></a>, "a javascript function which takes a standard CSS style selector and returns an array of elements objects." His example was <code>document.getElementsBySelector('div#main p a.external')</code>. And Sam Stephenson's Prototype library had a function called <code>$</code>. Its documentation still calls it <a href="http://api.prototypejs.org/dom/dollar/">"the cornerstone of Prototype"</a> and "a handy alias for <code>document.getElementById</code>." In Prototype, <code>$('nav')</code> hands you one element, by ID.</p>
+
+<h2>What happened</h2>
+
+<p>On August 22, 2005, two and a half weeks before the contest opened, Resig posted <a href="https://johnresig.com/blog/selectors-in-javascript/">"Selectors in Javascript"</a>. It was a reaction to a library called Behaviour, which let you attach functions to elements using CSS selectors. He liked the premise and disliked the typing. Behaviour, he wrote, "simply seems too tedious and verbose for everyday use." Here is its way of making list items delete themselves when clicked, quoted from the post:</p>
+
+<pre tabindex="0"><code>Behaviour.register({
+  '#example li': function(e){
+    e.onclick = function(){
+      this.parentNode.removeChild(this);
+    }
+  }
+});</code></pre>
+
+<p>And here is what Resig called "the same as above, done in my code":</p>
+
+<pre tabindex="0"><code>$('#example li').bind('click',function(){
+  this.parentNode.removeChild(this);
+});</code></pre>
+
+<p>There was no code behind it yet. He called it "a syntactical mock-up." What the post did have was a measurement. Under the heading "Syntactic fluff comparision" he stripped both versions down to the characters that carry no meaning:</p>
+
+<pre tabindex="0"><code>A: Behaviour.register({'':function(e){e.on=}});
+B: $('').bind('',);</code></pre>
+
+<p>I think that is the most important artifact in the whole story. The API was designed by counting keystrokes that were not the selector, the event name or the function. Everything left over was a cost. A third sample in the same post chained calls together, with <code>.set()</code>, <code>.bind()</code> and <code>.style()</code> one after another on the same selection. The whole shape of jQuery is there in August 2005, a year before 1.0.</p>
+
+<p>The first release came at BarCamp NYC in January 2006. The jQuery project <a href="https://blog.jquery.com/2026/01/17/jquery-4-0-0/">dates it to January 14</a>, the Saturday. <a href="https://johnresig.com/blog/barcampnyc-wrap-up/">Resig's own wrap-up</a>, posted on the 16th, lists his demo slot as "11am, Sunday," so take your pick. It was the third thing he showed in that slot, after two web apps. He announced it as "jQuery: New Wave Javascript" and added, with the confidence of someone who has not yet had to maintain it, "this code revolutionizes the way you can get Javascript to interact with HTML."</p>
+
+<p>Three days later a commenter named Kris De Volder pointed out that he already ran a project called JQuery, a Java code browser. Resig's reply explains the folder name from the contest: "I was, originally, going to use JSelect, but all the domain names were taken already."</p>
+
+<p>In 2015 Resig dug up that January 2006 code and <a href="https://johnresig.com/files/Genius%20-%20jQuery%20Annotation.htm">put it online with annotations</a>. It opens like this:</p>
+
+<pre tabindex="0"><code>function $(a,c) {
+  if ( a == null ) return;
+
+  <span class="c">// Since we're using Prototype's $ function,</span>
+  <span class="c">// be nice and have backwards compatability</span>
+  if ( typeof Prototype != "undefined" &amp;&amp; a.constructor == String ) {</code></pre>
+
+<p>So the original jQuery had no <code>jQuery</code> function at all. The library was a function named <code>$</code>, and its comment says outright whose name that was. If Prototype was on the page and you passed a plain word, it tried <code>getElementById</code> first, so old Prototype code kept working. By 1.0 the real name had become <code>jQuery</code>, <code>$</code> was an alias, and the previous owner's <code>$</code> was parked in <code>jQuery._$</code>. That is the snippet at the top of this essay.</p>
+
+<p>The 1.0 announcement is modest. "A lot of bugs fixed, a ton of new features, and a complete overhaul of how the jQuery development process is run." There was a Subversion checkout, a bug tracker, a "(Partial) Test Suite," and an update noting that 1.0 arrived "nearly one year after it was first conceived as a post in my weblog." The file header reads "jQuery - New Wave Javascript" and says it is dual licensed under MIT and GPL. The slogan most people associate with the project is not in the file. In 2010 Wikipedia's editors recorded the home page title as "jQuery: The write less, do more, JavaScript library."</p>
+
+<p>Then it moved fast. <a href="https://blog.jquery.com/2007/01/14/jquery-birthday-11-new-site-new-docs/">jQuery 1.1</a> shipped on the first birthday, January 14, 2007, claiming selectors "10x-20x faster" than 1.0.4 and a simplified API, with a compatibility plugin for people who had already written 1.0 code. GitHub <a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">adopted jQuery 1.2.1</a> in late 2007. And on September 28, 2008, Scott Guthrie <a href="https://weblogs.asp.net/scottgu/jquery-and-microsoft">announced</a> that "Microsoft will be shipping jQuery with Visual Studio going forward." The jQuery blog <a href="https://blog.jquery.com/2008/09/28/jquery-microsoft-nokia/">added the same day</a> that Nokia would ship it on phones with its web run-time.</p>
+
+<h2>Why this one won</h2>
+
+<p>There were plenty of JavaScript libraries by 2006, several of them larger and better funded. Here are the forces I think decided it. Each is arguable.</p>
+
+<p><strong>It used a query language people already knew.</strong> Anyone who had written a stylesheet could read <code>'#example li'</code>. Prototype's <code>$</code> took an ID. Willison's function took a selector but handed back a bare array, and you were on your own from there. jQuery took the selector and gave back something you could act on. The people building pages in 2006 were often designers who had learned CSS first, and this was the first JavaScript API written in their language.</p>
+
+<p><strong>It made the set the unit of work.</strong> Every method ran on every matched element and returned the set again. That removed the <code>for</code> loop, and it also removed the null check, because a selector that matched nothing gave you an empty set whose methods did nothing. That second property is the one people later turned against it. Hold on to it.</p>
+
+<p><strong>It took the utility belt and hid it.</strong> The 1.0 source is a museum of the kind of snippet described in the previous section, sometimes with the author credited in a comment. Here is part of how it decides the document is ready, without waiting for every image as <code>window.onload</code> did:</p>
+
+<pre tabindex="0"><code><span class="c">// If Mozilla is used</span>
+if ( jQuery.browser.mozilla || jQuery.browser.opera ) {
+  <span class="c">// Use the handy event callback</span>
+  document.addEventListener( "DOMContentLoaded", jQuery.ready, false );
+
+<span class="c">// If IE is used, use the excellent hack by Matthias Miller</span>
+<span class="c">// http://www.outofhanwell.com/blog/index.php?title=the_window_onload_problem_revisited</span>
+} else if ( jQuery.browser.msie ) {
+
+  <span class="c">// Only works if you document.write() it</span>
+  document.write("&lt;scr" + "ipt id=__ie_init defer=true " +
+    "src=//:&gt;&lt;\/script&gt;");</code></pre>
+
+<p>A third branch, for Safari, polls <code>document.readyState</code> on a timer. Three browsers, three unrelated techniques, one of them involving writing a script tag with a nonsense URL into the page. You typed <code>$(document).ready(fn)</code> and never saw any of it. I'd argue this was the real product. The selector engine got the attention, and the hidden branches saved the hours.</p>
+
+<p><strong>It was polite.</strong> jQuery kept nearly everything under one global name plus an alias, and it left <code>Object.prototype</code> and <code>Array.prototype</code> alone. It could sit on a page beside another library, which mattered a great deal when the page already had one and you were not allowed to remove it. <a href="https://api.jquery.com/jQuery.noConflict/">The documentation for <code>noConflict()</code></a> still explains the arrangement: "Old references of $ are saved during jQuery initialization; noConflict() simply restores them."</p>
+
+<p><strong>A platform vendor blessed it without taking it over.</strong> Guthrie's post is unusually clear about why Microsoft did not build its own. The team looked at adding selectors and animation to ASP.NET AJAX and "quickly realized that the jQuery support for these scenarios is already excellent." So: "We will distribute the jQuery JavaScript library as-is, and will not be forking or changing the source." The ASP.NET MVC download would "add the jQuery library by default to all new projects." For a large population of corporate developers, that sentence moved jQuery from something you had to justify to something that was simply there.</p>
+
+<h2>Living with it</h2>
+
+<p>Success produced its own set of chores. The first was the dollar sign itself. With two libraries on a page, whoever loaded last owned <code>$</code>. The idiom that solved it is on the same documentation page, and it became the standard way to open a jQuery plugin:</p>
+
+<pre tabindex="0"><code>jQuery.noConflict();
+(function( $ ) {
+  $(function() {
+    <span class="c">// More code using $ as alias to jQuery</span>
+  });
+})(jQuery);</code></pre>
+
+<p>Give the global <code>$</code> back, then take a private one as a function parameter. It is the same move as the lines at the top of this essay, made by the user instead of the library.</p>
+
+<p>The second chore was upgrades. The 1.1 release, less than five months after 1.0, already needed upgrade guides in three languages and a "jQuery 1.0 Compatibility Plugin." That set a pattern the project kept. Twenty years on, the 4.0 release still ships alongside an upgrade guide and a migration plugin.</p>
+
+<p>The third was the standards process, and here the library authors did something new. In April 2008, with browsers about to ship a native <code>querySelectorAll</code>, Resig <a href="https://johnresig.com/blog/thoughts-on-queryselectorall/">wrote to the W3C working group</a> with objections. The main one concerned queries that start from an element. Given this markup:</p>
+
+<pre tabindex="0"><code>&lt;div&gt;&lt;p id="foo"&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</code></pre>
+
+<p>asking the <code>foo</code> paragraph for <code>'div span'</code> returns the span, although there is no <code>div</code> inside the paragraph. The whole document is searched and the results are filtered afterwards. Every library did the opposite. Resig called the native behaviour "completely unacceptable" and "borderline useless to libraries." He had canvassed the other authors, and quoted Andrew Dupont of Prototype: "it violates principle of least surprise and bears no resemblance to the APIs in the wild."</p>
+
+<p>They lost that one. I ran Resig's test case in a current Chromium while writing this, and <code>foo.querySelectorAll('div span')</code> still returns one element. You need to write <code>':scope div span'</code> to get zero.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The platform copied the homework, slowly.</strong> When GitHub <a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">removed jQuery in 2018</a>, its engineers listed what had made that possible, and the list reads as jQuery's table of contents translated into standards: "The <code>$(selector)</code> pattern can easily be replaced with <code>querySelectorAll()</code>," class switching with <code>Element.classList</code>, animation in CSS, <code>$.ajax</code> with the Fetch Standard. The dates are worth a look. <a href="https://www.w3.org/TR/selectors-api/">Selectors API Level 1</a> became a W3C Recommendation on February 21, 2013, seven and a half years after a student's blog post about fluff. jQuery got <a href="https://api.jquery.com/closest/"><code>.closest()</code></a> in version 1.3, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest"><code>Element.closest()</code></a> is now a standard DOM method with the same name and the same job.</p>
+
+<p><strong>jQuery turned into a polyfill for its own imitation.</strong> This is the part I had not put together before reading the source. <a href="https://code.jquery.com/jquery-1.3.2.js">jQuery 1.3.2</a>, dated February 2009 in its header, already contains this:</p>
+
+<pre tabindex="0"><code>if ( !seed &amp;&amp; context.nodeType === 9 &amp;&amp; !isXML(context) ) {
+  try {
+    return makeArray( context.querySelectorAll(query), extra );
+  } catch(e){}
+}
+
+return oldSizzle(query, context, extra, seed);</code></pre>
+
+<p>Try the browser's version, and if it throws, fall back to your own. Notice <code>nodeType === 9</code>. The native path is used only when the query starts from the document, never from an element, which is the case Resig had told the working group was broken. I can't prove that was the motive, and the comments nearby mention a Safari bug as well, but the effect is the same. The library adopted the standard where the standard agreed with it and routed around it everywhere else. We now call this pattern a polyfill or progressive enhancement. In 2009 it was a library quietly making itself less necessary, one <code>try</code> block at a time.</p>
+
+<p><strong>The empty set became the argument against it.</strong> GitHub's post gives a three-line example, <code>$('.js-widget').addClass('is-loading').show()</code>, and then asks: "Did the author expect one or more js-widget elements on this page?" If the class name vanishes from the markup, nothing fails. "By default, jQuery silently skips the whole expresion when nothing matched the initial selector; but to us, such behavior was a bug rather than a feature." They also found that chaining "doesn't lend itself well to static analysis, since almost every result of a jQuery method call is of the same type." The feature that made jQuery pleasant for one person on one page was the same feature that made it hard for hundreds of engineers and a type checker. My own reading is that the language later settled on a compromise. Optional chaining, <code>el?.classList.add()</code>, is jQuery's silent no-op made opt-in, one question mark at a time.</p>
+
+<p><strong>The dollar sign outlived the dependency.</strong> Open the console in Chrome on a page with no libraries and type <code>$('img')</code>. It works. <a href="https://developer.chrome.com/docs/devtools/console/utilities">Chrome's documentation</a> lists <code>$(selector)</code> as "a shortcut for the <code>document.querySelector()</code> function," with a note that if the page uses "a library such as jQuery that uses $, this functionality will be overwritten." The tool yields the name to the library, the way the library once yielded it to Prototype.</p>
+
+<p><strong>It is still most of the web.</strong> <a href="https://w3techs.com/technologies/details/js-jquery">W3Techs</a>, on November 12, 2026, has jQuery on 63.9% of all websites, and 16.9% of those jQuery sites are still on version 1. The project is not a ruin either. jQuery 4.0.0 came out on January 17, 2026, "the first major version release in almost 10 years," dropping support for Internet Explorer 10 and older while keeping IE 11 for one more round. The retreat has mostly happened among people who write new code. <a href="https://blog.getbootstrap.com/2021/05/05/bootstrap-5/">Bootstrap 5</a> shipped in May 2021 under the heading "No more jQuery!" The site <a href="https://youmightnotneedjquery.com/">You Might Not Need jQuery</a> is careful about its own scope: "jQuery and its cousins are great, and by all means use them if it makes it easier to develop your application." Its plea is aimed at library authors who add a dependency for three function calls.</p>
+
+<p>One more thing in that 2015 look back deserves attention. Resig wrote that "jQuery would not have existed if it wasn't for Sam Stephenson creating Prototype, Simon Willison creating getElementsBySelector, Valerio Proietti creating moo.fx, and especially Dean Edwards creating so much: event binding, CSS selector libraries, DOM ready techniques and more." Take him at his word and jQuery contained very little that was new. Selectors in JavaScript existed. <code>$</code> existed. The event fix was a contest entry. What Resig added was the counting: the decision that the right API was the one with the least text between the thing you meant and the thing you had to type. Does that count as invention? I think it does, and I think it is the kind that standards bodies are worst at and individuals with a blog are best at.</p>
+
+<h2>The takeaway</h2>
+
+<p>The dollar sign replaced two things. On the page, it replaced the utility belt: the pasted <code>addEvent()</code>, the onload hack, the <code>ActiveXObject</code> wrapper, each with its author's name in a comment and its own set of bugs. jQuery gathered them behind one function and one query language that every CSS author already knew, and it was polite enough to coexist with whatever was on the page before it arrived. That combination, more than any single feature, is why it won.</p>
+
+<p>In the longer run it replaced the process by which the web platform got fixed. In 2005 that process was a blog contest. By 2008 it was a library author writing to a W3C list on behalf of his users, and by 2013 the selector function was a W3C Recommendation. jQuery's reward for being right was to become optional. It is hard to think of a better outcome for a library, or a rarer one, and it is still loading on roughly two pages out of three while you decide whether you need it.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://johnresig.com/blog/selectors-in-javascript/">Selectors in Javascript</a>, John Resig, 2005 <a class="archived" href="https://web.archive.org/web/20261025165330/https://johnresig.com/blog/selectors-in-javascript/">(archived)</a></li>
+    <li><a href="https://johnresig.com/blog/barcampnyc-wrap-up/">BarCampNYC Wrap-up</a>, John Resig, 2006, with the naming exchange in the comments <a class="archived" href="https://web.archive.org/web/20260922045923/https://johnresig.com/blog/barcampnyc-wrap-up/">(archived)</a></li>
+    <li><a href="https://blog.jquery.com/2006/08/26/jquery-10/">jQuery 1.0</a>, John Resig, jQuery blog, 2006 <a class="archived" href="https://web.archive.org/web/20261027143124/https://blog.jquery.com/2006/08/26/jquery-10/">(archived)</a></li>
+    <li><a href="https://code.jquery.com/jquery-1.0.js">jquery-1.0.js</a>, as served by the jQuery CDN (its header carries an October 2006 revision date) <a class="archived" href="https://web.archive.org/web/20260815151532/https://code.jquery.com/jquery-1.0.js">(archived)</a></li>
+    <li><a href="https://johnresig.com/files/Genius%20-%20jQuery%20Annotation.htm">The original jQuery source code, January 2006</a>, and <a href="https://johnresig.com/blog/annotated-version-of-the-original-jquery-release/">Annotated Version of the Original jQuery Release</a>, John Resig, 2015 <a class="archived" href="https://web.archive.org/web/20260511112506/https://johnresig.com/files/Genius%20-%20jQuery%20Annotation.htm">(archived)</a></li>
+    <li><a href="https://www.quirksmode.org/blog/archives/2005/09/addevent_recodi.html">addEvent() recoding contest</a> and <a href="https://www.quirksmode.org/blog/archives/2005/10/_and_the_winner_1.html">... and the winner is ...</a>, Peter-Paul Koch, QuirksBlog, 2005 <a class="archived" href="https://web.archive.org/web/20260615052939/https://www.quirksmode.org/blog/archives/2005/09/addevent_recodi.html">(archived)</a></li>
+    <li><a href="https://johnresig.com/blog/flexible-javascript-events/">Flexible Javascript Events</a>, John Resig, 2005 <a class="archived" href="https://web.archive.org/web/20261106154529/https://johnresig.com/blog/flexible-javascript-events/">(archived)</a></li>
+    <li><a href="https://simonwillison.net/2003/Mar/25/getElementsBySelector/">getElementsBySelector()</a>, Simon Willison, 2003 <a class="archived" href="https://web.archive.org/web/20260717150826/https://simonwillison.net/2003/Mar/25/getElementsBySelector/">(archived)</a></li>
+    <li><a href="http://api.prototypejs.org/dom/dollar/">$ utility</a>, Prototype API documentation <a class="archived" href="https://web.archive.org/web/20260826152923/http://api.prototypejs.org/dom/dollar/">(archived)</a></li>
+    <li><a href="https://blog.jquery.com/2007/01/14/jquery-birthday-11-new-site-new-docs/">jQuery Birthday: 1.1, New Site, New Docs</a>, John Resig, jQuery blog, 2007 <a class="archived" href="https://web.archive.org/web/20261024234519/https://blog.jquery.com/2007/01/14/jquery-birthday-11-new-site-new-docs/">(archived)</a></li>
+    <li><a href="https://weblogs.asp.net/scottgu/jquery-and-microsoft">jQuery and Microsoft</a>, Scott Guthrie, 2008 <a class="archived" href="https://web.archive.org/web/20241227205738/https://weblogs.asp.net/scottgu/jquery-and-microsoft">(archived)</a></li>
+    <li><a href="https://blog.jquery.com/2008/09/28/jquery-microsoft-nokia/">jQuery, Microsoft, and Nokia</a>, John Resig, jQuery blog, 2008 <a class="archived" href="https://web.archive.org/web/20261020124723/https://blog.jquery.com/2008/09/28/jquery-microsoft-nokia/">(archived)</a></li>
+    <li><a href="https://johnresig.com/blog/thoughts-on-queryselectorall/">Thoughts on querySelectorAll</a>, John Resig, 2008 <a class="archived" href="https://web.archive.org/web/20260905154559/https://johnresig.com/blog/thoughts-on-queryselectorall/">(archived)</a></li>
+    <li><a href="https://code.jquery.com/jquery-1.3.2.js">jquery-1.3.2.js</a>, jQuery CDN, 2009 <a class="archived" href="https://web.archive.org/web/20261027111419/https://code.jquery.com/jquery-1.3.2.js">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/selectors-api/">Selectors API Level 1</a>, W3C Recommendation, 2013 <a class="archived" href="https://web.archive.org/web/20261106042717/https://www.w3.org/TR/selectors-api/">(archived)</a></li>
+    <li><a href="https://api.jquery.com/jQuery.noConflict/">jQuery.noConflict()</a> and <a href="https://api.jquery.com/closest/">.closest()</a>, jQuery API documentation <a class="archived" href="https://web.archive.org/web/20261021030447/https://api.jquery.com/jQuery.noConflict/">(archived)</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest">Element: closest() method</a>, MDN <a class="archived" href="https://web.archive.org/web/20261106082007/https://developer.mozilla.org/en-US/docs/Web/API/Element/closest">(archived)</a></li>
+    <li><a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">Removing jQuery from GitHub.com frontend</a>, GitHub Engineering, 2018 <a class="archived" href="https://web.archive.org/web/20261101224116/https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">(archived)</a></li>
+    <li><a href="https://blog.getbootstrap.com/2021/05/05/bootstrap-5/">Bootstrap 5</a>, Bootstrap blog, 2021 <a class="archived" href="https://web.archive.org/web/20260818220944/https://blog.getbootstrap.com/2021/05/05/bootstrap-5/">(archived)</a></li>
+    <li><a href="https://youmightnotneedjquery.com/">You Might Not Need jQuery</a> <a class="archived" href="https://web.archive.org/web/20261103115732/https://youmightnotneedjquery.com/">(archived)</a></li>
+    <li><a href="https://developer.chrome.com/docs/devtools/console/utilities">Console Utilities API reference</a>, Chrome DevTools documentation <a class="archived" href="https://web.archive.org/web/20261023234538/https://developer.chrome.com/docs/devtools/console/utilities">(archived)</a></li>
+    <li><a href="https://blog.jquery.com/2026/01/17/jquery-4-0-0/">jQuery 4.0.0</a>, Timmy Willison, jQuery blog, 2026 <a class="archived" href="https://web.archive.org/web/20261106055435/https://blog.jquery.com/2026/01/17/jquery-4-0-0/">(archived)</a></li>
+    <li><a href="https://w3techs.com/technologies/details/js-jquery">Usage statistics and market share of jQuery for websites</a>, W3Techs, read November 12, 2026</li>
+    <li><a href="https://en.wikipedia.org/wiki/JQuery">jQuery</a> and <a href="https://en.wikipedia.org/wiki/John_Resig">John Resig</a>, Wikipedia <a class="archived" href="https://web.archive.org/web/20261106125635/https://en.wikipedia.org/wiki/JQuery">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
+  <item>
+    <title>getYear() and the year 19100</title>
+    <link>https://derek.io/view-source/getyear-and-the-year-19100/</link>
+    <guid isPermaLink="true">https://derek.io/view-source/getyear-and-the-year-19100/</guid>
+    <pubDate>Thu, 12 Nov 2026 03:15:17 GMT</pubDate>
+    <description>One small Date method returned 100, 2000 or 100 again for the year 2000 depending on the browser, got fixed three different ways, and is still in every browser today.</description>
+    <content:encoded><![CDATA[<p class="lede">A method that was right, got fixed, got fixed back, and is still shipping in the browser you are reading this in.</p>
+
+<pre tabindex="0"><code>var now = new Date();
+"19" + now.getYear();  <span class="c">// "19100"</span></code></pre>
+
+<p>Through the late 1990s, lines like that one printed the year in page footers and "last updated" stamps, and they were correct every time anyone checked. In 1998 it said 1998. In 1999 it said 1999. On the first morning of 2000 it said 19100, unless the visitor's browser was one of the ones where it said 192000.</p>
+
+<p>The usual Y2K story is about two-digit years stored in old mainframe records to save space. This one is different, and I think more useful to a working developer. <code>getYear()</code> never stored two digits. It returned a perfectly unambiguous number, the documentation said what the number was, and the trouble came from three separate attempts to make it nicer. By January 2000 the same call gave different answers in browsers from the same vendor, and the standard had already given up on it.</p>
+
+<h2>Before: years since 1900</h2>
+
+<p>The convention is older than the web. C's <code>struct tm</code>, the structure that <code>localtime()</code> fills in, has a member called <code>tm_year</code>, and <a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/time.h.html">the POSIX definition of <code>&lt;time.h&gt;</code></a> describes it in three words: "Years since 1900." The neighbouring member, <code>tm_mon</code>, is the month of the year from 0 to 11. If both of those look familiar, it is because you have been living with them in JavaScript for thirty years.</p>
+
+<p>They got there by way of Java. Java 1.0 shipped a class called <code>java.util.Date</code> with a <code>getYear()</code> that returned the year minus 1900 and a <code>getMonth()</code> that counted from zero. JavaScript took the whole thing. Allen Wirfs-Brock and Brendan Eich, in their history paper <a href="https://zenodo.org/records/4960086">"JavaScript: The First 20 Years"</a>, put it bluntly: "JavaScript 1.0 Date was a direct transliteration, bugs and all, of the java.util.Date class of Java 1.0." The list of inherited details they give includes "externally numbering months from 0–11, and Year 2000 ambiguities that were present in the Java design." The reason, they write, was "Java interoperability requirements."</p>
+
+<p>Eich has been less formal about it elsewhere. In 2003 Eric Lippert, who worked on Microsoft's JScript, wrote <a href="https://ericlippert.com/2003/10/06/erics-blog-for-january-279th-2003/">a post about JavaScript's date oddities</a> and wondered aloud why months start at zero. The post preserves Eich's reply: "My answer: because that's how java.util.Date did it." JavaScript was under orders to be Java's little brother, and the team was "trying not to reinvent wheels to be any more or less round than Java's equivalent." Then the line that covers today's topic: "Unfortunately, java.util.Date had a pile of y2k and usability bugs."</p>
+
+<p>So Navigator 2 shipped a <code>getYear()</code> that returned the year minus 1900. For 1996 that is 96. It looks exactly like a two-digit year, which is the whole problem. A number that happens to look like "the last two digits" for the first few years of a language's life will be used as the last two digits, whatever the manual says.</p>
+
+<h2>Three fixes and a standard</h2>
+
+<p>Here is the sequence, as well as the surviving sources let me reconstruct it.</p>
+
+<p><strong>1996: Netscape fixes it.</strong> Navigator 3 changed the method. Danny Goodman, explaining in 1998 why the calendar examples in the JavaScript Bible were about to break, <a href="https://dannyg.com/support/calendarY2K.html">described the change</a>: "getYear() started its life returning the year value as the year minus 1900. But starting with Navigator 3, the method returned a four-digit year for years starting with 2000." The new rule was 96 for 1996, 99 for 1999, then 2000 for 2000. My best guess at the reasoning is that somebody looked at 100 and saw a Y2K bug waiting to be reported. That same year, Microsoft's first JScript shipped in Internet Explorer 3 with the original behaviour. Microsoft's <a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/x0a9sc10(v=vs.84)">archived JScript reference</a> still records it: for JScript 1.0, "the year 1899 is returned as -1 and the year 2000 is returned as 100."</p>
+
+<p><strong>1997: Microsoft fixes it the same way, and Java walks away.</strong> Internet Explorer 4 adopted the Navigator 3 rule. The same Microsoft page gives the examples: "1996 is returned as 96, but 1825 and 2025 are returned as-is." Lippert's version, from inside the building, is that the original IE implementation was the mistake: "Fortunately we corrected that incompatibility in the second version." Meanwhile the method's source had disowned it. JDK 1.1, in February 1997, deprecated <code>java.util.Date</code>'s year, month and day methods in favour of a new <code>Calendar</code> class. <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Date.html">The Java 8 documentation</a> for <code>getYear()</code> still opens with the word "Deprecated."</p>
+
+<p><strong>June 1997: the standard writes down the original.</strong> The <a href="https://ecma-international.org/wp-content/uploads/ECMA-262_1st_edition_june_1997.pdf">first edition of ECMA-262</a> had to say what <code>getYear</code> does, and with the browsers disagreeing, it picked the oldest answer. Section 15.9.5.5 ends in one step: "Return YearFromTime(LocalTime(t)) − 1900." It also carries an apology in advance: "This function is specified here for backwards compatibility only. The function getFullYear is much to be preferred for nearly all purposes, because it avoids the 'year 2000 problem.'" That sentence was published two and a half years before the year 2000.</p>
+
+<p><strong>August 1998: Netscape un-fixes it.</strong> Navigator 4.06 shipped JavaScript 1.3 with a claim of ECMA-262 compliance, and compliance meant going back to year minus 1900. Phil Schwartau, handling a bug report for Mozilla in July 2000, relayed the developers' account in <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=45764">a Bugzilla comment</a>: "Between JavaScript versions 1.2 and 1.3, we rewrote the Javascript Date object from the ground up." The new code followed the draft standard. The resulting behaviour "was different from many (but not all) JavaScript Date implementations, but we retained it to be compliant with the evolving standard."</p>
+
+<p><strong>December 1999: the standard gives up.</strong> The third edition of ECMA-262, approved on December 16, 1999, moved <code>getYear</code> out of the main text and into Annex B, the appendix for things implementations may keep for old pages' sake. Schwartau's account covers Netscape's dilemma at that point. They had just changed the method to match a standard that no longer required it. "Rather than revert to the old getYear behavior and force scriptwriters to be aware of yet another version difference, we decided to keep the year - 1900 behavior for getYear, and encourage the use of getFullYear." And then, with admirable restraint: "It's not an ideal situation, but that's the history."</p>
+
+<p>Put it all in one place and this is what a script could expect on New Year's Day:</p>
+
+<pre tabindex="0"><code><span class="c">// new Date(2000, 0, 1).getYear()</span>
+<span class="c">// Navigator 2, IE 3         100</span>
+<span class="c">// Navigator 3              2000</span>
+<span class="c">// IE 4 and IE 5            2000</span>
+<span class="c">// Navigator 4.06 and up     100</span>
+<span class="c">// ECMA-262                  100</span></code></pre>
+
+<p>Then the day came. The mainframes mostly held. The web got a rash of cosmetic damage, and not only from JavaScript, since Perl's <code>localtime</code> and Java's <code>getYear()</code> followed the same C convention. <a href="https://en.wikipedia.org/wiki/Year_2000_problem">Wikipedia's account of the day</a> lists the US Naval Observatory, keeper of the country's official time, giving the date on its website as 1 Jan 19100. Météo-France showed a forecast map dated 01/01/19100. Al Gore's presidential campaign site briefly announced that it was 3 January 19100.</p>
+
+<p>On that same January 3, two things were published. On irt.org, Martin Webb posted <a href="https://www.irt.org/articles/js199/">"JavaScript Y2K Issues"</a>, a careful field guide to the mess. And at 23:39 UTC someone opened <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=22964">Mozilla bug 22964</a>, "JavaScript: getYear returns '100' for 2000." Two hours and twenty minutes later John Morrison closed it as invalid: "this behaviour is as designed and documented."</p>
+
+<h2>Why a one-line method went so wrong</h2>
+
+<p>It would be easy to file this under carelessness. I don't think that's fair to anyone involved. Each decision had a defensible reason behind it, and the reasons pulled in different directions.</p>
+
+<p><strong>A marketing mandate picked the API.</strong> Nobody at Netscape sat down and designed a year accessor that returned 95. They were told the language had to sit alongside Java and script its applets, so the date object matched Java's method for method. Java had copied the shape of C's time structure. The convention arrived in your browser third-hand, and each hand assumed the previous one had thought about it.</p>
+
+<p><strong>The original design was correct, and that made it fragile.</strong> Raymond Chen made this point in the comments on Lippert's post. The C convention "was actually good and correct," he wrote: "if you paid close attention and always added 1900 to the year, you always got the right answer." The catch is "if you paid close attention." For five years the wrong mental model, that this was a two-digit year, produced right answers. An API that rewards the wrong model until a known future date is a trap, however accurate the documentation.</p>
+
+<p><strong>The fix destroyed information.</strong> Chen again, on the Navigator 3 and IE 4 rule: "if you called getYear and got 80 back, you could never be sure whether that was the year 80 or the year 1980." Year minus 1900 is reversible. The friendlier rule is a two-digit year with an escape hatch, and it broke the one thing the old method was good for, which was subtracting one year from another. A script that computed someone's age as this year minus birth year would get 2000 minus 65.</p>
+
+<p><strong>Following the standard was a moving target.</strong> Netscape did what developers always say they want vendors to do. It tracked the draft spec, even where that meant changing shipped behaviour. Then the committee demoted the method, and Netscape was left holding a behaviour change it had made for the sake of a requirement that no longer existed. Microsoft ignored the standard on this point and stayed compatible with its own previous release, which from the point of view of an intranet full of IE-only pages was the responsible choice.</p>
+
+<p><strong>Nobody could remove anything.</strong> By 1997 the method was known to be a hazard, a replacement existed, and the spec said so in writing. It stayed, because pages were already calling it and a browser that breaks existing pages loses to the browser that doesn't. Hold that thought for the last section.</p>
+
+<h2>How everyone coped</h2>
+
+<p>The obvious answer was <code>getFullYear()</code>, which the version 4 browsers and the standard had added for exactly this purpose. The obvious answer was not available. As Webb put it, "so long as there are people using Netscape Navigator 2 and 3 and Internet Explorer 3, there will always be a need to use getYear(), as these browsers obviously do not support getFullYear()." So the era's solution was to keep calling the broken method and launder the result.</p>
+
+<p>Webb's version is the tidiest:</p>
+
+<pre tabindex="0"><code>function y2k(number) { return (number &lt; 1000) ? number + 1900 : number; }</code></pre>
+
+<p>If the browser gave you a small number, it meant years since 1900. If it gave you a big one, it was already a year. Goodman's patch for the book's calendars, dated 16 September 1998 in its own comment, was the same idea with the threshold at 1900 and the name <code>get4DigitYear</code>. Both carry the cost Chen described. Webb's cannot represent a year before 1000 and Goodman's cannot represent one before 1900, because the function can no longer tell 80 from 1980. For a page footer, nobody minded.</p>
+
+<p>Peter-Paul Koch's QuirksMode <a href="https://quirksmode.org/js/introdate.html">went further</a>. The page introduced the problem with "Netscape devised a complex solution that even Netscape itself doesn't completely follow," noted that "Netscape 3 (and only 3) follows Explorer," and then recommended throwing away everything except the last two digits and rebuilding the century from scratch:</p>
+
+<pre tabindex="0"><code>function takeYear(theDate) {
+  x = theDate.getYear();
+  var y = x % 100;
+  y += (y &lt; 38) ? 2000 : 1900;
+  return y;
+}</code></pre>
+
+<p>Why 38? "Because Epoch Time will end in 2038." That is a Y2K workaround whose expiry date is the next date bug on the calendar, written down cheerfully and on purpose. I find it hard not to admire.</p>
+
+<p>My favourite coping strategy is in the report that opened <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=45764">that same Mozilla bug</a> in July 2000. The reporter's own code handled the year like this:</p>
+
+<pre tabindex="0"><code><span class="c">// javascript .getYear() isn't Y2K compliant</span>
+datedisplay.setAttribute("value", dateObj.getDate()+"/"+(dateObj.getMonth()+1)+"/"+(2100-dateObj.getYear())+" "+hour+":"+minutes);</code></pre>
+
+<p>In 2000, <code>getYear()</code> returns 100, and 2100 minus 100 is 2000. In 2001 it returns 101, and the page announces that it is 1999. That fix was good for exactly twelve months, and to be fair, it was written in one of them.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The bug report became the documentation.</strong> Bug 22964 was closed in two hours and then refused to stay quiet. It has 67 duplicates. The last was filed in July 2013. Of its 80 comments, 51 date from 2005, which I'd guess is what happens when a browser built on that engine starts taking real market share and meets a web tested only in Internet Explorer. The thread contains the entire standards-versus-reality argument in miniature. One commenter quotes Annex B and concludes: "Mozilla should behave as it behaves now, and IE is wrong." Another answers with the point that browser vendors eventually organised their whole philosophy around: "the Mozilla user who browses the Internet CANNOT use getFullYear instead of getYear because he is not the author of the page he is browsing!!!" Both were right. The author of the page and the person hurt by the page are different people, and only one of them can deploy a fix.</p>
+
+<p><strong>The standard won, more than a decade late.</strong> <a href="https://www.webplatform.org/docs/javascript/Date/getYear">The reference page on WebPlatform.org</a> records the end of the split: "In Internet Explorer 3.0, and then in Internet Explorer versions starting with Internet Explorer 9 standards mode, the value returned is the stored year minus 1900." So for the year 2000, Internet Explorer's answer went 100, then 2000 from IE 4 through IE 8, then 100 again. A page that had relied on the middle answer for a decade would break on upgrade, in the name of interoperability. And the change applied only in IE9's standards mode, so the older document modes went on giving the old answer. The fix for the fix for the fix came with a switch.</p>
+
+<p><strong>Annex B is a museum that charges no admission and never closes.</strong> Wirfs-Brock and Eich describe what the committee thought it was doing in 1999 by moving "the non-Y2K compliant Date methods" to an annex: the hope was that it "would signal that these were deprecated features, which should not be used and that implementations were empowered to eventually remove them." Their verdict: "This was a naïve expectation." Browser makers would not remove anything a page might use, because "some Web pages never go away." <a href="https://tc39.es/ecma262/multipage/additional-ecmascript-features-for-web-browsers.html">Today's Annex B</a> has stopped pretending. It says its contents "are required when the ECMAScript host is a web browser," and that every feature in it has "one or more undesirable characteristics and in the absence of legacy usage would be removed from this specification." The Y2K warning from 1997 is still there, nearly word for word. So is the method. I ran <code>new Date().getYear()</code> in a current Chromium build while writing this and got 126.</p>
+
+<p><strong>The replacement took thirty years.</strong> <a href="https://github.com/tc39/proposal-temporal">Temporal</a>, the new date and time API, is now at Stage 4 at TC39, and its README opens with a sentence nobody will dispute: "Date has been a long-standing pain point in ECMAScript." <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal">MDN</a> describes it as "designed as a full replacement for the Date object," and is unsentimental about the original: "the Date API is based on the poorly designed java.util.Date class from Java." In Temporal a date's <code>year</code> is the year and January is month 1. MDN also still flags it as limited availability, not yet in every major browser. And notice the form the fix takes. Temporal is a new global object sitting beside <code>Date</code>. It replaces nothing, because nothing can be replaced. Java reached the same arrangement decades earlier: its <code>getYear()</code> was deprecated in 1997 and was still in the API documentation, deprecation notice attached, as of Java 8.</p>
+
+<p>There is a pattern in that list that I think goes beyond dates. Every change made to <code>getYear()</code> in place broke somebody's working page: Netscape's in 1996, Microsoft's in 1997, Netscape's again in 1998, Microsoft's again with IE9. The only move that helped was the one that left the old method alone and added <code>getFullYear()</code> next to it. Later this turned into a slogan: don't break the web. The people who wrote the 1997 standard were already learning it the hard way, from a function with one line of arithmetic in it.</p>
+
+<h2>The takeaway</h2>
+
+<p>The original <code>getYear()</code> was never wrong. It returned years since 1900, as documented, in Navigator 2, and it returns that today. What failed was everything around it: a borrowed design that looked like something it wasn't, two vendors fixing it in place at different times, and a standard that arrived after the fixes and sided with the original. The lesson I'd take is that once an API is on the web, changing what it returns is the most expensive thing you can do to it, and it stays expensive even when the change is an improvement. Add the new thing beside it, mark the old one as legacy, and accept that you will be shipping both for the rest of your career.</p>
+
+<p>Which, if you started in the 1990s, you have been. The line at the top of this essay still runs. It prints 19126 this year, in any browser that follows the specification. Somewhere there is probably a page where it does.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://zenodo.org/records/4960086">JavaScript: The First 20 Years</a>, Allen Wirfs-Brock and Brendan Eich, 2020 (corrected 2021) <a class="archived" href="https://web.archive.org/web/20251229164813/https://zenodo.org/records/4960086">(archived)</a></li>
+    <li><a href="https://ericlippert.com/2003/10/06/erics-blog-for-january-279th-2003/">Eric's Blog for January 279th, 2003</a>, Eric Lippert, 2003, with replies from Brendan Eich and Raymond Chen <a class="archived" href="https://web.archive.org/web/20240915103006/https://ericlippert.com/2003/10/06/erics-blog-for-january-279th-2003/">(archived)</a></li>
+    <li><a href="https://ecma-international.org/wp-content/uploads/ECMA-262_1st_edition_june_1997.pdf">ECMA-262, 1st edition</a>, Ecma, June 1997 (PDF; see section 15.9.5.5) <a class="archived" href="https://web.archive.org/web/20261105185941/https://ecma-international.org/wp-content/uploads/ECMA-262_1st_edition_june_1997.pdf">(archived)</a></li>
+    <li><a href="https://tc39.es/ecma262/multipage/additional-ecmascript-features-for-web-browsers.html">ECMAScript Annex B: Additional ECMAScript Features for Web Browsers</a>, Ecma TC39, current draft <a class="archived" href="https://web.archive.org/web/20261105185938/https://tc39.es/ecma262/multipage/additional-ecmascript-features-for-web-browsers.html">(archived)</a></li>
+    <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=22964">Bug 22964: JavaScript: getYear returns "100" for 2000</a>, Mozilla Bugzilla, 2000 to 2013 <a class="archived" href="https://web.archive.org/web/20250615043950/https://bugzilla.mozilla.org/show_bug.cgi?id=22964">(archived)</a></li>
+    <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=45764">Bug 45764: Y2K error in .getYear()</a>, Mozilla Bugzilla, 2000, with Phil Schwartau's history of the Netscape change</li>
+    <li><a href="https://www.irt.org/articles/js199/">JavaScript Y2K Issues</a>, Martin Webb, irt.org, 2000 <a class="archived" href="https://web.archive.org/web/20240812122852/https://www.irt.org/articles/js199/">(archived)</a></li>
+    <li><a href="https://dannyg.com/support/calendarY2K.html">JSBible 2/3 Calendar Scripts and Y2K</a>, Danny Goodman, 1998 <a class="archived" href="https://web.archive.org/web/20260412192610/http://www.dannyg.com/support/calendarY2K.html">(archived)</a></li>
+    <li><a href="https://quirksmode.org/js/introdate.html">Introduction to Date and Time</a>, Peter-Paul Koch, QuirksMode <a class="archived" href="https://web.archive.org/web/20260528205207/https://www.quirksmode.org/js/introdate.html">(archived)</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/x0a9sc10(v=vs.84)">getYear Method (Windows Scripting - JScript)</a>, Microsoft, archived <a class="archived" href="https://web.archive.org/web/20240131135705/https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/x0a9sc10%28v=vs.84%29">(archived)</a></li>
+    <li><a href="https://www.webplatform.org/docs/javascript/Date/getYear">getYear</a>, WebPlatform.org <a class="archived" href="https://web.archive.org/web/20170306095912/https://www.webplatform.org/docs/javascript/Date/getYear/">(archived)</a></li>
+    <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Date.html">java.util.Date</a>, Java SE 8 API documentation, Oracle <a class="archived" href="https://web.archive.org/web/20261027073259/https://docs.oracle.com/javase/8/docs/api/java/util/Date.html">(archived)</a></li>
+    <li><a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/time.h.html">&lt;time.h&gt;</a>, The Open Group Base Specifications <a class="archived" href="https://web.archive.org/web/20261101143519/https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/time.h.html">(archived)</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Year_2000_problem">Year 2000 problem</a>, Wikipedia</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getYear">Date.prototype.getYear()</a>, MDN <a class="archived" href="https://web.archive.org/web/20261101161627/https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getYear">(archived)</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal">Temporal</a>, MDN <a class="archived" href="https://web.archive.org/web/20261105215431/https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal">(archived)</a></li>
+    <li><a href="https://github.com/tc39/proposal-temporal">Temporal proposal</a>, Ecma TC39 <a class="archived" href="https://web.archive.org/web/20261016173346/https://github.com/tc39/proposal-temporal">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
+  <item>
+    <title>Where did all the old web developers go?</title>
+    <link>https://derek.io/view-source/where-did-the-old-web-developers-go/</link>
+    <guid isPermaLink="true">https://derek.io/view-source/where-did-the-old-web-developers-go/</guid>
+    <pubDate>Thu, 12 Nov 2026 02:37:49 GMT</pubDate>
+    <description>Around 2008 nobody writing JavaScript seemed to be over 40, and the industry spent a decade arguing about why. The answer was arithmetic, and the same arithmetic is running again.</description>
+    <content:encoded><![CDATA[<p class="lede">Around 2008, nobody in the room was over 40. It took the industry about ten years to work out why.</p>
+
+<pre tabindex="0"><code>var year = 2008;
+var jsBorn = 1995;
+year - jsBorn;  <span class="c">// 13</span></code></pre>
+
+<p>That subtraction is most of this essay. In 2008 the most experienced JavaScript developer on Earth had thirteen years of JavaScript, because that was all the JavaScript there had been. If you started your career with the language in 1995 at 22, you were 35. To be a 50-year-old JavaScript developer in 2008, you would have had to pick it up at 37, the year it shipped, and stay.</p>
+
+<p>Nobody did the subtraction at the time. If you wrote JavaScript for a living in 2008 and looked around the office, you saw twenty-somethings, a few people in their thirties, and a manager. The conclusion most people drew was grim: web development chews people up, and by 40 you are promoted out, pushed out, or replaced by someone who knows the new framework. The industry then argued about that conclusion for a decade, in essays and in very long comment threads, before settling on the duller and more accurate one. The argument is worth replaying, partly because the same arithmetic has started running again.</p>
+
+<h2>2007: "Young people are just smarter"</h2>
+
+<p>The era's thesis statement came from a 22-year-old. At Y Combinator's Startup School at Stanford in March 2007, Mark Zuckerberg told the audience, as <a href="https://infopackets.com/node/2114">reported at the time</a>: "I want to stress the importance of being young and technical." Then the line that outlived the talk: "Young people are just smarter. Why are most chess masters under 30?" And the explanation: "Young people just have simpler lives. We may not own a car. We may not have family. I only own a mattress."</p>
+
+<p>The quote reached a Hacker News that was about a month old. <a href="https://news.ycombinator.com/item?id=7347">The thread</a> drew 21 comments. The first reply came from Paul Graham, who ran the site and was 42: "He had a point. He just phrased it in a way that alienated a lot of people." Graham's version was that young people have "a certain energy and willingness to see things in unconventional ways," and that math "is famously a young man's game." Others pushed back. One pointed out that Paul Erdős was prolific into old age. Another argued that older people bring a creativity that improves as you watch more ideas succeed and fail.</p>
+
+<p>Look at what Zuckerberg's argument was actually made of. The headline was about intelligence, but the supporting evidence was a mattress. "Simpler lives" means no mortgage, no kids, and nowhere to be at six o'clock. That is a claim about who will work ninety-hour weeks for equity, and it describes a labor supply. Hold on to that distinction, because the next ten years of argument mostly lost it.</p>
+
+<h2>2008 to 2010: get a Plan B</h2>
+
+<p>By 2008 the phrase "it's a young man's game" had moved from mathematicians to programmers, and some people were already tired of it. In October 2008 a thirty-year-old asked the Joel on Software forum whether to get out of tech while still reasonably young. Matthew Heusser, a testing and agile writer, <a href="https://xndev.blogspot.com/2008/10/">answered on the Creative Chaos blog</a> under the title "On Being An 'Old Dude'": "'It's a young man's game' is something people should be saying at seventy-two, not thirty two." The evidence was, of all things, The Muppet Show. Its guest stars were established entertainers, and nearly all of them were in their thirties or older, because it took about ten years to do anything of substance and be recognized for it. "Those first ten years are the beginning of the story, not the end."</p>
+
+<p>The essay that defined the anxiety arrived the next year: "Programmers: Before you turn 40, get a plan B," published on improvingsoftware.com in 2009. Its premise was that a programmer's employability falls off a cliff around 40, so you had better line up management, consulting or something else before you reach the edge.</p>
+
+<p>The essay's afterlife says more than the essay. It was reposted to Hacker News <a href="https://news.ycombinator.com/item?id=9361580">in 2015</a>, where it drew 351 points and 289 comments, and <a href="https://news.ycombinator.com/item?id=16934500">again in 2018</a>. Each time, the people the essay was warning showed up in the comments. The top reply in 2015 came from a 46-year-old who wrote that the number didn't feel like a description of them. The top reply in 2018 came from a 50-year-old who reported being probably the best programmer they had ever been. An essay predicting that these people would be gone kept getting upvoted by them.</p>
+
+<p>The numbers behind the cliff traced largely to one source. Norm Matloff, a computer science professor at UC Davis, wrote that "many programmers find that their employability starts to decline at about age 35" and that "statistics show that most software developers are out of the field by age 40." When the claim resurfaced in 2016, readers noticed that the statistics were never named.</p>
+
+<p>In 2010 Vivek Wadhwa's TechCrunch piece "Silicon Valley's Dark Secret: It's All About Age" carried the ageism argument to a mainstream tech audience. The mood had shifted from "young people are smarter" to "the industry throws people away." Notice that both positions shared an assumption. Both took for granted that older developers had existed in large numbers and something had removed them.</p>
+
+<h2>2013 to 2017: where would they have come from?</h2>
+
+<p>The reframe arrived quietly, in <a href="https://news.ycombinator.com/item?id=5679321">a 2013 Hacker News thread</a> about an ITworld article called "Older programmers are more knowledgeable, but harder to find." A commenter named nevinera wrote:</p>
+
+<blockquote>
+  <p>This article keeps asking 'where do they go?' The better question is 'where did they come from?' You don't see a ton of 55 year-old developers because they'd have been going to school in the late eighties, before most colleges had CS departments, and well before it was apparent that there would be permanent demand for an enormous fleet of us.</p>
+</blockquote>
+
+<p>It is the opening subtraction, done with college instead of JavaScript. It got little attention. The anxiety kept climbing and peaked the following spring, when <a href="https://news.ycombinator.com/item?id=7372997">"Ask HN: What happens to older developers?"</a> went up on March 10, 2014 and collected 554 points and 358 comments. The poster was in their early thirties and wanted to know what the middle and late stretch of a developer's career even looked like. Two months later Zuckerberg turned 30, and the internet took some pleasure in digging up the 2007 quote.</p>
+
+<p>By 2016 and 2017 the demographic answer had become the common one, mostly because the supposedly missing developers kept turning up to give it. In <a href="https://news.ycombinator.com/item?id=12743697">a 2016 thread</a> on an InfoWorld article titled "Where do all the old programmers go?", a 42-year-old described starting just before the internet took off, and said most people don't realize how few developers there were in the trade back then. Another 42-year-old reported that finding work had become easier approaching 40. That commenter's father had recently retired as a programmer after starting in the 1970s.</p>
+
+<p><a href="https://news.ycombinator.com/item?id=14185818">A 2017 thread</a> on developers still coding after 40, 50 and 60 produced the tidiest statement of the math: "Programmers over 40 would have started programming before 1995. Programmer cohorts who started in 1985-1995 were likely much smaller than the web boom cohorts." The same thread took apart the statistic everyone had been quoting, that only about 13% of developers in Stack Overflow's survey were over 40. As one commenter put it, a Stack Overflow survey "measures the answers from the specific demographic of stackoverflow users who are inclined to answer surveys." And the first comment asked the question that should have ended the debate years earlier: would anyone think it odd for a 60-year-old physician to still be doctoring?</p>
+
+<p>The age chart everyone had been reading as a funnel, with people falling out of the top, was a birth-year chart. The top was narrow because few people had been poured in at the bottom thirty years before.</p>
+
+<h2>What the cohort math doesn't explain</h2>
+
+<p>It would be neat to stop there and declare the whole panic a statistical illusion. It wasn't, and the same threads show why.</p>
+
+<p>In <a href="https://news.ycombinator.com/item?id=23320974">a 2020 thread</a>, a 45-year-old asked for age-friendly companies after a year of interviews that ended, as far as they could tell, in being considered too old. It drew 452 points and 445 comments. One reply was from a developer who had applied for "some 3¾ thousand jobs" between ages 42 and 46 and averaged less than one interview a year.</p>
+
+<p>Both things were true at once, and they happened at different places. The cohort effect explains the empty chairs: most of the older developers people expected to see had never existed. Ageism explains what happened to some of the ones who did exist when they went looking for a new chair. The first is a fact about the 1980s. The second happened at the résumé screen.</p>
+
+<h2>What the argument got wrong</h2>
+
+<p><strong>The Plan B was a ladder that hadn't been built.</strong> In 2009, the choices after senior engineer at most companies were to stay a senior engineer indefinitely or become a manager. The staff and principal track, where you keep writing code and keep getting promoted, existed at a few large companies and spread through the 2010s. My read is that a good share of the "everyone leaves by 40" pattern was people walking through the only door marked "up." Once a second door existed, a lot of them stopped leaving.</p>
+
+<p><strong>Zuckerberg's argument was about labor, and it aged the way labor arguments do.</strong> "Simpler lives" meant cheaper and more available. People with fifteen years of experience mostly did not lose the ability to do the work. They stopped agreeing to do it at midnight. An employer can call that a decline, but it's a negotiation, and negotiations move when the supply does.</p>
+
+<p><strong>"Keep up or die" confused two kinds of knowledge.</strong> The half-life of a framework is short. Nobody's résumé leans on Prototype.js anymore. But the developers who lasted were mostly the ones who had learned the layer underneath: the DOM, HTTP, caching, how a browser actually spends its time. That layer barely moved. The <a href="https://derek.io/view-source/if-document-layers/">browser-forking mess of 1997</a> taught feature detection, and you still write feature detection. Treadmill knowledge expires and platform knowledge compounds, and the fear of 40 was mostly a fear that all of it was the first kind.</p>
+
+<p><strong>The field needed to get old before anyone could be old in it.</strong> Someone who started with the web in the mid-1990s is in their fifties now. Pave's compensation data, <a href="https://pave.com/blog-posts/artificial-intelligence-isnt-killing-the-software-engineer-yet">published this year</a>, shows the average age of engineers rising across every major job family. The old web developer turned out to be a person who needed time to exist.</p>
+
+<h2>2026: the fear flips</h2>
+
+<p>Here is the part nobody in the 2014 thread would have guessed. The question "where are the old developers?" has been replaced by "where will the next ones come from?", and the group with the hiring problem is the young.</p>
+
+<p>The same Pave analysis found that entry-level engineers fell from 22.9% of all software engineers to 16.7% by the third quarter of 2025, while senior individual contributors grew from 9.1% to 11.6%. CNBC reported in October, as <a href="https://www.fullstack.com/blog/software-engineering-is-dead-long-live-software-engineering">summarized by Fullstack</a>, that 71% of the growth in software development job postings between May 2025 and May 2026 came from senior roles, in a market still well below its pre-pandemic level.</p>
+
+<p>The research on juniors points the same way. A Stanford study using ADP payroll data, <a href="https://www.softwareseni.com/what-the-data-actually-shows-about-ai-and-junior-developer-employment-decline/">as summarized by SoftwareSeni</a>, found that workers aged 22 to 25 in the most AI-exposed occupations saw a 16% relative decline in employment, while workers aged 35 to 49 in the same occupations saw growth. <a href="https://docs.iza.org/dp18723.pdf">An IZA discussion paper</a> from June found a 14 to 15 percent relative decline in junior versus senior developer vacancies after ChatGPT's release. Its sharper finding is about where the change happened: employers were asking for more experience under the same job titles. In the authors' words, AI is "raising the bar for what counts as a qualified junior hire."</p>
+
+<p>Some caution is due. Interest rates and pandemic over-hiring are tangled up in all of these numbers, and the most alarming figures in circulation come from the weakest sources. But the direction is consistent, and so is the explanation people in the industry give for it. <a href="https://builtin.com/articles/senior-hiring-software-engineering">Built In</a> put it this way in September: companies aren't hiring senior engineers to ship faster. They're hiring them so that faster code doesn't turn into expensive cleanup. Code got cheap. Knowing which code shouldn't exist did not.</p>
+
+<p>In 2009 the fear was that experience would stop being worth anything at 40. In 2026 experience is the scarce input. The scar tissue is now the product: knowing why the caching layer is strange, why that regression only shows up in Safari, why the rewrite will fail. If there is a 2026 version of the age cliff, I'd argue it has more to do with atrophy than with birthdays. The risk for someone 25 years in is letting an agent do so much of the work that the judgment they're being paid for goes soft.</p>
+
+<p>And there's a bill attached. Octopus Deploy's 2026 AI Pulse Report, <a href="https://pulse2.com/octopus-deploy-ai-pulse-report/">as reported in February</a>, lays out three phases: experimentation in 2024 and 2025, a junior hiring freeze from 2025 to 2027, and a potential senior talent crisis between 2027 and 2030. Seniors are made out of juniors. Stop hiring one and, a decade on, you run short of the other.</p>
+
+<h2>The takeaway</h2>
+
+<p>The 2008 office had no one over 40 because of hiring decisions made, or not made, in the 1980s, when the field was small and nobody knew it would need an enormous fleet. The age structure of a profession is a slow recording of who it let in, played back decades later. Everyone looking at that recording in 2008 thought they were watching something happen in the present. They were looking at the past.</p>
+
+<p>The same recording is being made right now. If the junior freeze holds for a few years, the developers of 2040 will look around the office and notice that hardly anyone is 38. Someone will write an essay about how the field burns people out in their thirties. The comments will argue about it for a decade. And the answer will be the one nevinera gave in 2013: ask where they would have come from.</p>
+
+<p>The 2009 essay said to get a Plan B before 40. The advice that held up is closer to the opposite. Stay hands-on enough that your judgment stays honest, and teach someone younger, because there aren't many of them coming and you are how the next cohort gets made.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://infopackets.com/node/2114">'Young People are Just Smarter,' Says Facebook CEO</a>, Infopackets, 2007</li>
+    <li><a href="https://news.ycombinator.com/item?id=7347">Young people are just smarter</a>, Hacker News, 2007 <a class="archived" href="https://web.archive.org/web/20231215160129/https://news.ycombinator.com/item?id=7347">(archived)</a></li>
+    <li><a href="https://xndev.blogspot.com/2008/10/">On Being An "Old Dude"</a>, Matthew Heusser, Creative Chaos, 2008 <a class="archived" href="https://web.archive.org/web/20261012083857/https://xndev.blogspot.com/2008/10/">(archived)</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=9361580">Programmers: Before you turn 40, get a plan B</a>, Hacker News, 2015 repost <a class="archived" href="https://web.archive.org/web/20260304160606/https://news.ycombinator.com/item?id=9361580">(archived)</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=16934500">Programmers: Before you turn 40, get a plan B</a>, Hacker News, 2018 repost <a class="archived" href="https://web.archive.org/web/20240906174735/https://news.ycombinator.com/item?id=16934500">(archived)</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=5679321">Older programmers are more knowledgeable, but harder to find</a>, Hacker News, 2013 <a class="archived" href="https://web.archive.org/web/20241111121448/https://news.ycombinator.com/item?id=5679321">(archived)</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=7372997">Ask HN: What happens to older developers?</a>, Hacker News, 2014 <a class="archived" href="https://web.archive.org/web/20250327140155/https://news.ycombinator.com/item?id=7372997">(archived)</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=12743697">Where do all the old programmers go?</a>, Hacker News, 2016</li>
+    <li><a href="https://news.ycombinator.com/item?id=14185818">Software Developers after 40, 50 and 60 Who're Still Coding</a>, Hacker News, 2017 <a class="archived" href="https://web.archive.org/web/20260217034817/https://news.ycombinator.com/item?id=14185818">(archived)</a></li>
+    <li><a href="https://news.ycombinator.com/item?id=23320974">Ask HN: Any job boards and age-friendly companies for older developers?</a>, Hacker News, 2020 <a class="archived" href="https://web.archive.org/web/20211019095644/https://news.ycombinator.com/item?id=23320974">(archived)</a></li>
+    <li><a href="https://pave.com/blog-posts/artificial-intelligence-isnt-killing-the-software-engineer-yet">Artificial Intelligence Isn't Killing the Software Engineer (Yet)</a>, Pave, 2026 <a class="archived" href="https://web.archive.org/web/20261006184613/https://www.pave.com/blog-posts/artificial-intelligence-isnt-killing-the-software-engineer-yet">(archived)</a></li>
+    <li><a href="https://www.fullstack.com/blog/software-engineering-is-dead-long-live-software-engineering">Software Engineering is Dead; Long Live Software Engineering</a>, Fullstack, 2026</li>
+    <li><a href="https://www.softwareseni.com/what-the-data-actually-shows-about-ai-and-junior-developer-employment-decline/">What the Data Actually Shows About AI and Junior Developer Employment Decline</a>, SoftwareSeni <a class="archived" href="https://web.archive.org/web/20260810010126/https://www.softwareseni.com/what-the-data-actually-shows-about-ai-and-junior-developer-employment-decline/">(archived)</a></li>
+    <li><a href="https://docs.iza.org/dp18723.pdf">Generative AI and the Redefinition of Entry-Level Software Work</a>, Westby, Modestino and Cheng, IZA, 2026 <a class="archived" href="https://web.archive.org/web/20261025071612/https://docs.iza.org/dp18723.pdf">(archived)</a></li>
+    <li><a href="https://builtin.com/articles/senior-hiring-software-engineering">AI Makes Code Cheap, and Engineers More Expensive</a>, Built In, 2026 <a class="archived" href="https://web.archive.org/web/20261002135423/https://builtin.com/articles/senior-hiring-software-engineering">(archived)</a></li>
+    <li><a href="https://pulse2.com/octopus-deploy-ai-pulse-report/">Octopus Deploy: AI Pulse Report Warns Of Senior Developer Shortage</a>, Pulse 2.0, 2026 <a class="archived" href="https://web.archive.org/web/20260610101250/https://pulse2.com/octopus-deploy-ai-pulse-report/">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
+  <item>
+    <title>if (document.layers): the web forks in two</title>
+    <link>https://derek.io/view-source/if-document-layers/</link>
+    <guid isPermaLink="true">https://derek.io/view-source/if-document-layers/</guid>
+    <pubDate>Thu, 12 Nov 2026 00:53:51 GMT</pubDate>
+    <description>In 1997 Netscape and Microsoft each invented their own model of a web page. Everyone wrote every effect twice, and the way it ended explains a lot about how the web still works.</description>
+    <content:encoded><![CDATA[<p class="lede">Two lines of code you typed more often than your own phone number, and the fork in the web they stood for.</p>
+
+<pre tabindex="0"><code>var ns4 = document.layers ? 1 : 0;
+var ie4 = document.all ? 1 : 0;</code></pre>
+
+<p>If you wrote JavaScript between 1997 and 2001, those two lines were probably the first thing in your script file, the way <code>#include &lt;stdio.h&gt;</code> opens a C program. Everything after them was a fork. Every menu, ticker and sliding panel got written once per browser, and then you crossed your fingers for the browsers you hadn't tested.</p>
+
+<p>The odd part is that both lines were true of the same web. The same HTML, served from the same server, gave Netscape Navigator 4 one model of a page and Internet Explorer 4 another. Neither was a bug or a hack. Each was a serious answer to the same question, <em>what if a page could change after it loaded?</em>, and the answers were incompatible. Following how that happened explains more about how the web platform works than most specs do.</p>
+
+<h2>Before the fork: a frozen page</h2>
+
+<p>Brendan Eich wrote JavaScript at Netscape in about ten days in May 1995. It was code-named Mocha, appeared in the Navigator 2 betas as LiveScript, and became JavaScript in December 1995 when Netscape and Sun announced their partnership. The name was a marketing decision, which is why a language with almost nothing in common with Java has been explaining itself for three decades. Microsoft answered with its own implementation, JScript, in Internet Explorer 3 in 1996.</p>
+
+<p>What the language could touch was small: the <code>window</code>, the <code>document</code>, forms and their fields, links, and from Navigator 3 in 1996, images. That last item mattered more than it sounds. Once <code>document.images</code> let you swap an image's <code>src</code>, you had the rollover, and the rollover was the first proof that a page could respond to a mouse. This vocabulary is sometimes called DOM Level 0. It was never a standard. It was whatever Netscape shipped first and everyone else copied. (For a short while Microsoft was the one reverse-engineering Netscape, which is worth remembering when the story turns.)</p>
+
+<p>Everything on that list shared one limit: the page itself was frozen. You could validate a form, open a window, swap a picture, and write text into the document <em>while it was loading</em> with <code>document.write</code>. Once loading finished, the layout was set. If you wanted different content, you asked the server for a different page.</p>
+
+<h2>What Dynamic HTML promised</h2>
+
+<p>In 1997 both vendors broke that rule. Netscape Communicator 4 arrived mid-year and Internet Explorer 4 that fall, each carrying a bundle the marketing departments called Dynamic HTML. The pitch was three technologies stacked: HTML for content, CSS for style, and JavaScript to change either one while the visitor watched.</p>
+
+<p>The piece that made it feel like a different medium was CSS positioning. You could write <code>position: absolute; left: 120px; top: 40px</code> and put a box exactly where you wanted it, on top of other boxes, with a <code>z-index</code>. A positioned box could be hidden, shown, moved or restacked, and doing that on a timer gave you animation. Menus that flew out. Panels that slid. Text that followed the cursor around, which was, to be fair, an entire genre for about two years.</p>
+
+<p>Both browsers could do all of it. They disagreed, completely, about what the page <em>was</em>.</p>
+
+<h2>Two models of a page</h2>
+
+<p>Here is the core difference, stated as plainly as I can, because the rest of the mess follows from it.</p>
+
+<p>Internet Explorer 4 made the entire document a live object. Every element, whether heading, paragraph, list item or table cell, was reachable through <code>document.all</code>, and you could change almost any of them after load: style, text, contents. The page reflowed around the change. Microsoft even added <code>innerHTML</code>, so you could replace an element's contents with a string of markup. (Hold that thought. It comes back at the end.)</p>
+
+<p>Netscape 4 made a handful of special rectangles live. Only elements you had positioned, with CSS or with Netscape's own <code>&lt;layer&gt;</code> tag, showed up in <code>document.layers</code>. Everything else was, as far as script was concerned, set in concrete. You could move a layer, but you couldn't make the paragraph below it reflow, and you couldn't change a font size on the fly.</p>
+
+<p>One browser exposed the whole page. The other exposed a few windows cut into it. That gap shows up in the smallest everyday jobs. To replace the text in a news box, Internet Explorer needed one line:</p>
+
+<pre tabindex="0"><code>document.all["news"].innerHTML = "&lt;b&gt;Updated!&lt;/b&gt;";</code></pre>
+
+<p>In Netscape 4, every layer owned a whole separate document, so to change a layer's contents you reopened that document and rewrote it:</p>
+
+<pre tabindex="0"><code>var lyr = document.layers["news"];
+lyr.document.open();
+lyr.document.write("&lt;b&gt;Updated!&lt;/b&gt;");
+lyr.document.close();</code></pre>
+
+<p>Because each layer had its own <code>document</code>, reaching anything inside one meant walking down through it. An arrow image inside a menu layer was this in Netscape:</p>
+
+<pre tabindex="0"><code>document.layers["menu"].document.images["arrow"].src
+  = "down.gif";</code></pre>
+
+<p>and in Internet Explorer was simply <code>document.images["arrow"].src</code>. This is why Dreamweaver's generated <code>MM_findObj</code> helper is a recursive function that digs through each layer's document looking for a name. It was a way to find an image when the answer depended on where in the layer tree it happened to live.</p>
+
+<p>My best guess at the root cause is the engine underneath. Navigator 4's layout engine formatted a page once, as the HTML streamed in, and wasn't built to go back and re-lay-out. Layers were a clever way to get movable regions without that, because each layer was laid out on its own. Internet Explorer 4 shipped with a new engine designed to re-lay-out the document when something changed, so it could expose everything. Same goal, different foundations, and the foundations decided what was possible.</p>
+
+<h2>Events ran in opposite directions</h2>
+
+<p>Then there were events. Click a link inside a div inside the body: who hears about it first? Internet Explorer said the link, then the div, then the body, with the event bubbling outward. Netscape 4 said the reverse. The event was captured from the top on its way down, and you had to ask for it explicitly with <code>captureEvents</code>. The event also reached your code differently: Netscape passed it to your handler as an argument, while Internet Explorer kept it in a global, <code>window.event</code>. And the coordinates were measured from different places.</p>
+
+<pre tabindex="0"><code><span class="c">// Netscape 4</span>
+document.captureEvents(Event.MOUSEDOWN);
+document.onmousedown = function (e) {
+  x = e.pageX;
+};
+
+<span class="c">// Internet Explorer 4</span>
+document.onmousedown = function () {
+  x = event.clientX;
+};</code></pre>
+
+<p><code>pageX</code> counted from the top-left of the document. <code>clientX</code> counted from the top-left of the visible window. Scroll the page and your drag-and-drop code was off by exactly the scroll distance, in one browser only, which is the kind of bug that survives three rounds of testing.</p>
+
+<p>The eventual standard, <a href="https://www.w3.org/TR/DOM-Level-2-Events/">DOM Level 2 Events</a> in 2000, did something I find a little beautiful: it gave both camps their way. An event travels down in a capture phase, reaches its target, then bubbles back up, and you choose which phase you listen in. That is the third argument to <code>addEventListener</code> that most people leave at its default without ever knowing what it was for.</p>
+
+<h2>Why they diverged</h2>
+
+<p>Three forces pulled the models apart, and the third is the one people forget.</p>
+
+<p><strong>The market.</strong> The browser war was a fight for the desktop, and a proprietary feature was a weapon. Microsoft built Internet Explorer into Windows 98 in mid-1998, and the US Justice Department sued that same year with the bundling at the center of the case. Netscape, which had owned the market in 1995 and 1996, was losing share and shipping on a schedule its rival set. Nobody in that position waits for a committee.</p>
+
+<p><strong>The standard lagged the products.</strong> The W3C's <a href="https://www.w3.org/TR/REC-DOM-Level-1/">DOM Level 1</a> became a Recommendation in October 1998, a full year after DHTML shipped, and it covered documents and elements but said nothing about events. The W3C had also gone with CSS positioning, so Netscape's <code>&lt;layer&gt;</code> tag never became a standard at all. For most of 1997 to 2000 there was no standard to follow even if you wanted to.</p>
+
+<p><strong>Netscape lost its footing.</strong> In 1998 Netscape released its source code and decided to rebuild its layout engine from scratch, the work that became Gecko. Rewrites take time, and Netscape 6 did not ship until late 2000. For roughly three years Netscape 4 and its point releases were the current Netscape. Joel Spolsky's 2000 essay <a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/">Things You Should Never Do, Part I</a> became famous for arguing that starting over is the worst strategic mistake a software company can make. Whether it was a mistake is still argued. What isn't in dispute is what it did to developers: it froze Netscape 4 as the version you had to support.</p>
+
+<p>That last point is the one I'd underline. A bad browser that's about to be replaced is a short-lived problem. A bad browser that stays the newest version of its line for three years turns into a design constraint, and design constraints get built into everything.</p>
+
+<h2>How everyone coped</h2>
+
+<p>The first draft of everyone's code looked like the naive version: test for each browser, write the effect three times.</p>
+
+<pre tabindex="0"><code>function showMenu(id) {
+  if (document.getElementById) {
+    document.getElementById(id)
+      .style.visibility = "visible";
+  } else if (document.all) {
+    document.all[id]
+      .style.visibility = "visible";
+  } else if (document.layers) {
+    document.layers[id].visibility = "show";
+  }
+}</code></pre>
+
+<p>Notice <code>"show"</code> against <code>"visible"</code>. Even the values disagreed. After typing that branch for the fortieth time, people did the obvious thing and wrote it once:</p>
+
+<pre tabindex="0"><code>function getObj(id) {
+  if (document.getElementById)
+    return document.getElementById(id);
+  if (document.all) return document.all[id];
+  if (document.layers) return document.layers[id];
+  return null;
+}
+
+function getStyle(id) {
+  var o = getObj(id);
+  return o &amp;&amp; o.style ? o.style : o;
+}
+
+function show(id) {
+  getStyle(id).visibility =
+    document.layers ? "show" : "visible";
+}</code></pre>
+
+<p>That small trick, where a Netscape layer is its own style object and an Internet Explorer element has a <code>.style</code>, was in a thousand script files. It is also the seed of every JavaScript library you have used since. More on that in a moment.</p>
+
+<p>There was a whole supply chain around the problem. Macromedia released Dreamweaver in December 1997, and a big part of its appeal was Behaviors: pick one from a menu and it generated the cross-browser JavaScript for you, <code>MM_</code> prefix and all. Danny Goodman's <em>Dynamic HTML: The Definitive Reference</em> from O'Reilly in 1998 was the book on everyone's desk. Sites like Dynamic Drive handed out copy-and-paste menus and scrollers. CSS had its own trick: Netscape 4 didn't understand <code>@import</code>, so you put the good styles there and let it see only a plain stylesheet.</p>
+
+<p>Some people gave up and picked a side. "Best viewed with Netscape Navigator" and "Best viewed with Internet Explorer" buttons, usually 88 by 31 pixels, were the heraldry of the era. And in 1998, a group of developers formed the <a href="https://www.webstandards.org/">Web Standards Project</a> to lobby browser makers to support the W3C's specs. Developers organizing to pressure vendors was new, and it worked slowly, and then it worked.</p>
+
+<h2>How it ended</h2>
+
+<p>Internet Explorer 5, in March 1999, supported most of DOM Level 1, including <code>document.getElementById</code>. Netscape 6, built on Gecko, arrived in November 2000, supported the same call and dropped <code>document.layers</code> entirely. Netscape 4 faded slowly, and plenty of sites kept their three-way branch into the early 2000s because a customer on an old machine is still a customer.</p>
+
+<p>The habit of sniffing for a browser by name died less by decree than by arithmetic. Look at the user agent string Internet Explorer sent:</p>
+
+<pre tabindex="0"><code>Mozilla/4.0 (compatible; MSIE 5.0; Windows 98)</code></pre>
+
+<p>It introduces itself as Mozilla, Netscape's code name, and <a href="https://webaim.org/blog/user-agent-string-history/">the usual telling</a> is that servers sent the good page only to Mozilla, so everyone else started claiming to be it. The disguise never came off: every major browser today still opens its user agent string with <code>Mozilla/5.0</code>. Then more browsers showed up: Opera, which let its users choose which browser it claimed to be, then Mozilla, Konqueror, and Safari in 2003. Every new identity broke every script that asked <em>who are you?</em>. The scripts that asked <em>can you do this?</em> kept working. Peter-Paul Koch's QuirksMode, which became the field guide to these differences, <a href="https://www.quirksmode.org/js/support.html">argued for exactly that</a>. The practice became known as object detection, and later as feature detection.</p>
+
+<p>How sticky was the old habit? jQuery shipped a browser-sniffing helper, <code>$.browser</code>, deprecated it in 2009, and still didn't remove it until <a href="https://jquery.com/upgrade-guide/1.9/">jQuery 1.9</a> in 2013.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The winner wrote the standard.</strong> Remember <code>innerHTML</code>? It was a Microsoft invention in Internet Explorer 4. It was in no part of DOM Level 1, 2 or 3. It became part of a web standard only in the HTML5 era, when the specs finally wrote down what every browser already did, by which point it was how half the web updated itself. <code>XMLHttpRequest</code> took the same road, starting life as an Internet Explorer 5 ActiveX object. The lesson I take from both is that standards are often a record of what survived, and the fight over who gets to be the thing that survives happens in the wild, in production, on your client's site.</p>
+
+<p><strong>The wrapper is the seed of the library.</strong> Look back at <code>getObj</code>. A decade later Prototype's <code>$()</code> was <code>getElementById</code> in a shorter coat, and jQuery generalized the idea into a whole way of working. The pattern keeps recurring: when the platform diverges, somebody writes the adapter once, everyone borrows it, and the divergence quietly moves from your code into a dependency. That isn't a bad outcome, but it explains why the pain of this era produced the tools of the next one.</p>
+
+<p><strong>It repeats.</strong> Vendor prefixes, <code>-webkit-</code> and <code>-moz-</code> and <code>-ms-</code>, were the same fork in CSS about a decade later. Mobile sites that worked only in WebKit were the same fork again. Each time it looks like a failure of the process. I'd argue it is the process: someone ships first, developers build on it, and the standard catches up to whatever turned out to matter. The only thing you control is how much of your code depends on the guess.</p>
+
+<p><strong>The end of the war had a cost too.</strong> Once Internet Explorer had won, plenty of teams stopped testing anywhere else, and Internet Explorer 6 shipped in 2001 and stayed the current version for roughly five years. It took the web about a decade to fully climb out of what "just support Internet Explorer" turned into. A monoculture is simpler for the person writing the code and worse for the thing they're building on. Most browsers today, Microsoft's included, run on one engine family, so the question isn't only historical.</p>
+
+<h2>The line that never died</h2>
+
+<p>Go back to the two lines at the top. <code>ns4</code> and <code>ie4</code> carry a hidden assumption: that the web has two browsers. Every sniffing script was a prediction about the future of the platform, and each prediction expired the next time the market moved.</p>
+
+<p>One of the two lines got a strange afterlife. So many pages kept <code>if (document.all)</code> as their test for Internet Explorer that when other browsers later added <code>document.all</code> for compatibility, they had to <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/all">make it lie</a>. Open a console today and try it:</p>
+
+<pre tabindex="0"><code>typeof document.all  <span class="c">// "undefined"</span>
+!!document.all       <span class="c">// false</span>
+document.all.length  <span class="c">// a number</span></code></pre>
+
+<p>The collection is there and it works, but it reports itself as undefined and tests as false, so that sniffing code written in 1998 takes the standards branch. The JavaScript specification carries a special case that exists for this one object. <code>document.layers</code> is simply gone.</p>
+
+
+
+<h2>The takeaway</h2>
+
+<p>If you keep one thing from the layers-versus-all years, I'd make it this: the web has never been designed first and built second. It gets built, argued over in production, and then written down. Netscape and Microsoft each shipped a guess in 1997. Developers paid for the disagreement for about four years, twice over in every script. What came out the other side was the DOM you use today, an events model that kept both designs, and a handful of Microsoft inventions that the standards adopted after the fact.</p>
+
+<p>The habit it left behind is the more useful inheritance. Asking a browser who it is turned out to be a bet on a market that kept changing. Asking what it can do, as in <code>if ('IntersectionObserver' in window)</code>, has held up for twenty-five years because it makes no prediction at all. The two lines at the top of this essay asked the wrong question millions of times, and the platform still carries a special case to keep them harmless. I can't think of a better argument for writing the check the other way.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/">Things You Should Never Do, Part I</a>, Joel Spolsky, 2000 <a class="archived" href="https://web.archive.org/web/20261111012839/https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/">(archived)</a></li>
+    <li><a href="https://www.quirksmode.org/js/support.html">Object detection</a>, Peter-Paul Koch, QuirksMode <a class="archived" href="https://web.archive.org/web/20261023084440/https://www.quirksmode.org/js/support.html">(archived)</a></li>
+    <li><a href="https://webaim.org/blog/user-agent-string-history/">History of the browser user-agent string</a>, Aaron Andersen, WebAIM <a class="archived" href="https://web.archive.org/web/20261105071655/https://webaim.org/blog/user-agent-string-history/">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/REC-DOM-Level-1/">Document Object Model (DOM) Level 1 Specification</a>, W3C, 1998</li>
+    <li><a href="https://www.w3.org/TR/DOM-Level-2-Events/">Document Object Model (DOM) Level 2 Events Specification</a>, W3C, 2000 <a class="archived" href="https://web.archive.org/web/20261106021345/https://www.w3.org/TR/DOM-Level-2-Events/">(archived)</a></li>
+    <li><a href="https://www.webstandards.org/">The Web Standards Project</a> <a class="archived" href="https://web.archive.org/web/20261103002405/https://www.webstandards.org/">(archived)</a></li>
+    <li><a href="https://jquery.com/upgrade-guide/1.9/">jQuery Core 1.9 Upgrade Guide</a> <a class="archived" href="https://web.archive.org/web/20261011080555/https://jquery.com/upgrade-guide/1.9/">(archived)</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/all">Document: all property</a>, MDN <a class="archived" href="https://web.archive.org/web/20261025205246/https://developer.mozilla.org/en-US/docs/Web/API/Document/all">(archived)</a></li>
+  </ul>
+</section>]]></content:encoded>
+  </item>
+</channel>
+</rss>
