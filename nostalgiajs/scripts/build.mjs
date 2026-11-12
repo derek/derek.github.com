@@ -1,4 +1,4 @@
-// View Source build. No dependencies: `node scripts/build.mjs` from view-source/.
+// Nostalgia.js build. No dependencies: `node scripts/build.mjs` from nostalgiajs/.
 // Reads essays.json, archive.json and content/*.html, then writes every page,
 // the landing page and the feed. Generated files are committed, because
 // GitHub Pages serves this folder as it is.
@@ -7,8 +7,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SITE = 'https://derek.io/view-source/';
-const NAME = 'View Source';
+const SITE = 'https://derek.io/nostalgiajs/';
+const NAME = 'Nostalgia.js';
 const TAGLINE = 'AI Essays on Web History';
 const ISSUES = 'https://github.com/derek/derek.github.com/issues/new';
 

@@ -1,8 +1,8 @@
 {
-  "name": "view-source",
+  "name": "nostalgiajs",
   "private": true,
   "type": "module",
-  "description": "View Source: AI Essays on Web History. No dependencies.",
+  "description": "Nostalgia.js: AI Essays on Web History. No dependencies.",
   "scripts": {
     "build": "node scripts/build.mjs",
     "archive": "node scripts/archive.mjs",

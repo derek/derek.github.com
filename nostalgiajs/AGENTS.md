@@ -1,20 +1,20 @@
-# AGENTS.md: View Source
+# AGENTS.md: Nostalgia.js
 
 Instructions for AI agents and humans working in this folder. Keep this file current: if you change a convention, change it here in the same commit.
 
 ## What this is
 
-View Source is a collection of essays on web history, with the tagline "AI Essays on Web History". Served by GitHub Pages at `/view-source/`. The essays cover the web from the 1990s through the 2010s, mostly through JavaScript, and include the people and culture of that time (careers, communities, arguments) as well as the technology. An essay may run up to the present when its story does.
+Nostalgia.js is a collection of essays on web history, with the tagline "AI Essays on Web History". Served by GitHub Pages at `/nostalgiajs/`. The essays cover the web from the 1990s through the 2010s, mostly through JavaScript, and include the people and culture of that time (careers, communities, arguments) as well as the technology. An essay may run up to the present when its story does.
 
 Audience: JavaScript and web developers aged 40 to 60 in Derek's community, many of whom lived this history. The essays are written by an AI. Derek Gathright edits the collection and picks most of the topics.
 
 These are essays, not blog posts. They are not dated, they do not say "today" or "this week", and the site does not promise a schedule. Say "essay" and "collection", never "post", "blog" or "daily".
 
-The site was called Boomer.js until November 2026. `../boomerjs/` now holds only redirect pages to the new addresses. Leave them alone.
+The site was first called Boomer.js and then, briefly, View Source. `../boomerjs/` and `../view-source/` now hold only redirect pages to the new addresses. Leave them alone.
 
 ## Hard rules
 
-1. **Stay in this folder.** Do not edit anything outside `view-source/`.
+1. **Stay in this folder.** Do not edit anything outside `nostalgiajs/`.
 2. **No dependencies.** One build script in plain Node, no npm packages, no frameworks, no CDN scripts, no tracking, no web fonts. The published pages use no JavaScript.
 3. **Never edit generated files by hand.** `index.html`, `feed.xml`, `about/index.html` and every `<slug>/index.html` are written by `scripts/build.mjs`. Change the sources (`essays.json`, `content/`, `style.css`, the script) and rebuild. Commit the generated files with the change, because GitHub Pages serves this folder as it is.
 4. **No author name, and one quiet disclosure.** The essays have no byline and the author has no name. The tagline and the About page say the essays are written by AI. Do not add disclaimers, apologies or "as an AI" asides to an essay.
@@ -42,7 +42,7 @@ Target 2,200 to 3,000 words of prose (about 10 to 13 minutes, plus code). Reader
 
 Section headings should describe the content of this essay. The list above is the order of ideas, not a set of headings to copy, apart from "The takeaway".
 
-**Link your sources.** When an essay mentions an essay, blog post, spec, book or project site, link it inline at the mention and list it again under "Sources and further reading" with author and year. Only link URLs you have opened and confirmed load and say what you claim. If you cannot open a source, name it without a link. Link to other View Source essays as `../their-slug/` where they are relevant.
+**Link your sources.** When an essay mentions an essay, blog post, spec, book or project site, link it inline at the mention and list it again under "Sources and further reading" with author and year. Only link URLs you have opened and confirmed load and say what you claim. If you cannot open a source, name it without a link. Link to other Nostalgia.js essays as `../their-slug/` where they are relevant.
 
 ## Files
 
@@ -95,14 +95,14 @@ Code goes in `<pre tabindex="0"><code>…</code></pre>` with `&lt;`, `&gt;` and 
 
 ## Commands
 
-Run from `view-source/`. Needs Node 22 or newer. There is nothing to install.
+Run from `nostalgiajs/`. Needs Node 22 or newer. There is nothing to install.
 
 | Command | What it does |
 | --- | --- |
 | `npm run build` | Validates `essays.json` and the fragments, then regenerates every page and the feed. |
 | `npm run archive` | Looks up an Internet Archive copy for each source link and records it in `archive.json`. Add `-- --save` to ask the archive to capture pages it does not have. Needs network access. |
 | `npm run og` | Draws the link-preview cards. Add `-- <slug>` to draw one. Needs Playwright with Chromium. |
-| `npm run serve` | Local server on port 8000. Open `/view-source/`. |
+| `npm run serve` | Local server on port 8000. Open `/nostalgiajs/`. |
 
 ## Adding an essay
 
@@ -123,7 +123,7 @@ Readers report mistakes through the "Spot a mistake?" link, which opens a GitHub
 
 - Light and dark mode via `prefers-color-scheme`, colours as tokens in `:root`. Body text at least 18px with 4.5:1 contrast. The audience reads with their glasses on, so do not make it small.
 - Semantic HTML, a visible focus style, `lang="en"`.
-- Links inside the site are relative so it works under `/view-source/` and from a local server. The feed, canonical links and link-preview tags use absolute URLs, which they require.
+- Links inside the site are relative so it works under `/nostalgiajs/` and from a local server. The feed, canonical links and link-preview tags use absolute URLs, which they require.
 - Everything from `essays.json` is HTML-escaped by the build. Keep it that way.
 - Copy style: short sentences, plain words, no hype.
 
