@@ -9,7 +9,12 @@
         1995,
         2001
       ],
-      "published": "2026-11-12T00:53:51+00:00"
+      "published": "2026-11-12T00:53:51+00:00",
+      "unverified": [
+        "That the \"Best viewed with\" buttons were usually 88 by 31 pixels. The buttons are well documented; I did not open a source for the size.",
+        "The mention of Dynamic Drive as a source of copy-and-paste scripts. Its site would not load when this was checked.",
+        "Why the two browsers exposed such different models. The engine explanation is my best guess, and the essay says so."
+      ]
     },
     {
       "slug": "where-did-the-old-web-developers-go",
@@ -20,7 +25,13 @@
         2007,
         null
       ],
-      "published": "2026-11-12T02:37:49+00:00"
+      "published": "2026-11-12T02:37:49+00:00",
+      "unverified": [
+        "Vivek Wadhwa's 2010 TechCrunch piece and the original 2009 \"Plan B\" essay are named from secondary references. I did not open either directly.",
+        "The Stanford and ADP employment figures are quoted from SoftwareSeni's summary, not from the study itself.",
+        "The CNBC figure on senior job postings is quoted from Fullstack's summary of CNBC's reporting.",
+        "That the staff and principal engineering track spread through the 2010s is my reading, not a sourced claim."
+      ]
     },
     {
       "slug": "getyear-and-the-year-19100",
@@ -31,7 +42,14 @@
         1995,
         null
       ],
-      "published": "2026-11-12T03:15:17+00:00"
+      "published": "2026-11-12T03:15:17+00:00",
+      "unverified": [
+        "The January 2000 sightings of \"19100\" (the US Naval Observatory, Meteo-France, the Gore campaign site) rest on Wikipedia's Year 2000 problem article, not on the original news reports.",
+        "Internet Explorer 9's return to \"year minus 1900\" in standards mode rests on one reference page.",
+        "JDK 1.1 is dated only to February 1997, because sources disagree on the day.",
+        "Whether Navigator 4.0 to 4.05 returned 100 or 2000 could not be pinned down, so the essay speaks only about 4.06 and later.",
+        "Why Navigator 3 changed the method is my guess, and is marked as one."
+      ]
     },
     {
       "slug": "jquery-and-the-dollar-sign",
@@ -42,7 +60,14 @@
         2005,
         null
       ],
-      "published": "2026-11-12T04:41:10+00:00"
+      "published": "2026-11-12T04:41:10+00:00",
+      "unverified": [
+        "When the \"write less, do more\" slogan first appeared. It is sourced only to Wikipedia's citation of the jquery.com page title.",
+        "The date of the first release. The jQuery project says January 14, 2006; John Resig's own write-up implies the 15th. The essay reports both.",
+        "Whether the jquery-1.0.js file on the jQuery CDN is identical to the one released on August 26, 2006. Its header carries an October 2006 revision date.",
+        "Why jQuery 1.3.2 used querySelectorAll only for document-rooted queries is my inference.",
+        "John Resig's age at the time comes from Wikipedia."
+      ]
     },
     {
       "slug": "view-source-was-the-school",
@@ -53,7 +78,13 @@
         1993,
         null
       ],
-      "published": "2026-11-12T09:58:53+00:00"
+      "published": "2026-11-12T09:58:53+00:00",
+      "unverified": [
+        "Netscape's exact menu labels and keyboard shortcut for viewing source. The essay says only that the name varied by browser and year.",
+        "Tim O'Reilly's essay is linked in its print view, because the canonical page refused to load.",
+        "That the Firefox bug reporter copied the script from a page's source is an inference, and is worded as one.",
+        "Why Internet Explorer opened source in Notepad rests on a single 2008 Microsoft blog post."
+      ]
     },
     {
       "slug": "firebug-and-the-inside-of-the-page",
@@ -64,7 +95,13 @@
         2006,
         2017
       ],
-      "published": "2026-11-12T19:15:40+00:00"
+      "published": "2026-11-12T19:15:40+00:00",
+      "unverified": [
+        "Joe Hewitt's own 2006 blog posts. His site is down, so his words are quoted only as they appear in Mozilla Hacks and a FOSDEM interview.",
+        "The January 12, 2006 announcement date comes from Jay Hoffmann's history of the web, and is flagged in the text.",
+        "That F12 as the developer-tools key began with Firebug 0.2.3 rests on Wikipedia, and is attributed to it.",
+        "The Firebug 1.1 source listings come from a third-party mirror, which the essay names."
+      ]
     }
   ]
 }

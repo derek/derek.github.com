@@ -40,9 +40,27 @@
   <main>
     <article>
       <p class="meta">People and culture · 2007 to today · 11 min read</p>
-      <h1>Where did all the old web developers go?</h1>
+      <div class="title">
+        <img src="../icons/where-did-the-old-web-developers-go.svg" width="64" height="64" alt="">
+        <h1>Where did all the old web developers go?</h1>
+      </div>
 
 <p class="lede">Around 2008, nobody in the room was over 40. It took the industry about ten years to work out why.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#2007-young-people-are-just-smarter">2007: "Young people are just smarter"</a></li>
+          <li><a href="#2008-to-2010-get-a-plan-b">2008 to 2010: get a Plan B</a></li>
+          <li><a href="#2013-to-2017-where-would-they-have-come-from">2013 to 2017: where would they have come from?</a></li>
+          <li><a href="#what-the-cohort-math-doesn-t-explain">What the cohort math doesn't explain</a></li>
+          <li><a href="#what-the-argument-got-wrong">What the argument got wrong</a></li>
+          <li><a href="#2026-the-fear-flips">2026: the fear flips</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
 
 <pre tabindex="0"><code>var year = 2008;
 var jsBorn = 1995;
@@ -52,7 +70,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p>Nobody did the subtraction at the time. If you wrote JavaScript for a living in 2008 and looked around the office, you saw twenty-somethings, a few people in their thirties, and a manager. The conclusion most people drew was grim: web development chews people up, and by 40 you are promoted out, pushed out, or replaced by someone who knows the new framework. The industry then argued about that conclusion for a decade, in essays and in very long comment threads, before settling on the duller and more accurate one. The argument is worth replaying, partly because the same arithmetic has started running again.</p>
 
-<h2>2007: "Young people are just smarter"</h2>
+<h2 id="2007-young-people-are-just-smarter">2007: "Young people are just smarter"</h2>
 
 <p>The era's thesis statement came from a 22-year-old. At Y Combinator's Startup School at Stanford in March 2007, Mark Zuckerberg told the audience, as <a href="https://infopackets.com/node/2114">reported at the time</a>: "I want to stress the importance of being young and technical." Then the line that outlived the talk: "Young people are just smarter. Why are most chess masters under 30?" And the explanation: "Young people just have simpler lives. We may not own a car. We may not have family. I only own a mattress."</p>
 
@@ -60,7 +78,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p>Look at what Zuckerberg's argument was actually made of. The headline was about intelligence, but the supporting evidence was a mattress. "Simpler lives" means no mortgage, no kids, and nowhere to be at six o'clock. That is a claim about who will work ninety-hour weeks for equity, and it describes a labor supply. Hold on to that distinction, because the next ten years of argument mostly lost it.</p>
 
-<h2>2008 to 2010: get a Plan B</h2>
+<h2 id="2008-to-2010-get-a-plan-b">2008 to 2010: get a Plan B</h2>
 
 <p>By 2008 the phrase "it's a young man's game" had moved from mathematicians to programmers, and some people were already tired of it. In October 2008 a thirty-year-old asked the Joel on Software forum whether to get out of tech while still reasonably young. Matthew Heusser, a testing and agile writer, <a href="https://xndev.blogspot.com/2008/10/">answered on the Creative Chaos blog</a> under the title "On Being An 'Old Dude'": "'It's a young man's game' is something people should be saying at seventy-two, not thirty two." The evidence was, of all things, The Muppet Show. Its guest stars were established entertainers, and nearly all of them were in their thirties or older, because it took about ten years to do anything of substance and be recognized for it. "Those first ten years are the beginning of the story, not the end."</p>
 
@@ -72,7 +90,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p>In 2010 Vivek Wadhwa's TechCrunch piece "Silicon Valley's Dark Secret: It's All About Age" carried the ageism argument to a mainstream tech audience. The mood had shifted from "young people are smarter" to "the industry throws people away." Notice that both positions shared an assumption. Both took for granted that older developers had existed in large numbers and something had removed them.</p>
 
-<h2>2013 to 2017: where would they have come from?</h2>
+<h2 id="2013-to-2017-where-would-they-have-come-from">2013 to 2017: where would they have come from?</h2>
 
 <p>The reframe arrived quietly, in <a href="https://news.ycombinator.com/item?id=5679321">a 2013 Hacker News thread</a> about an ITworld article called "Older programmers are more knowledgeable, but harder to find." A commenter named nevinera wrote:</p>
 
@@ -88,7 +106,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p>The age chart everyone had been reading as a funnel, with people falling out of the top, was a birth-year chart. The top was narrow because few people had been poured in at the bottom thirty years before.</p>
 
-<h2>What the cohort math doesn't explain</h2>
+<h2 id="what-the-cohort-math-doesn-t-explain">What the cohort math doesn't explain</h2>
 
 <p>It would be neat to stop there and declare the whole panic a statistical illusion. It wasn't, and the same threads show why.</p>
 
@@ -96,7 +114,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p>Both things were true at once, and they happened at different places. The cohort effect explains the empty chairs: most of the older developers people expected to see had never existed. Ageism explains what happened to some of the ones who did exist when they went looking for a new chair. The first is a fact about the 1980s. The second happened at the résumé screen.</p>
 
-<h2>What the argument got wrong</h2>
+<h2 id="what-the-argument-got-wrong">What the argument got wrong</h2>
 
 <p><strong>The Plan B was a ladder that hadn't been built.</strong> In 2009, the choices after senior engineer at most companies were to stay a senior engineer indefinitely or become a manager. The staff and principal track, where you keep writing code and keep getting promoted, existed at a few large companies and spread through the 2010s. My read is that a good share of the "everyone leaves by 40" pattern was people walking through the only door marked "up." Once a second door existed, a lot of them stopped leaving.</p>
 
@@ -106,7 +124,7 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p><strong>The field needed to get old before anyone could be old in it.</strong> Someone who started with the web in the mid-1990s is in their fifties now. Pave's compensation data, <a href="https://pave.com/blog-posts/artificial-intelligence-isnt-killing-the-software-engineer-yet">published this year</a>, shows the average age of engineers rising across every major job family. The old web developer turned out to be a person who needed time to exist.</p>
 
-<h2>2026: the fear flips</h2>
+<h2 id="2026-the-fear-flips">2026: the fear flips</h2>
 
 <p>Here is the part nobody in the 2014 thread would have guessed. The question "where are the old developers?" has been replaced by "where will the next ones come from?", and the group with the hiring problem is the young.</p>
 
@@ -120,13 +138,23 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
 
 <p>And there's a bill attached. Octopus Deploy's 2026 AI Pulse Report, <a href="https://pulse2.com/octopus-deploy-ai-pulse-report/">as reported in February</a>, lays out three phases: experimentation in 2024 and 2025, a junior hiring freeze from 2025 to 2027, and a potential senior talent crisis between 2027 and 2030. Seniors are made out of juniors. Stop hiring one and, a decade on, you run short of the other.</p>
 
-<h2>The takeaway</h2>
+<h2 id="the-takeaway">The takeaway</h2>
 
 <p>The 2008 office had no one over 40 because of hiring decisions made, or not made, in the 1980s, when the field was small and nobody knew it would need an enormous fleet. The age structure of a profession is a slow recording of who it let in, played back decades later. Everyone looking at that recording in 2008 thought they were watching something happen in the present. They were looking at the past.</p>
 
 <p>The same recording is being made right now. If the junior freeze holds for a few years, the developers of 2040 will look around the office and notice that hardly anyone is 38. Someone will write an essay about how the field burns people out in their thirties. The comments will argue about it for a decade. And the answer will be the one nevinera gave in 2013: ask where they would have come from.</p>
 
 <p>The 2009 essay said to get a Plan B before 40. The advice that held up is closer to the opposite. Stay hands-on enough that your judgment stays honest, and teach someone younger, because there aren't many of them coming and you are how the next cohort gets made.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>Vivek Wadhwa's 2010 TechCrunch piece and the original 2009 &quot;Plan B&quot; essay are named from secondary references. I did not open either directly.</li>
+    <li>The Stanford and ADP employment figures are quoted from SoftwareSeni's summary, not from the study itself.</li>
+    <li>The CNBC figure on senior job postings is quoted from Fullstack's summary of CNBC's reporting.</li>
+    <li>That the staff and principal engineering track spread through the 2010s is my reading, not a sourced claim.</li>
+  </ul>
+</section>
 
 <section class="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources and further reading</h2>
@@ -150,7 +178,8 @@ year - jsBorn;  <span class="c">// 13</span></code></pre>
   </ul>
 </section>
 
-      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+Where+did+all+the+old+web+developers+go%3F&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fwhere-did-the-old-web-developers-go%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+Where+did+all+the+old+web+developers+go%3F&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fwhere-did-the-old-web-developers-go%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/where-did-the-old-web-developers-go.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/where-did-the-old-web-developers-go.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">

@@ -40,9 +40,30 @@
   <main>
     <article>
       <p class="meta">Browsers and the platform · 1995 to 2001 · 12 min read</p>
-      <h1>if (document.layers): the web forks in two</h1>
+      <div class="title">
+        <img src="../icons/if-document-layers.svg" width="64" height="64" alt="">
+        <h1>if (document.layers): the web forks in two</h1>
+      </div>
 
 <p class="lede">Two lines of code you typed more often than your own phone number, and the fork in the web they stood for.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#before-the-fork-a-frozen-page">Before the fork: a frozen page</a></li>
+          <li><a href="#what-dynamic-html-promised">What Dynamic HTML promised</a></li>
+          <li><a href="#two-models-of-a-page">Two models of a page</a></li>
+          <li><a href="#events-ran-in-opposite-directions">Events ran in opposite directions</a></li>
+          <li><a href="#why-they-diverged">Why they diverged</a></li>
+          <li><a href="#how-everyone-coped">How everyone coped</a></li>
+          <li><a href="#how-it-ended">How it ended</a></li>
+          <li><a href="#what-it-left-behind">What it left behind</a></li>
+          <li><a href="#the-line-that-never-died">The line that never died</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
 
 <pre tabindex="0"><code>var ns4 = document.layers ? 1 : 0;
 var ie4 = document.all ? 1 : 0;</code></pre>
@@ -51,7 +72,7 @@ var ie4 = document.all ? 1 : 0;</code></pre>
 
 <p>The odd part is that both lines were true of the same web. The same HTML, served from the same server, gave Netscape Navigator 4 one model of a page and Internet Explorer 4 another. Neither was a bug or a hack. Each was a serious answer to the same question, <em>what if a page could change after it loaded?</em>, and the answers were incompatible. Following how that happened explains more about how the web platform works than most specs do.</p>
 
-<h2>Before the fork: a frozen page</h2>
+<h2 id="before-the-fork-a-frozen-page">Before the fork: a frozen page</h2>
 
 <p>Brendan Eich wrote JavaScript at Netscape in about ten days in May 1995. It was code-named Mocha, appeared in the Navigator 2 betas as LiveScript, and became JavaScript in December 1995, when Netscape and Sun jointly announced it. The name was a marketing decision, which is why a language with almost nothing in common with Java has been explaining itself for three decades. Microsoft answered with its own implementation, JScript, in Internet Explorer 3 in 1996.</p>
 
@@ -59,7 +80,7 @@ var ie4 = document.all ? 1 : 0;</code></pre>
 
 <p>Everything on that list shared one limit: the page itself was frozen. You could validate a form, open a window, swap a picture, and write text into the document <em>while it was loading</em> with <code>document.write</code>. Once loading finished, the layout was set. If you wanted different content, you asked the server for a different page.</p>
 
-<h2>What Dynamic HTML promised</h2>
+<h2 id="what-dynamic-html-promised">What Dynamic HTML promised</h2>
 
 <p>In 1997 both vendors broke that rule. Netscape Communicator 4 arrived mid-year and Internet Explorer 4 that fall, each carrying a bundle the marketing departments called Dynamic HTML. The pitch was three technologies stacked: HTML for content, CSS for style, and JavaScript to change either one while the visitor watched.</p>
 
@@ -67,7 +88,7 @@ var ie4 = document.all ? 1 : 0;</code></pre>
 
 <p>Both browsers could do all of it. They disagreed, completely, about what the page <em>was</em>.</p>
 
-<h2>Two models of a page</h2>
+<h2 id="two-models-of-a-page">Two models of a page</h2>
 
 <p>Here is the core difference, stated as plainly as I can, because the rest of the mess follows from it.</p>
 
@@ -95,7 +116,7 @@ lyr.document.close();</code></pre>
 
 <p>My best guess at the root cause is the engine underneath. Navigator 4's layout engine formatted a page once, as the HTML streamed in, and wasn't built to go back and re-lay-out. Layers were a clever way to get movable regions without that, because each layer was laid out on its own. Internet Explorer 4 shipped with a new engine designed to re-lay-out the document when something changed, so it could expose everything. Same goal, different foundations, and the foundations decided what was possible.</p>
 
-<h2>Events ran in opposite directions</h2>
+<h2 id="events-ran-in-opposite-directions">Events ran in opposite directions</h2>
 
 <p>Then there were events. Click a link inside a div inside the body: who hears about it first? Internet Explorer said the link, then the div, then the body, with the event bubbling outward. Netscape 4 said the reverse. The event was captured at the window, document or layer on its way down, and you had to ask for it explicitly with <code>captureEvents</code>. The event also reached your code differently: Netscape passed it to your handler as an argument, while Internet Explorer kept it in a global, <code>window.event</code>. And the coordinates were measured from different places.</p>
 
@@ -114,7 +135,7 @@ document.onmousedown = function () {
 
 <p>The eventual standard, <a href="https://www.w3.org/TR/DOM-Level-2-Events/">DOM Level 2 Events</a> in 2000, did something I find a little beautiful: it gave both camps their way. An event travels down in a capture phase, reaches its target, then bubbles back up, and you choose which phase you listen in. That is the third argument to <code>addEventListener</code> that most people leave at its default without ever knowing what it was for.</p>
 
-<h2>Why they diverged</h2>
+<h2 id="why-they-diverged">Why they diverged</h2>
 
 <p>Three forces pulled the models apart, and the third is the one people forget.</p>
 
@@ -126,7 +147,7 @@ document.onmousedown = function () {
 
 <p>That last point is the one I'd underline. A bad browser that's about to be replaced is a short-lived problem. A bad browser that stays the newest version of its line for three years turns into a design constraint, and design constraints get built into everything.</p>
 
-<h2>How everyone coped</h2>
+<h2 id="how-everyone-coped">How everyone coped</h2>
 
 <p>The first draft of everyone's code looked like the naive version: test for each browser, write the effect three times.</p>
 
@@ -168,7 +189,7 @@ function show(id) {
 
 <p>Some people gave up and picked a side. "Best viewed with Netscape Navigator" and "Best viewed with Internet Explorer" buttons, usually 88 by 31 pixels, were the heraldry of the era. And in 1998, a group of developers formed the <a href="https://www.webstandards.org/">Web Standards Project</a> to lobby browser makers to support the W3C's specs. Developers organizing to pressure vendors was new, and it worked slowly, and then it worked.</p>
 
-<h2>How it ended</h2>
+<h2 id="how-it-ended">How it ended</h2>
 
 <p>Internet Explorer 5, in March 1999, supported most of DOM Level 1, including <code>document.getElementById</code>. Netscape 6, built on Gecko, arrived in November 2000, supported the same call and dropped <code>document.layers</code> entirely. Netscape 4 faded slowly, and plenty of sites kept their three-way branch into the early 2000s because a customer on an old machine is still a customer.</p>
 
@@ -180,7 +201,7 @@ function show(id) {
 
 <p>How sticky was the old habit? jQuery shipped a browser-sniffing helper, <code>$.browser</code>, deprecated it in 2009, and still didn't remove it until <a href="https://jquery.com/upgrade-guide/1.9/">jQuery 1.9</a> in 2013.</p>
 
-<h2>What it left behind</h2>
+<h2 id="what-it-left-behind">What it left behind</h2>
 
 <p><strong>The winner wrote the standard.</strong> Remember <code>innerHTML</code>? It was a Microsoft invention in Internet Explorer 4. It was in no part of DOM Level 1, 2 or 3. It became part of a web standard only in the HTML5 era, when the specs finally wrote down what every browser already did, by which point it was how half the web updated itself. <code>XMLHttpRequest</code> took the same road, starting life as an Internet Explorer 5 ActiveX object. The lesson I take from both is that standards are often a record of what survived, and the fight over who gets to be the thing that survives happens in the wild, in production, on your client's site.</p>
 
@@ -190,7 +211,7 @@ function show(id) {
 
 <p><strong>The end of the war had a cost too.</strong> Once Internet Explorer had won, plenty of teams stopped testing anywhere else, and Internet Explorer 6 shipped in 2001 and stayed the current version for roughly five years. It took the web about a decade to fully climb out of what "just support Internet Explorer" turned into. A monoculture is simpler for the person writing the code and worse for the thing they're building on. Most browsers today, Microsoft's included, run on one engine family, so the question isn't only historical.</p>
 
-<h2>The line that never died</h2>
+<h2 id="the-line-that-never-died">The line that never died</h2>
 
 <p>Go back to the two lines at the top. <code>ns4</code> and <code>ie4</code> carry a hidden assumption: that the web has two browsers. Every sniffing script was a prediction about the future of the platform, and each prediction expired the next time the market moved.</p>
 
@@ -204,11 +225,20 @@ document.all.length  <span class="c">// a number</span></code></pre>
 
 
 
-<h2>The takeaway</h2>
+<h2 id="the-takeaway">The takeaway</h2>
 
 <p>If you keep one thing from the layers-versus-all years, I'd make it this: the web has never been designed first and built second. It gets built, argued over in production, and then written down. Netscape and Microsoft each shipped a guess in 1997. Developers paid for the disagreement for about four years, twice over in every script. What came out the other side was the DOM you use today, an events model that kept both designs, and a handful of Microsoft inventions that the standards adopted after the fact.</p>
 
 <p>The habit it left behind is the more useful inheritance. Asking a browser who it is turned out to be a bet on a market that kept changing. Asking what it can do, as in <code>if ('IntersectionObserver' in window)</code>, has held up for twenty-five years because it makes no prediction at all. The two lines at the top of this essay asked the wrong question millions of times, and the platform still carries a special case to keep them harmless. I can't think of a better argument for writing the check the other way.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>That the &quot;Best viewed with&quot; buttons were usually 88 by 31 pixels. The buttons are well documented; I did not open a source for the size.</li>
+    <li>The mention of Dynamic Drive as a source of copy-and-paste scripts. Its site would not load when this was checked.</li>
+    <li>Why the two browsers exposed such different models. The engine explanation is my best guess, and the essay says so.</li>
+  </ul>
+</section>
 
 <section class="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources and further reading</h2>
@@ -224,7 +254,8 @@ document.all.length  <span class="c">// a number</span></code></pre>
   </ul>
 </section>
 
-      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+if+%28document.layers%29%3A+the+web+forks+in+two&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fif-document-layers%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+if+%28document.layers%29%3A+the+web+forks+in+two&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fif-document-layers%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/if-document-layers.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/if-document-layers.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">

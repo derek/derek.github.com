@@ -40,9 +40,26 @@
   <main>
     <article>
       <p class="meta">Libraries and tools · 2005 to today · 13 min read</p>
-      <h1>jQuery 1.0: what $ really replaced</h1>
+      <div class="title">
+        <img src="../icons/jquery-and-the-dollar-sign.svg" width="64" height="64" alt="">
+        <h1>jQuery 1.0: what $ really replaced</h1>
+      </div>
 
 <p class="lede">The dollar sign was second-hand, the best ideas were credited to other people, and the browsers spent the next decade copying it anyway.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#before-the-utility-belt">Before: the utility belt</a></li>
+          <li><a href="#what-happened">What happened</a></li>
+          <li><a href="#why-this-one-won">Why this one won</a></li>
+          <li><a href="#living-with-it">Living with it</a></li>
+          <li><a href="#what-it-left-behind">What it left behind</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
 
 <pre tabindex="0"><code>if ( $ )
   jQuery._$ = $;
@@ -55,7 +72,7 @@ var $ = jQuery;</code></pre>
 
 <p><a href="https://blog.jquery.com/2006/08/26/jquery-10/">jQuery 1.0 was announced</a> on August 26, 2006. To see what it changed, start a year earlier.</p>
 
-<h2>Before: the utility belt</h2>
+<h2 id="before-the-utility-belt">Before: the utility belt</h2>
 
 <p>In 2005 the DOM worked, more or less, in every browser that mattered. The trouble was that it worked differently in each, and the standard way of doing things was long-winded even where it worked. You fetched one element with <code>document.getElementById</code>, or a list with <code>getElementsByTagName</code>, and then you looped. Attaching a click handler meant <code>addEventListener</code> in Mozilla, Opera and Safari, and <code>attachEvent</code> in Internet Explorer, which also forgot which element the handler belonged to.</p>
 
@@ -83,7 +100,7 @@ var $ = jQuery;</code></pre>
 
 <p>Two other pieces of the belt matter here. In March 2003 Simon Willison had published <a href="https://simonwillison.net/2003/Mar/25/getElementsBySelector/"><code>document.getElementsBySelector</code></a>, "a javascript function which takes a standard CSS style selector and returns an array of elements objects." His example was <code>document.getElementsBySelector('div#main p a.external')</code>. And Sam Stephenson's Prototype library had a function called <code>$</code>. Its documentation still calls it <a href="http://api.prototypejs.org/dom/dollar/">"the cornerstone of Prototype"</a> and "a handy alias for <code>document.getElementById</code>." In Prototype, <code>$('nav')</code> hands you one element, by ID.</p>
 
-<h2>What happened</h2>
+<h2 id="what-happened">What happened</h2>
 
 <p>On August 22, 2005, two and a half weeks before the contest opened, Resig posted <a href="https://johnresig.com/blog/selectors-in-javascript/">"Selectors in Javascript"</a>. It was a reaction to a library called Behaviour, which let you attach functions to elements using CSS selectors. He liked the premise and disliked the typing. Behaviour, he wrote, "simply seems too tedious and verbose for everyday use." Here is its way of making list items delete themselves when clicked, quoted from the post:</p>
 
@@ -127,7 +144,7 @@ B: $('').bind('',);</code></pre>
 
 <p>Then it moved fast. <a href="https://blog.jquery.com/2007/01/14/jquery-birthday-11-new-site-new-docs/">jQuery 1.1</a> shipped on the first birthday, January 14, 2007, claiming selectors "10x-20x faster" than 1.0.4 and a simplified API, with a compatibility plugin for people who had already written 1.0 code. GitHub <a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">adopted jQuery 1.2.1</a> in late 2007. And on September 28, 2008, Scott Guthrie <a href="https://weblogs.asp.net/scottgu/jquery-and-microsoft">announced</a> that "Microsoft will be shipping jQuery with Visual Studio going forward." The jQuery blog <a href="https://blog.jquery.com/2008/09/28/jquery-microsoft-nokia/">added the same day</a> that Nokia would ship it on phones with its web run-time.</p>
 
-<h2>Why this one won</h2>
+<h2 id="why-this-one-won">Why this one won</h2>
 
 <p>There were plenty of JavaScript libraries by 2006, several of them larger and better funded. Here are the forces I think decided it. Each is arguable.</p>
 
@@ -156,7 +173,7 @@ if ( jQuery.browser.mozilla || jQuery.browser.opera ) {
 
 <p><strong>A platform vendor blessed it without taking it over.</strong> Guthrie's post is unusually clear about why Microsoft did not build its own. The team looked at adding selectors and animation to ASP.NET AJAX and "quickly realized that the jQuery support for these scenarios is already excellent." So: "We will distribute the jQuery JavaScript library as-is, and will not be forking or changing the source." The ASP.NET MVC download would "add the jQuery library by default to all new projects." For a large population of corporate developers, that sentence moved jQuery from something you had to justify to something that was simply there.</p>
 
-<h2>Living with it</h2>
+<h2 id="living-with-it">Living with it</h2>
 
 <p>Success produced its own set of chores. The first was the dollar sign itself. With two libraries on a page, whoever loaded last owned <code>$</code>. The idiom that solved it is on the same documentation page, and it became the standard way to open a jQuery plugin:</p>
 
@@ -179,7 +196,7 @@ if ( jQuery.browser.mozilla || jQuery.browser.opera ) {
 
 <p>They lost that one. I ran Resig's test case in a current Chromium while writing this, and <code>foo.querySelectorAll('div span')</code> still returns one element. You need to write <code>':scope div span'</code> to get zero.</p>
 
-<h2>What it left behind</h2>
+<h2 id="what-it-left-behind">What it left behind</h2>
 
 <p><strong>The platform copied the homework, slowly.</strong> When GitHub <a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">removed jQuery in 2018</a>, its engineers listed what had made that possible, and the list reads as jQuery's table of contents translated into standards: "The <code>$(selector)</code> pattern can easily be replaced with <code>querySelectorAll()</code>," class switching with <code>Element.classList</code>, animation in CSS, <code>$.ajax</code> with the Fetch Standard. The dates are worth a look. <a href="https://www.w3.org/TR/selectors-api/">Selectors API Level 1</a> became a W3C Recommendation on February 21, 2013, seven and a half years after a student's blog post about fluff. jQuery got <a href="https://api.jquery.com/closest/"><code>.closest()</code></a> in version 1.3, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest"><code>Element.closest()</code></a> is now a standard DOM method with the same name and the same job.</p>
 
@@ -203,11 +220,22 @@ return oldSizzle(query, context, extra, seed);</code></pre>
 
 <p>One more thing in that 2015 look back deserves attention. Resig wrote that "jQuery would not have existed if it wasn't for Sam Stephenson creating Prototype, Simon Willison creating getElementsBySelector, Valerio Proietti creating moo.fx, and especially Dean Edwards creating so much: event binding, CSS selector libraries, DOM ready techniques and more." Take him at his word and jQuery contained very little that was new. Selectors in JavaScript existed. <code>$</code> existed. The event fix was a contest entry. What Resig added was the counting: the decision that the right API was the one with the least text between the thing you meant and the thing you had to type. Does that count as invention? I think it does, and I think it is the kind that standards bodies are worst at and individuals with a blog are best at.</p>
 
-<h2>The takeaway</h2>
+<h2 id="the-takeaway">The takeaway</h2>
 
 <p>The dollar sign replaced two things. On the page, it replaced the utility belt: the pasted <code>addEvent()</code>, the onload hack, the <code>ActiveXObject</code> wrapper, each with its author's name in a comment and its own set of bugs. jQuery gathered them behind one function and one query language that every CSS author already knew, and it was polite enough to coexist with whatever was on the page before it arrived. That combination, more than any single feature, is why it won.</p>
 
 <p>In the longer run it replaced the process by which the web platform got fixed. In 2005 that process was a blog contest. By 2008 it was a library author writing to a W3C list on behalf of his users, and by 2013 the selector function was a W3C Recommendation. jQuery's reward for being right was to become optional. It is hard to think of a better outcome for a library, or a rarer one, and it is still loading on roughly two pages out of three while you decide whether you need it.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>When the &quot;write less, do more&quot; slogan first appeared. It is sourced only to Wikipedia's citation of the jquery.com page title.</li>
+    <li>The date of the first release. The jQuery project says January 14, 2006; John Resig's own write-up implies the 15th. The essay reports both.</li>
+    <li>Whether the jquery-1.0.js file on the jQuery CDN is identical to the one released on August 26, 2006. Its header carries an October 2006 revision date.</li>
+    <li>Why jQuery 1.3.2 used querySelectorAll only for document-rooted queries is my inference.</li>
+    <li>John Resig's age at the time comes from Wikipedia.</li>
+  </ul>
+</section>
 
 <section class="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources and further reading</h2>
@@ -239,7 +267,8 @@ return oldSizzle(query, context, extra, seed);</code></pre>
   </ul>
 </section>
 
-      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+jQuery+1.0%3A+what+%24+really+replaced&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fjquery-and-the-dollar-sign%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+jQuery+1.0%3A+what+%24+really+replaced&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fjquery-and-the-dollar-sign%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/jquery-and-the-dollar-sign.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/jquery-and-the-dollar-sign.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">

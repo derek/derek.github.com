@@ -40,9 +40,26 @@
   <main>
     <article>
       <p class="meta">People and culture · 1993 to today · 13 min read</p>
-      <h1>View Source was the school</h1>
+      <div class="title">
+        <img src="../icons/view-source-was-the-school.svg" width="64" height="64" alt="">
+        <h1>View Source was the school</h1>
+      </div>
 
 <p class="lede">The web's training programme was a menu item that nobody was required to ship. It taught a generation of developers, and then the lessons got harder to read.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#before-software-arrived-sealed">Before: software arrived sealed</a></li>
+          <li><a href="#what-happened-one-menu-item">What happened: one menu item</a></li>
+          <li><a href="#why-it-worked">Why it worked</a></li>
+          <li><a href="#living-with-it-the-people-who-wanted-it-off">Living with it: the people who wanted it off</a></li>
+          <li><a href="#what-it-left-behind">What it left behind</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
 
 <pre tabindex="0"><code>&lt;!-- Badda Bing, Badda Boom --&gt;</code></pre>
 
@@ -50,7 +67,7 @@
 
 <p>The item was called View Source, or Document Source, or Page Source, depending on the browser and the year. It opened the file the server had sent, exactly as sent, comments and all. For a long stretch of the web's history that menu item was the nearest thing the trade had to a school. It had no teachers, no syllabus and no admissions office. This post is about how it got there, why it worked so well, who tried to switch it off, and what has replaced it.</p>
 
-<h2>Before: software arrived sealed</h2>
+<h2 id="before-software-arrived-sealed">Before: software arrived sealed</h2>
 
 <p>In the early 1990s, if you admired how a program worked, admiration was as far as you could go. Software shipped compiled. You could see what it did and not how. Building anything interactive meant buying a tool and learning its language first. Clay Shirky, looking back from 1998, put it this way: "Prior to the invention of HTML, all software packages which implemented any sort of hypertext required the user to learn a programming language of some sort (Director, Hypercard)."</p>
 
@@ -71,7 +88,7 @@ hypermedia&lt;/A&gt; information retrieval</code></pre>
 
 <p>The browsers that spread the web did not keep the editing half. They kept a window onto the raw file. That turned out to matter more.</p>
 
-<h2>What happened: one menu item</h2>
+<h2 id="what-happened-one-menu-item">What happened: one menu item</h2>
 
 <p><a href="https://stuff.mit.edu/afs/sipb.mit.edu/project/www/doc/Mosaic-2.4/d2-file-menu.html">The user's guide for NCSA Mosaic 2.4</a> lists the File menu: New Window, Clone Window, Open URL, Reload Current, and, further down, this.</p>
 
@@ -106,7 +123,7 @@ hypermedia&lt;/A&gt; information retrieval</code></pre>
 
 <p>He adds that when a page is worth copying, "the question 'How did they do that?' can be answered in seconds." And he notes how easily it could have gone the other way. The first browser makers could have treated the feature "as a kind of debugging option which could have been disabled in any public release". They left it in.</p>
 
-<h2>Why it worked</h2>
+<h2 id="why-it-worked">Why it worked</h2>
 
 <p>Other platforms have let you read their source. Few of them trained a workforce by accident. Here are the forces I think made the difference. Reasonable people weigh them differently.</p>
 
@@ -120,7 +137,7 @@ hypermedia&lt;/A&gt; information retrieval</code></pre>
 
 <p><strong>There was not yet much to protect.</strong> Shirky describes the early web as having "no discernible financial incentive for the majority of its initial participants." A band page and a list of favourite links are not trade secrets. By the time there was real money in a page's markup, the habit of reading each other's work was already the culture, and the people who had learned that way were the ones being hired.</p>
 
-<h2>Living with it: the people who wanted it off</h2>
+<h2 id="living-with-it-the-people-who-wanted-it-off">Living with it: the people who wanted it off</h2>
 
 <p>Not everyone enjoyed being the textbook. Photographers, designers and small businesses saw their pictures and layouts turn up on other people's sites, and wanted a lock. The lock they got was the no-right-click script. This one is from <a href="https://www.irt.org/script/969.htm">the irt.org JavaScript FAQ</a>, question 969, "How can I suppress a right mouse click?":</p>
 
@@ -150,7 +167,7 @@ window.onmousedown=right;
 
 <p>Nobody set out to end the lesson. Pages got heavy, bytes cost money, and the fix for bytes was to remove everything a human reader needed.</p>
 
-<h2>What it left behind</h2>
+<h2 id="what-it-left-behind">What it left behind</h2>
 
 <p><strong>The fix Russell asked for got built, and the default flipped.</strong> In that follow-up he said compiled JavaScript would need "brand new tools akin to symbol servers" to be workable. The seed already existed. The same Closure announcement mentions Closure Inspector, "a Firebug extension that makes debugging the obfuscated code almost as easy as debugging the human-readable source." <a href="https://tc39.es/ecma426/">The source map specification</a> says its first format "was created by Joseph Schorr for use by Closure Inspector". That format went through two more revisions, and in December 2024 it became <a href="https://ecma-international.org/publications-and-standards/standards/ecma-426/">ECMA-426</a>, an Ecma standard for mapping shipped code back to what a person wrote. So readable source came back as a file you may publish beside your code if you choose to. In 1996 you had to do nothing to be readable. Now you have to do something, and you may just as reasonably keep the map private for your own error reports. I'd argue that switch, from on by default to off by default, changed more than any single tool did.</p>
 
@@ -164,11 +181,21 @@ window.onmousedown=right;
 
 <p>Where is the school now? My best guess is that it moved to places where sharing is a decision: public repositories, documentation, tutorials and other people's answers to questions. There is more to read than there ever was, and it is better organised. The difference is that everything in it was put there on purpose, by someone who thought it was fit to be seen. The old school showed you the production code of a film studio, including the comment somebody left in for a laugh.</p>
 
-<h2>The takeaway</h2>
+<h2 id="the-takeaway">The takeaway</h2>
 
 <p>View Source worked as a school because of a coincidence of four things: a text format, an interpreter with no build step, a parser that forgave errors, and a default nobody could opt out of. Take away any one and you get something lesser. The last is the one we lost, and nobody took it. It went as a side effect of making pages faster, one removed comment at a time, until the file the server sent was no longer the file anyone wrote.</p>
 
 <p>What replaced it is in many ways better: open repositories, real debuggers, and a standard for mapping shipped code back to its source. But it is all opt-in, and opt-in transparency teaches you what people are willing to show. The old kind taught you what they actually did. This page, for what it's worth, has no build step. The command still works here.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>Netscape's exact menu labels and keyboard shortcut for viewing source. The essay says only that the name varied by browser and year.</li>
+    <li>Tim O'Reilly's essay is linked in its print view, because the canonical page refused to load.</li>
+    <li>That the Firefox bug reporter copied the script from a page's source is an inference, and is worded as one.</li>
+    <li>Why Internet Explorer opened source in Notepad rests on a single 2008 Microsoft blog post.</li>
+  </ul>
+</section>
 
 <section class="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources and further reading</h2>
@@ -194,7 +221,8 @@ window.onmousedown=right;
   </ul>
 </section>
 
-      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+View+Source+was+the+school&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fview-source-was-the-school%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+View+Source+was+the+school&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fview-source-was-the-school%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/view-source-was-the-school.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/view-source-was-the-school.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">

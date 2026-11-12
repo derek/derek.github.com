@@ -54,11 +54,12 @@ Section headings should describe the content of this essay. The list above is th
 | `archive.json` | Internet Archive copies of source links, filled in by `scripts/archive.mjs`. |
 | `og/*.png` | Link-preview cards, drawn by `scripts/og.mjs`. |
 | `style.css` | The one stylesheet. |
+| `icons/<slug>.txt` | One pixel icon per essay, as a 32x32 text grid. `icons/_<topic>.txt` are the fallbacks used when an essay has no icon of its own. |
 | `berry.gif`, `berry.png` | The animated mascot shown in the header, and its still frame. |
 | `buttons/*.png` | The three 88x31 footer buttons, drawn by `scripts/buttons.py` (needs Python with Pillow; run only to change them). |
 | `scripts/build.mjs` | Generates every page, the landing page and the feed. |
 | `TOPICS.md` | Essay ideas, with Derek's "Up next" queue at the top. |
-| `<slug>/index.html`, `index.html`, `about/index.html`, `feed.xml` | Generated. Do not edit. |
+| `<slug>/index.html`, `index.html`, `about/index.html`, `feed.xml`, `icons/*.svg` | Generated. Do not edit. |
 
 ### An entry in `essays.json`
 
@@ -78,6 +79,7 @@ Section headings should describe the content of this essay. The list above is th
 - `era`: the years the story covers, `[start, end]`, or `[start, null]` when it runs to the present. Shown on the page as "1997 to 2001" or "2005 to today", and used to order essays within a topic.
 - `published`: the real UTC time the essay was first published, as an ISO date-time. It is used only inside the RSS feed. It is never shown on a page, and never changed afterwards.
 - `related` (optional): up to three slugs to list first under "Related essays". Without it, the build picks essays from the same topic and the nearest era.
+- `unverified` (optional, but expected on new essays): a list of plain sentences, shown near the end of the essay under "What I couldn't verify". See below.
 - `corrections` (optional): a list of `{ "date": "2026-12-01", "note": "What changed." }`, shown at the end of the essay.
 
 ### A content fragment
@@ -95,6 +97,38 @@ Section headings should describe the content of this essay. The list above is th
 
 Code goes in `<pre tabindex="0"><code>…</code></pre>` with `&lt;`, `&gt;` and `&amp;` escaped. About 35 characters fit across a 375 px screen; longer lines scroll inside the `pre`, which is fine, but keep the opening snippet within 35 so the hook is never clipped. Do not bend period code out of shape to fit.
 
+### What the build adds to an essay
+
+You write only the fragment. The build adds the title with the essay's icon, a "Contents" list made from the fragment's `<h2>` headings, "(archived)" links beside sources, the "What I couldn't verify" box above the sources, the "Spot a mistake?" box with "View source" and "Edit history" links to GitHub, and the related essays. Because the contents list is built from the headings, keep each `<h2>` short and specific, and do not put links inside headings.
+
+### What I couldn't verify
+
+Every essay tells the reader plainly where its evidence is thin. Put these in the essay's `unverified` list in `essays.json`, one plain sentence each, in the essay's first-person voice:
+
+- a claim that rests on a single source, or on Wikipedia or another secondary summary instead of the original
+- a source you could not open, and what you linked or left out as a result
+- dates or details where sources disagree
+- anything in the essay that is your own inference or guess
+
+Take them from your research notes and from the second-pass review. Three to five entries is typical. Do not list things you simply cut. If there is truly nothing, leave the field out.
+
+### Icons
+
+Each essay has a small pixel icon, shown beside its title and on the landing page. It is drawn as text in `icons/<slug>.txt`: exactly 32 lines of exactly 32 characters, one character per pixel. A dot is transparent. The colours are:
+
+| Char | Colour | Char | Colour | Char | Colour |
+| --- | --- | --- | --- | --- | --- |
+| `K` | black | `W` | white | `S` | silver |
+| `D` | dark grey | `N` | navy | `n` | light navy |
+| `B` | blue | `C` | pale blue | `T` | teal |
+| `G` | green | `L` | lime | `R` | red |
+| `M` | maroon | `Y` | gold | `y` | pale yellow |
+| `O` | orange | `o` | dark orange | `P` | purple |
+| `p` | violet | `E` | beige | `e` | dark beige |
+| `b` | brown | | | | |
+
+Draw it like a Windows 95 desktop icon: one clear object that stands for the essay's artifact (a calendar page for `getYear()`, a bug for Firebug), a one-pixel black outline, flat colours, a pixel or two of empty margin, and no text beyond a few characters. Read two existing icon files first to see the style. After the build, open `icons/<slug>.svg` in the browser and look at it at 48 px. If you cannot get a clear, recognisable icon, delete the file: the build then uses the topic's fallback icon, which is better than a muddy drawing.
+
 ## Commands
 
 Run from `nostalgiajs/`. Needs Node 22 or newer. There is nothing to install.
@@ -110,8 +144,8 @@ Run from `nostalgiajs/`. Needs Node 22 or newer. There is nothing to install.
 
 1. Pick the topic from `TOPICS.md`: the first item under "Up next" if that list has any, otherwise your choice from the lists.
 2. Research. Open the sources and collect the exact dates, versions and quotes you will use.
-3. Write `content/<slug>.html` and add the entry to `essays.json`.
-4. **Second-pass fact check.** Have a separate reviewer (a subagent that has not seen your research notes) read the finished fragment, reopen every linked source, and try to find errors: wrong dates, versions, quotes that do not appear on the page, claims the source does not support. Fix or cut everything it finds. Do not skip this, even when you are confident.
+3. Write `content/<slug>.html` and add the entry to `essays.json`. Draw the essay's icon as `icons/<slug>.txt`.
+4. **Second-pass fact check.** Have a separate reviewer (a subagent that has not seen your research notes) read the finished fragment, reopen every linked source, and try to find errors: wrong dates, versions, quotes that do not appear on the page, claims the source does not support. Fix or cut everything it finds. Do not skip this, even when you are confident. Then fill in the essay's `unverified` list.
 5. Delete the topic's line from `TOPICS.md` and renumber "Up next". Add any good new ideas to the lists.
 6. Run `npm run archive`, then `npm run og -- <slug>`, then `npm run build`.
 7. Check the new essay and the landing page at 375 px wide: no horizontal page scroll, no console errors, no broken local links.

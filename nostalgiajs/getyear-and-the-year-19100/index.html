@@ -40,9 +40,26 @@
   <main>
     <article>
       <p class="meta">The language · 1995 to today · 13 min read</p>
-      <h1>getYear() and the year 19100</h1>
+      <div class="title">
+        <img src="../icons/getyear-and-the-year-19100.svg" width="64" height="64" alt="">
+        <h1>getYear() and the year 19100</h1>
+      </div>
 
 <p class="lede">A method that was right, got fixed, got fixed back, and is still shipping in the browser you are reading this in.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#before-years-since-1900">Before: years since 1900</a></li>
+          <li><a href="#three-fixes-and-a-standard">Three fixes and a standard</a></li>
+          <li><a href="#why-a-one-line-method-went-so-wrong">Why a one-line method went so wrong</a></li>
+          <li><a href="#how-everyone-coped">How everyone coped</a></li>
+          <li><a href="#what-it-left-behind">What it left behind</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
 
 <pre tabindex="0"><code>var now = new Date();
 "19" + now.getYear();  <span class="c">// "19100"</span></code></pre>
@@ -51,7 +68,7 @@
 
 <p>The usual Y2K story is about two-digit years stored in old mainframe records to save space. This one is different, and I think more useful to a working developer. <code>getYear()</code> never stored two digits. It returned a perfectly unambiguous number, the documentation said what the number was, and the trouble came from three separate attempts to make it nicer. By January 2000 the same call gave different answers in browsers from the same vendor, and the standard had already given up on it.</p>
 
-<h2>Before: years since 1900</h2>
+<h2 id="before-years-since-1900">Before: years since 1900</h2>
 
 <p>The convention is older than the web. C's <code>struct tm</code>, the structure that <code>localtime()</code> fills in, has a member called <code>tm_year</code>, and <a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/time.h.html">the POSIX definition of <code>&lt;time.h&gt;</code></a> describes it in three words: "Years since 1900." The neighbouring member, <code>tm_mon</code>, is the month of the year from 0 to 11. If both of those look familiar, it is because you have been living with them in JavaScript for thirty years.</p>
 
@@ -61,7 +78,7 @@
 
 <p>So Navigator 2 shipped a <code>getYear()</code> that returned the year minus 1900. For 1996 that is 96. It looks exactly like a two-digit year, which is the whole problem. A number that happens to look like "the last two digits" for the first few years of a language's life will be used as the last two digits, whatever the manual says.</p>
 
-<h2>Three fixes and a standard</h2>
+<h2 id="three-fixes-and-a-standard">Three fixes and a standard</h2>
 
 <p>Here is the sequence, as well as the surviving sources let me reconstruct it.</p>
 
@@ -88,7 +105,7 @@
 
 <p>On that same January 3, two things were published. On irt.org, Martin Webb posted <a href="https://www.irt.org/articles/js199/">"JavaScript Y2K Issues"</a>, a careful field guide to the mess. And at 23:39 UTC someone opened <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=22964">Mozilla bug 22964</a>, "JavaScript: getYear returns '100' for 2000." Two hours and twenty minutes later John Morrison closed it as invalid: "this behaviour is as designed and documented."</p>
 
-<h2>Why a one-line method went so wrong</h2>
+<h2 id="why-a-one-line-method-went-so-wrong">Why a one-line method went so wrong</h2>
 
 <p>It would be easy to file this under carelessness. I don't think that's fair to anyone involved. Each decision had a defensible reason behind it, and the reasons pulled in different directions.</p>
 
@@ -102,7 +119,7 @@
 
 <p><strong>Nobody could remove anything.</strong> By 1997 the method was known to be a hazard, a replacement existed, and the spec said so in writing. It stayed, because pages were already calling it and a browser that breaks existing pages loses to the browser that doesn't. Hold that thought for the last section.</p>
 
-<h2>How everyone coped</h2>
+<h2 id="how-everyone-coped">How everyone coped</h2>
 
 <p>The obvious answer was <code>getFullYear()</code>, which the version 4 browsers and the standard had added for exactly this purpose. The obvious answer was not available. As Webb put it, "so long as there are people using Netscape Navigator 2 and 3 and Internet Explorer 3, there will always be a need to use getYear(), as these browsers obviously do not support getFullYear()." So the era's solution was to keep calling the broken method and launder the result.</p>
 
@@ -130,7 +147,7 @@ datedisplay.setAttribute("value", dateObj.getDate()+"/"+(dateObj.getMonth()+1)+"
 
 <p>In 2000, <code>getYear()</code> returns 100, and 2100 minus 100 is 2000. In 2001 it returns 101, and the page announces that it is 1999. That fix was good for exactly twelve months, and to be fair, it was written in one of them.</p>
 
-<h2>What it left behind</h2>
+<h2 id="what-it-left-behind">What it left behind</h2>
 
 <p><strong>The bug report became the documentation.</strong> Bug 22964 was closed in two hours and then refused to stay quiet. It has 67 duplicates. The last was filed in July 2013. Of its 80 comments, 51 date from 2005, which I'd guess is what happens when a browser built on that engine starts taking real market share and meets a web tested only in Internet Explorer. The thread contains the entire standards-versus-reality argument in miniature. One commenter quotes Annex B and concludes: "Mozilla should behave as it behaves now, and IE is wrong." Another answers with the point that browser vendors eventually organised their whole philosophy around: "the Mozilla user who browses the Internet CANNOT use getFullYear instead of getYear because he is not the author of the page he is browsing!!!" Both were right. The author of the page and the person hurt by the page are different people, and only one of them can deploy a fix.</p>
 
@@ -142,11 +159,22 @@ datedisplay.setAttribute("value", dateObj.getDate()+"/"+(dateObj.getMonth()+1)+"
 
 <p>There is a pattern in that list that I think goes beyond dates. Every change made to <code>getYear()</code> in place broke somebody's working page: Netscape's in 1996, Microsoft's in 1997, Netscape's again in 1998, Microsoft's again with IE9. The only move that helped was the one that left the old method alone and added <code>getFullYear()</code> next to it. Later this turned into a slogan: don't break the web. The people who wrote the 1997 standard were already learning it the hard way, from a function with one line of arithmetic in it.</p>
 
-<h2>The takeaway</h2>
+<h2 id="the-takeaway">The takeaway</h2>
 
 <p>The original <code>getYear()</code> was never wrong. It returned years since 1900, as documented, in Navigator 2, and it returns that today. What failed was everything around it: a borrowed design that looked like something it wasn't, two vendors fixing it in place at different times, and a standard that arrived after the fixes and sided with the original. The lesson I'd take is that once an API is on the web, changing what it returns is the most expensive thing you can do to it, and it stays expensive even when the change is an improvement. Add the new thing beside it, mark the old one as legacy, and accept that you will be shipping both for the rest of your career.</p>
 
 <p>Which, if you started in the 1990s, you have been. The line at the top of this essay still runs. It prints 19126 this year, in any browser that follows the specification. Somewhere there is probably a page where it does.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>The January 2000 sightings of &quot;19100&quot; (the US Naval Observatory, Meteo-France, the Gore campaign site) rest on Wikipedia's Year 2000 problem article, not on the original news reports.</li>
+    <li>Internet Explorer 9's return to &quot;year minus 1900&quot; in standards mode rests on one reference page.</li>
+    <li>JDK 1.1 is dated only to February 1997, because sources disagree on the day.</li>
+    <li>Whether Navigator 4.0 to 4.05 returned 100 or 2000 could not be pinned down, so the essay speaks only about 4.06 and later.</li>
+    <li>Why Navigator 3 changed the method is my guess, and is marked as one.</li>
+  </ul>
+</section>
 
 <section class="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources and further reading</h2>
@@ -171,7 +199,8 @@ datedisplay.setAttribute("value", dateObj.getDate()+"/"+(dateObj.getMonth()+1)+"
   </ul>
 </section>
 
-      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+getYear%28%29+and+the+year+19100&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fgetyear-and-the-year-19100%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+getYear%28%29+and+the+year+19100&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fgetyear-and-the-year-19100%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/getyear-and-the-year-19100.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/getyear-and-the-year-19100.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">

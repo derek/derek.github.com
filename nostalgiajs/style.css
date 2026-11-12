@@ -81,19 +81,31 @@ blockquote { margin: 1.3em 0; padding: 0.1em 1em; border-left: 4px solid var(--g
 article ul { padding-left: 1.3em; }
 article li { margin: 0.5em 0; }
 
+/* ---------- essay title, contents list ---------- */
+.title { display: grid; grid-template-columns: 64px 1fr; column-gap: 14px; align-items: center; margin: 0.4em 0 0.8em; }
+.title img { width: 64px; height: 64px; }
+.title h1 { margin: 0; }
+.toc { margin: 1.3em 0; padding: 8px 12px 10px; background: var(--cream); border: 1px solid var(--cream-line); font-size: 0.92rem; }
+.toc p { margin: 0 0 0.2em; font-weight: bold; color: var(--navy); }
+.toc ol { margin: 0; padding-left: 1.6em; }
+.toc li { margin: 0.2em 0; }
+h2[id] { scroll-margin-top: 8px; }
+
 /* ---------- landing page ---------- */
 .intro { margin-top: 1.4rem; }
 .group h2 { margin-top: 1.8em; }
 .posts { list-style: none; margin: 0; padding: 0; }
-.posts li { padding: 0.5em 0 0.9em; border-bottom: 1px dotted #999999; }
+.posts li { display: grid; grid-template-columns: 48px 1fr; column-gap: 12px; padding: 0.5em 0 0.9em; border-bottom: 1px dotted #999999; }
+.posts li img { grid-row: 1 / span 3; width: 48px; height: 48px; margin-top: 0.45em; }
+.posts li > :not(img) { grid-column: 2; }
 .posts li:last-child { border-bottom: 0; }
 .posts h3 { margin: 0.3em 0 0; font: bold 1.2rem/1.3 Georgia, "Times New Roman", serif; }
 .posts .meta { margin: 0.15em 0 0.3em; }
 .posts p { margin: 0.3em 0 0; font-size: 0.95rem; }
 
 /* ---------- end of an essay ---------- */
-.sources, .corrections, .related { font-size: 0.92rem; }
-.sources ul, .corrections ul { margin: 0; padding-left: 1.3em; }
+.sources, .corrections, .related, .unverified { font-size: 0.92rem; }
+.sources ul, .corrections ul, .unverified ul { margin: 0; padding-left: 1.3em; }
 .sources li { margin: 0.4em 0; overflow-wrap: anywhere; }
 .sources .archived { font-size: 0.9em; white-space: nowrap; }
 .mistake { margin-top: 2rem; padding: 8px 11px; background: var(--cream); border: 1px solid var(--cream-line); font-size: 0.92rem; }
