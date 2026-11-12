@@ -102,6 +102,23 @@
         "That F12 as the developer-tools key began with Firebug 0.2.3 rests on Wikipedia, and is attributed to it.",
         "The Firebug 1.1 source listings come from a third-party mirror, which the essay names."
       ]
+    },
+    {
+      "slug": "the-first-jsconf",
+      "title": "JSConf 2009: the community that didn't know it existed",
+      "description": "In April 2009 about 130 people met in a hotel outside Washington for the first conference about JavaScript itself. It nearly didn't happen, and its format, its side room and its name spread around the world.",
+      "topic": "people",
+      "era": [
+        2009,
+        null
+      ],
+      "published": "2026-11-12T20:06:20+00:00",
+      "related": [
+        "jquery-and-the-dollar-sign",
+        "where-did-the-old-web-developers-go",
+        "firebug-and-the-inside-of-the-page"
+      ],
+      "unverified": []
     }
   ]
 }

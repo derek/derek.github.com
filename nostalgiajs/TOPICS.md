@@ -12,9 +12,8 @@ Derek's picks, in order. Always take the first item here. Only choose from the l
 2. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
 3. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
 4. The IE6 funeral (2010) and the campaigns to kill a browser
-5. The first JSConf (2009) and the start of a JavaScript conference culture
-6. IE6: the box model, `hasLayout` and conditional comments
-7. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
+5. IE6: the box model, `hasLayout` and conditional comments
+6. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
 ## Ideas
 
@@ -64,6 +63,9 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - From webmaster to "front-end developer": how the job titles split
 - FizzBuzz, the whiteboard and the rituals of the developer interview
 - "Wat" (2012) and the tradition of laughing at JavaScript
+- ServerJS becomes CommonJS (2009): the mailing list that gave JavaScript `require()` before it had a server to run on
+- "Hug a Conference Organizer" (2010) and the economics of the community tech conference, from hotel room blocks to ticket lotteries
+- The conference code of conduct: how one page of boilerplate spread from event to event in the early 2010s
 - "How it feels to learn JavaScript in 2016" and JavaScript fatigue
 - The "no right click" script, image theft and the early web's copyright anxieties
 - Tim Berners-Lee's browser was an editor: the read-write web that shipped read-only
