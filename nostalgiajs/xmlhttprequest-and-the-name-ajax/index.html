@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XMLHttpRequest: six years waiting for a name · Nostalgia.js</title>
+<meta name="description" content="Microsoft shipped the object behind every web application in 1999, under a name its author calls an excuse. Almost nobody used it until a designer's 2005 essay called the technique Ajax.">
+<link rel="canonical" href="https://derek.io/nostalgiajs/xmlhttprequest-and-the-name-ajax/">
+<meta property="og:site_name" content="Nostalgia.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XMLHttpRequest: six years waiting for a name">
+<meta property="og:description" content="Microsoft shipped the object behind every web application in 1999, under a name its author calls an excuse. Almost nobody used it until a designer's 2005 essay called the technique Ajax.">
+<meta property="og:url" content="https://derek.io/nostalgiajs/xmlhttprequest-and-the-name-ajax/">
+<meta property="og:image" content="https://derek.io/nostalgiajs/og/xmlhttprequest-and-the-name-ajax.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%239a3412'/%3E%3Cpath d='M12 10l-6 6 6 6M20 10l6 6-6 6' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../style.css">
+<link rel="alternate" type="application/rss+xml" title="Nostalgia.js" href="../feed.xml">
+</head>
+<body>
+<header class="bar">
+  <div class="in">
+    <a class="brand" href="../">Nostalgia.js<span>AI Essays on Web History</span></a>
+    <picture>
+      <source srcset="../berry.png" media="(prefers-reduced-motion: reduce)">
+      <img src="../berry.gif" width="48" height="48" alt="'member when...? Yeah, I remember!" title="'member when...? Yeah, I remember!">
+    </picture>
+  </div>
+</header>
+<nav class="strip" aria-label="Nostalgia.js">
+  <div class="in">
+    <a href="../">Essays</a>
+    <a href="../about/">About</a>
+    <a class="rss" href="../feed.xml">RSS<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#ff6600"/><circle cx="3.6" cy="10.4" r="1.4" fill="#fff"/><path d="M2.2 6.4a5.4 5.4 0 0 1 5.4 5.4M2.2 3a8.8 8.8 0 0 1 8.8 8.8" fill="none" stroke="#fff" stroke-width="1.7"/></svg></a>
+  </div>
+</nav>
+<div class="wrap">
+  <main>
+    <article>
+      <p class="meta">Browsers and the platform · 1998 to 2006 · 14 min read</p>
+      <div class="title">
+        <img src="../icons/xmlhttprequest-and-the-name-ajax.svg" width="64" height="64" alt="">
+        <h1>XMLHttpRequest: six years waiting for a name</h1>
+      </div>
+
+<p class="lede">The most important line of JavaScript of the 2000s shipped in 1999 with a name its own author calls an excuse, and then sat largely ignored for six years until somebody gave the technique around it a better one.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#before-one-click-one-page">Before: one click, one page</a></li>
+          <li><a href="#a-weekend-in-redmond">A weekend in Redmond</a></li>
+          <li><a href="#how-the-object-worked">How the object worked</a></li>
+          <li><a href="#why-it-sat-unused">Why it sat unused</a></li>
+          <li><a href="#february-18-2005">February 18, 2005</a></li>
+          <li><a href="#living-with-two-constructors">Living with two constructors</a></li>
+          <li><a href="#what-it-left-behind">What it left behind</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
+
+<pre tabindex="0"><code>var req = new ActiveXObject(
+  "Microsoft.XMLHTTP");</code></pre>
+
+<p>That is how you asked a server for something without leaving the page, in Internet Explorer 5, in March 1999. It isn't JavaScript's doing, strictly. <code>ActiveXObject</code> was Microsoft's way of letting script load a Windows component, the same door that opened Excel or the file system, and <code>"Microsoft.XMLHTTP"</code> was a component that happened to speak HTTP. The object it handed back could <code>open</code> a URL, <code>send</code> a request and give you the response as text. The page stayed where it was.</p>
+
+<p>Every web application you use now is built on that ability. What I find worth an essay is the gap. The capability was in the dominant browser from 1999. The word "Ajax" arrived on February 18, 2005. In between, the object sat in the most widely used browser on earth and drew very little notice. The story of those six years is a story about a team with a deadline, a browser plug-in system, a recession and, in the end, a consultant who needed a shorter word for a client meeting.</p>
+
+<h2 id="before-one-click-one-page">Before: one click, one page</h2>
+
+<p>The web's original contract was simple. You clicked, the browser threw away the page, the server built a new one, and you waited. Jesse James Garrett, in the essay this story ends with, put the cost in one line: "While the server is doing its thing, what's the user doing? That's right, waiting."</p>
+
+<p>Dynamic HTML, which arrived in 1997 and which <a href="../if-document-layers/">split the web in two for a while</a>, let a page change itself after it loaded. It did not let a page fetch anything new. Script could rearrange what the server had already sent, and that was all. If you wanted to check whether a username was taken, you submitted the form.</p>
+
+<p>People found ways around this, and they were all smuggling operations. Anything with a <code>src</code> could carry a message to the server, so the standard trick was a frame the visitor couldn't see:</p>
+
+<pre tabindex="0"><code>&lt;iframe name="rpc" width="0" height="0"&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+function checkName(name) {
+  frames["rpc"].location =
+    "check.asp?name=" + escape(name);
+}
+function gotResult(taken) {
+  alert(taken ? "Taken" : "Available");
+}
+&lt;/script&gt;</code></pre>
+
+<p>The server answered with a tiny HTML page whose only content was a script calling <code>parent.gotResult(true)</code>. The response was, in effect, a function call sent as a web page. That is the Internet Explorer form; other browsers needed other hidden elements for the same trick. It failed in ways that were hard to see, because a hidden frame has no error handler and no status code you can read.</p>
+
+<p>Microsoft had an official product in this space too. Brent Ashley's <a href="https://www.ashleyit.com/rs/">Remote Scripting page</a>, which Ashley has kept online "for historical purposes", describes Microsoft Remote Scripting as solving the problem "by embedding a Java applet in the page to communicate with the server". A Java applet, to send a string. Ashley wrote a JavaScript-only alternative called JSRS "in the summer of 2000", built on hidden DHTML elements, and a second one called RSLite that passed its data in cookies. When people are carrying data in cookies on purpose, the platform is missing a feature.</p>
+
+<h2 id="a-weekend-in-redmond">A weekend in Redmond</h2>
+
+<p>The feature came from a mail team. Alex Hopmann, who worked on Exchange 2000 at Microsoft, wrote the history down in <a href="https://www.alexhopmann.com/page/the-story-of-xmlhttp">The Story of XMLHTTP</a>, and it is the best primary source on any of this, so I'll lean on it.</p>
+
+<p>Exchange needed a new Outlook Web Access, the webmail front end for corporate email. Hopmann dates the start to "probably sometime in late 1998". Two versions got underway: one of plain HTML pages, and one built with DHTML by Jim Van Eaton and Bob Gering. Of the first demo of the DHTML one, Hopmann writes, "I was just blown away". The DHTML one had a plumbing problem, though. In Hopmann's words, "they were basically doing hacky form-posts back to the server". So:</p>
+
+<blockquote><p>That weekend I startup up Visual Studio and whipped up the first version of what would become XMLHTTP. The first version didn't have async support hooked up and was pretty crude&hellip;</p></blockquote>
+
+<p>A component on one developer's machine doesn't help a product whose whole pitch is that you can walk up to any computer and read your mail. It had to be in the browser already. Internet Explorer 5 was, by Hopmann's account, "just weeks away from beta 2", its last beta. Another developer, Shawn Bracewell, rewrote the code to production quality and added the asynchronous mode and error handling. Hopmann, meanwhile, went looking for something that already shipped with Internet Explorer and could carry a stowaway. That turned out to be MSXML, Microsoft's XML parser library, whose team was run by Jean Paoli.</p>
+
+<p>Which brings us to the name. I'd assumed for years that it was called XMLHTTP because it was designed to fetch XML. Hopmann says otherwise:</p>
+
+<blockquote><p>&hellip;the thing is mostly about HTTP and doesn't have any specific tie to XML other than that was the easiest excuse for shipping it so I needed to cram XML into the name (plus- XML was the hot technology at the time and it seemed like some good marketing for the component).</p></blockquote>
+
+<p>Two other lines from that account deserve to be better known. On security: "We did a quick security review but at the time no one really understood the seriousness or types of vulnerabilities that anything shipping could cause." And on quality: "no one other than OWA is going to try to call it so if it has a bug in the beta, worst case we just can't use it." The feature that would carry Gmail, Google Suggest and much of what got called Web 2.0 was checked in a week before a beta, on the theory that only one team would ever call it.</p>
+
+<p>Internet Explorer 5 shipped in March 1999. Exchange 2000 and its Outlook Web Access followed, per Hopmann, "another year and a half" later. By then the piece it needed was on a great many desktops.</p>
+
+<h2 id="how-the-object-worked">How the object worked</h2>
+
+<p>The API that went out in 1999 is, with small changes, the one in your browser today. A full request, as you'd have written it for Internet Explorer 5 or 6:</p>
+
+<pre tabindex="0"><code>var req = new ActiveXObject("Microsoft.XMLHTTP");
+req.onreadystatechange = function () {
+  if (req.readyState == 4) {
+    if (req.status == 200) {
+      document.all["news"].innerHTML =
+        req.responseText;
+    }
+  }
+};
+req.open("GET", "news.asp", true);
+req.send(null);</code></pre>
+
+<p>Three things in there shaped a decade of code. The third argument to <code>open</code> is the async flag, and <code>true</code> meant your script carried on while the request was out. That one boolean is the A in Ajax. The callback fired on every state change, so everyone learned to test for the magic number 4; the W3C's first draft listed the states by name, and 4 was "Loaded". And the response came back two ways: as a string in <code>responseText</code>, or parsed into a document in <code>responseXML</code> if the server sent XML. Most people, most of the time, wanted the string.</p>
+
+<p>Other browsers had no ActiveX, so they couldn't copy the component. They copied its interface instead and exposed it as a plain constructor, <code>new XMLHttpRequest()</code>, with Microsoft's method names and a spelling that capitalizes half an acronym. (Microsoft's own component was XMLHTTP, all capitals.) <a href="https://en.wikipedia.org/wiki/XMLHttpRequest">Wikipedia's history</a> puts it in Mozilla's Gecko engine by 2002, in Safari 1.2 in 2004 and in Opera 8.0 in 2005. Aaron Swartz, looking back in <a href="http://www.aaronsw.com/weblog/ajaxhistory">A Brief History of Ajax</a>, summed up those years: "Mozilla quickly followed suit and, while nobody I know used it, the function stayed there, just waiting to be taken advantage of."</p>
+
+<h2 id="why-it-sat-unused">Why it sat unused</h2>
+
+<p>Six years is a long time for a feature this useful to sit unused. I count four reasons, and I think they mattered in roughly this order.</p>
+
+<p><strong>It lived behind ActiveX.</strong> For the first few years the object existed in one browser on one operating system, behind the same mechanism that security-minded administrators were busy switching off. A public site that depended on it was betting on the visitor's browser and the visitor's IT department. Garrett, asked in a <a href="https://www.route-fifty.com/digital-government/2006/08/the-story-behind-ajax/318502/">2006 interview</a> about the standards work then starting, said something that fits: people had tried to solve the problem "in proprietary ways for years", and the approach "didn't get traction until it was broadly available in a vendor-neutral way". The dates fit. Safari's support came in 2004, the year Gmail launched.</p>
+
+<p><strong>The timing was terrible.</strong> The object shipped in 1999 and the dot-com crash followed. Swartz's history has a bleak phrase for the period: "Shortly thereafter the bubble burst and web development crashed." The teams that might have spent 2001 building ambitious browser applications were mostly not employed to do so. Hopmann, explaining why the idea hadn't caught on even earlier, grants the slow connections and slow machines of the late 1990s ("typical machines were 200mhz") and then names what he thinks mattered most: developers don't make sweeping shifts quickly, and "these things take 3-5 years".</p>
+
+<p><strong>Nobody could see the examples.</strong> Outlook Web Access was the first big application built this way, and it lived behind corporate logins. Oddpost, a webmail service that opened in 2002 and behaved like a desktop mail client, charged a subscription, and Swartz reckons that is why it "didn't receive as much attention". Gmail launched on April 1, 2004, two and a half years after work on it began. Paul Buchheit <a href="http://paulbuchheit.blogspot.com/2009/01/overnight-success-takes-long-time.html">recalls</a> that along the way quite a few colleagues wanted it killed, or rebuilt with native client software, "not this crazy Javascript stuff". It was free, but its script was hard to follow. The breakthrough was the small one. Google Suggest <a href="https://googleblog.blogspot.com/2004/12/ive-got-suggestion.html">appeared in December 2004</a>, a search box that completed your query as you typed, and Hopmann notes that people "looked at the source code of that page to figure out how it worked". <a href="../view-source-was-the-school/">View Source was the school</a>, and for once the lesson was short enough to read. Google Maps <a href="https://googleblog.blogspot.com/2005/02/mapping-your-way.html">followed on February 8, 2005</a>.</p>
+
+<p><strong>It had no name.</strong> Developers called it XMLHTTP, or remote scripting, or described it by pointing at Gmail. None of those fits on a slide. I think this reason is underrated, and the next section is my argument for it.</p>
+
+<h2 id="february-18-2005">February 18, 2005</h2>
+
+<p>Ten days after Google Maps appeared, Jesse James Garrett of the San Francisco consultancy Adaptive Path published <a href="https://designftw.mit.edu/lectures/apis/ajax_adaptive_path.pdf">Ajax: A New Approach to Web Applications</a>. Garrett was a user experience designer writing for other designers, and the essay reads that way. It has two diagrams and no code. The key sentences:</p>
+
+<blockquote><p>Google Suggest and Google Maps are two examples of a new approach to web applications that we at Adaptive Path have been calling Ajax. The name is shorthand for Asynchronous JavaScript + XML, and it represents a fundamental shift in what's possible on the Web.</p></blockquote>
+
+<p>Garrett was careful to say what the word covered: "Ajax isn't a technology. It's really several technologies", listed as XHTML and CSS, the DOM, XML and XSLT, <code>XMLHttpRequest</code>, and JavaScript "binding everything together". The essay claimed no invention. A follow-up Q&amp;A three weeks later answered the obvious challenge directly: "Neither Adaptive Path nor Google invented Ajax." Asked why the thing needed a name at all, Garrett gave the most honest answer in the history of technical branding:</p>
+
+<blockquote><p>I needed something shorter than "Asynchronous JavaScript+<wbr>CSS+<wbr>DOM+<wbr>XMLHttpRequest" to use when discussing this approach with clients.</p></blockquote>
+
+<p>In the 2006 interview Garrett filled in the scene. The technical people at a client already understood the pieces; the word was for "the business people I was dealing with". Then Garrett published the essay and "left the country", spending two weeks in Japan without internet access and coming home to "this avalanche of e-mail".</p>
+
+<p>The speed of what followed is the evidence that the name was the missing part. On March 22, 2005, thirty-two days after the essay, <a href="https://rubyonrails.org/2005/3/22/rails-0-11-0-ajax-pagination-non-vhost-incoming-mail">Rails 0.11.0</a> shipped with the word in its release title and "Ajax helpers" as the headline feature. By the time Hopmann wrote his account, the term had reached the Wall Street Journal. Douglas Crockford, never one to oversell a trend, later <a href="https://www.json.org/fatfree.html">described the moment</a> this way: "In 2005, the idea of Dynamic HTML gained new energy and acceptance when it was renamed as Ajax."</p>
+
+<p>Hopmann's verdict on his former employer is harsher than anything I'd write: "At Microsoft we totally blew the opportunity to evangelize and get out in front of this approach back in 1999."</p>
+
+<h2 id="living-with-two-constructors">Living with two constructors</h2>
+
+<p>Once everyone wanted to make requests, everyone needed the same few lines at the top of the file, because there were two ways to get the object. The canonical version is short enough that the Internet Explorer team <a href="https://learn.microsoft.com/en-us/archive/blogs/ie/native-xmlhttprequest-object">published it themselves</a> in January 2006:</p>
+
+<pre tabindex="0"><code>if (window.XMLHttpRequest){
+  <span class="c">// If IE7, Mozilla, Safari, etc: Use native object</span>
+  var xmlHttp = new XMLHttpRequest()
+}
+else
+{
+  if (window.ActiveXObject){
+    <span class="c">// ...otherwise, use the ActiveX control for IE5.x and IE6</span>
+    var xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+}</code></pre>
+
+<p>Read the first comment again. That post, by program manager Sunava Dutta, was announcing that Internet Explorer 7 would support "a scriptable native version of XMLHTTP", so that organizations which had disabled ActiveX could still run these applications. Microsoft was adopting the other browsers' imitation of Microsoft's own component, and putting itself on the "native object" branch of a test that had existed only to route around it. Internet Explorer 7 shipped in October 2006. The <code>else</code> branch stayed in libraries for years, since Internet Explorer 6 did too.</p>
+
+<p>Careful versions of that snippet grew a ladder of <code>try</code> blocks, asking for <code>"Msxml2.XMLHTTP"</code> first and falling back to <code>"Microsoft.XMLHTTP"</code>, because the component had been reissued under more than one name. Nobody wanted to write that twice, so the wrapper became the first thing every library offered. Prototype, the library that grew up alongside Rails, <a href="http://prototypejs.org/learn/introduction-to-ajax">reduced a request to</a>:</p>
+
+<pre tabindex="0"><code>new Ajax.Request('/some_url', {
+  method:'get',
+  onSuccess: function(transport) {
+    var response = transport.responseText || "no response text";
+    alert("Success! \n\n" + response);
+  },
+  onFailure: function() { alert('Something went wrong...'); }
+});</code></pre>
+
+<p>No <code>readyState</code>, no magic 4, no ActiveX. <a href="../jquery-and-the-dollar-sign/">jQuery</a> later did the same with <code>$.ajax</code>, and I'd guess a large share of working developers went a decade without typing <code>XMLHttpRequest</code> at all. The word in the method name was Garrett's.</p>
+
+<p>The X went quietly. Garrett's own Q&amp;A had already conceded that you didn't need XML, and could use "a technology like JavaScript Object Notation". Parsing a <code>responseXML</code> document with DOM calls was miserable next to getting an object you could use directly, and by December 2006 Crockford could tell an XML conference, to its face, that "JSON has become the X in Ajax".</p>
+
+<h2 id="what-it-left-behind">What it left behind</h2>
+
+<p><strong>A standard written by transcription.</strong> The W3C published its <a href="https://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/">first working draft</a> of "The XMLHttpRequest Object" on April 5, 2006, seven years after the object shipped. Its stated method was to "document a minimum set of interoperable features based on existing implementations", and it adds that "only features that are already implemented are considered". It also acknowledges being derived from the WHATWG's work documenting existing behavior. So the chain runs: a Microsoft team writes a component for its own product, other browsers reverse-engineer the interface, a group of browser people writes down what the copies do, and the standards body publishes that. I don't mean this as a complaint. It is how most of the platform you rely on got specified, and this is one of the cleanest examples.</p>
+
+<p><strong>A name nobody can fix.</strong> The current <a href="https://xhr.spec.whatwg.org/">living standard</a> carries a sentence I find oddly moving: "The name XMLHttpRequest is historical and has no bearing on its functionality." It was true the weekend the thing was written. The XML was a shipping excuse from the start, and the web will carry it for as long as there is a web, capital letters and all.</p>
+
+<p><strong>The synchronous flag outlived its reason.</strong> Hopmann's first version "didn't have async support hooked up", so the blocking mode came first and the famous one was added in the rewrite. A blocking request freezes the page while it waits, and browsers have been trying to remove it for years. The spec says synchronous requests outside of workers are "in the process of being removed from the web platform", and then adds, in brackets, "This is a long process that takes many years." A blocking mode from a weekend prototype is still being negotiated a quarter of a century later.</p>
+
+<p><strong>The engine in the diagram became the framework.</strong> Garrett's essay describes the browser loading "an Ajax engine", written in JavaScript, that is "responsible for both rendering the interface the user sees and communicating with the server on the user's behalf". In 2005 that was a box in a figure. It is also a fair description of what a single-page application framework does, written years before the big ones existed. The problems arrived with it. Garrett's Q&amp;A lists, as open questions, accessibility, the back button, and what happens when JavaScript is off, and answers all of them with "maybe". The industry spent the next fifteen years turning those maybes into routers, history APIs and server rendering.</p>
+
+<p><strong>The security review came later.</strong> The rule browsers settled on was that a page could call only its own server, and the 2006 draft gives it one line: "Same-origin security restrictions SHOULD apply." Everything developers then wanted, calling other people's servers, needed a new permission system, which is where the <a href="https://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/">2008 Level 2 draft</a>'s "cross-site requests" and the CORS errors in your console come from. The "quick security review" of the late 1990s has been followed by a rather longer one.</p>
+
+<p>The replacement, <code>fetch</code>, arrived in the mid-2010s, and MDN describes it as "a more powerful and flexible replacement for XMLHttpRequest". It returns a promise instead of counting to 4. The old constructor is still in every browser, and a great deal of code still calls it through one wrapper or another.</p>
+
+<h2 id="the-takeaway">The takeaway</h2>
+
+<p>The capability and the name are different inventions, and the web needed both. Microsoft shipped the capability in 1999, for one product, under a name chosen to get it past a release deadline. It worked. Hardly anyone outside noticed, because it was locked to one browser, because the industry was in a slump, because the best examples were hidden behind logins and paywalls, and because nobody could say in a meeting what it was. Each of those took years to clear, and the last one was cleared in an afternoon's reading by a designer who had written no part of the code.</p>
+
+<p>I'd argue that makes Garrett's essay a piece of engineering in its own right. Hopmann, who built the first version, came to the same view: "effective marketing and communication of your ideas is important and we missed out on that." A feature that can't be named can't be asked for, budgeted, taught or put in a job ad. The object had one name that was wrong from its first day and survived anyway; the technique had none for six years and stayed obscure until it got one.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>Almost everything about how XMLHTTP was written and shipped rests on one account, Alex Hopmann's. He gives no date for the weekend, the naming or the security review beyond starting the webmail work &quot;probably sometime in late 1998&quot;, and his page shows no original publication date.</li>
+    <li>Jesse James Garrett's essay is linked as a saved copy of its print view, because Adaptive Path's own site would not load.</li>
+    <li>The dates for Mozilla, Safari 1.2 and Opera 8.0 support come from Wikipedia, as do Oddpost's 2002 opening and the release months of Internet Explorer 5 and 7. Wikipedia's XMLHttpRequest article also dates the idea to 2000, which contradicts Hopmann; I followed Hopmann.</li>
+    <li>Jay Hoffmann's history of the web says XMLHTTP was added to replace Java components that Outlook Web Access had relied on. Hopmann does not mention this, so I left it out.</li>
+    <li>How little the object was used before 2004 is hard to measure. Aaron Swartz wrote that nobody he knew used it, but Hopmann says the approach was already doing well by 2000 to 2002, and it was common on corporate intranets.</li>
+    <li>Google's two blog posts are linked for their dates only. Whether Google Maps used XMLHttpRequest or hidden frames at launch is disputed in the comments on Swartz's post, so the essay does not say.</li>
+    <li>That XMLHTTP sitting behind ActiveX held back public sites, that Prototype's wrapper kept most developers from typing the constructor, and that the missing name mattered as much as I say, are my own readings.</li>
+  </ul>
+</section>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://www.alexhopmann.com/page/the-story-of-xmlhttp">The Story of XMLHTTP</a>, Alex Hopmann, mid-2000s, updated 2007 <a class="archived" href="https://web.archive.org/web/20260808161908/https://www.alexhopmann.com/page/the-story-of-xmlhttp">(archived)</a></li>
+    <li><a href="https://designftw.mit.edu/lectures/apis/ajax_adaptive_path.pdf">Ajax: A New Approach to Web Applications</a>, Jesse James Garrett, Adaptive Path, 2005 (a saved copy of the print view, with the March 2005 Q&amp;A) <a class="archived" href="https://web.archive.org/web/20261103073801/https://designftw.mit.edu/lectures/apis/ajax_adaptive_path.pdf">(archived)</a></li>
+    <li><a href="https://www.route-fifty.com/digital-government/2006/08/the-story-behind-ajax/318502/">The story behind Ajax</a>, interview with Jesse James Garrett by Brad Grimes and Joab Jackson, GCN, 2006</li>
+    <li><a href="http://www.aaronsw.com/weblog/ajaxhistory">A Brief History of Ajax</a>, Aaron Swartz, 2005 <a class="archived" href="https://web.archive.org/web/20261106075510/http://www.aaronsw.com/weblog/ajaxhistory">(archived)</a></li>
+    <li><a href="https://www.ashleyit.com/rs/">Remote Scripting Resources</a>, Brent Ashley <a class="archived" href="https://web.archive.org/web/20260807214600/http://ashleyit.com/rs/">(archived)</a></li>
+    <li><a href="http://paulbuchheit.blogspot.com/2009/01/overnight-success-takes-long-time.html">Overnight success takes a long time</a>, Paul Buchheit, 2009 <a class="archived" href="https://web.archive.org/web/20261009024309/http://paulbuchheit.blogspot.com/2009/01/overnight-success-takes-long-time.html">(archived)</a></li>
+    <li><a href="https://googleblog.blogspot.com/2004/12/ive-got-suggestion.html">I've got a suggestion</a>, Official Google Blog, 2004 <a class="archived" href="https://web.archive.org/web/20261106232252/https://googleblog.blogspot.com/2004/12/ive-got-suggestion.html">(archived)</a></li>
+    <li><a href="https://googleblog.blogspot.com/2005/02/mapping-your-way.html">Mapping your way</a>, Official Google Blog, 2005 <a class="archived" href="https://web.archive.org/web/20261031183033/https://googleblog.blogspot.com/2005/02/mapping-your-way.html">(archived)</a></li>
+    <li><a href="https://rubyonrails.org/2005/3/22/rails-0-11-0-ajax-pagination-non-vhost-incoming-mail">Rails 0.11.0: Ajax, Pagination, Non-vhost, Incoming mail</a>, Ruby on Rails, 2005 <a class="archived" href="https://web.archive.org/web/20260808190453/https://rubyonrails.org/2005/3/22/rails-0-11-0-ajax-pagination-non-vhost-incoming-mail">(archived)</a></li>
+    <li><a href="http://prototypejs.org/learn/introduction-to-ajax">Introduction to Ajax</a>, Prototype JavaScript framework <a class="archived" href="https://web.archive.org/web/20261105213935/http://prototypejs.org/learn/introduction-to-ajax">(archived)</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/archive/blogs/ie/native-xmlhttprequest-object">Native XMLHTTPRequest object</a>, Sunava Dutta, IEBlog, 2006 <a class="archived" href="https://web.archive.org/web/20240610231823/https://learn.microsoft.com/en-us/archive/blogs/ie/native-xmlhttprequest-object">(archived)</a></li>
+    <li><a href="https://www.json.org/fatfree.html">JSON: The Fat-Free Alternative to XML</a>, Douglas Crockford, 2006 <a class="archived" href="https://web.archive.org/web/20261104215020/http://www.json.org/fatfree.html">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/">The XMLHttpRequest Object, Working Draft 5 April 2006</a>, W3C <a class="archived" href="https://web.archive.org/web/20261104223823/https://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/">(archived)</a></li>
+    <li><a href="https://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/">XMLHttpRequest Level 2, Working Draft 25 February 2008</a>, W3C <a class="archived" href="https://web.archive.org/web/20260518223207/https://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/">(archived)</a></li>
+    <li><a href="https://xhr.spec.whatwg.org/">XMLHttpRequest Living Standard</a>, WHATWG <a class="archived" href="https://web.archive.org/web/20261107003413/https://xhr.spec.whatwg.org/">(archived)</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a>, MDN <a class="archived" href="https://web.archive.org/web/20261111172233/https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">(archived)</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/XMLHttpRequest">XMLHttpRequest</a>, Wikipedia</li>
+  </ul>
+</section>
+
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+XMLHttpRequest%3A+six+years+waiting+for+a+name&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Fxmlhttprequest-and-the-name-ajax%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/xmlhttprequest-and-the-name-ajax.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/xmlhttprequest-and-the-name-ajax.html">Edit history</a></p>
+    </article>
+
+    <nav class="related" aria-labelledby="related-h">
+      <h2 id="related-h">Related essays</h2>
+      <ul>
+        <li><a href="../if-document-layers/">if (document.layers): the web forks in two</a> <span>Browsers and the platform · 1995 to 2001</span></li>
+        <li><a href="../jquery-and-the-dollar-sign/">jQuery 1.0: what $ really replaced</a> <span>Libraries and tools · 2005 to today</span></li>
+        <li><a href="../view-source-was-the-school/">View Source was the school</a> <span>People and culture · 1993 to today</span></li>
+      </ul>
+      <p><a href="../">All essays</a></p>
+    </nav>
+  </main>
+
+  <footer>
+    <p class="buttons">
+      <a href="../"><img src="../buttons/nostalgiajs.png" width="88" height="31" alt="Nostalgia.js"></a>
+      <img src="../buttons/any-browser.png" width="88" height="31" alt="Best viewed with any browser">
+      <img src="../buttons/notepad.png" width="88" height="31" alt="Made with Notepad">
+    </p>
+    <p>Nostalgia.js · AI Essays on Web History · <a href="../about/">How these essays are made</a></p>
+  </footer>
+</div>
+</body>
+</html>

@@ -10,11 +10,10 @@ Derek's picks, in order. Always take the first item here. Only choose from the l
 
 1. The blogs that ran the industry (Ajaxian, QuirksMode, personal blogs) and the feed reader, up to Google Reader's shutdown in 2013
 2. The webmaster: one job title for the whole site, and the `mailto:webmaster@` link in every footer
-3. `XMLHttpRequest`, `ActiveXObject` and the road to Ajax getting a name in 2005
-4. The IE6 funeral (2010) and the campaigns to kill a browser
-5. The first JSConf (2009) and the start of a JavaScript conference culture
-6. IE6: the box model, `hasLayout` and conditional comments
-7. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
+3. The IE6 funeral (2010) and the campaigns to kill a browser
+4. The first JSConf (2009) and the start of a JavaScript conference culture
+5. IE6: the box model, `hasLayout` and conditional comments
+6. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
 ## Ideas
 
@@ -45,6 +44,9 @@ Aim for about one people-and-culture essay in every three, so the collection is 
 - Venkman and the DOM Inspector: the debugger and the tree view Mozilla shipped years before anyone used them
 - YSlow (2007) and the invention of front-end performance as a discipline
 - `console.log` shipped to production: `firebugx.js`, "console is not defined" and the stub at the top of every script
+- JSON: Crockford's "fat-free alternative to XML", `eval()` as a parser and the script-tag trick that became JSONP
+- The back button and the `#` fragment: how Ajax applications broke history and `pushState` repaired it
+- Hidden frames, Java applets and cookies: remote scripting before `XMLHttpRequest` (MSRS, JSRS, RSLite)
 
 ### People and culture
 
