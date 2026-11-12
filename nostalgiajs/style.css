@@ -46,9 +46,8 @@ body {
 .strip { background: var(--cream); border-bottom: 1px solid var(--cream-line); font-size: 0.9rem; }
 .strip .in { padding-top: 6px; padding-bottom: 6px; }
 .strip a { color: var(--navy); font-weight: bold; margin-right: 16px; }
-.strip .in { display: flex; align-items: center; }
-.strip .xml { margin: 0 0 0 auto; line-height: 0; }
-.strip .xml img, .buttons img { image-rendering: pixelated; }
+.strip .rss svg { margin-left: 5px; vertical-align: -1px; }
+.buttons img { image-rendering: pixelated; }
 
 /* ---------- text ---------- */
 a { color: var(--link); text-underline-offset: 0.12em; }

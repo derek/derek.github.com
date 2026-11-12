@@ -1,4 +1,4 @@
-# Draws the footer buttons: three 88x31 badges and the orange XML chiclet.
+# Draws the three 88x31 footer buttons.
 # Pixel art at 1x, saved at 3x with hard edges so it stays crisp on phones.
 import sys
 from PIL import Image, ImageDraw, ImageFont
@@ -37,10 +37,3 @@ b = Image.open(berry_png).convert('RGB').resize((25, 25), Image.LANCZOS); im.pas
 ctext(d, 30, 87, 5, 'Nostalgia', f(B, 9), (255, 255, 255))
 ctext(d, 30, 87, 16, '.js', f(B, 10), (255, 204, 0))
 save(im, 'nostalgiajs')
-
-# 4. The orange XML chiclet
-im, d = new(36, 14, (255, 102, 0)); bevel(d, 36, 14, (255, 190, 130), (120, 50, 0))
-d.rectangle([1, 1, 34, 12], outline=(255, 255, 255))
-ctext(d, 0, 36, 1, 'XML', f(B, 9), (255, 255, 255))
-save(im, 'xml')
-

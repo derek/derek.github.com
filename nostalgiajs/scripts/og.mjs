@@ -30,7 +30,7 @@ mkdirSync(join(ROOT, 'og'), { recursive: true });
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 const jobs = [];
-if (!only) jobs.push(['default', 'Essays on the web we built by hand', 'AI Essays on Web History']);
+if (!only) jobs.push(['default', 'Essays about the early web', 'AI Essays on Web History']);
 for (const e of essays) if (!only || only === e.slug) jobs.push([e.slug, e.title, 'AI Essays on Web History']);
 for (const [name, title, sub] of jobs) {
   await page.setContent(card(title, sub));
