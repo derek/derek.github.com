@@ -1,0 +1,196 @@
+<p class="lede">The dollar sign was second-hand, the best ideas were credited to other people, and the browsers spent the next decade copying it anyway.</p>
+
+<pre tabindex="0"><code>if ( $ )
+  jQuery._$ = $;
+
+var $ = jQuery;</code></pre>
+
+<p>Those lines sit about sixty lines into <a href="https://code.jquery.com/jquery-1.0.js">the file jQuery's CDN still serves as <code>jquery-1.0.js</code></a>. The last one is the famous one. The first two are more interesting, and the comment above them in the source says what they are for: "Map over the $ in case of overwrite." Before jQuery takes the dollar sign, it checks whether somebody else is already using it, and puts theirs somewhere safe.</p>
+
+<p>Somebody else was. By 2006 <code>$</code> already meant something on a lot of pages, and it meant something different. So the question in the title has two answers. The dollar sign replaced another library's dollar sign. And jQuery, the thing behind it, replaced a folder of small functions that every working developer carried from job to job, a few of which the author of jQuery had personally written.</p>
+
+<p><a href="https://blog.jquery.com/2006/08/26/jquery-10/">jQuery 1.0 was announced</a> on August 26, 2006. To see what it changed, start a year earlier.</p>
+
+<h2>Before: the utility belt</h2>
+
+<p>In 2005 the DOM worked, more or less, in every browser that mattered. The trouble was that it worked differently in each, and the standard way of doing things was long-winded even where it worked. You fetched one element with <code>document.getElementById</code>, or a list with <code>getElementsByTagName</code>, and then you looped. Attaching a click handler meant <code>addEventListener</code> in Mozilla, Opera and Safari, and <code>attachEvent</code> in Internet Explorer, which also forgot which element the handler belonged to.</p>
+
+<p>Nobody wrote this out fresh each time. You had a file, often called something like <code>common.js</code>, with an <code>addEvent()</code>, a function to find elements by class name, something to run code when the page loaded, and a wrapper to create an <code>XMLHttpRequest</code>. Each function had an author and a URL in a comment, and each had known bugs.</p>
+
+<p>The state of the art is nicely preserved on QuirksMode. On September 8, 2005, Peter-Paul Koch <a href="https://www.quirksmode.org/blog/archives/2005/09/addevent_recodi.html">launched a contest</a> to rewrite <code>addEvent()</code>, because the version everyone had been pasting "doesn't quite cut the cake any more." The judges were Koch, Scott Andrew LePera and Dean Edwards. The prize was "eternal and undying fame," plus a promise to "spread the winning entry as the new standard." Entries had to work in "Explorer 5+ Windows, Mozilla, Opera, and Safari."</p>
+
+<p>That contest shows how the web platform got patched in 2005. There was no package manager and no committee. A respected blogger held a competition, and the winning snippet was distributed by copy and paste. <a href="https://www.quirksmode.org/blog/archives/2005/10/_and_the_winner_1.html">The winner was announced</a> on October 18, and here it is, as edited by the judges:</p>
+
+<pre tabindex="0"><code>function addEvent( obj, type, fn )
+{
+  if (obj.addEventListener)
+    obj.addEventListener( type, fn, false );
+  else if (obj.attachEvent)
+  {
+    obj["e"+type+fn] = fn;
+    obj[type+fn] = function() { obj["e"+type+fn]( window.event ); }
+    obj.attachEvent( "on"+type, obj[type+fn] );
+  }
+}</code></pre>
+
+<p>The three lines in the <code>attachEvent</code> branch exist to make <code>this</code> work. As <a href="https://johnresig.com/blog/flexible-javascript-events/">the author's own write-up</a> put it, in Internet Explorer "the 'this' reference refers to the worthless 'window', when, in fact, it should refer to the parent object." The trick is to store the handler as a property of the element, keyed by the event type plus the function's entire source text, and call it from there. Koch wrote that "by far the most important reason" for the choice was "its brevity."</p>
+
+<p>The winner was John Resig, born in 1984 and so 21 at the time. His entry is still linked from his site, at a path under <code>/apps/jselect/</code>. Remember that folder name.</p>
+
+<p>Two other pieces of the belt matter here. In March 2003 Simon Willison had published <a href="https://simonwillison.net/2003/Mar/25/getElementsBySelector/"><code>document.getElementsBySelector</code></a>, "a javascript function which takes a standard CSS style selector and returns an array of elements objects." His example was <code>document.getElementsBySelector('div#main p a.external')</code>. And Sam Stephenson's Prototype library had a function called <code>$</code>. Its documentation still calls it <a href="http://api.prototypejs.org/dom/dollar/">"the cornerstone of Prototype"</a> and "a handy alias for <code>document.getElementById</code>." In Prototype, <code>$('nav')</code> hands you one element, by ID.</p>
+
+<h2>What happened</h2>
+
+<p>On August 22, 2005, two and a half weeks before the contest opened, Resig posted <a href="https://johnresig.com/blog/selectors-in-javascript/">"Selectors in Javascript"</a>. It was a reaction to a library called Behaviour, which let you attach functions to elements using CSS selectors. He liked the premise and disliked the typing. Behaviour, he wrote, "simply seems too tedious and verbose for everyday use." Here is its way of making list items delete themselves when clicked, quoted from the post:</p>
+
+<pre tabindex="0"><code>Behaviour.register({
+  '#example li': function(e){
+    e.onclick = function(){
+      this.parentNode.removeChild(this);
+    }
+  }
+});</code></pre>
+
+<p>And here is what Resig called "the same as above, done in my code":</p>
+
+<pre tabindex="0"><code>$('#example li').bind('click',function(){
+  this.parentNode.removeChild(this);
+});</code></pre>
+
+<p>There was no code behind it yet. He called it "a syntactical mock-up." What the post did have was a measurement. Under the heading "Syntactic fluff comparision" he stripped both versions down to the characters that carry no meaning:</p>
+
+<pre tabindex="0"><code>A: Behaviour.register({'':function(e){e.on=}});
+B: $('').bind('',);</code></pre>
+
+<p>I think that is the most important artifact in the whole story. The API was designed by counting keystrokes that were not the selector, the event name or the function. Everything left over was a cost. A third sample in the same post chained calls together, with <code>.set()</code>, <code>.bind()</code> and <code>.style()</code> one after another on the same selection. The whole shape of jQuery is there in August 2005, a year before 1.0.</p>
+
+<p>The first release came at BarCamp NYC in January 2006. The jQuery project <a href="https://blog.jquery.com/2026/01/17/jquery-4-0-0/">dates it to January 14</a>, the Saturday. <a href="https://johnresig.com/blog/barcampnyc-wrap-up/">Resig's own wrap-up</a>, posted on the 16th, lists his demo slot as "11am, Sunday," so take your pick. It was the third thing he showed in that slot, after two web apps. He announced it as "jQuery: New Wave Javascript" and added, with the confidence of someone who has not yet had to maintain it, "this code revolutionizes the way you can get Javascript to interact with HTML."</p>
+
+<p>Three days later a commenter named Kris De Volder pointed out that he already ran a project called JQuery, a Java code browser. Resig's reply explains the folder name from the contest: "I was, originally, going to use JSelect, but all the domain names were taken already."</p>
+
+<p>In 2015 Resig dug up that January 2006 code and <a href="https://johnresig.com/files/Genius%20-%20jQuery%20Annotation.htm">put it online with annotations</a>. It opens like this:</p>
+
+<pre tabindex="0"><code>function $(a,c) {
+  if ( a == null ) return;
+
+  <span class="c">// Since we're using Prototype's $ function,</span>
+  <span class="c">// be nice and have backwards compatability</span>
+  if ( typeof Prototype != "undefined" &amp;&amp; a.constructor == String ) {</code></pre>
+
+<p>So the original jQuery had no <code>jQuery</code> function at all. The library was a function named <code>$</code>, and its comment says outright whose name that was. If Prototype was on the page and you passed a plain word, it tried <code>getElementById</code> first, so old Prototype code kept working. By 1.0 the real name had become <code>jQuery</code>, <code>$</code> was an alias, and the previous owner's <code>$</code> was parked in <code>jQuery._$</code>. That is the snippet at the top of this essay.</p>
+
+<p>The 1.0 announcement is modest. "A lot of bugs fixed, a ton of new features, and a complete overhaul of how the jQuery development process is run." There was a Subversion checkout, a bug tracker, a "(Partial) Test Suite," and an update noting that 1.0 arrived "nearly one year after it was first conceived as a post in my weblog." The file header reads "jQuery - New Wave Javascript" and says it is dual licensed under MIT and GPL. The slogan most people associate with the project is not in the file. In 2010 Wikipedia's editors recorded the home page title as "jQuery: The write less, do more, JavaScript library."</p>
+
+<p>Then it moved fast. <a href="https://blog.jquery.com/2007/01/14/jquery-birthday-11-new-site-new-docs/">jQuery 1.1</a> shipped on the first birthday, January 14, 2007, claiming selectors "10x-20x faster" than 1.0.4 and a simplified API, with a compatibility plugin for people who had already written 1.0 code. GitHub <a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">adopted jQuery 1.2.1</a> in late 2007. And on September 28, 2008, Scott Guthrie <a href="https://weblogs.asp.net/scottgu/jquery-and-microsoft">announced</a> that "Microsoft will be shipping jQuery with Visual Studio going forward." The jQuery blog <a href="https://blog.jquery.com/2008/09/28/jquery-microsoft-nokia/">added the same day</a> that Nokia would ship it on phones with its web run-time.</p>
+
+<h2>Why this one won</h2>
+
+<p>There were plenty of JavaScript libraries by 2006, several of them larger and better funded. Here are the forces I think decided it. Each is arguable.</p>
+
+<p><strong>It used a query language people already knew.</strong> Anyone who had written a stylesheet could read <code>'#example li'</code>. Prototype's <code>$</code> took an ID. Willison's function took a selector but handed back a bare array, and you were on your own from there. jQuery took the selector and gave back something you could act on. The people building pages in 2006 were often designers who had learned CSS first, and this was the first JavaScript API written in their language.</p>
+
+<p><strong>It made the set the unit of work.</strong> Every method ran on every matched element and returned the set again. That removed the <code>for</code> loop, and it also removed the null check, because a selector that matched nothing gave you an empty set whose methods did nothing. That second property is the one people later turned against it. Hold on to it.</p>
+
+<p><strong>It took the utility belt and hid it.</strong> The 1.0 source is a museum of the kind of snippet described in the previous section, sometimes with the author credited in a comment. Here is part of how it decides the document is ready, without waiting for every image as <code>window.onload</code> did:</p>
+
+<pre tabindex="0"><code><span class="c">// If Mozilla is used</span>
+if ( jQuery.browser.mozilla || jQuery.browser.opera ) {
+  <span class="c">// Use the handy event callback</span>
+  document.addEventListener( "DOMContentLoaded", jQuery.ready, false );
+
+<span class="c">// If IE is used, use the excellent hack by Matthias Miller</span>
+<span class="c">// http://www.outofhanwell.com/blog/index.php?title=the_window_onload_problem_revisited</span>
+} else if ( jQuery.browser.msie ) {
+
+  <span class="c">// Only works if you document.write() it</span>
+  document.write("&lt;scr" + "ipt id=__ie_init defer=true " +
+    "src=//:&gt;&lt;\/script&gt;");</code></pre>
+
+<p>A third branch, for Safari, polls <code>document.readyState</code> on a timer. Three browsers, three unrelated techniques, one of them involving writing a script tag with a nonsense URL into the page. You typed <code>$(document).ready(fn)</code> and never saw any of it. I'd argue this was the real product. The selector engine got the attention, and the hidden branches saved the hours.</p>
+
+<p><strong>It was polite.</strong> jQuery kept nearly everything under one global name plus an alias, and it left <code>Object.prototype</code> and <code>Array.prototype</code> alone. It could sit on a page beside another library, which mattered a great deal when the page already had one and you were not allowed to remove it. <a href="https://api.jquery.com/jQuery.noConflict/">The documentation for <code>noConflict()</code></a> still explains the arrangement: "Old references of $ are saved during jQuery initialization; noConflict() simply restores them."</p>
+
+<p><strong>A platform vendor blessed it without taking it over.</strong> Guthrie's post is unusually clear about why Microsoft did not build its own. The team looked at adding selectors and animation to ASP.NET AJAX and "quickly realized that the jQuery support for these scenarios is already excellent." So: "We will distribute the jQuery JavaScript library as-is, and will not be forking or changing the source." The ASP.NET MVC download would "add the jQuery library by default to all new projects." For a large population of corporate developers, that sentence moved jQuery from something you had to justify to something that was simply there.</p>
+
+<h2>Living with it</h2>
+
+<p>Success produced its own set of chores. The first was the dollar sign itself. With two libraries on a page, whoever loaded last owned <code>$</code>. The idiom that solved it is on the same documentation page, and it became the standard way to open a jQuery plugin:</p>
+
+<pre tabindex="0"><code>jQuery.noConflict();
+(function( $ ) {
+  $(function() {
+    <span class="c">// More code using $ as alias to jQuery</span>
+  });
+})(jQuery);</code></pre>
+
+<p>Give the global <code>$</code> back, then take a private one as a function parameter. It is the same move as the lines at the top of this essay, made by the user instead of the library.</p>
+
+<p>The second chore was upgrades. The 1.1 release, less than five months after 1.0, already needed upgrade guides in three languages and a "jQuery 1.0 Compatibility Plugin." That set a pattern the project kept. Twenty years on, the 4.0 release still ships alongside an upgrade guide and a migration plugin.</p>
+
+<p>The third was the standards process, and here the library authors did something new. In April 2008, with browsers about to ship a native <code>querySelectorAll</code>, Resig <a href="https://johnresig.com/blog/thoughts-on-queryselectorall/">wrote to the W3C working group</a> with objections. The main one concerned queries that start from an element. Given this markup:</p>
+
+<pre tabindex="0"><code>&lt;div&gt;&lt;p id="foo"&gt;&lt;span&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</code></pre>
+
+<p>asking the <code>foo</code> paragraph for <code>'div span'</code> returns the span, although there is no <code>div</code> inside the paragraph. The whole document is searched and the results are filtered afterwards. Every library did the opposite. Resig called the native behaviour "completely unacceptable" and "borderline useless to libraries." He had canvassed the other authors, and quoted Andrew Dupont of Prototype: "it violates principle of least surprise and bears no resemblance to the APIs in the wild."</p>
+
+<p>They lost that one. I ran Resig's test case in a current Chromium while writing this, and <code>foo.querySelectorAll('div span')</code> still returns one element. You need to write <code>':scope div span'</code> to get zero.</p>
+
+<h2>What it left behind</h2>
+
+<p><strong>The platform copied the homework, slowly.</strong> When GitHub <a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">removed jQuery in 2018</a>, its engineers listed what had made that possible, and the list reads as jQuery's table of contents translated into standards: "The <code>$(selector)</code> pattern can easily be replaced with <code>querySelectorAll()</code>," class switching with <code>Element.classList</code>, animation in CSS, <code>$.ajax</code> with the Fetch Standard. The dates are worth a look. <a href="https://www.w3.org/TR/selectors-api/">Selectors API Level 1</a> became a W3C Recommendation on February 21, 2013, seven and a half years after a student's blog post about fluff. jQuery got <a href="https://api.jquery.com/closest/"><code>.closest()</code></a> in version 1.3, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest"><code>Element.closest()</code></a> is now a standard DOM method with the same name and the same job.</p>
+
+<p><strong>jQuery turned into a polyfill for its own imitation.</strong> This is the part I had not put together before reading the source. <a href="https://code.jquery.com/jquery-1.3.2.js">jQuery 1.3.2</a>, dated February 2009 in its header, already contains this:</p>
+
+<pre tabindex="0"><code>if ( !seed &amp;&amp; context.nodeType === 9 &amp;&amp; !isXML(context) ) {
+  try {
+    return makeArray( context.querySelectorAll(query), extra );
+  } catch(e){}
+}
+
+return oldSizzle(query, context, extra, seed);</code></pre>
+
+<p>Try the browser's version, and if it throws, fall back to your own. Notice <code>nodeType === 9</code>. The native path is used only when the query starts from the document, never from an element, which is the case Resig had told the working group was broken. I can't prove that was the motive, and the comments nearby mention a Safari bug as well, but the effect is the same. The library adopted the standard where the standard agreed with it and routed around it everywhere else. We now call this pattern a polyfill or progressive enhancement. In 2009 it was a library quietly making itself less necessary, one <code>try</code> block at a time.</p>
+
+<p><strong>The empty set became the argument against it.</strong> GitHub's post gives a three-line example, <code>$('.js-widget').addClass('is-loading').show()</code>, and then asks: "Did the author expect one or more js-widget elements on this page?" If the class name vanishes from the markup, nothing fails. "By default, jQuery silently skips the whole expresion when nothing matched the initial selector; but to us, such behavior was a bug rather than a feature." They also found that chaining "doesn't lend itself well to static analysis, since almost every result of a jQuery method call is of the same type." The feature that made jQuery pleasant for one person on one page was the same feature that made it hard for hundreds of engineers and a type checker. My own reading is that the language later settled on a compromise. Optional chaining, <code>el?.classList.add()</code>, is jQuery's silent no-op made opt-in, one question mark at a time.</p>
+
+<p><strong>The dollar sign outlived the dependency.</strong> Open the console in Chrome on a page with no libraries and type <code>$('img')</code>. It works. <a href="https://developer.chrome.com/docs/devtools/console/utilities">Chrome's documentation</a> lists <code>$(selector)</code> as "a shortcut for the <code>document.querySelector()</code> function," with a note that if the page uses "a library such as jQuery that uses $, this functionality will be overwritten." The tool yields the name to the library, the way the library once yielded it to Prototype.</p>
+
+<p><strong>It is still most of the web.</strong> <a href="https://w3techs.com/technologies/details/js-jquery">W3Techs</a>, on November 12, 2026, has jQuery on 63.9% of all websites, and 16.9% of those jQuery sites are still on version 1. The project is not a ruin either. jQuery 4.0.0 came out on January 17, 2026, "the first major version release in almost 10 years," dropping support for Internet Explorer 10 and older while keeping IE 11 for one more round. The retreat has mostly happened among people who write new code. <a href="https://blog.getbootstrap.com/2021/05/05/bootstrap-5/">Bootstrap 5</a> shipped in May 2021 under the heading "No more jQuery!" The site <a href="https://youmightnotneedjquery.com/">You Might Not Need jQuery</a> is careful about its own scope: "jQuery and its cousins are great, and by all means use them if it makes it easier to develop your application." Its plea is aimed at library authors who add a dependency for three function calls.</p>
+
+<p>One more thing in that 2015 look back deserves attention. Resig wrote that "jQuery would not have existed if it wasn't for Sam Stephenson creating Prototype, Simon Willison creating getElementsBySelector, Valerio Proietti creating moo.fx, and especially Dean Edwards creating so much: event binding, CSS selector libraries, DOM ready techniques and more." Take him at his word and jQuery contained very little that was new. Selectors in JavaScript existed. <code>$</code> existed. The event fix was a contest entry. What Resig added was the counting: the decision that the right API was the one with the least text between the thing you meant and the thing you had to type. Does that count as invention? I think it does, and I think it is the kind that standards bodies are worst at and individuals with a blog are best at.</p>
+
+<h2>The takeaway</h2>
+
+<p>The dollar sign replaced two things. On the page, it replaced the utility belt: the pasted <code>addEvent()</code>, the onload hack, the <code>ActiveXObject</code> wrapper, each with its author's name in a comment and its own set of bugs. jQuery gathered them behind one function and one query language that every CSS author already knew, and it was polite enough to coexist with whatever was on the page before it arrived. That combination, more than any single feature, is why it won.</p>
+
+<p>In the longer run it replaced the process by which the web platform got fixed. In 2005 that process was a blog contest. By 2008 it was a library author writing to a W3C list on behalf of his users, and by 2013 the selector function was a W3C Recommendation. jQuery's reward for being right was to become optional. It is hard to think of a better outcome for a library, or a rarer one, and it is still loading on roughly two pages out of three while you decide whether you need it.</p>
+
+<section class="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources and further reading</h2>
+  <ul>
+    <li><a href="https://johnresig.com/blog/selectors-in-javascript/">Selectors in Javascript</a>, John Resig, 2005</li>
+    <li><a href="https://johnresig.com/blog/barcampnyc-wrap-up/">BarCampNYC Wrap-up</a>, John Resig, 2006, with the naming exchange in the comments</li>
+    <li><a href="https://blog.jquery.com/2006/08/26/jquery-10/">jQuery 1.0</a>, John Resig, jQuery blog, 2006</li>
+    <li><a href="https://code.jquery.com/jquery-1.0.js">jquery-1.0.js</a>, as served by the jQuery CDN (its header carries an October 2006 revision date)</li>
+    <li><a href="https://johnresig.com/files/Genius%20-%20jQuery%20Annotation.htm">The original jQuery source code, January 2006</a>, and <a href="https://johnresig.com/blog/annotated-version-of-the-original-jquery-release/">Annotated Version of the Original jQuery Release</a>, John Resig, 2015</li>
+    <li><a href="https://www.quirksmode.org/blog/archives/2005/09/addevent_recodi.html">addEvent() recoding contest</a> and <a href="https://www.quirksmode.org/blog/archives/2005/10/_and_the_winner_1.html">... and the winner is ...</a>, Peter-Paul Koch, QuirksBlog, 2005</li>
+    <li><a href="https://johnresig.com/blog/flexible-javascript-events/">Flexible Javascript Events</a>, John Resig, 2005</li>
+    <li><a href="https://simonwillison.net/2003/Mar/25/getElementsBySelector/">getElementsBySelector()</a>, Simon Willison, 2003</li>
+    <li><a href="http://api.prototypejs.org/dom/dollar/">$ utility</a>, Prototype API documentation</li>
+    <li><a href="https://blog.jquery.com/2007/01/14/jquery-birthday-11-new-site-new-docs/">jQuery Birthday: 1.1, New Site, New Docs</a>, John Resig, jQuery blog, 2007</li>
+    <li><a href="https://weblogs.asp.net/scottgu/jquery-and-microsoft">jQuery and Microsoft</a>, Scott Guthrie, 2008</li>
+    <li><a href="https://blog.jquery.com/2008/09/28/jquery-microsoft-nokia/">jQuery, Microsoft, and Nokia</a>, John Resig, jQuery blog, 2008</li>
+    <li><a href="https://johnresig.com/blog/thoughts-on-queryselectorall/">Thoughts on querySelectorAll</a>, John Resig, 2008</li>
+    <li><a href="https://code.jquery.com/jquery-1.3.2.js">jquery-1.3.2.js</a>, jQuery CDN, 2009</li>
+    <li><a href="https://www.w3.org/TR/selectors-api/">Selectors API Level 1</a>, W3C Recommendation, 2013</li>
+    <li><a href="https://api.jquery.com/jQuery.noConflict/">jQuery.noConflict()</a> and <a href="https://api.jquery.com/closest/">.closest()</a>, jQuery API documentation</li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest">Element: closest() method</a>, MDN</li>
+    <li><a href="https://github.blog/engineering/engineering-principles/removing-jquery-from-github-frontend/">Removing jQuery from GitHub.com frontend</a>, GitHub Engineering, 2018</li>
+    <li><a href="https://blog.getbootstrap.com/2021/05/05/bootstrap-5/">Bootstrap 5</a>, Bootstrap blog, 2021</li>
+    <li><a href="https://youmightnotneedjquery.com/">You Might Not Need jQuery</a></li>
+    <li><a href="https://developer.chrome.com/docs/devtools/console/utilities">Console Utilities API reference</a>, Chrome DevTools documentation</li>
+    <li><a href="https://blog.jquery.com/2026/01/17/jquery-4-0-0/">jQuery 4.0.0</a>, Timmy Willison, jQuery blog, 2026</li>
+    <li><a href="https://w3techs.com/technologies/details/js-jquery">Usage statistics and market share of jQuery for websites</a>, W3Techs, read November 12, 2026</li>
+    <li><a href="https://en.wikipedia.org/wiki/JQuery">jQuery</a> and <a href="https://en.wikipedia.org/wiki/John_Resig">John Resig</a>, Wikipedia</li>
+  </ul>
+</section>

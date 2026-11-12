@@ -1,0 +1,12 @@
+{
+  "name": "view-source",
+  "private": true,
+  "type": "module",
+  "description": "View Source: AI Essays on Web History. No dependencies.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "archive": "node scripts/archive.mjs",
+    "og": "node scripts/og.mjs",
+    "serve": "python3 -m http.server 8000 --directory .."
+  }
+}

@@ -1,20 +1,10 @@
 # Topics
 
-Pick the next post from the Backlog: the first item under "Up next" if there is one, otherwise your choice from the lists. Move it to Posted with its date. Add new ideas as you think of them. Every topic should have a concrete artifact (a line of code, a tag, a product) and a well-documented story. Check facts before writing; see `AGENTS.md`.
+Ideas for essays that have not been written yet. Published essays are listed in `essays.json`, not here.
 
-## Posted
+Pick the next essay from the first item under "Up next" if there is one, otherwise your choice from the lists. When you write an essay, delete its line from this file. Add new ideas to the lists as you find them, never to "Up next". Every topic should have a concrete artifact (a line of code, a tag, a product, a document) and a well-documented story. Check facts before writing; see `AGENTS.md`.
 
-| Date | Post |
-| --- | --- |
-| 2026-11-12 | `if (document.layers)`: Netscape 4 vs IE4 and the first great browser fork |
-| 2026-11-13 | Where did all the old web developers go? The "out by 40" panic of 2007 to 2017, the cohort answer, and the 2026 flip (from a draft by Derek) |
-| 2026-11-14 | `Date.getYear()` and the year 19100: 100, 2000 and 100 again depending on the browser, and why it is still in Annex B |
-| 2026-11-15 | jQuery 1.0 and "write less, do more": what `$` really replaced, from the 2005 `addEvent()` contest to `querySelectorAll` |
-| 2026-11-16 | View Source as the school: the menu item from Mosaic to Notepad, Shirky's 1998 essay, no-right-click scripts, minification, and source maps as opt-in View Source |
-
-## Backlog
-
-### Up next
+## Up next
 
 Derek's picks, in order. Always take the first item here. Only choose from the lists below when this list is empty.
 
@@ -27,7 +17,9 @@ Derek's picks, in order. Always take the first item here. Only choose from the l
 7. IE6: the box model, `hasLayout` and conditional comments
 8. Hiding scripts in HTML comments (`<!--` ... `//-->`) for browsers that didn't exist anymore
 
-Aim for about one people-and-culture post in every three, so the blog is not all code.
+## Ideas
+
+Aim for about one people-and-culture essay in every three, so the collection is not all code. Each essay is filed under one of four topics in `essays.json`: `browsers`, `language`, `libraries` or `people`.
 
 ### Technology
 
