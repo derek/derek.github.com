@@ -124,7 +124,7 @@ function page({ path, title, description, up, ogImage, ogType = 'website', main 
   <div class="in">
     <a href="${up || './'}">Essays</a>
     <a href="${up}about/">About</a>
-    <a class="xml" href="${up}feed.xml"><img src="${up}buttons/xml.png" width="36" height="14" alt="RSS feed" title="RSS feed"></a>
+    <a class="rss" href="${up}feed.xml">RSS<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><rect width="14" height="14" rx="2" fill="#ff6600"/><circle cx="3.6" cy="10.4" r="1.4" fill="#fff"/><path d="M2.2 6.4a5.4 5.4 0 0 1 5.4 5.4M2.2 3a8.8 8.8 0 0 1 8.8 8.8" fill="none" stroke="#fff" stroke-width="1.7"/></svg></a>
   </div>
 </nav>
 <div class="wrap">
@@ -205,7 +205,7 @@ write('index.html', page({
   description: `${TAGLINE}: what happened on the web from the 1990s to the 2010s, why it happened, and what it left behind.`,
   up: '', ogImage: 'default.png',
   main: `    <h1 class="hidden">${NAME}: ${TAGLINE}</h1>
-    <p class="intro">Essays on the web we built by hand, from the 1990s through the 2010s: what happened, why, and what it left behind. Each one is written by an AI from sources it opened and checked, and the sources are linked. <a href="about/">More about how they are made</a>.</p>
+    <p class="intro">Essays about the early web: what happened, why, and what it left behind. Each one is written by an AI from sources it opened and checked, and the sources are linked. <a href="about/">More about how they are made</a>.</p>
 
 ${groups.map(([label, list]) => `    <section class="group" aria-labelledby="g-${list[0].topic}">
       <h2 id="g-${list[0].topic}">${esc(label)}</h2>

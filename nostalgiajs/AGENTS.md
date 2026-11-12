@@ -16,7 +16,7 @@ The site was first called Boomer.js and then, briefly, View Source. `../boomerjs
 
 1. **Stay in this folder.** Do not edit anything outside `nostalgiajs/`.
 2. **No dependencies.** One build script in plain Node, no npm packages, no frameworks, no CDN scripts, no tracking, no web fonts. The published pages use no JavaScript.
-3. **Never edit generated files by hand.** `index.html`, `feed.xml`, `about/index.html` and every `<slug>/index.html` are written by `scripts/build.mjs`. Change the sources (`essays.json`, `content/`, `style.css`, the script) and rebuild. Commit the generated files with the change, because GitHub Pages serves this folder as it is.
+3. **Never edit generated files by hand.** A hand edit is silently lost at the next build. The landing page's intro sentence lives in `scripts/build.mjs`, and the About page's text lives in `content/_about.html`. `index.html`, `feed.xml`, `about/index.html` and every `<slug>/index.html` are written by `scripts/build.mjs`. Change the sources (`essays.json`, `content/`, `style.css`, the script) and rebuild. Commit the generated files with the change, because GitHub Pages serves this folder as it is.
 4. **No author name, and one quiet disclosure.** The essays have no byline and the author has no name. The tagline and the About page say the essays are written by AI. Do not add disclaimers, apologies or "as an AI" asides to an essay.
 5. **Never invent facts.** No made-up quotes, statistics, version numbers, release dates, people or anecdotes. Open a real source for every date, version, quote and attribution before you write it. Quote people only in words you have seen on the page. If you cannot confirm a claim, drop it or state it less firmly ("around 2001", "by the early 2000s"). Label your own interpretations ("my best guess", "I'd argue"). Code samples must be real code from the period or code that runs as shown, not pseudo-code in disguise.
 6. **Never claim personal memories.** Do not write "I remember writing this" or invent a past. Do not dwell on the absence either: no "I wasn't there" or "the people who were there will know". Tell the story with the confidence of someone who did the reading. Use "you" for the developer's experience.
@@ -55,7 +55,7 @@ Section headings should describe the content of this essay. The list above is th
 | `og/*.png` | Link-preview cards, drawn by `scripts/og.mjs`. |
 | `style.css` | The one stylesheet. |
 | `berry.gif`, `berry.png` | The animated mascot shown in the header, and its still frame. |
-| `buttons/*.png` | The three 88x31 footer buttons and the orange XML feed button, drawn by `scripts/buttons.py` (needs Python with Pillow; run only to change them). |
+| `buttons/*.png` | The three 88x31 footer buttons, drawn by `scripts/buttons.py` (needs Python with Pillow; run only to change them). |
 | `scripts/build.mjs` | Generates every page, the landing page and the feed. |
 | `TOPICS.md` | Essay ideas, with Derek's "Up next" queue at the top. |
 | `<slug>/index.html`, `index.html`, `about/index.html`, `feed.xml` | Generated. Do not edit. |
@@ -123,7 +123,7 @@ Readers report mistakes through the "Spot a mistake?" link, which opens a GitHub
 
 ## Site conventions
 
-- The look is a tidy late-1990s homepage: navy title bar with a gold rule, pale yellow link strip, navy section bars, Verdana body text, Georgia headings and yellow code boxes, in web-safe colours. Simple and old, never busy: no backgrounds, counters or marquees, and no badges beyond the three 88x31 buttons in the footer and the orange XML button that links to the feed. It is light only, with no dark mode.
+- The look is a tidy late-1990s homepage: navy title bar with a gold rule, pale yellow link strip, navy section bars, Verdana body text, Georgia headings and yellow code boxes, in web-safe colours. Simple and old, never busy: no backgrounds, counters or marquees, and no badges beyond the three 88x31 buttons in the footer and the small orange feed icon beside the RSS link. It is light only, with no dark mode.
 - The animated berry in the top-right corner (`berry.gif`, with `berry.png` as the still shown to readers who ask for reduced motion) is the site's mascot. It is the only animation on the site. Its hover text is "'member when...? Yeah, I remember!".
 - Colours are tokens in `:root`. Body text is 17px Verdana with at least 4.5:1 contrast. The audience reads with their glasses on, so do not make it small.
 - Semantic HTML, a visible focus style, `lang="en"`.
