@@ -114,7 +114,12 @@
       ],
       "published": "2026-11-12T20:05:01+00:00",
       "unverified": [
-        "placeholder until the review is in."
+        "The card's exact wording. I quote TechCrunch's version; Computerworld printed it slightly differently (\"See you at MIX where we'll show...\"). Attendance also varies, from \"around a hundred\" to \"between 80 and 100\".",
+        "I did not open ie6funeral.com or the original 37signals, Digg, IE6 No More and Windows blog posts (those I tried would not load), so the obituary, the 37signals notice, the Digg figures and Roger Capriotti's words are quoted from press coverage and other blogs that reproduced them.",
+        "The Digg poll result. Eric Lawrence's post adds two answers to get 69% who could not upgrade, while TechCrunch reported 77%. The poll was self-selected either way.",
+        "Everything about the YouTube banner's origin and effect rests on Chris Zacharias's own account, written ten years later, including the claim that YouTube's IE6 audience halved in a month.",
+        "The \"Retiring IE6\" post is signed only \"Eric\". I name Eric Lawrence because it is on the IEInternals blog; the page itself does not give a surname.",
+        "That the YouTube banner mostly moved home users, that IE6 Countdown's launch a year to the day after the funeral was a coincidence, and the remark about most browsers now running on Google's engine are my own inferences. I also did not open a source for Chrome's 2008 launch."
       ]
     }
   ]
