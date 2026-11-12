@@ -12,6 +12,7 @@ const NAME = 'Nostalgia.js';
 const TAGLINE = 'AI Essays on Web History';
 const BERRY = "'member when...? Yeah, I remember!"; // plain text, safe inside an attribute
 const ISSUES = 'https://github.com/derek/derek.github.com/issues/new';
+const REPO = 'https://github.com/derek/derek.github.com';
 
 // Topic groups, in the order the landing page shows them.
 const TOPICS = [
@@ -20,7 +21,14 @@ const TOPICS = [
   ['libraries', 'Libraries and tools'],
   ['people', 'People and culture'],
 ];
-const RESERVED = new Set(['about', 'content', 'scripts', 'og', 'index', 'feed']);
+const RESERVED = new Set(['about', 'content', 'scripts', 'og', 'index', 'feed', 'icons', 'buttons']);
+
+// Icon palette: one character per pixel in icons/<slug>.txt. A dot is transparent.
+const PALETTE = {
+  K: '#000000', W: '#ffffff', S: '#c0c0c0', D: '#808080', N: '#000080', n: '#5a5ac8', B: '#0000ff', C: '#d2ebff',
+  T: '#008080', G: '#008000', L: '#00ff00', R: '#cc0000', M: '#800000', Y: '#ffcc00', y: '#ffffcc', O: '#ff6600',
+  o: '#c83c00', P: '#800080', p: '#9a4ec4', E: '#ded6be', e: '#c8c0a8', b: '#5a2800',
+};
 
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const write = (p, s) => {
@@ -62,6 +70,10 @@ for (const e of essays) {
   for (const r of e.related || []) {
     if (!essays.some((x) => x.slug === r)) fail(`${e.slug}: related essay "${r}" does not exist`);
   }
+  for (const u of e.unverified || []) {
+    if (typeof u !== 'string' || !u.trim()) fail(`${e.slug}: each "unverified" entry must be a sentence`);
+  }
+  e.icon = existsSync(join(ROOT, 'icons', e.slug + '.txt')) ? e.slug : '_' + e.topic;
   const text = e.body.replace(/<pre[\s\S]*?<\/pre>/g, ' ').replace(/<section class="sources"[\s\S]*$/, ' ').replace(/<[^>]+>/g, ' ');
   e.minutes = Math.max(1, Math.round(text.split(/\s+/).filter(Boolean).length / 220));
   e.eraText = e.era[1] === null ? `${e.era[0]} to today` : e.era[0] === e.era[1] ? String(e.era[0]) : `${e.era[0]} to ${e.era[1]}`;
@@ -156,6 +168,69 @@ function withArchiveLinks(body) {
   return body.slice(0, i) + sources;
 }
 
+// ---------- icons: 32x32 text grids become crisp SVG files ----------
+function iconSvg(name) {
+  const rows = read(`icons/${name}.txt`).replace(/\s+$/, '').split('\n');
+  if (rows.length !== 32 || rows.some((r) => r.length !== 32)) fail(`icons/${name}.txt must be 32 lines of 32 characters`);
+  const rects = [];
+  rows.forEach((row, y) => {
+    for (let x = 0; x < 32;) {
+      const ch = row[x];
+      let w = 1;
+      while (x + w < 32 && row[x + w] === ch) w++;
+      if (ch !== '.') {
+        if (!PALETTE[ch]) fail(`icons/${name}.txt: unknown colour "${ch}" on line ${y + 1}`);
+        rects.push(`<rect x="${x}" y="${y}" width="${w}" height="1" fill="${PALETTE[ch]}"/>`);
+      }
+      x += w;
+    }
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">${rects.join('')}</svg>\n`;
+}
+for (const f of readdirSync(join(ROOT, 'icons'))) {
+  if (f.endsWith('.txt')) write(`icons/${f.slice(0, -4)}.svg`, iconSvg(f.slice(0, -4)));
+}
+
+// Give each section heading an id and build the contents list from them.
+function withContents(body) {
+  const used = new Set(['sources-h']);
+  const items = [];
+  const out = body.replace(/<h2>([\s\S]*?)<\/h2>/g, (all, inner) => {
+    const label = inner.replace(/<[^>]+>/g, '').trim();
+    let id = label.toLowerCase().replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'section';
+    for (let n = 2, base = id; used.has(id); n++) id = `${base}-${n}`;
+    used.add(id);
+    items.push(`          <li><a href="#${id}">${inner}</a></li>`);
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+  items.push('          <li><a href="#sources-h">Sources and further reading</a></li>');
+  const toc = `
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+${items.join('\n')}
+  </ol>
+</nav>
+`;
+  const i = out.indexOf('</p>') + 4;        // straight after the lede
+  return out.slice(0, i) + '\n' + toc + out.slice(i);
+}
+
+// The "What I couldn't verify" box sits just above the sources.
+function withUnverified(body, e) {
+  if (!(e.unverified || []).length) return body;
+  const box = `<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+${e.unverified.map((u) => `    <li>${esc(u)}</li>`).join('\n')}
+  </ul>
+</section>
+
+`;
+  const i = body.indexOf('<section class="sources"');
+  return body.slice(0, i) + box + body.slice(i);
+}
+
 function issueLink(e) {
   const q = new URLSearchParams({
     title: `Correction: ${e.title}`,
@@ -178,11 +253,15 @@ ${e.corrections.map((c) => `          <li>${esc(c.date)}: ${esc(c.note)}</li>`).
   const rel = related(e);
   const main = `    <article>
       <p class="meta">${esc(topicName[e.topic])} · ${e.eraText} · ${e.minutes} min read</p>
-      <h1>${esc(e.title)}</h1>
+      <div class="title">
+        <img src="../icons/${e.icon}.svg" width="64" height="64" alt="">
+        <h1>${esc(e.title)}</h1>
+      </div>
 
-${withArchiveLinks(e.body)}
+${withUnverified(withContents(withArchiveLinks(e.body)), e)}
 ${corrections}
-      <p class="mistake">Spot a mistake? <a href="${esc(issueLink(e))}">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="${esc(issueLink(e))}">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="${REPO}/blob/master/nostalgiajs/content/${e.slug}.html">View source</a> · <a href="${REPO}/commits/master/nostalgiajs/content/${e.slug}.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">
@@ -211,6 +290,7 @@ ${groups.map(([label, list]) => `    <section class="group" aria-labelledby="g-$
       <h2 id="g-${list[0].topic}">${esc(label)}</h2>
       <ul class="posts">
 ${list.map((e) => `        <li>
+          <img src="icons/${e.icon}.svg" width="48" height="48" alt="">
           <h3><a href="${e.slug}/">${esc(e.title)}</a></h3>
           <p class="meta">${e.eraText} · ${e.minutes} min read</p>
           <p>${esc(e.description)}</p>

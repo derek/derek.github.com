@@ -40,9 +40,26 @@
   <main>
     <article>
       <p class="meta">Libraries and tools · 2006 to 2017 · 14 min read</p>
-      <h1>Firebug: the first look inside the page</h1>
+      <div class="title">
+        <img src="../icons/firebug-and-the-inside-of-the-page.svg" width="64" height="64" alt="">
+        <h1>Firebug: the first look inside the page</h1>
+      </div>
 
 <p class="lede">The tool that showed every browser what developer tools should be was an add-on, uploaded when it was a few days old, and nearly sold for the price of a paperback.</p>
+
+<nav class="toc" aria-labelledby="toc-h">
+  <p id="toc-h">Contents</p>
+  <ol>
+          <li><a href="#before-alert-and-five-separate-tools">Before: <code>alert()</code> and five separate tools</a></li>
+          <li><a href="#twelve-months-from-one-panel-to-1-0">Twelve months, from one panel to 1.0</a></li>
+          <li><a href="#why-this-one-caught-on">Why this one caught on</a></li>
+          <li><a href="#living-with-it">Living with it</a></li>
+          <li><a href="#what-it-left-behind">What it left behind</a></li>
+          <li><a href="#the-takeaway">The takeaway</a></li>
+          <li><a href="#sources-h">Sources and further reading</a></li>
+  </ol>
+</nav>
+
 
 <blockquote>
 <p>This is a very early release – the code is only a few days old. Beware of the leopard.</p>
@@ -52,7 +69,7 @@
 
 <p>Version 0.2 did not look like the start of anything. It was one panel inside the Firefox window. But by the time the extension stopped working in November 2017, every major browser shipped tools built to the same plan, the F12 key opened most of them, and the function it had taught pages to call was a web standard.</p>
 
-<h2>Before: <code>alert()</code> and five separate tools</h2>
+<h2 id="before-alert-and-five-separate-tools">Before: <code>alert()</code> and five separate tools</h2>
 
 <p>The standard debugging technique of the early 2000s was <code>alert()</code>. The people who built the replacements say so themselves. The WebKit team's <a href="https://webkit.org/blog/5718/10-years-of-web-inspector/">ten-year retrospective</a> calls the period "the wild west of web development, when your best debugging aid was <code>alert()</code>." John J. Barton, who later led Firebug from inside IBM, remembered enterprise web apps starting to grow "without much more than 'window.alert()' debugging." You put a dialog box where you wanted a breakpoint and clicked OK until the loop ran out.</p>
 
@@ -62,7 +79,7 @@
 
 <p>The author was unusually well placed to notice. Hewitt had worked on the Netscape user interface, was one of the small group that started the stripped-down browser that became Firefox, and had written the DOM Inspector himself. Then, in Ratcliffe's telling, he went back to building websites and "soon found that the state of the art tools that he had used as a web developer in the late 90s had not changed."</p>
 
-<h2>Twelve months, from one panel to 1.0</h2>
+<h2 id="twelve-months-from-one-panel-to-1-0">Twelve months, from one panel to 1.0</h2>
 
 <p>The first release was that single panel. According to Ratcliffe it was "roughly equivalent to the console panel," it logged Ajax requests as they happened, and the way for a page to write a message into it was a function called <code>printfire</code>. Jay Hoffmann's <a href="https://thehistoryoftheweb.com/?p=4304">history of web debugging</a> dates Hewitt's announcement to January 12, 2006. I could not open Hewitt's own post from the period, so hold the day loosely. The month is solid, although the opening paragraph of Odvarko's farewell says 2005 and its own timeline says otherwise.</p>
 
@@ -97,7 +114,7 @@
 
 <p>Firebug 1.0 final followed in January 2007, a year after the leopard.</p>
 
-<h2>Why this one caught on</h2>
+<h2 id="why-this-one-caught-on">Why this one caught on</h2>
 
 <p>None of the parts were new, so the explanation has to be somewhere else. Here are the forces I'd point to.</p>
 
@@ -111,7 +128,7 @@
 
 <p><strong>Libraries and companies built on it.</strong> Hewitt told FOSDEM that "many of the popular JavaScript frameworks like Dojo, jQuery, YUI, and MochiKit use Firebug's logging feature for their built-in debugging facilities." In May 2007 Willison linked a YUI team announcement, headed "The YUI Team Is Hiring an Engineer To Work on Firebug," and quoted it: "we're opening a search for a full-time developer to work with Joe on advancing the Firebug roadmap." That July Yahoo's performance team released YSlow, which Willison described as "an extension on top of another extension." Once other people's tools assumed Firebug, it was infrastructure.</p>
 
-<h2>Living with it</h2>
+<h2 id="living-with-it">Living with it</h2>
 
 <p>The first problem was the one in Skinner's brackets. <code>console.log</code> worked where Firebug was installed. Anywhere else, a logging call you forgot to delete reached for an object that did not exist, threw an error and took the rest of your script with it. Hewitt's answer was Firebug Lite, which Willison linked on the same day as the 1.0 beta: "Add Firebug to your site for non-Firefox browsers." In the same folder of the source tree sits a second, much smaller file, called <a href="https://www.askapache.com/s/s.askapache.net/javascript/firebug/lite/1.1/firebugx.js"><code>firebugx.js</code></a>. This is all of it:</p>
 
@@ -135,7 +152,7 @@
 
 <p>The end was slow and fairly gracious. Mozilla decided to build developer tools into Firefox, and, as Odvarko wrote, "the decision was made not to use Firebug as the platform to build upon." <a href="https://www.mozilla.org/en-US/firefox/10.0/releasenotes/">Firefox 10</a>, in January 2012, shipped an "Inspect tool with content highlighting." Firebug 2.0 came out in June 2014, and after that the team was "in maintenance mode." The last version was 2.0.19. Then <a href="https://www.mozilla.org/en-US/firefox/57.0/releasenotes/">Firefox 57</a>, on November 14, 2017, stopped running the old kind of extension altogether. Odvarko, by then on the Firefox DevTools team, wrote that "more than a million loyal fans" were still using Firebug that autumn.</p>
 
-<h2>What it left behind</h2>
+<h2 id="what-it-left-behind">What it left behind</h2>
 
 <p><strong>A standard nobody designed.</strong> There is now a <a href="https://console.spec.whatwg.org/">WHATWG Console Standard</a>. Fourteen of the sixteen names in <code>firebugx.js</code> are in it, every one except <code>profile</code> and <code>profileEnd</code>, along with the <code>%o</code> and <code>%s</code> format specifiers. The standard is frank about being written after the fact. A note says that "for historical reasons, <code>console</code> is lowercased," the namespace object gets a special rule "for historical web-compatibility reasons," and the part that puts text on the screen is left "implementation-defined." Its status section still calls it "an early work in progress" and "the editors' first specification." I ran the sixteen names through a current Chromium while writing this, and all sixteen are still functions, the two unstandardized ones included. So the most-typed debugging API on the web began in a 0.4 release of a browser add-on and was written down by a standards body years later. It is the route <a href="../if-document-layers/">Microsoft's <code>innerHTML</code></a> took, ship first and specify later, except that this time the proprietary vendor was one person.</p>
 
@@ -162,11 +179,21 @@ this.$$ = function(selector)
 
 <p><strong>The platform that made it possible is gone.</strong> Firebug could exist because a 2006 Firefox extension could reach into anything. Firefox 57 "exclusively supports extensions built using the WebExtension API," and as far as I can see that API could not host a second Firebug. Today a browser's debugger comes from the browser's vendor. Hewitt had seen where the value was. Asked in 2007 about a Firebug 2.0, he said that "the theme of the next version will be extensibility," with pages adding "their own tabs and buttons."</p>
 
-<h2>The takeaway</h2>
+<h2 id="the-takeaway">The takeaway</h2>
 
 <p>Firebug did not invent the DOM tree view, the JavaScript debugger, the error console or the command line. Each of those existed, in its own window, with its own author. What Hewitt did in January 2006 was put them in one panel under the page and connect them, at the moment pages turned into programs, and in the same fortnight that another browser engine began building the same thing in-house. He then gave the result away, which is why it became the common language rather than a product. Within a few years every major browser had its own version, and at least one of them was describing its work as compatibility with Firebug.</p>
 
 <p>The extension is dead and almost everything it defined is alive. <code>console.log</code> is a standard, <code>$</code> and <code>$$</code> answer in every console, HAR files cross every support desk, and F12 still opens the tools in most browsers. The farewell page at <a href="https://getfirebug.com/">getfirebug.com</a> says the work "lives on in Firefox Developer Tools." That is true, and it is also too modest. It lives on in all of them, mostly under the names a few days of code gave it.</p>
+
+<section class="unverified" aria-labelledby="unverified-h">
+  <h2 id="unverified-h">What I couldn't verify</h2>
+  <ul>
+    <li>Joe Hewitt's own 2006 blog posts. His site is down, so his words are quoted only as they appear in Mozilla Hacks and a FOSDEM interview.</li>
+    <li>The January 12, 2006 announcement date comes from Jay Hoffmann's history of the web, and is flagged in the text.</li>
+    <li>That F12 as the developer-tools key began with Firebug 0.2.3 rests on Wikipedia, and is attributed to it.</li>
+    <li>The Firebug 1.1 source listings come from a third-party mirror, which the essay names.</li>
+  </ul>
+</section>
 
 <section class="sources" aria-labelledby="sources-h">
   <h2 id="sources-h">Sources and further reading</h2>
@@ -198,7 +225,8 @@ this.$$ = function(selector)
   </ul>
 </section>
 
-      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+Firebug%3A+the+first+look+inside+the+page&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Ffirebug-and-the-inside-of-the-page%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.</p>
+      <p class="mistake">Spot a mistake? <a href="https://github.com/derek/derek.github.com/issues/new?title=Correction%3A+Firebug%3A+the+first+look+inside+the+page&amp;body=Essay%3A+https%3A%2F%2Fderek.io%2Fnostalgiajs%2Ffirebug-and-the-inside-of-the-page%2F%0A%0AWhat+is+wrong%3A%0A%0AWhat+it+should+say%2C+with+a+source+if+you+have+one%3A%0A">Open an issue</a> and it will be checked and corrected.<br>
+      <a href="https://github.com/derek/derek.github.com/blob/master/nostalgiajs/content/firebug-and-the-inside-of-the-page.html">View source</a> · <a href="https://github.com/derek/derek.github.com/commits/master/nostalgiajs/content/firebug-and-the-inside-of-the-page.html">Edit history</a></p>
     </article>
 
     <nav class="related" aria-labelledby="related-h">
