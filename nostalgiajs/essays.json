@@ -113,7 +113,16 @@
         null
       ],
       "published": "2026-11-12T20:05:05+00:00",
-      "unverified": []
+      "unverified": [
+        "That \"webmaster\" was coined on the etiquette page rests on Tim Berners-Lee's own note on that page. The 1993 date is my inference from a November 1992 snapshot without the word and Merriam-Webster's first-use year.",
+        "That the W3C folder named MailArchive/webmaster holds mail sent to the webmaster address is my reading of its name and of the greeting in one message. The archive itself does not say.",
+        "The 1996 Web Week survey is quoted from an undated Princeton Review career profile. I could not find the survey itself, and Georgia Tech's webmaster surveys from the same years would not load.",
+        "Louise Addis as the first webmaster, and the reasons the role faded, rest on one secondary source, Jay Hoffmann's history.",
+        "Google's 2008 \"Webmaster Team\" and webmaster job ladder rest on one person's blog post.",
+        "Microsoft's advisory on the live.fi certificate does not name the mailbox that was registered, so the essay does not either.",
+        "That address harvesting drove webmasters to scripts and forms is supported only by Wikipedia and by RFC 2142's warning. The FTC's 2002 study of harvesting would not load, so it is not cited.",
+        "The four forces behind the one-person job, and the comparison of the server administrator with an on-call rotation, are my own readings."
+      ]
     }
   ]
 }
