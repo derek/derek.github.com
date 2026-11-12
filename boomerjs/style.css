@@ -102,9 +102,9 @@ blockquote {
 .posts { list-style: none; margin: 0; padding: 0; }
 .posts li { padding: 1.4rem 0; border-top: 1px solid var(--line); }
 .posts li:first-child { border-top: 0; }
-.posts h2 { margin: 0.1em 0 0.2em; font-size: 1.4rem; }
-.posts h2 a { color: var(--text); text-decoration: none; }
-.posts h2 a:hover { color: var(--link); text-decoration: underline; }
+.posts h3 { margin: 0.1em 0 0.2em; font-size: 1.4rem; line-height: 1.25; }
+.posts h3 a { color: var(--text); text-decoration: none; }
+.posts h3 a:hover { color: var(--link); text-decoration: underline; }
 .posts p { margin: 0.3em 0; color: var(--muted); }
 
 /* ---------- pager and footer ---------- */
