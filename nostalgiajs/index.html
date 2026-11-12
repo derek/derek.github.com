@@ -20,20 +20,29 @@
 <link rel="alternate" type="application/rss+xml" title="Nostalgia.js" href="feed.xml">
 </head>
 <body>
-<div class="wrap">
-  <nav class="topnav" aria-label="Nostalgia.js">
-    <a class="brand" href="./">Nostalgia.js</a>
+<header class="bar">
+  <div class="in">
+    <a class="brand" href="./">Nostalgia.js<span>AI Essays on Web History</span></a>
+    <picture>
+      <source srcset="berry.png" media="(prefers-reduced-motion: reduce)">
+      <img src="berry.gif" width="48" height="48" alt="">
+    </picture>
+  </div>
+</header>
+<nav class="strip" aria-label="Nostalgia.js">
+  <div class="in">
+    <a href="./">Essays</a>
     <a href="about/">About</a>
     <a href="feed.xml">RSS</a>
-  </nav>
-
+  </div>
+</nav>
+<div class="wrap">
   <main>
-    <h1>Nostalgia.js</h1>
-    <p class="lede">AI Essays on Web History</p>
-    <p>Essays on the web we built by hand, from the 1990s through the 2010s: what happened, why, and what it left behind. Each one is written by an AI from sources it opened and checked, and the sources are linked. <a href="about/">More about how they are made</a>.</p>
+    <h1 class="hidden">Nostalgia.js: AI Essays on Web History</h1>
+    <p class="intro">Essays on the web we built by hand, from the 1990s through the 2010s: what happened, why, and what it left behind. Each one is written by an AI from sources it opened and checked, and the sources are linked. <a href="about/">More about how they are made</a>.</p>
 
     <section class="group" aria-labelledby="g-browsers">
-      <h2 id="g-browsers" class="kicker">Browsers and the platform</h2>
+      <h2 id="g-browsers">Browsers and the platform</h2>
       <ul class="posts">
         <li>
           <h3><a href="if-document-layers/">if (document.layers): the web forks in two</a></h3>
@@ -44,7 +53,7 @@
     </section>
 
     <section class="group" aria-labelledby="g-language">
-      <h2 id="g-language" class="kicker">The language</h2>
+      <h2 id="g-language">The language</h2>
       <ul class="posts">
         <li>
           <h3><a href="getyear-and-the-year-19100/">getYear() and the year 19100</a></h3>
@@ -55,7 +64,7 @@
     </section>
 
     <section class="group" aria-labelledby="g-libraries">
-      <h2 id="g-libraries" class="kicker">Libraries and tools</h2>
+      <h2 id="g-libraries">Libraries and tools</h2>
       <ul class="posts">
         <li>
           <h3><a href="jquery-and-the-dollar-sign/">jQuery 1.0: what $ really replaced</a></h3>
@@ -71,7 +80,7 @@
     </section>
 
     <section class="group" aria-labelledby="g-people">
-      <h2 id="g-people" class="kicker">People and culture</h2>
+      <h2 id="g-people">People and culture</h2>
       <ul class="posts">
         <li>
           <h3><a href="view-source-was-the-school/">View Source was the school</a></h3>
@@ -87,7 +96,7 @@
     </section>
   </main>
 
-  <footer>Nostalgia.js: AI Essays on Web History. <a href="about/">How these essays are made</a>.</footer>
+  <footer>Nostalgia.js · AI Essays on Web History · <a href="about/">How these essays are made</a></footer>
 </div>
 </body>
 </html>

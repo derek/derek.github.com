@@ -20,18 +20,27 @@
 <link rel="alternate" type="application/rss+xml" title="Nostalgia.js" href="../feed.xml">
 </head>
 <body>
-<div class="wrap">
-  <nav class="topnav" aria-label="Nostalgia.js">
-    <a class="brand" href="../">Nostalgia.js</a>
+<header class="bar">
+  <div class="in">
+    <a class="brand" href="../">Nostalgia.js<span>AI Essays on Web History</span></a>
+    <picture>
+      <source srcset="../berry.png" media="(prefers-reduced-motion: reduce)">
+      <img src="../berry.gif" width="48" height="48" alt="">
+    </picture>
+  </div>
+</header>
+<nav class="strip" aria-label="Nostalgia.js">
+  <div class="in">
+    <a href="../">Essays</a>
     <a href="../about/">About</a>
     <a href="../feed.xml">RSS</a>
-  </nav>
-
+  </div>
+</nav>
+<div class="wrap">
   <main>
     <article>
-      <p class="kicker">Libraries and tools · 2005 to today</p>
+      <p class="meta">Libraries and tools · 2005 to today · 13 min read</p>
       <h1>jQuery 1.0: what $ really replaced</h1>
-      <p class="meta">13 min read</p>
 
 <p class="lede">The dollar sign was second-hand, the best ideas were credited to other people, and the browsers spent the next decade copying it anyway.</p>
 
@@ -244,7 +253,7 @@ return oldSizzle(query, context, extra, seed);</code></pre>
     </nav>
   </main>
 
-  <footer>Nostalgia.js: AI Essays on Web History. <a href="../about/">How these essays are made</a>.</footer>
+  <footer>Nostalgia.js · AI Essays on Web History · <a href="../about/">How these essays are made</a></footer>
 </div>
 </body>
 </html>

@@ -20,18 +20,27 @@
 <link rel="alternate" type="application/rss+xml" title="Nostalgia.js" href="../feed.xml">
 </head>
 <body>
-<div class="wrap">
-  <nav class="topnav" aria-label="Nostalgia.js">
-    <a class="brand" href="../">Nostalgia.js</a>
+<header class="bar">
+  <div class="in">
+    <a class="brand" href="../">Nostalgia.js<span>AI Essays on Web History</span></a>
+    <picture>
+      <source srcset="../berry.png" media="(prefers-reduced-motion: reduce)">
+      <img src="../berry.gif" width="48" height="48" alt="">
+    </picture>
+  </div>
+</header>
+<nav class="strip" aria-label="Nostalgia.js">
+  <div class="in">
+    <a href="../">Essays</a>
     <a href="../about/">About</a>
     <a href="../feed.xml">RSS</a>
-  </nav>
-
+  </div>
+</nav>
+<div class="wrap">
   <main>
     <article>
-      <p class="kicker">Libraries and tools · 2006 to 2017</p>
+      <p class="meta">Libraries and tools · 2006 to 2017 · 14 min read</p>
       <h1>Firebug: the first look inside the page</h1>
-      <p class="meta">14 min read</p>
 
 <p class="lede">The tool that showed every browser what developer tools should be was an add-on, uploaded when it was a few days old, and nearly sold for the price of a paperback.</p>
 
@@ -203,7 +212,7 @@ this.$$ = function(selector)
     </nav>
   </main>
 
-  <footer>Nostalgia.js: AI Essays on Web History. <a href="../about/">How these essays are made</a>.</footer>
+  <footer>Nostalgia.js · AI Essays on Web History · <a href="../about/">How these essays are made</a></footer>
 </div>
 </body>
 </html>

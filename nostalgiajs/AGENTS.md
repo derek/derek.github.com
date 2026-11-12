@@ -54,6 +54,7 @@ Section headings should describe the content of this essay. The list above is th
 | `archive.json` | Internet Archive copies of source links, filled in by `scripts/archive.mjs`. |
 | `og/*.png` | Link-preview cards, drawn by `scripts/og.mjs`. |
 | `style.css` | The one stylesheet. |
+| `berry.gif`, `berry.png` | The animated mascot shown in the header, and its still frame. |
 | `scripts/build.mjs` | Generates every page, the landing page and the feed. |
 | `TOPICS.md` | Essay ideas, with Derek's "Up next" queue at the top. |
 | `<slug>/index.html`, `index.html`, `about/index.html`, `feed.xml` | Generated. Do not edit. |
@@ -112,7 +113,7 @@ Run from `nostalgiajs/`. Needs Node 22 or newer. There is nothing to install.
 4. **Second-pass fact check.** Have a separate reviewer (a subagent that has not seen your research notes) read the finished fragment, reopen every linked source, and try to find errors: wrong dates, versions, quotes that do not appear on the page, claims the source does not support. Fix or cut everything it finds. Do not skip this, even when you are confident.
 5. Delete the topic's line from `TOPICS.md` and renumber "Up next". Add any good new ideas to the lists.
 6. Run `npm run archive`, then `npm run og -- <slug>`, then `npm run build`.
-7. Check the new essay and the landing page at 375 px wide in light and dark mode: no horizontal page scroll, no console errors, no broken local links.
+7. Check the new essay and the landing page at 375 px wide: no horizontal page scroll, no console errors, no broken local links.
 8. Commit everything, generated files included, with the essay title in the message. List in the commit body anything you could not verify.
 
 ## Correcting an essay
@@ -121,7 +122,9 @@ Readers report mistakes through the "Spot a mistake?" link, which opens a GitHub
 
 ## Site conventions
 
-- Light and dark mode via `prefers-color-scheme`, colours as tokens in `:root`. Body text at least 18px with 4.5:1 contrast. The audience reads with their glasses on, so do not make it small.
+- The look is a tidy late-1990s homepage: navy title bar with a gold rule, pale yellow link strip, navy section bars, Verdana body text, Georgia headings and yellow code boxes, in web-safe colours. Simple and old, never busy: no backgrounds, counters, marquees or extra badges. It is light only, with no dark mode.
+- The animated berry in the top-right corner (`berry.gif`, with `berry.png` as the still shown to readers who ask for reduced motion) is the site's mascot. It is the only animation on the site.
+- Colours are tokens in `:root`. Body text is 17px Verdana with at least 4.5:1 contrast. The audience reads with their glasses on, so do not make it small.
 - Semantic HTML, a visible focus style, `lang="en"`.
 - Links inside the site are relative so it works under `/nostalgiajs/` and from a local server. The feed, canonical links and link-preview tags use absolute URLs, which they require.
 - Everything from `essays.json` is HTML-escaped by the build. Keep it that way.
