@@ -106,7 +106,7 @@
     {
       "slug": "the-first-jsconf",
       "title": "JSConf 2009: the community that didn't know it existed",
-      "description": "In April 2009 about 130 people met in a hotel outside Washington for the first conference about JavaScript itself. It nearly didn't happen, and its format, its side room and its name spread around the world.",
+      "description": "In April 2009 about 130 people met in a hotel outside Washington for a conference about JavaScript itself. It nearly didn't happen, and its format, its side room and its name spread around the world.",
       "topic": "people",
       "era": [
         2009,
@@ -118,7 +118,15 @@
         "where-did-the-old-web-developers-go",
         "firebug-and-the-inside-of-the-page"
       ],
-      "unverified": []
+      "unverified": [
+        "Whether this was strictly the first JavaScript conference. The organizers and attendees called it that, Kevin Dangoor hedged with \"possibly\", and I did not search for earlier events in other countries.",
+        "The story of the mortgage-backed deposit, the drive to the hotel and the emails rests on Jan Lehnardt's 2015 speaker notes alone. Dangoor's 2010 notes confirm only that the conference was nearly cancelled and that a \"sold out\" notice produced a waiting list.",
+        "Who proposed taking JSConf to Europe, and when Chris Williams first raised the idea. Lehnardt and Williams each remember making the offer, and Lehnardt's 2009 post says Williams asked \"last fall\" while the 2015 talk places it just after RubyFringe.",
+        "The attendance figure. Dangoor wrote 130, Lehnardt \"130+ attendees & speakers\", and the sponsor pitch promised 125. I found no official count.",
+        "That the Ajaxian blog's founders organized The Ajax Experience. I only opened the event archive, which lists Ben Galbraith as a speaker, so the essay says no more than that.",
+        "How many editions JSConf EU held, whether JSConf US ran in every year after 2015, and who owns the JSConf name now. The sites I opened give a \"10th anniversary\" in 2019, a 2019 event in Carlsbad and a 2025 event \"under the OpenJS Foundation\", and nothing firmer.",
+        "That scarcity made community conferences harder to get into, that no library had been \"the host\" before, and that the job title needed the room. Those are my readings, not sourced claims."
+      ]
     }
   ]
 }
