@@ -1660,7 +1660,7 @@ function makeIntro() {
   el.innerHTML = `<span class="eyebrow">Doomfeed · a parody${isReturn ? ` · visit ${store.visits}` : ''}</span>
     <h2>This feed is designed to keep you here.</h2>
     <p>Every post, badge, and buzz below uses a real trick from real apps. While you scroll, <span class="mobile-only">the red bar at the bottom of your screen</span><span class="desk-only">the panel on the right</span> keeps score: your time, your mood, and every trick used on you.</p>
-    <p class="real-note">Nothing here is real except the tricks. Every person, post, photo, number, and notification is made up. There's no tracking and no real notifications: nothing you do leaves your browser, and your stats stay on this device until you tap "Forget me" in the toll.</p>
+    <p class="real-note">Nothing here is real except the tricks. Every person, post, photo, number, and notification is made up. There are no real notifications, and the only tracking is a simple page-view count (GoatCounter: no cookies, no personal data). Everything you do here stays in your browser until you tap "Forget me" in the toll.</p>
     <div class="r-actions"><button class="solid" data-xray>Show me the tricks</button><button class="mobile-only" data-toll>Open the toll</button><button data-calm="on">Try calm mode</button><button data-dismiss>Just scroll</button></div>`;
   return el;
 }
@@ -2539,5 +2539,7 @@ setTimeout(() => {
 }, 1500);
 })();
 </script>
+<!-- Page-view counting only: GoatCounter sets no cookies and collects no personal data. Dashboard: derekgathright.goatcounter.com -->
+<script data-goatcounter="https://derekgathright.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
