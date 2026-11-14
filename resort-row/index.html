@@ -24,6 +24,9 @@
   --danger: #b3261e;
   --focus: #1f5fbf;
   --lot-text: #241f1b;
+  --road-mark: rgba(60,50,40,.35);
+  --park: #cfe3b8;
+  --path: #efe6d2;
   --shadow: 0 1px 2px rgba(0,0,0,.08), 0 4px 14px rgba(0,0,0,.06);
 }
 @media (prefers-color-scheme: dark) {
@@ -45,6 +48,9 @@
     --danger: #ff8a80;
     --focus: #8ab4ff;
     --shadow: 0 1px 2px rgba(0,0,0,.4);
+    --road-mark: rgba(255,255,255,.22);
+    --park: #2f4429;
+    --path: #4a4339;
     color-scheme: dark;
   }
 }
@@ -52,7 +58,7 @@
   --bg: #1b1916; --panel: #262320; --fg: #eee7dc; --muted: #b5aa9c; --line: #3d3832;
   --road: #3a352f; --road-line: #59514761; --land: #2f4a2b; --build: #5a3d22; --event: #43365a;
   --corner: #5b4c1c; --plaza: #302c27; --accent: #4fb3a3; --accent-fg: #10201d; --danger: #ff8a80;
-  --focus: #8ab4ff; --shadow: 0 1px 2px rgba(0,0,0,.4); color-scheme: dark;
+  --focus: #8ab4ff; --shadow: 0 1px 2px rgba(0,0,0,.4); --road-mark: rgba(255,255,255,.22); --park: #2f4429; --path: #4a4339; color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -120,7 +126,35 @@ aside { display: grid; gap: 12px; }
 #board .pick rect.base { stroke: var(--accent); stroke-width: 4; animation: pulse 1s ease-in-out infinite alternate; cursor: pointer; }
 #board .hot rect.base { fill: var(--accent); }
 @keyframes pulse { from { stroke-opacity: 1; } to { stroke-opacity: .35; } }
-@media (prefers-reduced-motion: reduce) { #board .pick rect.base { animation: none; } }
+#board .halo { paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
+#board .tok { transition: transform .17s ease-out; }
+#board .tok.now .bob { animation: bob .9s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+#board .part { transform-box: fill-box; transform-origin: 50% 100%; }
+#board .rise { animation: rise .7s cubic-bezier(.2,1.5,.4,1) var(--d, 0s) both; }
+@keyframes rise { from { transform: scaleY(0); opacity: 0; } 30% { opacity: 1; } to { transform: scaleY(1); } }
+#board .float { animation: floatUp 1.5s ease-out forwards; }
+@keyframes floatUp { 0% { transform: translateY(6px); opacity: 0; } 15% { opacity: 1; transform: translateY(0); } 70% { opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
+#board .stampIn { transform-box: fill-box; transform-origin: center; animation: stampIn 1.5s ease-out forwards; }
+@keyframes stampIn { 0% { transform: scale(2.2); opacity: 0; } 14% { transform: scale(.94); opacity: 1; } 22% { transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; } }
+#board .steam { animation: steam 2.4s ease-in-out infinite; }
+@keyframes steam { 0%, 100% { opacity: .2; transform: translateY(2px); } 50% { opacity: .9; transform: translateY(-2px); } }
+#board .ripple { transform-box: fill-box; transform-origin: center; animation: ripple 2.6s ease-out infinite; }
+@keyframes ripple { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.9); opacity: 0; } }
+#board .lamp { animation: lamp 1.8s ease-in-out infinite alternate; }
+@keyframes lamp { from { fill: #ffd54a; } to { fill: #fff8c4; } }
+#board .neon { animation: lamp 1.2s steps(2) infinite; }
+#board .flag { transform-box: fill-box; transform-origin: 0 50%; animation: flag 1.6s ease-in-out infinite alternate; }
+@keyframes flag { from { transform: scaleX(1); } to { transform: scaleX(.8) skewY(4deg); } }
+.die.tumble { animation: tumble .45s linear infinite; }
+@keyframes tumble { 0% { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(.88); } 100% { transform: rotate(360deg) scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  #board .pick rect.base, #board .tok.now .bob, #board .rise, #board .steam, #board .ripple, #board .lamp, #board .neon, #board .flag, .die.tumble { animation: none; }
+  #board .tok { transition: none; }
+  #board .stampIn { animation: fadeOut 1s linear forwards; }
+  #board .float { animation: fadeOut 1.4s linear forwards; }
+}
+@keyframes fadeOut { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
 
 /* Players */
 .players { display: grid; gap: 6px; }
@@ -412,6 +446,7 @@ dialog ul { padding-left: 20px; }
       p.out = true;
       S.lots.forEach((L, li) => { if (L.owner === pi) release(li); });
       log(`${p.name} is bankrupt and leaves the game.`);
+      stamp('BANKRUPT', '#c62828');
     }
   }
 
@@ -476,7 +511,7 @@ dialog ul { padding-left: 20px; }
         p.cash += PASS_BONUS;
         log(`${p.name} reaches the Bank and collects ${fmt(PASS_BONUS)}.`);
       }
-      renderBoard(); renderPlayers();
+      renderTokens(); renderPlayers(); popCash();
       await sleep(170);
     }
     await land();
@@ -490,6 +525,7 @@ dialog ul { padding-left: 20px; }
         const nights = rnd(6);
         await animateDie(nights, 'Nights');
         const due = nights * lotRate(li);
+        stamp(`${nights} NIGHT${nights > 1 ? 'S' : ''}`, S.players[owner].color, ...lotCenter(li));
         const msg = `${p.name} stays ${nights} night${nights > 1 ? 's' : ''} at ${LOTS[li].name} and owes ${pName(owner)} ${fmt(due)}.`;
         log(msg);
         S.turn.notes.push(msg);
@@ -591,6 +627,7 @@ dialog ul { padding-left: 20px; }
     p.cash -= price;
     S.lots[li].owner = S.cur;
     S.turn.boughtLand = true;
+    stamp('SOLD', p.color, ...lotCenter(li));
     log(`${p.name} buys the land at ${LOTS[li].name} for ${fmt(price)}.`);
     UI.mode = null;
     UI.selected = li;
@@ -626,6 +663,8 @@ dialog ul { padding-left: 20px; }
   function build(li, upTo, cost, what) {
     const p = cur();
     p.cash -= cost;
+    UI.pop = { li, from: S.lots[li].stage };
+    setTimeout(() => { if (UI.pop && UI.pop.li === li) UI.pop = null; }, 1600);
     S.lots[li].stage = upTo;
     S.turn.builtLot = li;
     UI.selected = li;
@@ -749,7 +788,9 @@ dialog ul { padding-left: 20px; }
   }
   async function animateDie(v, cap) {
     $('#trayCap').textContent = cap === 'Nights' ? 'Rolling for nights…' : 'Rolling…';
-    for (let i = 0; i < 7; i++) { showDie(rnd(6)); await sleep(55); }
+    $('#die').classList.add('tumble');
+    for (let i = 0; i < 8; i++) { showDie(rnd(6)); await sleep(60); }
+    $('#die').classList.remove('tumble');
     showDie(v);
     S.turn.dice = { kind: cap, value: v };
     $('#trayCap').textContent = cap === 'Nights' ? `${v} night${v > 1 ? 's' : ''}` : `Move ${v}`;
@@ -759,6 +800,7 @@ dialog ul { padding-left: 20px; }
     $('#trayCap').textContent = 'Zoning board…';
     for (let i = 0; i < 7; i++) { showZone(ZONING[rnd(6) - 1]); await sleep(70); }
     showZone(face);
+    stamp(ZONE_LABEL[face], { approved: '#1f8a3a', half: '#1d5fd6', double: '#b26a00', rejected: '#c62828' }[face]);
     S.turn.zone = face;
     $('#trayCap').textContent = ZONE_LABEL[face].toLowerCase().replace(/^./, m => m.toUpperCase());
     await sleep(450);
@@ -767,93 +809,369 @@ dialog ul { padding-left: 20px; }
   // ---------- Rendering ----------
   function cellXY(i) { return track[i]; }
 
-  function renderBoard() {
-    const svg = $('#board');
-    const pickSet = new Set(UI.mode && UI.mode.type === 'pick' ? UI.mode.cells : []);
+  // Illustration data: each resort is a little scene; each stage adds parts.
+  // Part coords are fractions of the lot's scene box.
+  const VIS = [
+    { scene: 'forest', stages: [
+      [{ k: 'house', x: .04, y: .28, w: .34, h: .64, c: '#c98b4f', roof: '#7a3e1d' }],
+      [{ k: 'house', x: .44, y: .56, w: .15, h: .38, c: '#b07a45', roof: '#6b3518' }, { k: 'house', x: .62, y: .56, w: .15, h: .38, c: '#b07a45', roof: '#6b3518' }],
+      [{ k: 'pool', x: .44, y: .08, w: .3, h: .3, c: '#7fd3e6', steam: true }],
+      [{ k: 'cable', x: .8, y: .02, w: .17, h: .94 }]] },
+    { scene: 'bay', stages: [
+      [{ k: 'house', x: .06, y: .36, w: .4, h: .58, c: '#f3efe4', roof: '#2f6fa3' }],
+      [{ k: 'box', x: .52, y: .54, w: .34, h: .38, c: '#e9e2cf' }],
+      [{ k: 'lighthouse', x: .74, y: .0, w: .13, h: .5 }]] },
+    { scene: 'desert', stages: [
+      [{ k: 'tower', x: .3, y: .06, w: .36, h: .6, c: '#e7b94a' }],
+      [{ k: 'pool', x: .05, y: .74, w: .42, h: .19, c: '#5bc0eb' }],
+      [{ k: 'green', x: .55, y: .72, w: .4, h: .24 }],
+      [{ k: 'sign', x: .04, y: .12, w: .22, h: .24 }]] },
+    { scene: 'garden', stages: [
+      [{ k: 'box', x: .05, y: .3, w: .42, h: .62, c: '#f6e7ef' }],
+      [{ k: 'dome', x: .55, y: .46, w: .38, h: .48, c: '#bfe8d8' }],
+      [{ k: 'house', x: .6, y: .0, w: .3, h: .4, c: '#f2e2c4', roof: '#c0392b' }]] },
+    { scene: 'snow', stages: [
+      [{ k: 'house', x: .04, y: .34, w: .28, h: .62, c: '#a8673a', roof: '#5b2c14' }],
+      [{ k: 'rink', x: .36, y: .68, w: .26, h: .27 }],
+      [{ k: 'cable', x: .67, y: .04, w: .3, h: .9 }],
+      [{ k: 'dome', x: .38, y: .14, w: .2, h: .42, c: '#dfe6ee' }]] },
+    { scene: 'beach', stages: [
+      [.04, .27, .5].map(x => ({ k: 'house', x, y: .3, w: .2, h: .42, c: '#e9d3a1', roof: '#9c7a3c' })),
+      [{ k: 'box', x: .75, y: .34, w: .19, h: .36, c: '#ffb3a7' }],
+      [{ k: 'pool', x: .2, y: .0, w: .58, h: .24, c: '#5fd0d8' }]] },
+    { scene: 'city', stages: [
+      [{ k: 'tower', x: .3, y: .15, w: .38, h: .56, c: '#8fb3e8' }],
+      [{ k: 'box', x: .74, y: .44, w: .2, h: .26, c: '#c8b6f2' }],
+      [{ k: 'box', x: .05, y: .78, w: .86, h: .16, c: '#e9d9a6' }],
+      [{ k: 'box', x: .35, y: .04, w: .28, h: .1, c: '#f2c94c' }]] },
+    { scene: 'harbor', stages: [
+      [{ k: 'box', x: .34, y: .06, w: .58, h: .5, c: '#f1e9d8' }],
+      [{ k: 'boat', x: .02, y: .18, w: .2, h: .26 }, { k: 'boat', x: .02, y: .6, w: .2, h: .26 }],
+      [{ k: 'dome', x: .38, y: .62, w: .36, h: .34, c: '#c0504d' }]] },
+  ];
+
+  function shade(hex, f) {
+    const n = parseInt(hex.slice(1), 16);
+    const t = f < 0 ? 0 : 255, p = Math.abs(f);
+    const ch = v => Math.round((t - v) * p + v);
+    return `rgb(${ch(n >> 16)},${ch((n >> 8) & 255)},${ch(n & 255)})`;
+  }
+  const r1 = v => Math.round(v * 10) / 10;
+
+  function windows(X, Y, W, H, gapX = 8, gapY = 9) {
     let h = '';
-    // background
-    h += `<rect x="0" y="0" width="600" height="600" rx="14" fill="var(--panel)"/>`;
-    // track
+    const cols = Math.max(1, Math.floor((W - 4) / gapX)), rows = Math.max(1, Math.floor((H - 8) / gapY));
+    const ox = X + (W - cols * gapX) / 2 + 2, oy = Y + 4;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
+      h += `<rect x="${r1(ox + c * gapX)}" y="${r1(oy + r * gapY)}" width="4" height="5" fill="#fff6c7" stroke="rgba(0,0,0,.25)" stroke-width=".4"/>`;
+    return h;
+  }
+
+  function drawPart(p, X, Y, W, H) {
+    const line = 'stroke="rgba(0,0,0,.45)" stroke-width=".8"';
+    switch (p.k) {
+      case 'box': case 'tower': {
+        const d = Math.min(6, W * .15);
+        let h = `<polygon points="${X},${Y} ${X + d},${Y - d} ${X + W + d},${Y - d} ${X + W},${Y}" fill="${shade(p.c, .4)}" ${line}/>`;
+        h += `<polygon points="${X + W},${Y} ${X + W + d},${Y - d} ${X + W + d},${Y + H - d} ${X + W},${Y + H}" fill="${shade(p.c, -.28)}" ${line}/>`;
+        h += `<rect x="${X}" y="${Y}" width="${W}" height="${H}" fill="${p.c}" ${line}/>`;
+        h += windows(X, Y, W, H - 6);
+        h += `<rect x="${X + W / 2 - 3}" y="${Y + H - 7}" width="6" height="7" fill="${shade(p.c, -.5)}"/>`;
+        if (p.k === 'tower') h += `<line x1="${X + W / 2 + d / 2}" y1="${Y - d}" x2="${X + W / 2 + d / 2}" y2="${Y - d - 10}" stroke="#555" stroke-width="1.2"/><circle cx="${X + W / 2 + d / 2}" cy="${Y - d - 10}" r="1.8" fill="#e33"/>`;
+        return h;
+      }
+      case 'house': {
+        const ry = Y + H * .4;
+        let h = `<rect x="${X}" y="${ry}" width="${W}" height="${H - H * .4}" fill="${p.c}" ${line}/>`;
+        h += `<polygon points="${X - 2},${ry + 1} ${X + W / 2},${Y} ${X + W + 2},${ry + 1}" fill="${p.roof}" ${line}/>`;
+        h += windows(X, ry, W, H * .6 - 7, 9, 10);
+        h += `<rect x="${X + W / 2 - 2.5}" y="${Y + H - 7}" width="5" height="7" fill="${shade(p.c, -.55)}"/>`;
+        return h;
+      }
+      case 'pool': case 'rink': {
+        const rink = p.k === 'rink';
+        let h = `<rect x="${X}" y="${Y}" width="${W}" height="${H}" rx="${Math.min(W, H) / 2.5}" fill="${rink ? '#eef8ff' : p.c}" stroke="#fff" stroke-width="2.5"/>`;
+        h += `<rect x="${X}" y="${Y}" width="${W}" height="${H}" rx="${Math.min(W, H) / 2.5}" fill="none" stroke="rgba(0,0,0,.25)" stroke-width=".8"/>`;
+        if (rink) h += `<path d="M${X + W * .25},${Y + H * .45} q6,-6 12,0 M${X + W * .5},${Y + H * .7} q6,-5 12,0" fill="none" stroke="#8fb7cf" stroke-width="1"/>`;
+        else h += `<path d="M${X + W * .2},${Y + H * .5} q4,-3 8,0 t8,0 M${X + W * .5},${Y + H * .7} q4,-3 8,0 t8,0" fill="none" stroke="#fff" stroke-width="1.2" opacity=".85"/>`;
+        if (p.steam) h += `<path class="steam" d="M${X + W * .3},${Y - 2} q-4,-6 0,-11 M${X + W * .55},${Y - 2} q4,-6 0,-12 M${X + W * .8},${Y - 2} q-4,-5 0,-10" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>`;
+        return h;
+      }
+      case 'green': {
+        let h = `<ellipse cx="${X + W / 2}" cy="${Y + H / 2}" rx="${W / 2}" ry="${H / 2}" fill="#73c46b" stroke="rgba(0,0,0,.3)" stroke-width=".8"/>`;
+        h += `<ellipse cx="${X + W * .35}" cy="${Y + H * .6}" rx="${W * .12}" ry="${H * .14}" fill="#efe0a8"/>`;
+        h += `<circle cx="${X + W * .68}" cy="${Y + H * .55}" r="1.6" fill="#222"/><line x1="${X + W * .68}" y1="${Y + H * .55}" x2="${X + W * .68}" y2="${Y + H * .55 - 13}" stroke="#333" stroke-width="1"/><polygon points="${X + W * .68},${Y + H * .55 - 13} ${X + W * .68 + 8},${Y + H * .55 - 10.5} ${X + W * .68},${Y + H * .55 - 8}" fill="#e33"/>`;
+        return h;
+      }
+      case 'dome': {
+        const by = Y + H * .5;
+        let h = `<rect x="${X}" y="${by}" width="${W}" height="${H * .5}" fill="${shade(p.c, -.12)}" ${line}/>`;
+        h += `<path d="M${X},${by} A${W / 2},${H * .5} 0 0 1 ${X + W},${by} Z" fill="${p.c}" ${line}/>`;
+        h += `<path d="M${X + W / 2},${Y} V${by} M${X + W * .2},${by - H * .3} Q${X + W / 2},${by - H * .15} ${X + W * .8},${by - H * .3}" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1"/>`;
+        h += windows(X, by, W, H * .5 - 5, 9, 10);
+        return h;
+      }
+      case 'cable': {
+        const x1 = X + 3, y1 = Y + H, x2 = X + W - 3, y2 = Y;
+        let h = `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#333" stroke-width="1.2"/>`;
+        h += `<rect x="${x1 - 2}" y="${y1 - 10}" width="4" height="10" fill="#666"/><rect x="${x2 - 2}" y="${y2}" width="4" height="10" fill="#666"/>`;
+        [.3, .65].forEach(t => {
+          const cx = x1 + (x2 - x1) * t, cy = y1 + (y2 - y1) * t;
+          h += `<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy + 5}" stroke="#333" stroke-width="1"/><rect x="${cx - 4}" y="${cy + 5}" width="8" height="7" rx="1.5" fill="#d0312d" stroke="#222" stroke-width=".6"/>`;
+        });
+        return h;
+      }
+      case 'sign': {
+        let h = `<line x1="${X + W / 2}" y1="${Y + H * .6}" x2="${X + W / 2}" y2="${Y + H}" stroke="#555" stroke-width="2"/>`;
+        h += `<rect x="${X}" y="${Y}" width="${W}" height="${H * .62}" rx="3" fill="#2b2240" stroke="#ff5fa2" stroke-width="1.5"/>`;
+        h += `<text x="${X + W / 2}" y="${Y + H * .45}" text-anchor="middle" font-size="${Math.min(10, W * .3)}" font-weight="900" fill="#ff8fc2" class="neon">777</text>`;
+        return h;
+      }
+      case 'lighthouse': {
+        let h = `<polygon points="${X + W * .2},${Y + H} ${X + W * .32},${Y + H * .2} ${X + W * .68},${Y + H * .2} ${X + W * .8},${Y + H}" fill="#fff" ${line}/>`;
+        h += `<polygon points="${X + W * .26},${Y + H * .62} ${X + W * .29},${Y + H * .42} ${X + W * .71},${Y + H * .42} ${X + W * .74},${Y + H * .62}" fill="#d0312d"/>`;
+        h += `<rect x="${X + W * .28}" y="${Y + H * .06}" width="${W * .44}" height="${H * .14}" fill="#ffd54a" class="lamp" ${line}/>`;
+        h += `<polygon points="${X + W * .22},${Y + H * .07} ${X + W / 2},${Y - 2} ${X + W * .78},${Y + H * .07}" fill="#d0312d" ${line}/>`;
+        return h;
+      }
+      case 'boat': {
+        let h = `<path d="M${X},${Y + H * .65} H${X + W} L${X + W * .82},${Y + H} H${X + W * .18} Z" fill="#fff" ${line}/>`;
+        h += `<line x1="${X + W / 2}" y1="${Y}" x2="${X + W / 2}" y2="${Y + H * .65}" stroke="#555" stroke-width="1"/>`;
+        h += `<polygon points="${X + W / 2 + 1},${Y + 2} ${X + W * .9},${Y + H * .58} ${X + W / 2 + 1},${Y + H * .58}" fill="#f6f1e7" ${line}/>`;
+        return h;
+      }
+    }
+    return '';
+  }
+
+  function tree(x, y, s, kind) {
+    if (kind === 'palm') return `<path d="M${x},${y} q2,-10 0,-18" stroke="#8a5a2b" stroke-width="2" fill="none"/><path d="M${x},${y - 18} q-8,-2 -11,4 M${x},${y - 18} q8,-2 11,4 M${x},${y - 18} q-4,-7 -9,-6 M${x},${y - 18} q4,-7 9,-6" stroke="#2e8b57" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+    if (kind === 'cactus') return `<path d="M${x},${y} v-14 M${x},${y - 7} h-4 v-5 M${x},${y - 9} h4 v-4" stroke="#3f8f4a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+    if (kind === 'round') return `<rect x="${x - 1}" y="${y - 5}" width="2" height="5" fill="#7a4b22"/><circle cx="${x}" cy="${y - 9 * s}" r="${6 * s}" fill="#4f9d4a"/><circle cx="${x - 2 * s}" cy="${y - 11 * s}" r="${2.5 * s}" fill="#7cc173"/>`;
+    return `<rect x="${x - 1}" y="${y - 4}" width="2" height="4" fill="#6b4423"/><polygon points="${x - 7 * s},${y - 3} ${x},${y - 16 * s} ${x + 7 * s},${y - 3}" fill="#2f7d4a"/><polygon points="${x - 5 * s},${y - 9 * s} ${x},${y - 20 * s} ${x + 5 * s},${y - 9 * s}" fill="#3d9a5c"/>`;
+  }
+
+  function scenery(kind, sx, sy, sw, sh, x, y, w, hh) {
+    const P = (fx, fy) => [r1(sx + fx * sw), r1(sy + fy * sh)];
+    let h = '';
+    const waves = (wx, wy, ww, n) => { let s = ''; for (let i = 0; i < n; i++) s += `<path d="M${wx + (i % 3) * ww / 3 + 4},${wy + i * 7} q3,-3 6,0 t6,0" stroke="#fff" stroke-width="1" fill="none" opacity=".7"/>`; return s; };
+    switch (kind) {
+      case 'forest':
+        [[.0, .25], [.4, .2], [.96, .3], [.4, .98], [.82, .98], [.24, .02], [.6, .02]].forEach(([a, b], i) => { const [tx, ty] = P(a, b); h += tree(tx, ty, i % 2 ? .8 : 1); });
+        break;
+      case 'bay':
+        h += `<rect x="${x}" y="${y}" width="${w}" height="${sy - y + sh * .3}" fill="#7cc7e8"/>` + waves(sx, sy - 10, sw * .6, 3);
+        h += `<rect x="${x}" y="${sy + sh * .3}" width="${w}" height="5" fill="#f1dfae"/>`;
+        [[.97, .98], [.02, .98]].forEach(([a, b]) => { const [tx, ty] = P(a, b); h += tree(tx, ty, .8, 'round'); });
+        break;
+      case 'desert':
+        h += `<ellipse cx="${sx + sw * .3}" cy="${sy + sh * .98}" rx="${sw * .5}" ry="10" fill="#f8d9a8" opacity=".9"/>`;
+        [[.85, .2], [.08, .6], [.9, .55], [.5, .99]].forEach(([a, b]) => { const [tx, ty] = P(a, b); h += tree(tx, ty, 1, 'cactus'); });
+        break;
+      case 'garden':
+        for (let i = 0; i < 26; i++) { const [tx, ty] = P(((i * 37) % 100) / 100, ((i * 61) % 100) / 100); h += `<circle cx="${tx}" cy="${ty}" r="1.8" fill="${['#e75480', '#fff', '#c45bd1'][i % 3]}" opacity=".8"/>`; }
+        h += `<rect x="${sx}" y="${sy + sh * .96}" width="${sw}" height="5" rx="2.5" fill="#5aa25a"/>`;
+        break;
+      case 'snow':
+        h += `<polygon points="${x},${sy + sh * .4} ${sx + sw * .15},${y + 2} ${sx + sw * .34},${sy + sh * .4}" fill="#d6e6f2"/><polygon points="${sx + sw * .1},${y + 13} ${sx + sw * .15},${y + 2} ${sx + sw * .2},${y + 13}" fill="#fff"/>`;
+        h += `<polygon points="${sx + sw * .55},${sy + sh * .3} ${sx + sw * .72},${y + 4} ${x + w},${sy + sh * .3}" fill="#c9dcec"/>`;
+        [[.97, .99], [.66, .99]].forEach(([a, b]) => { const [tx, ty] = P(a, b); h += tree(tx, ty, .8); });
+        break;
+      case 'beach':
+        h += `<rect x="${x}" y="${sy + sh * .8}" width="${w}" height="${y + hh - (sy + sh * .8)}" fill="#6cc3e0"/>` + waves(sx, sy + sh * .86, sw, 3);
+        [[.03, .25], [.92, .2]].forEach(([a, b]) => { const [tx, ty] = P(a, b); h += tree(tx, ty, 1, 'palm'); });
+        h += `<circle cx="${sx + sw * .85}" cy="${sy + sh * .72}" r="5" fill="#e74c3c"/><path d="M${sx + sw * .85},${sy + sh * .72} v8" stroke="#555"/>`;
+        break;
+      case 'city':
+        h += `<rect x="${x}" y="${sy + sh * .72}" width="${w}" height="3" fill="rgba(0,0,0,.12)"/>`;
+        [[.12, .6], [.88, .3], [.95, .85]].forEach(([a, b]) => { const [tx, ty] = P(a, b); h += `<line x1="${tx}" y1="${ty}" x2="${tx}" y2="${ty - 12}" stroke="#555" stroke-width="1.2"/><circle cx="${tx}" cy="${ty - 12}" r="2.4" fill="#ffd54a"/>`; });
+        break;
+      case 'harbor':
+        h += `<rect x="${x}" y="${y}" width="${sx - x + sw * .26}" height="${hh}" fill="#6db7dd"/>` + waves(x + 2, sy + sh * .1, sw * .3, 2);
+        h += `<rect x="${sx + sw * .22}" y="${sy + sh * .1}" width="5" height="${sh * .85}" fill="#a0764a"/>`;
+        [[.96, .99]].forEach(([a, b]) => { const [tx, ty] = P(a, b); h += tree(tx, ty, .9, 'round'); });
+        break;
+    }
+    return h;
+  }
+
+  function glyph(t, cx, cy) {
+    const s = 'stroke="var(--fg)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".75"';
+    switch (t) {
+      case 'land': return `<g ${s}><path d="M${cx - 5},${cy + 8} V${cy - 8}"/><path d="M${cx - 5},${cy - 8} h11 l-3,4 l3,4 h-11" fill="#3f9d4f" stroke="var(--fg)"/></g>`;
+      case 'build': return `<g ${s}><path d="M${cx - 6},${cy + 8} V${cy - 8} H${cx + 9} M${cx - 6},${cy - 4} L${cx - 2},${cy - 8} M${cx + 6},${cy - 8} V${cy - 1}"/><rect x="${cx + 3.5}" y="${cy - 1}" width="5" height="4" fill="#e08a1e" stroke="var(--fg)"/></g>`;
+      case 'event': return `<circle cx="${cx}" cy="${cy}" r="11" fill="#fff" fill-opacity=".55" stroke="#7b2fbf" stroke-width="1.5"/><text x="${cx}" y="${cy + 6}" text-anchor="middle" font-size="17" font-weight="900" fill="#7b2fbf">?</text>`;
+      case 'bank': return `<g ${s}><path d="M${cx - 11},${cy - 4} L${cx},${cy - 11} L${cx + 11},${cy - 4} Z M${cx - 9},${cy - 1} V${cy + 7} M${cx - 3},${cy - 1} V${cy + 7} M${cx + 3},${cy - 1} V${cy + 7} M${cx + 9},${cy - 1} V${cy + 7} M${cx - 12},${cy + 9} H${cx + 12}"/></g>`;
+      case 'cityhall': return `<g ${s}><path d="M${cx - 10},${cy + 9} V${cy} H${cx + 10} V${cy + 9} M${cx - 6},${cy} A6,6 0 0 1 ${cx + 6},${cy} M${cx},${cy - 6} V${cy - 12}"/><path d="M${cx},${cy - 12} l6,2 l-6,2" fill="#d0312d" stroke="none"/></g>`;
+      case 'landoffice': return `<g ${s}><path d="M${cx},${cy + 10} V${cy - 10}"/><path d="M${cx},${cy - 8} h9 l3,3 l-3,3 h-9 Z M${cx},${cy} h-9 l-3,3 l3,3 h9 Z" fill="#f2df9c" stroke="var(--fg)"/></g>`;
+      case 'tourism': return `<polygon points="${[...Array(10)].map((_, i) => { const a = -Math.PI / 2 + i * Math.PI / 5, r = i % 2 ? 5 : 11; return `${r1(cx + r * Math.cos(a))},${r1(cy + r * Math.sin(a))}`; }).join(' ')}" fill="#f2b705" stroke="var(--fg)" stroke-width="1" stroke-opacity=".6"/>`;
+    }
+    return '';
+  }
+
+  function initBoard() {
+    $('#board').innerHTML = '<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter></defs><g id="bd"></g><g id="tk"></g><g id="fx" pointer-events="none"></g>';
+    UI.lastCash = null;
+  }
+
+  function renderBoard() {
+    const pickSet = new Set(UI.mode && UI.mode.type === 'pick' ? UI.mode.cells : []);
+    let h = `<rect x="0" y="0" width="600" height="600" rx="14" fill="var(--panel)"/>`;
+    // road tiles
     track.forEach(([x, y], i) => {
       const t = cellType[i];
       const fill = CORNERS[i] ? 'var(--corner)' : t === 'land' ? 'var(--land)' : t === 'build' ? 'var(--build)' : t === 'event' ? 'var(--event)' : 'var(--road)';
       const cls = 'cell' + (pickSet.has(i) ? ' pick' : '') + (UI.hover === i ? ' hot' : '');
-      const px = x * CS, py = y * CS;
-      h += `<g class="${cls}" data-cell="${i}">`;
-      h += `<rect class="base" x="${px + 1}" y="${py + 1}" width="${CS - 2}" height="${CS - 2}" rx="5" fill="${fill}"/>`;
-      const label = { land: 'LAND', build: 'BUILD', event: '?', bank: 'BANK|+$2k', cityhall: 'CITY|HALL', landoffice: 'LAND|OFFICE', tourism: 'TOUR-|ISM' }[t];
-      if (label) {
-        const lines = label.split('|');
-        const fs = t === 'event' ? 20 : CORNERS[i] ? 10 : 9;
-        lines.forEach((ln, k) => {
-          const ty = py + CS / 2 + (k - (lines.length - 1) / 2) * 12 + (t === 'event' ? 7 : 3);
-          h += `<text x="${px + CS / 2}" y="${ty}" text-anchor="middle" font-size="${fs}" font-weight="700" fill="var(--fg)" opacity=".8">${ln}</text>`;
-        });
+      h += `<g class="${cls}" data-cell="${i}"><rect class="base" x="${x * CS + 1}" y="${y * CS + 1}" width="${CS - 2}" height="${CS - 2}" rx="5" fill="${fill}"/></g>`;
+    });
+    h += `<rect x="25" y="25" width="550" height="550" fill="none" stroke="var(--road-mark)" stroke-width="1.5" stroke-dasharray="5 9" pointer-events="none"/>`;
+    // glyphs, labels and entrances
+    h += `<g pointer-events="none">`;
+    track.forEach(([x, y], i) => {
+      const t = cellType[i], px = x * CS, py = y * CS, cx = px + CS / 2;
+      const corner = !!CORNERS[i];
+      if (t !== 'street') {
+        let gx = cx, gy = py + (corner ? 19 : 22);
+        if (S.ent[i]) { if (y === 0) gy -= 7; else if (y === N - 1) gy += 5; else if (x === 0) { gx -= 9; gy = py + CS / 2; } else { gx += 9; gy = py + CS / 2; } }
+        h += S.ent[i] ? `<g transform="translate(${gx} ${gy}) scale(.8) translate(${-gx} ${-gy})">${glyph(t, gx, gy)}</g>` : glyph(t, gx, gy);
       }
-      // entrance marker
+      const label = { bank: 'BANK', cityhall: 'CITY HALL', landoffice: 'LAND OFF.', tourism: 'TOURISM' }[t];
+      if (label) h += `<text x="${cx}" y="${py + 43}" text-anchor="middle" font-size="8" font-weight="800" letter-spacing=".3" fill="var(--fg)" opacity=".8">${label}</text>`;
       const li = cellLot[i];
       if (li >= 0 && S.ent[i] && S.lots[li].owner >= 0) {
         const col = S.players[S.lots[li].owner].color;
-        let ex, ey, ew, eh;
-        if (y === 0) { ex = px + 13; ey = py + CS - 11; ew = 24; eh = 10; }
-        else if (y === N - 1) { ex = px + 13; ey = py + 1; ew = 24; eh = 10; }
-        else if (x === 0) { ex = px + CS - 11; ey = py + 13; ew = 10; eh = 24; }
-        else { ex = px + 1; ey = py + 13; ew = 10; eh = 24; }
-        h += `<rect x="${ex}" y="${ey}" width="${ew}" height="${eh}" rx="2" fill="${col}" stroke="#fff" stroke-width="1.5"/>`;
-        h += `<rect x="${ex + ew / 2 - 3}" y="${ey + eh / 2 - 3}" width="6" height="6" fill="#fff"/>`;
+        // little storefront facing the resort
+        let rot = 0;
+        if (y === N - 1) rot = 180; else if (x === 0) rot = 90; else if (x === N - 1) rot = -90;
+        h += `<g transform="translate(${px + CS / 2} ${py + CS / 2}) rotate(${rot})">
+          <rect x="-13" y="9" width="26" height="15" rx="2" fill="${col}" stroke="#fff" stroke-width="1.5"/>
+          <path d="M-14,9 h28 l-3,-5 h-22 Z" fill="#fff" stroke="${col}" stroke-width="1"/>
+          <path d="M-9,9 l1.5,-5 M-3,9 l.5,-5 M3,9 l-.5,-5 M9,9 l-1.5,-5" stroke="${col}" stroke-width="2"/>
+          <rect x="-4" y="14" width="8" height="10" rx="4" ry="4" fill="#fff"/></g>`;
       }
-      h += `</g>`;
     });
-    // lots
+    h += `</g>`;
+    // resorts
     LOTS.forEach((l, li) => {
-      const L = S.lots[li];
+      const L = S.lots[li], V = VIS[li];
       const [rx, ry, rw, rh] = l.rect;
       const x = rx * CS + 4, y = ry * CS + 4, w = rw * CS - 8, hh = rh * CS - 8;
       const owner = L.owner >= 0 ? S.players[L.owner] : null;
-      const status = owner ? (L.stage ? `${fmt(lotRate(li))} / night` : 'Vacant land') : `For sale ${fmt(l.land)}`;
+      const status = owner ? (L.stage ? `${fmt(lotRate(li))} / night` : 'Vacant lot') : `For sale ${fmt(l.land)}`;
       const aria = `${l.name}. ${owner ? 'Owned by ' + owner.name + '. ' : ''}${status}. ${L.stage} of ${l.stages.length} stages built. ${entCount(li)} entrances.`;
+      const sx = x + 8, sy = y + 30, sw = w - 16, sh = hh - 30 - 26;
       h += `<g class="lot" data-lot="${li}" tabindex="0" role="button" aria-label="${esc(aria)}">`;
-      h += `<rect class="lotbg" x="${x}" y="${y}" width="${w}" height="${hh}" rx="8" fill="${l.color}" stroke="${owner ? owner.color : 'rgba(0,0,0,.18)'}" stroke-width="${owner ? 5 : 1.5}" ${UI.selected === li ? 'stroke-dasharray="10 5"' : ''}/>`;
-      const words = l.name.split(' ');
-      const cx = x + w / 2, top = y + hh / 2 - 30;
-      words.forEach((wd, k) => {
-        h += `<text x="${cx}" y="${top + k * 17}" text-anchor="middle" font-size="15" font-weight="800" fill="var(--lot-text)">${esc(wd)}</text>`;
+      h += `<clipPath id="clip${li}"><rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="8"/></clipPath>`;
+      h += `<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="8" fill="${l.color}"/>`;
+      h += `<g clip-path="url(#clip${li})">${scenery(V.scene, sx, sy, sw, sh, x, y, w, hh)}</g>`;
+      // stage parts, back to front; unbuilt ones as dashed footprints
+      const parts = [];
+      V.stages.forEach((ps, k) => ps.forEach(p => parts.push({ p, k })));
+      parts.sort((a, b) => (a.p.k === 'cable') - (b.p.k === 'cable') || (a.p.y + a.p.h) - (b.p.y + b.p.h));
+      parts.forEach(({ p, k }) => {
+        const X = r1(sx + p.x * sw), Y = r1(sy + p.y * sh), W = r1(p.w * sw), H = r1(p.h * sh);
+        if (k < L.stage) {
+          const rise = UI.pop && UI.pop.li === li && k >= UI.pop.from;
+          h += `<g class="part${rise ? ' rise' : ''}" style="--d:${rise ? (k - UI.pop.from) * 0.18 : 0}s">${drawPart(p, X, Y, W, H)}</g>`;
+        } else if (p.k !== 'cable') {
+          h += `<rect x="${X}" y="${Y}" width="${W}" height="${H}" rx="3" fill="rgba(255,255,255,.18)" stroke="var(--lot-text)" stroke-opacity=".3" stroke-dasharray="3 3"/>`;
+        }
       });
-      const n = l.stages.length, gap = 20, sx = cx - ((n - 1) * gap) / 2;
-      for (let k = 0; k < n; k++) {
-        const built = k < L.stage;
-        h += `<rect x="${sx + k * gap - 7}" y="${top + 26}" width="14" height="${12 + k * 3}" transform="translate(0 ${-k * 3})" rx="2" fill="${built ? 'var(--lot-text)' : 'none'}" stroke="var(--lot-text)" stroke-width="1.5" opacity="${built ? 1 : .45}"/>`;
-      }
-      h += `<text x="${cx}" y="${top + 62}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--lot-text)">${status}</text>`;
+      // frame
+      h += `<rect class="lotbg" x="${x}" y="${y}" width="${w}" height="${hh}" rx="8" fill="none" stroke="${owner ? owner.color : 'rgba(0,0,0,.2)'}" stroke-width="${owner ? 5 : 1.5}" ${UI.selected === li ? 'stroke-dasharray="10 5"' : ''}/>`;
+      // name plate
+      const nw = l.name.length * 6.6 + 18;
+      h += `<rect x="${x + w / 2 - nw / 2}" y="${y + 7}" width="${nw}" height="19" rx="9.5" fill="rgba(255,255,255,.9)" stroke="rgba(0,0,0,.15)"/>`;
+      h += `<text x="${x + w / 2}" y="${y + 20.5}" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--lot-text)">${esc(l.name)}</text>`;
+      // status tag
+      const tw = status.length * 6 + 16, ty = y + hh - 22;
+      const tagFill = owner ? (L.stage ? '#2b2622' : 'rgba(255,255,255,.9)') : '#fff';
+      const tagText = owner ? (L.stage ? '#fff' : 'var(--lot-text)') : '#b3261e';
+      h += `<rect x="${x + w / 2 - tw / 2}" y="${ty}" width="${tw}" height="17" rx="4" fill="${tagFill}" stroke="${owner ? 'none' : '#b3261e'}" stroke-width="1.2"/>`;
+      h += `<text x="${x + w / 2}" y="${ty + 12.5}" text-anchor="middle" font-size="10.5" font-weight="800" fill="${tagText}">${status}</text>`;
       if (owner) {
-        h += `<circle cx="${x + w - 14}" cy="${y + 14}" r="10" fill="${owner.color}" stroke="#fff" stroke-width="2"/>`;
-        h += `<text x="${x + w - 14}" y="${y + 18}" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">${esc(owner.name[0].toUpperCase())}</text>`;
+        h += `<line x1="${x + 12}" y1="${y + 8}" x2="${x + 12}" y2="${y + 28}" stroke="#444" stroke-width="1.5"/>`;
+        h += `<path class="flag" d="M${x + 12.5},${y + 8} l14,4 l-14,4 Z" fill="${owner.color}" stroke="#fff" stroke-width=".8"/>`;
       }
       h += `</g>`;
     });
-    // plaza
+    // central park
     const p = cur();
-    h += `<rect x="${4 * CS + 4}" y="${4 * CS + 4}" width="${4 * CS - 8}" height="${4 * CS - 8}" rx="12" fill="var(--plaza)"/>`;
-    h += `<text x="300" y="268" text-anchor="middle" font-size="26" font-weight="900" fill="var(--fg)" letter-spacing="1">RESORT</text>`;
-    h += `<text x="300" y="296" text-anchor="middle" font-size="26" font-weight="900" fill="var(--accent)" letter-spacing="1">ROW</text>`;
+    h += `<rect x="${4 * CS + 4}" y="${4 * CS + 4}" width="${4 * CS - 8}" height="${4 * CS - 8}" rx="12" fill="var(--park)"/>`;
+    h += `<circle cx="300" cy="300" r="56" fill="none" stroke="var(--path)" stroke-width="10"/>`;
+    h += `<path d="M204,300 H244 M356,300 H396 M300,204 V244 M300,356 V396" stroke="var(--path)" stroke-width="10"/>`;
+    [[222, 222], [378, 222], [222, 378], [378, 378], [226, 262], [374, 338]].forEach(([tx, ty]) => { h += tree(tx, ty + 8, 1, 'round'); });
+    h += `<circle cx="300" cy="300" r="22" fill="#9fd8ef" stroke="#fff" stroke-width="3"/><circle class="ripple" cx="300" cy="300" r="10" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="300" cy="300" r="4" fill="#fff"/>`;
+    h += `<text x="300" y="262" text-anchor="middle" font-size="20" font-weight="900" fill="var(--fg)" letter-spacing="1.5" class="halo">RESORT <tspan fill="var(--accent)">ROW</tspan></text>`;
     if (S.phase === 'over') {
-      h += `<text x="300" y="330" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)">${esc(S.players[S.standings[0].i].name)} wins!</text>`;
+      h += `<text x="300" y="352" text-anchor="middle" font-size="14" font-weight="800" fill="var(--fg)" class="halo">${esc(S.players[S.standings[0].i].name)} wins!</text>`;
     } else {
-      h += `<text x="300" y="331" text-anchor="middle" font-size="14" font-weight="700" fill="var(--fg)"><tspan fill="${p.color}" stroke="var(--plaza)" stroke-width=".5">${esc(p.name.slice(0, 12))}</tspan>'s turn</text>`;
-      h += `<text x="300" y="350" text-anchor="middle" font-size="12" fill="var(--muted)">Round ${S.round}${S.maxRounds ? ' of ' + S.maxRounds : ''}</text>`;
+      h += `<text x="300" y="347" text-anchor="middle" font-size="13" font-weight="800" fill="var(--fg)" class="halo"><tspan fill="${p.color}">${esc(p.name.slice(0, 12))}</tspan>'s turn</text>`;
+      h += `<text x="300" y="363" text-anchor="middle" font-size="11" font-weight="600" fill="var(--fg)" opacity=".75" class="halo">Round ${S.round}${S.maxRounds ? ' of ' + S.maxRounds : ''}</text>`;
     }
-    // tokens
-    const OFF = [[-11, -11], [11, -11], [-11, 11], [11, 11]];
+    $('#bd').innerHTML = h;
+    renderTokens();
+  }
+
+  const OFF = [[-11, -10], [11, -10], [-11, 12], [11, 12]];
+  function tokenXY(pi) {
+    const [x, y] = cellXY(S.players[pi].pos);
+    return [x * CS + CS / 2 + OFF[pi][0], y * CS + CS / 2 + OFF[pi][1]];
+  }
+  function renderTokens() {
+    const tk = $('#tk');
     S.players.forEach((pl, pi) => {
-      if (pl.out) return;
-      const [x, y] = cellXY(pl.pos);
-      const [ox, oy] = OFF[pi];
-      const tx = x * CS + CS / 2 + ox, ty = y * CS + CS / 2 + oy;
-      const isCur = pi === S.cur && S.phase !== 'over';
-      h += `<g aria-hidden="true"><circle cx="${tx}" cy="${ty}" r="${isCur ? 10 : 9}" fill="${pl.color}" stroke="${isCur ? 'var(--fg)' : '#fff'}" stroke-width="2"/>`;
-      h += `<text x="${tx}" y="${ty + 4}" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">${esc(pl.name[0].toUpperCase())}</text></g>`;
+      let g = tk.querySelector(`[data-tok="${pi}"]`);
+      if (!g) {
+        g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('data-tok', pi);
+        g.setAttribute('class', 'tok');
+        g.setAttribute('aria-hidden', 'true');
+        g.innerHTML = `<ellipse cx="0" cy="9" rx="8" ry="3" fill="rgba(0,0,0,.3)"/><g class="bob"><path d="M-7,9 Q-7,1 -3,-1 L3,-1 Q7,1 7,9 Z" fill="${pl.color}" stroke="#fff" stroke-width="1.5"/><circle cx="0" cy="-5" r="5.5" fill="${pl.color}" stroke="#fff" stroke-width="1.5"/><circle cx="-1.8" cy="-6.8" r="1.6" fill="#fff" opacity=".6"/></g>`;
+        tk.appendChild(g);
+      }
+      const [tx, ty] = tokenXY(pi);
+      g.style.transform = `translate(${tx}px, ${ty}px)`;
+      g.style.display = pl.out ? 'none' : '';
+      g.classList.toggle('now', pi === S.cur && S.phase !== 'over');
     });
-    svg.innerHTML = h;
+  }
+
+  // Floating money and rubber stamps
+  function fxText(x, y, text, color, cls = 'float', size = 13) {
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', x); t.setAttribute('y', y);
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('font-size', size);
+    t.setAttribute('font-weight', '900');
+    t.setAttribute('fill', color);
+    t.setAttribute('class', cls + ' halo');
+    t.textContent = text;
+    $('#fx').appendChild(t);
+    setTimeout(() => t.remove(), 1600);
+  }
+  function popCash() {
+    if (!S) return;
+    if (!UI.lastCash || UI.lastCash.length !== S.players.length) { UI.lastCash = S.players.map(p => p.cash); return; }
+    S.players.forEach((p, pi) => {
+      const d = p.cash - UI.lastCash[pi];
+      if (!d) return;
+      const [tx, ty] = tokenXY(pi);
+      fxText(tx, ty - 16, (d > 0 ? '+' : '−') + fmt(Math.abs(d)), d > 0 ? '#1f8a3a' : '#c62828');
+      UI.lastCash[pi] = p.cash;
+    });
+  }
+  function stamp(text, color, cx = 300, cy = 300) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const w = text.length * 13 + 28;
+    g.setAttribute('transform', `translate(${cx} ${cy}) rotate(-9)`);
+    g.innerHTML = `<g class="stampIn"><rect x="${-w / 2}" y="-22" width="${w}" height="44" rx="6" fill="var(--panel)" fill-opacity=".94" stroke="${color}" stroke-width="4"/><rect x="${-w / 2 + 5}" y="-17" width="${w - 10}" height="34" rx="3" fill="none" stroke="${color}" stroke-width="1.5"/><text x="0" y="8" text-anchor="middle" font-size="22" font-weight="900" letter-spacing="1" fill="${color}">${esc(text)}</text></g>`;
+    $('#fx').appendChild(g);
+    setTimeout(() => g.remove(), reduced ? 900 : 1500);
+  }
+  function lotCenter(li) {
+    const [rx, ry, rw, rh] = LOTS[li].rect;
+    return [(rx + rw / 2) * CS, (ry + rh / 2) * CS];
   }
 
   function renderPlayers() {
@@ -992,6 +1310,7 @@ dialog ul { padding-left: 20px; }
     renderPanel();
     renderInfo();
     renderLog();
+    popCash();
     if (S.turn && S.turn.dice) showDie(S.turn.dice.value);
     else if (S.phase === 'roll') { showDie(0); $('#trayCap').textContent = 'Roll to move'; }
     if (S.phase === 'roll') showZone(null);
@@ -1071,6 +1390,7 @@ dialog ul { padding-left: 20px; }
     $('#resumeBtn').hidden = !(saved && saved.phase !== 'over');
   }
   function showGame() {
+    initBoard();
     $('#setup').hidden = true;
     $('#game').hidden = false;
   }
